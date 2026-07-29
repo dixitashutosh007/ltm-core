@@ -1,0 +1,151 @@
+<!--
+  LTM CIS Tech Advisory — Contact Us reference implementation
+  - Header pill (persistent) opens the modal
+  - End-of-report panel opens the same modal
+  - Modal collects customer details + a one-line priority
+  - Clicking "Open in email app" builds a mailto: link populated with the
+    customer details and the report essentials, then opens it
+  - No attachment (per requirement) — PDF is offered as a separate download
+
+  Wire-up: call LTM.contactUs.setReport(reportEssentials) whenever your
+  accelerator generates or updates the report. Then LTM.contactUs.open()
+  from any button.
+-->
+
+<button id="ltm-cu-header" type="button">Contact Us</button>
+
+<div id="ltm-cu-endpanel">
+  <h3>Ready to talk through your results?</h3>
+  <p>A member of our CIS Tech Advisory team will walk through your report and outline next steps. No commitment beyond a conversation.</p>
+  <button id="ltm-cu-open" type="button">Contact Us →</button>
+</div>
+
+<dialog id="ltm-cu-modal">
+  <form method="dialog">
+    <header>
+      <strong>Contact CIS Tech Advisory</strong>
+      <button value="cancel" aria-label="Close">×</button>
+    </header>
+    <div class="ltm-cu-body">
+      <p>We'll email your details and a short summary of your report to <a href="mailto:ashutosh.dixit@ltm.com">ashutosh.dixit@ltm.com</a>. You will be able to review and edit the email before sending.</p>
+      <label>Your name <input name="name" required></label>
+      <label>Company <input name="company" required></label>
+      <label>Role <input name="role"></label>
+      <label>Work email <input type="email" name="email" required></label>
+      <label>Phone (optional) <input name="phone"></label>
+      <label>What would you most like to discuss? <textarea name="priority" rows="3" placeholder="e.g. how to prioritise the top 3 findings"></textarea></label>
+    </div>
+    <footer>
+      <button value="cancel">Cancel</button>
+      <button id="ltm-cu-send" value="send">Open in email app</button>
+    </footer>
+  </form>
+</dialog>
+
+<style>
+  #ltm-cu-header {
+    position: fixed; top: 14px; right: 18px; z-index: 99998;
+    font: 600 12px/1 Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+    letter-spacing: 0.04em; padding: 9px 14px; border-radius: 999px;
+    background: #ff5e4f; color: #fff; border: 0; cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.12);
+  }
+  #ltm-cu-header:hover { background: #e5412f; }
+  #ltm-cu-endpanel {
+    background: #141414; color: #fff; padding: 32px 28px; border-radius: 10px;
+    margin: 24px 0; text-align: center;
+    font: 400 14px/1.5 Inter, -apple-system, sans-serif;
+  }
+  #ltm-cu-endpanel h3 { margin: 0 0 8px; font-size: 20px; }
+  #ltm-cu-endpanel p { margin: 0 0 18px; color: rgba(255,255,255,0.85); }
+  #ltm-cu-open {
+    background: #ff5e4f; color: #fff; border: 0; padding: 12px 22px;
+    border-radius: 999px; font: 600 14px/1 Inter, sans-serif; cursor: pointer;
+  }
+  #ltm-cu-open:hover { background: #fff; color: #141414; }
+  #ltm-cu-modal {
+    border: 0; border-radius: 10px; padding: 0; width: min(520px, 92vw);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25); font: 400 14px/1.5 Inter, sans-serif;
+  }
+  #ltm-cu-modal::backdrop { background: rgba(0,0,0,0.4); }
+  #ltm-cu-modal header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 18px; border-bottom: 1px solid #ececec;
+  }
+  #ltm-cu-modal header button {
+    background: none; border: 0; font-size: 22px; cursor: pointer; color: #666;
+  }
+  .ltm-cu-body { padding: 18px; display: grid; gap: 10px; }
+  .ltm-cu-body label { display: grid; gap: 4px; font-size: 12px; color: #555; }
+  .ltm-cu-body input, .ltm-cu-body textarea {
+    font: 400 14px/1.4 Inter, sans-serif; padding: 8px 10px;
+    border: 1px solid #d9d9d9; border-radius: 6px;
+  }
+  #ltm-cu-modal footer {
+    display: flex; justify-content: flex-end; gap: 8px;
+    padding: 12px 18px; border-top: 1px solid #ececec; background: #fafafa;
+  }
+  #ltm-cu-modal footer button {
+    font: 600 13px/1 Inter, sans-serif; padding: 9px 14px;
+    border-radius: 6px; cursor: pointer; border: 1px solid transparent;
+  }
+  #ltm-cu-modal footer button[value="cancel"] { background: #fff; border-color: #d9d9d9; color: #444; }
+  #ltm-cu-send { background: #ff5e4f; color: #fff; }
+  #ltm-cu-send:hover { background: #e5412f; }
+</style>
+
+<script>
+(function () {
+  const CFG = {
+    to: "ashutosh.dixit@ltm.com",
+    accelerator: "CIS Tech Advisory Accelerator",
+    framework: "v1.0"
+  };
+  const state = { report: null };
+  const modal = document.getElementById("ltm-cu-modal");
+  const openBtns = [document.getElementById("ltm-cu-header"), document.getElementById("ltm-cu-open")];
+  openBtns.forEach(b => b && b.addEventListener("click", () => modal.showModal()));
+
+  document.getElementById("ltm-cu-send").addEventListener("click", (e) => {
+    const form = e.target.closest("form");
+    const fd = new FormData(form);
+    if (!fd.get("name") || !fd.get("company") || !fd.get("email")) return;
+    const r = state.report || {};
+    const subject = `CIS Tech Advisory — ${CFG.accelerator} — ${fd.get("company")}`;
+    const body = [
+      "Hi Ashutosh,",
+      "",
+      `I've just completed the ${CFG.accelerator} assessment on the LTM CIS Tech Advisory site and would like to walk through the results.`,
+      "",
+      "My details:",
+      `  Name:    ${fd.get("name")}`,
+      `  Company: ${fd.get("company")}`,
+      `  Role:    ${fd.get("role") || "—"}`,
+      `  Email:   ${fd.get("email")}`,
+      `  Phone:   ${fd.get("phone") || "—"}`,
+      "",
+      "Report essentials (from the tool):",
+      `  Assessment:      ${CFG.accelerator}`,
+      `  Framework:       ${CFG.framework}`,
+      `  Generated:       ${new Date().toISOString()}`,
+      `  Headline score:  ${r.headline || "not generated yet"}`,
+      `  Top signals:     ${(r.topSignals || []).join(" | ") || "—"}`,
+      `  My priority:     ${fd.get("priority") || "—"}`,
+      "",
+      "Please get in touch to set up a 30-minute readout.",
+      "",
+      "Thanks,",
+      `${fd.get("name")}`
+    ].join("\n");
+    const href = `mailto:${encodeURIComponent(CFG.to)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = href;
+  });
+
+  window.LTM = window.LTM || {};
+  window.LTM.contactUs = {
+    open: () => modal.showModal(),
+    setReport: (r) => { state.report = r; },
+    configure: (c) => Object.assign(CFG, c || {})
+  };
+})();
+</script>
