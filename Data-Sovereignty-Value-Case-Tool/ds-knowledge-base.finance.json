@@ -1,0 +1,522 @@
+{
+  "meta": {
+    "schema_version": "0.1.0",
+    "artifact": "Digital Sovereignty Accelerator — Knowledge Base",
+    "vertical": "financial_services",
+    "phase": "Phase 1 (UK & EU)",
+    "generated": "2026-07-21",
+    "last_reviewed": "2026-07-21",
+    "review_cadence": "Regulatory currency is a first-class property. Re-verify every regime object against primary sources at least quarterly; this landscape moves monthly (DORA/NIS2 amendments, UK Cyber Security and Resilience Bill still in passage, EU AI Act reaching full application Aug 2026).",
+    "purpose": "Triage / applicability screening + high-level readiness scoring. NOT legal advice. Output determines which UK/EU digital-sovereignty regimes apply to a financial entity and roughly why, plus a maturity-stage readiness estimate. It qualifies a client into a deeper LTM advisory engagement (gap assessment + sovereignty roadmap).",
+    "disclaimer": "Indicative only. Applicability of law depends on specific facts and should be confirmed with qualified counsel. Grades of 'likely_confirm', 'partial', 'needs_legal_review' and 'advisory' explicitly signal where facilitated or legal validation is required.",
+
+    "delivery_tiers": {
+      "tier_1_core": "Self-serve web tool. Closed answer types only (single_select, multi_select, boolean, rating_1_5, range, with allow_not_applicable). Produces an INDICATIVE applicability + readiness result. This is the gated lead-gen path.",
+      "tier_2_extended": "Consultant-led workshop. Adds richer types (drag_order, open_text) and deeper evidence probes. Produces a VALIDATED result that feeds the roadmap. Open text lives almost entirely here."
+    },
+
+    "answer_types": [
+      {"id": "single_select", "tiers": [1, 2]},
+      {"id": "multi_select", "tiers": [1, 2]},
+      {"id": "boolean", "tiers": [1, 2]},
+      {"id": "rating_1_5", "tiers": [1, 2]},
+      {"id": "range", "tiers": [1, 2]},
+      {"id": "drag_order", "tiers": [2]},
+      {"id": "open_text", "tiers": [2]}
+    ],
+
+    "grades": {
+      "applies": "Trigger conditions clearly met. Regime is in scope.",
+      "likely_confirm": "Strong indication of scope; a fact needs confirmation (usually facilitated or legal).",
+      "partial": "Regime applies only in part — e.g. residual obligations after a lex-specialis carve-out.",
+      "advisory": "Not a hard applicability determination; a sovereignty risk/consideration to flag (e.g. residency != sovereignty).",
+      "needs_legal_review": "Fact pattern is ambiguous or high-stakes; refer to counsel before concluding.",
+      "not_applicable": "Trigger conditions not met."
+    },
+    "grade_precedence": ["applies", "likely_confirm", "partial", "needs_legal_review", "advisory", "not_applicable"],
+
+    "rule_engine": {
+      "note": "Each regime carries an ordered array of applicability_rules. The engine evaluates every rule's 'when' condition tree against the collected facts; each satisfied rule yields its 'grade'. The regime's final grade = highest-precedence grade among satisfied rules. Every satisfied rule also contributes its 'rationale' to the explainability output (the 'why').",
+      "operators": {
+        "eq": "fact equals value",
+        "neq": "fact not equal to value",
+        "in": "fact (scalar) is one of value[]",
+        "not_in": "fact (scalar) is not in value[]",
+        "includes_any": "fact (array) shares >=1 element with value[]",
+        "includes_all": "fact (array) contains all of value[]",
+        "gte": "fact >= value",
+        "lte": "fact <= value",
+        "is_true": "fact === true",
+        "is_false": "fact === false"
+      },
+      "condition_tree": "A condition is either a leaf {fact, op, value} or a group {all:[...]} / {any:[...]} / {not:{...}}. Trees nest arbitrarily."
+    },
+
+    "maturity_spine": {
+      "note": "Readiness rolls up onto your five-stage sovereignty maturity model. Endpoints (Reactive -> Sovereign-by-Design) are fixed from your existing narrative; the three intermediate labels below are PROPOSED and must be reconciled against your Digital Sovereignty deck before this ships.",
+      "scale": "0-100 normalised",
+      "stages": [
+        {"stage": 1, "label": "Reactive", "band": [0, 20], "descriptor": "Compliance handled ad hoc and after the fact; sovereignty exposure largely unmapped."},
+        {"stage": 2, "label": "Aware (PROPOSED — confirm vs deck)", "band": [21, 40], "descriptor": "Obligations identified; controls patchy and undocumented."},
+        {"stage": 3, "label": "Structured (PROPOSED — confirm vs deck)", "band": [41, 60], "descriptor": "Defined controls and ownership; residency addressed but jurisdictional exposure not fully controlled."},
+        {"stage": 4, "label": "Managed (PROPOSED — confirm vs deck)", "band": [61, 80], "descriptor": "Controls tested and evidenced; third-party and concentration risk actively managed."},
+        {"stage": 5, "label": "Sovereign-by-Design", "band": [81, 100], "descriptor": "Sovereignty embedded in architecture and procurement; foreign-access risk provably mitigated, not just relocated."}
+      ]
+    },
+
+    "scoring": {
+      "readiness_question_normalisation": "rating_1_5 -> ((value-1)/4)*100. single_select readiness options carry an explicit 'score' (0-100). range readiness questions map min..max linearly to 0..100.",
+      "regime_readiness": "For each in-scope regime, weighted mean of its readiness_dimensions (each dimension = mean of its mapped questions * dimension weight), rounded to a 0-100 score, then mapped to a maturity stage via the bands above.",
+      "overall_sovereignty_readiness": "Weighted mean of in-scope regime scores. Suggested regime weights favour the sharpest-teeth regimes for the vertical (see regime.weight). Only regimes graded applies/likely_confirm/partial contribute; advisory items surface as risk flags, not score inputs."
+    }
+  },
+
+  "facts": [
+    {"key": "entity_role", "type": "enum", "values": ["financial_entity", "ict_provider_to_finance", "other"], "description": "Primary role of the assessed organisation."},
+    {"key": "fin_entity_type", "type": "enum", "values": ["credit_institution", "investment_firm", "payment_institution", "emi", "insurer", "reinsurer", "insurance_intermediary", "iorp_pension", "casp_crypto", "ccp", "csd", "trading_venue", "credit_rating_agency", "aifm", "ucits_mgmt", "crowdfunding", "other_financial", "none"], "description": "DORA financial-entity category (~20 categories in Art. 2)."},
+    {"key": "establishment_eu", "type": "boolean", "description": "Established / has operations in one or more EU member states."},
+    {"key": "establishment_uk", "type": "boolean", "description": "Established / has operations in the UK."},
+    {"key": "eu_member_state_count", "type": "number", "description": "Number of EU member states of operation (relevant to NIS2 transposition variance)."},
+    {"key": "offers_services_eu", "type": "boolean", "description": "Offers goods/services to, or monitors behaviour of, individuals in the EU (GDPR Art. 3(2))."},
+    {"key": "offers_services_uk", "type": "boolean", "description": "Offers goods/services to, or monitors, individuals in the UK."},
+    {"key": "processes_personal_data", "type": "boolean", "description": "Processes any personal data."},
+    {"key": "data_subjects_geo", "type": "array", "values": ["EU", "UK", "US", "Other"], "description": "Where the data subjects are located."},
+    {"key": "special_category_data", "type": "boolean", "description": "Processes special-category / highly sensitive data."},
+    {"key": "data_volume_band", "type": "enum", "values": ["under_10k", "10k_1m", "1m_10m", "over_10m", "unknown"], "description": "Approximate personal-data record volume (risk weighting only)."},
+    {"key": "data_hosting_location", "type": "array", "values": ["EU", "UK", "US", "Other"], "description": "Where data is physically stored/processed."},
+    {"key": "cloud_provider_hq", "type": "array", "values": ["US", "EU", "UK", "Other"], "description": "HQ jurisdiction of primary cloud/hosting providers — the jurisdictional-exposure key."},
+    {"key": "uses_us_hyperscaler", "type": "boolean", "description": "Material reliance on a US-headquartered hyperscaler (AWS / Azure / Google Cloud)."},
+    {"key": "sovereign_offering_status", "type": "enum", "values": ["yes", "partial", "no", "unknown"], "description": "Whether workloads sit on a sovereign/EU-boundary offering with contractual & operational controls."},
+    {"key": "company_size", "type": "enum", "values": ["micro", "small", "medium", "large"], "description": "Size band (headcount/turnover) for proportionality thresholds."},
+    {"key": "uses_high_risk_ai", "type": "boolean", "description": "Uses AI for creditworthiness/credit scoring or insurance risk/pricing (EU AI Act Annex III high-risk)."},
+    {"key": "uses_other_ai", "type": "boolean", "description": "Uses AI for other purposes (fraud detection, ops) — transparency/GPAI obligations may apply."},
+    {"key": "is_or_uses_designated_ctp", "type": "enum", "values": ["yes", "no", "unknown"], "description": "Is, or depends on, a designated Critical Third Party (UK) / Critical ICT Third-Party Provider (DORA)."},
+    {"key": "ict_concentration_risk", "type": "boolean", "description": "A single ICT provider supports a critical/important function with no ready substitute."}
+  ],
+
+  "regimes": [
+    {
+      "id": "dora",
+      "name": "Digital Operational Resilience Act (DORA)",
+      "legal_reference": "Regulation (EU) 2022/2554",
+      "jurisdiction": "EU",
+      "sector_scope": "financial_services",
+      "status": "in_force",
+      "status_note": "Applicable since 17 January 2025. 2026 is the first genuine supervisory enforcement cycle.",
+      "confidence": "high",
+      "weight": 0.30,
+      "applicability_rules": [
+        {
+          "when": {"all": [
+            {"fact": "entity_role", "op": "eq", "value": "financial_entity"},
+            {"fact": "fin_entity_type", "op": "in", "value": ["credit_institution", "investment_firm", "payment_institution", "emi", "insurer", "reinsurer", "insurance_intermediary", "iorp_pension", "casp_crypto", "ccp", "csd", "trading_venue", "credit_rating_agency", "aifm", "ucits_mgmt", "crowdfunding"]},
+            {"any": [
+              {"fact": "establishment_eu", "op": "is_true"},
+              {"fact": "offers_services_eu", "op": "is_true"}
+            ]}
+          ]},
+          "grade": "applies",
+          "rationale": "Regulated financial entity operating in/into the EU falls within DORA's ~20 in-scope categories (Art. 2)."
+        },
+        {
+          "when": {"all": [
+            {"fact": "entity_role", "op": "eq", "value": "ict_provider_to_finance"},
+            {"fact": "is_or_uses_designated_ctp", "op": "eq", "value": "yes"}
+          ]},
+          "grade": "likely_confirm",
+          "rationale": "ICT providers to the financial sector can be designated Critical ICT Third-Party Providers (CTPPs) and placed under direct ESA Lead Overseer supervision. 19 CTPPs were designated as of Nov 2025 (incl. AWS, Azure, Google Cloud, IBM, Bloomberg)."
+        }
+      ],
+      "obligations": [
+        "ICT risk-management framework with board-level accountability.",
+        "ICT-incident classification and reporting — initial notification of a major incident within tight timelines (~4 hours after classification), tighter than NIS2.",
+        "Digital operational resilience testing, including threat-led penetration testing at least every 3 years for significant entities.",
+        "ICT third-party risk management: maintain a Register of Information of all ICT arrangements; assess and manage concentration risk; mandate contractual audit/access rights.",
+        "Documented exit strategies for critical ICT services."
+      ],
+      "readiness_dimensions": [
+        {"id": "governance", "name": "ICT risk governance & board accountability", "weight": 0.2},
+        {"id": "incident_reporting", "name": "Incident detection & regulatory reporting", "weight": 0.2},
+        {"id": "resilience_testing", "name": "Resilience & threat-led testing", "weight": 0.2},
+        {"id": "third_party_risk", "name": "ICT third-party & concentration risk register", "weight": 0.2},
+        {"id": "exit_strategy", "name": "Exit / substitutability planning", "weight": 0.2}
+      ],
+      "sources": [
+        {"ref": "Regulation (EU) 2022/2554"},
+        {"ref": "compliancehub.wiki — DORA enforcement 2026", "url": "https://compliancehub.wiki/dora-nis2-2026-enforcement-eu-financial-cyber-resilience-compliance/", "retrieved": "2026-07-21"}
+      ]
+    },
+
+    {
+      "id": "nis2_residual",
+      "name": "NIS2 — residual obligations for financial entities",
+      "legal_reference": "Directive (EU) 2022/2555",
+      "jurisdiction": "EU",
+      "sector_scope": "cross_sector",
+      "status": "in_force",
+      "status_note": "Enforceable since Oct 2024; first audits from June 2026. Jan 2026 Commission proposed targeted amendments. Transposition remains uneven across member states.",
+      "confidence": "medium",
+      "weight": 0.05,
+      "applicability_rules": [
+        {
+          "when": {"all": [
+            {"fact": "entity_role", "op": "eq", "value": "financial_entity"},
+            {"fact": "establishment_eu", "op": "is_true"}
+          ]},
+          "grade": "partial",
+          "rationale": "DORA is lex specialis (DORA Art. 1(2) / NIS2 Art. 4): for financial entities DORA replaces NIS2's ICT risk-management and incident-reporting obligations. Residual NIS2 duties NOT covered by DORA (e.g. certain corporate-level cyber hygiene, cross-sector cooperation, and member-state registration such as Germany's registration requirement) may still apply. Exact residual scope varies by national transposition — confirm per member state."
+        }
+      ],
+      "obligations": [
+        "Residual corporate-level cybersecurity obligations outside DORA's remit.",
+        "Member-state-specific registration/cooperation duties where applicable (varies by transposition)."
+      ],
+      "readiness_dimensions": [
+        {"id": "corporate_cyber_hygiene", "name": "Corporate cyber hygiene beyond ICT-risk scope", "weight": 1.0}
+      ],
+      "sources": [
+        {"ref": "Directive (EU) 2022/2555, Art. 4"},
+        {"ref": "PayTechLaw — NIS2 meets DORA", "url": "https://paytechlaw.com/en/nis2-meets-dora-changes-for-financial-institutions/", "retrieved": "2026-07-21"}
+      ]
+    },
+
+    {
+      "id": "uk_opres",
+      "name": "UK Operational Resilience & Outsourcing (FCA/PRA)",
+      "legal_reference": "FCA PS21/3 & PRA equivalent (operational resilience); PRA SS2/21 (outsourcing & third-party risk)",
+      "jurisdiction": "UK",
+      "sector_scope": "financial_services",
+      "status": "in_force",
+      "confidence": "high",
+      "weight": 0.20,
+      "applicability_rules": [
+        {
+          "when": {"all": [
+            {"fact": "entity_role", "op": "eq", "value": "financial_entity"},
+            {"fact": "establishment_uk", "op": "is_true"}
+          ]},
+          "grade": "applies",
+          "rationale": "FCA/PRA-regulated firms and FMIs must meet UK operational-resilience and outsourcing/third-party-risk rules. This responsibility is unchanged by the CTP regime — firms remain accountable for their own third-party arrangements."
+        }
+      ],
+      "obligations": [
+        "Identify important business services and set impact tolerances.",
+        "Map and test the ability to remain within impact tolerances through severe-but-plausible scenarios.",
+        "Maintain a self-assessment document.",
+        "Manage outsourcing and third-party risk (due diligence, exit, contingency) per SS2/21."
+      ],
+      "readiness_dimensions": [
+        {"id": "important_business_services", "name": "Important business services & impact tolerances", "weight": 0.35},
+        {"id": "third_party_oversight", "name": "Outsourcing / third-party oversight", "weight": 0.35},
+        {"id": "testing", "name": "Scenario testing & self-assessment", "weight": 0.30}
+      ],
+      "sources": [
+        {"ref": "FCA PS21/3; PRA SS2/21"},
+        {"ref": "FCA — Critical Third Parties page", "url": "https://www.fca.org.uk/firms/critical-third-parties-strengthening-uk-financial-services", "retrieved": "2026-07-21"}
+      ]
+    },
+
+    {
+      "id": "uk_ctp",
+      "name": "UK Critical Third Parties (CTP) regime",
+      "legal_reference": "FSMA 2000 (as amended by FSMA 2023); FCA PS24/16 / PRA PS16/24",
+      "jurisdiction": "UK",
+      "sector_scope": "financial_services",
+      "status": "in_force",
+      "status_note": "Rules effective 1 Jan 2025; bind a provider only once HM Treasury designates it. First CTPs designated by HMT in July 2026. Treasury Committee recommended designating major AI/cloud providers by end 2026.",
+      "confidence": "high",
+      "weight": 0.05,
+      "applicability_rules": [
+        {
+          "when": {"fact": "entity_role", "op": "eq", "value": "ict_provider_to_finance"},
+          "grade": "advisory",
+          "rationale": "ICT providers to the UK financial sector may be designated Critical Third Parties by HM Treasury, bringing them under joint FCA/PRA/Bank of England oversight (governance, supply-chain risk, cyber resilience, change and incident management, plus six Fundamental Rules). Obligations bind from the date of designation."
+        },
+        {
+          "when": {"all": [
+            {"fact": "entity_role", "op": "eq", "value": "financial_entity"},
+            {"fact": "establishment_uk", "op": "is_true"},
+            {"fact": "is_or_uses_designated_ctp", "op": "eq", "value": "yes"}
+          ]},
+          "grade": "advisory",
+          "rationale": "Reliance on a designated CTP is a material concentration/dependency consideration. The CTP rules bind the provider, not the firm — but the firm's own operational-resilience accountability is undiminished."
+        }
+      ],
+      "obligations": [
+        "(If designated) Comply with CTP rules across governance, supply-chain risk, cyber resilience, change and incident management, and the six Fundamental Rules; provide assurance, testing and notifications to regulators."
+      ],
+      "readiness_dimensions": [
+        {"id": "ctp_dependency", "name": "CTP dependency / designation readiness", "weight": 1.0}
+      ],
+      "sources": [
+        {"ref": "Bank of England — regulators to begin overseeing CTPs", "url": "https://www.bankofengland.co.uk/news/2026/july/uk-financial-regulators-to-begin-overseeing-critical-third-parties-announced-by-hmt", "retrieved": "2026-07-21"},
+        {"ref": "Morrison Foerster — UK CTP regime goes live", "url": "https://www.mofo.com/resources/insights/260716-uk-announces-list-of-first-critical-third-parties", "retrieved": "2026-07-21"}
+      ]
+    },
+
+    {
+      "id": "eu_gdpr",
+      "name": "EU GDPR",
+      "legal_reference": "Regulation (EU) 2016/679",
+      "jurisdiction": "EU",
+      "sector_scope": "cross_sector",
+      "status": "in_force",
+      "confidence": "high",
+      "weight": 0.15,
+      "applicability_rules": [
+        {
+          "when": {"all": [
+            {"fact": "processes_personal_data", "op": "is_true"},
+            {"any": [
+              {"fact": "establishment_eu", "op": "is_true"},
+              {"fact": "offers_services_eu", "op": "is_true"},
+              {"fact": "data_subjects_geo", "op": "includes_any", "value": ["EU"]}
+            ]}
+          ]},
+          "grade": "applies",
+          "rationale": "Processing personal data with an EU establishment, or targeting/monitoring individuals in the EU, engages GDPR (Art. 3). Includes Chapter V transfer restrictions and Art. 9 conditions for special-category data."
+        }
+      ],
+      "obligations": [
+        "Lawful basis, transparency, data-subject rights, security of processing, records, DPO where applicable.",
+        "Chapter V restrictions on transfers of personal data outside the EEA.",
+        "Article 9 conditions where special-category data is processed."
+      ],
+      "readiness_dimensions": [
+        {"id": "data_protection_governance", "name": "Data-protection governance", "weight": 0.5},
+        {"id": "transfer_compliance", "name": "Cross-border transfer compliance", "weight": 0.5}
+      ],
+      "sources": [{"ref": "Regulation (EU) 2016/679"}]
+    },
+
+    {
+      "id": "uk_gdpr",
+      "name": "UK GDPR / DPA 2018 / PECR (as amended by DUAA 2025)",
+      "legal_reference": "UK GDPR; Data Protection Act 2018; PECR; Data (Use and Access) Act 2025",
+      "jurisdiction": "UK",
+      "sector_scope": "cross_sector",
+      "status": "in_force",
+      "status_note": "DUAA 2025 amendments are phasing in through 2026 (next commencement phase came into force 5 Feb 2026). EU->UK adequacy renewed to at least Dec 2031, so UK is not a 'third country' for EU personal data.",
+      "confidence": "high",
+      "weight": 0.10,
+      "applicability_rules": [
+        {
+          "when": {"all": [
+            {"fact": "processes_personal_data", "op": "is_true"},
+            {"any": [
+              {"fact": "establishment_uk", "op": "is_true"},
+              {"fact": "offers_services_uk", "op": "is_true"},
+              {"fact": "data_subjects_geo", "op": "includes_any", "value": ["UK"]}
+            ]}
+          ]},
+          "grade": "applies",
+          "rationale": "Processing personal data with a UK establishment, or targeting/monitoring individuals in the UK, engages the UK GDPR / DPA 2018 (and PECR for electronic communications). Track DUAA 2025 changes as they commence."
+        }
+      ],
+      "obligations": [
+        "UK GDPR / DPA 2018 core obligations (analogous to EU GDPR).",
+        "PECR obligations for electronic marketing/communications.",
+        "Monitor phased DUAA 2025 amendments."
+      ],
+      "readiness_dimensions": [
+        {"id": "data_protection_governance", "name": "Data-protection governance", "weight": 1.0}
+      ],
+      "sources": [
+        {"ref": "Data (Use and Access) Act 2025"},
+        {"ref": "Addleshaw Goddard — UK/EU data & cyber timeline", "url": "https://www.addleshawgoddard.com/en/insights/insights-briefings/2026/technology/data-cyber-legislation-recent-forthcoming-timeline/", "retrieved": "2026-07-21"}
+      ]
+    },
+
+    {
+      "id": "data_transfer_jurisdiction",
+      "name": "Cross-border transfer & jurisdictional-exposure (residency != sovereignty)",
+      "legal_reference": "GDPR Chapter V (Schrems II, SCCs, TIAs); foreign-access statutes incl. US CLOUD Act; EU Data Act Art. on unlawful third-country access",
+      "jurisdiction": "UK/EU",
+      "sector_scope": "cross_sector",
+      "status": "cross_cutting_risk_area",
+      "status_note": "This is the sovereignty crux, not a single statute. It probes exposure that persists even when residency requirements are met on paper.",
+      "confidence": "high",
+      "weight": 0.15,
+      "applicability_rules": [
+        {
+          "when": {"all": [
+            {"fact": "processes_personal_data", "op": "is_true"},
+            {"fact": "data_subjects_geo", "op": "includes_any", "value": ["EU", "UK"]},
+            {"any": [
+              {"fact": "uses_us_hyperscaler", "op": "is_true"},
+              {"fact": "cloud_provider_hq", "op": "includes_any", "value": ["US"]}
+            ]}
+          ]},
+          "grade": "advisory",
+          "rationale": "Residency is not sovereignty. A US-headquartered provider can be reachable under the US CLOUD Act regardless of where data physically sits (incl. EU/UK regions). Assess jurisdictional exposure and whether a genuine sovereign/EU-boundary control set is in place — not merely data location."
+        },
+        {
+          "when": {"all": [
+            {"fact": "data_subjects_geo", "op": "includes_any", "value": ["EU"]},
+            {"fact": "data_hosting_location", "op": "includes_any", "value": ["US", "Other"]}
+          ]},
+          "grade": "needs_legal_review",
+          "rationale": "Personal data of EU subjects hosted outside the EEA in a non-adequate jurisdiction requires a valid Chapter V transfer mechanism (adequacy / SCCs + Transfer Impact Assessment). Note: hosting in the UK is covered by the EU->UK adequacy decision and is not, on its own, a transfer violation."
+        }
+      ],
+      "obligations": [
+        "Valid transfer mechanism for personal data leaving the EEA/UK (adequacy, SCCs, BCRs).",
+        "Transfer Impact Assessments where required.",
+        "Demonstrable control against foreign-government access, not just data localisation."
+      ],
+      "readiness_dimensions": [
+        {"id": "jurisdiction_control", "name": "Foreign-access / jurisdictional control", "weight": 0.6},
+        {"id": "transfer_mechanisms", "name": "Transfer mechanisms & TIAs", "weight": 0.4}
+      ],
+      "sources": [
+        {"ref": "GDPR Chapter V; US CLOUD Act (2018)"},
+        {"ref": "Kiteworks — residency vs sovereignty", "url": "https://www.kiteworks.com/gdpr-compliance/eu-data-sovereignty-gdpr-compliance/", "retrieved": "2026-07-21"}
+      ]
+    },
+
+    {
+      "id": "eu_ai_act",
+      "name": "EU AI Act",
+      "legal_reference": "Regulation (EU) 2024/1689",
+      "jurisdiction": "EU",
+      "sector_scope": "cross_sector",
+      "status": "phasing",
+      "status_note": "Full application 2 August 2026; high-risk (Annex III) obligations apply from that point. GPAI obligations applied from Aug 2025.",
+      "confidence": "high",
+      "weight": 0.10,
+      "applicability_rules": [
+        {
+          "when": {"all": [
+            {"fact": "uses_high_risk_ai", "op": "is_true"},
+            {"any": [
+              {"fact": "establishment_eu", "op": "is_true"},
+              {"fact": "offers_services_eu", "op": "is_true"}
+            ]}
+          ]},
+          "grade": "applies",
+          "rationale": "AI used for creditworthiness/credit scoring, or insurance risk assessment/pricing, is high-risk under Annex III — triggering risk management, data governance, transparency, human oversight and conformity obligations. Penalties reach up to 7% of global turnover."
+        },
+        {
+          "when": {"all": [
+            {"fact": "uses_other_ai", "op": "is_true"},
+            {"any": [
+              {"fact": "establishment_eu", "op": "is_true"},
+              {"fact": "offers_services_eu", "op": "is_true"}
+            ]}
+          ]},
+          "grade": "advisory",
+          "rationale": "Non-high-risk AI may still carry transparency and/or GPAI-related obligations depending on the system. Confirm classification."
+        }
+      ],
+      "obligations": [
+        "(High-risk) Risk-management system, data & data-governance controls, technical documentation, logging, transparency, human oversight, accuracy/robustness, and conformity assessment."
+      ],
+      "readiness_dimensions": [
+        {"id": "ai_data_governance", "name": "AI data governance & provenance", "weight": 0.5},
+        {"id": "ai_risk_controls", "name": "High-risk AI risk controls & oversight", "weight": 0.5}
+      ],
+      "sources": [{"ref": "Regulation (EU) 2024/1689, Annex III"}]
+    },
+
+    {
+      "id": "eu_data_act",
+      "name": "EU Data Act",
+      "legal_reference": "Regulation (EU) 2023/2854",
+      "jurisdiction": "EU",
+      "sector_scope": "cross_sector",
+      "status": "in_force",
+      "status_note": "Applicable from 12 September 2025. Cloud switching/portability and safeguards against unlawful third-country access to non-personal data.",
+      "confidence": "medium",
+      "weight": 0.05,
+      "applicability_rules": [
+        {
+          "when": {"all": [
+            {"any": [
+              {"fact": "establishment_eu", "op": "is_true"},
+              {"fact": "offers_services_eu", "op": "is_true"}
+            ]},
+            {"any": [
+              {"fact": "uses_us_hyperscaler", "op": "is_true"},
+              {"fact": "cloud_provider_hq", "op": "includes_any", "value": ["US", "EU", "UK", "Other"]}
+            ]}
+          ]},
+          "grade": "likely_confirm",
+          "rationale": "Users and providers of cloud/data-processing services with an EU nexus fall within the Data Act's switching/portability duties and its prohibition on unlawful third-country access to non-personal/industrial data held in the EU. Confirm which obligations bind you as customer vs provider."
+        }
+      ],
+      "obligations": [
+        "Cloud switching and portability facilitation (removal of switching charges phasing in).",
+        "Safeguards against unlawful third-country governmental access to non-personal data held in the EU.",
+        "Contractual fairness for data access/sharing."
+      ],
+      "readiness_dimensions": [
+        {"id": "portability_switching", "name": "Cloud portability & switching readiness", "weight": 1.0}
+      ],
+      "sources": [{"ref": "Regulation (EU) 2023/2854"}]
+    }
+  ],
+
+  "questions": [
+    {"id": "Q_ROLE", "category": "entity_identity", "tier": 1, "sector": "common", "answer_type": "single_select", "text": "Which best describes your organisation's role?", "options": [{"label": "A regulated financial entity (bank, insurer, payment firm, fund, etc.)", "fact_value": {"entity_role": "financial_entity"}}, {"label": "An ICT/technology provider serving financial firms", "fact_value": {"entity_role": "ict_provider_to_finance"}}, {"label": "Neither / other", "fact_value": {"entity_role": "other"}}], "writes": ["entity_role"], "maps_to_triggers": ["dora", "uk_opres", "uk_ctp", "nis2_residual"]},
+
+    {"id": "Q_FINTYPE", "category": "entity_identity", "tier": 1, "sector": "finance", "answer_type": "single_select", "shown_if": {"fact": "entity_role", "op": "eq", "value": "financial_entity"}, "text": "Which type of financial entity are you?", "options": [{"label": "Bank / credit institution", "fact_value": {"fin_entity_type": "credit_institution"}}, {"label": "Investment firm", "fact_value": {"fin_entity_type": "investment_firm"}}, {"label": "Payment institution", "fact_value": {"fin_entity_type": "payment_institution"}}, {"label": "E-money institution", "fact_value": {"fin_entity_type": "emi"}}, {"label": "Insurer / reinsurer / intermediary", "fact_value": {"fin_entity_type": "insurer"}}, {"label": "Pension fund (IORP)", "fact_value": {"fin_entity_type": "iorp_pension"}}, {"label": "Crypto-asset service provider", "fact_value": {"fin_entity_type": "casp_crypto"}}, {"label": "Fund manager (AIFM / UCITS)", "fact_value": {"fin_entity_type": "aifm"}}, {"label": "Market infrastructure (CCP / CSD / trading venue)", "fact_value": {"fin_entity_type": "ccp"}}, {"label": "Other financial entity", "fact_value": {"fin_entity_type": "other_financial"}}], "writes": ["fin_entity_type"], "maps_to_triggers": ["dora"]},
+
+    {"id": "Q_EST", "category": "jurisdictional_footprint", "tier": 1, "sector": "common", "answer_type": "multi_select", "text": "Where is your organisation established or does it have operations?", "options": [{"label": "One or more EU member states", "fact_value": {"establishment_eu": true}}, {"label": "United Kingdom", "fact_value": {"establishment_uk": true}}, {"label": "United States", "fact_value": {}}, {"label": "Other", "fact_value": {}}], "writes": ["establishment_eu", "establishment_uk"], "maps_to_triggers": ["dora", "uk_opres", "eu_gdpr", "uk_gdpr", "eu_ai_act", "eu_data_act", "nis2_residual"]},
+
+    {"id": "Q_SERVE", "category": "jurisdictional_footprint", "tier": 1, "sector": "common", "answer_type": "multi_select", "text": "Do you offer products/services to, or monitor the behaviour of, individuals located in the EU or UK?", "options": [{"label": "Individuals in the EU", "fact_value": {"offers_services_eu": true}}, {"label": "Individuals in the UK", "fact_value": {"offers_services_uk": true}}, {"label": "Neither", "fact_value": {}}], "writes": ["offers_services_eu", "offers_services_uk"], "maps_to_triggers": ["eu_gdpr", "uk_gdpr", "dora"]},
+
+    {"id": "Q_MSTATES", "category": "jurisdictional_footprint", "tier": 1, "sector": "common", "answer_type": "range", "shown_if": {"fact": "establishment_eu", "op": "is_true"}, "text": "In how many EU member states do you operate?", "range": {"min": 0, "max": 27, "step": 1}, "writes": ["eu_member_state_count"], "maps_to_triggers": ["nis2_residual"], "note": "Feeds an advisory on NIS2 transposition variance across member states."},
+
+    {"id": "Q_PD", "category": "data_profile", "tier": 1, "sector": "common", "answer_type": "boolean", "text": "Does your organisation process personal data?", "writes": ["processes_personal_data"], "maps_to_triggers": ["eu_gdpr", "uk_gdpr", "data_transfer_jurisdiction"]},
+
+    {"id": "Q_DSGEO", "category": "data_profile", "tier": 1, "sector": "common", "answer_type": "multi_select", "allow_not_applicable": true, "shown_if": {"fact": "processes_personal_data", "op": "is_true"}, "text": "Where are the individuals whose data you process located?", "options": [{"label": "EU", "fact_value": {"data_subjects_geo": ["EU"]}}, {"label": "UK", "fact_value": {"data_subjects_geo": ["UK"]}}, {"label": "US", "fact_value": {"data_subjects_geo": ["US"]}}, {"label": "Other", "fact_value": {"data_subjects_geo": ["Other"]}}], "writes": ["data_subjects_geo"], "maps_to_triggers": ["eu_gdpr", "uk_gdpr", "data_transfer_jurisdiction"]},
+
+    {"id": "Q_SCD", "category": "data_profile", "tier": 1, "sector": "common", "answer_type": "boolean", "shown_if": {"fact": "processes_personal_data", "op": "is_true"}, "text": "Do you process special-category or highly sensitive data (e.g., biometric, health, detailed financial)?", "writes": ["special_category_data"], "maps_to_triggers": ["eu_gdpr"]},
+
+    {"id": "Q_VOL", "category": "data_profile", "tier": 1, "sector": "common", "answer_type": "single_select", "allow_not_applicable": true, "shown_if": {"fact": "processes_personal_data", "op": "is_true"}, "text": "Approximately how many personal-data records do you hold?", "options": [{"label": "Under 10,000", "fact_value": {"data_volume_band": "under_10k"}}, {"label": "10k – 1m", "fact_value": {"data_volume_band": "10k_1m"}}, {"label": "1m – 10m", "fact_value": {"data_volume_band": "1m_10m"}}, {"label": "Over 10m", "fact_value": {"data_volume_band": "over_10m"}}], "writes": ["data_volume_band"], "maps_to_triggers": [], "note": "Risk weighting only — does not by itself change applicability."},
+
+    {"id": "Q_HOSTLOC", "category": "hosting_and_cloud", "tier": 1, "sector": "common", "answer_type": "multi_select", "text": "Where is your data physically stored and processed?", "options": [{"label": "EU", "fact_value": {"data_hosting_location": ["EU"]}}, {"label": "UK", "fact_value": {"data_hosting_location": ["UK"]}}, {"label": "US", "fact_value": {"data_hosting_location": ["US"]}}, {"label": "Other", "fact_value": {"data_hosting_location": ["Other"]}}], "writes": ["data_hosting_location"], "maps_to_triggers": ["data_transfer_jurisdiction"]},
+
+    {"id": "Q_CLOUDHQ", "category": "hosting_and_cloud", "tier": 1, "sector": "common", "answer_type": "multi_select", "text": "What is the headquarters jurisdiction of your primary cloud/hosting providers?", "options": [{"label": "US-headquartered", "fact_value": {"cloud_provider_hq": ["US"]}}, {"label": "EU-headquartered", "fact_value": {"cloud_provider_hq": ["EU"]}}, {"label": "UK-headquartered", "fact_value": {"cloud_provider_hq": ["UK"]}}, {"label": "Other", "fact_value": {"cloud_provider_hq": ["Other"]}}], "writes": ["cloud_provider_hq"], "maps_to_triggers": ["data_transfer_jurisdiction", "eu_data_act"], "note": "The jurisdictional-exposure key. Provider HQ, not data location, drives foreign-access risk."},
+
+    {"id": "Q_HYPER", "category": "hosting_and_cloud", "tier": 1, "sector": "common", "answer_type": "boolean", "text": "Do you rely on a US-headquartered hyperscaler (AWS, Microsoft Azure, Google Cloud) for material workloads?", "writes": ["uses_us_hyperscaler"], "maps_to_triggers": ["data_transfer_jurisdiction", "eu_data_act", "dora"]},
+
+    {"id": "Q_SOVOFFER", "category": "hosting_and_cloud", "tier": 1, "sector": "common", "answer_type": "single_select", "allow_not_applicable": true, "shown_if": {"fact": "uses_us_hyperscaler", "op": "is_true"}, "text": "Are those workloads on a sovereign / EU-boundary offering with contractual and operational controls against foreign access?", "options": [{"label": "Yes — sovereign offering with controls", "fact_value": {"sovereign_offering_status": "yes"}, "score": 100}, {"label": "Partially", "fact_value": {"sovereign_offering_status": "partial"}, "score": 50}, {"label": "No — standard commercial region", "fact_value": {"sovereign_offering_status": "no"}, "score": 0}, {"label": "Don't know", "fact_value": {"sovereign_offering_status": "unknown"}, "score": 0}], "writes": ["sovereign_offering_status"], "maps_to_triggers": ["data_transfer_jurisdiction"], "readiness": {"regime": "data_transfer_jurisdiction", "dimension": "jurisdiction_control"}},
+
+    {"id": "Q_SIZE", "category": "scale", "tier": 1, "sector": "common", "answer_type": "single_select", "text": "What is your organisation's size?", "options": [{"label": "Micro (<10 staff, ≤ €2m)", "fact_value": {"company_size": "micro"}}, {"label": "Small (<50 staff, ≤ €10m)", "fact_value": {"company_size": "small"}}, {"label": "Medium (<250 staff, ≤ €50m)", "fact_value": {"company_size": "medium"}}, {"label": "Large (≥250 staff or > €50m)", "fact_value": {"company_size": "large"}}], "writes": ["company_size"], "maps_to_triggers": ["dora", "nis2_residual"], "note": "Drives proportionality (DORA simplified framework for some entities; NIS2 size thresholds)."},
+
+    {"id": "Q_AI", "category": "technology_use", "tier": 1, "sector": "finance", "answer_type": "multi_select", "text": "Do you use AI or automated decision systems for any of the following?", "options": [{"label": "Creditworthiness / credit scoring", "fact_value": {"uses_high_risk_ai": true}}, {"label": "Insurance risk assessment or pricing", "fact_value": {"uses_high_risk_ai": true}}, {"label": "Fraud detection or operational automation", "fact_value": {"uses_other_ai": true}}, {"label": "None of these", "fact_value": {}}], "writes": ["uses_high_risk_ai", "uses_other_ai"], "maps_to_triggers": ["eu_ai_act"]},
+
+    {"id": "Q_CTP", "category": "third_party_dependency", "tier": 1, "sector": "finance", "answer_type": "single_select", "text": "Are you, or do you depend on, a provider designated (or likely to be designated) a Critical Third Party by UK regulators or a Critical ICT Third-Party Provider under DORA (e.g., a major cloud provider)?", "options": [{"label": "Yes", "fact_value": {"is_or_uses_designated_ctp": "yes"}}, {"label": "No", "fact_value": {"is_or_uses_designated_ctp": "no"}}, {"label": "Don't know", "fact_value": {"is_or_uses_designated_ctp": "unknown"}}], "writes": ["is_or_uses_designated_ctp"], "maps_to_triggers": ["uk_ctp", "dora"]},
+
+    {"id": "Q_CONC", "category": "third_party_dependency", "tier": 1, "sector": "finance", "answer_type": "boolean", "text": "Is a single ICT provider responsible for a critical or important function with no ready substitute?", "writes": ["ict_concentration_risk"], "maps_to_triggers": ["dora"], "readiness": {"regime": "dora", "dimension": "third_party_risk"}},
+
+    {"id": "QR_GOV", "category": "resilience_posture", "tier": 1, "sector": "finance", "answer_type": "rating_1_5", "text": "How mature is board-level ownership of ICT / operational-resilience risk?", "writes": [], "readiness": {"regime": "dora", "dimension": "governance"}},
+
+    {"id": "QR_INC", "category": "resilience_posture", "tier": 1, "sector": "finance", "answer_type": "rating_1_5", "text": "How ready is your ICT-incident detection and regulatory-reporting capability (e.g., ability to report a major incident within hours)?", "writes": [], "readiness": {"regime": "dora", "dimension": "incident_reporting"}},
+
+    {"id": "QR_TEST", "category": "resilience_posture", "tier": 1, "sector": "finance", "answer_type": "rating_1_5", "text": "How regularly do you conduct resilience / scenario testing, including threat-led penetration testing?", "writes": [], "readiness": {"regime": "dora", "dimension": "resilience_testing"}},
+
+    {"id": "QR_TPR", "category": "resilience_posture", "tier": 1, "sector": "finance", "answer_type": "rating_1_5", "text": "How complete is your register of ICT third-party arrangements and your exit / substitutability planning?", "writes": [], "readiness": {"regime": "dora", "dimension": "third_party_risk"}},
+
+    {"id": "QR_IBS", "category": "resilience_posture", "tier": 1, "sector": "finance", "answer_type": "single_select", "allow_not_applicable": true, "shown_if": {"fact": "establishment_uk", "op": "is_true"}, "text": "Have you identified important business services and set impact tolerances (UK operational resilience)?", "options": [{"label": "Fully", "fact_value": {}, "score": 100}, {"label": "Partially", "fact_value": {}, "score": 50}, {"label": "Not yet", "fact_value": {}, "score": 0}], "writes": [], "readiness": {"regime": "uk_opres", "dimension": "important_business_services"}},
+
+    {"id": "QR_SOV", "category": "resilience_posture", "tier": 1, "sector": "common", "answer_type": "rating_1_5", "text": "How well can you evidence protection of data from foreign-government access — beyond physical residency?", "writes": [], "readiness": {"regime": "data_transfer_jurisdiction", "dimension": "jurisdiction_control"}},
+
+    {"id": "QR_TRANSFER", "category": "resilience_posture", "tier": 1, "sector": "common", "answer_type": "single_select", "allow_not_applicable": true, "text": "Do you have transfer mechanisms and Transfer Impact Assessments (TIAs) in place for cross-border data flows?", "options": [{"label": "Yes, documented", "fact_value": {}, "score": 100}, {"label": "Partial", "fact_value": {}, "score": 50}, {"label": "No", "fact_value": {}, "score": 0}], "writes": [], "readiness": {"regime": "data_transfer_jurisdiction", "dimension": "transfer_mechanisms"}},
+
+    {"id": "Q2_PRIORITY", "category": "governance_posture", "tier": 2, "sector": "common", "answer_type": "drag_order", "text": "Rank these sovereignty risk domains by level of concern for your organisation (most concerning first):", "options": ["Data residency", "Foreign-government access", "ICT concentration / resilience", "Regulatory reporting", "Supply-chain oversight"], "writes": [], "note": "Facilitated. Shapes roadmap emphasis; not a scoring input."},
+
+    {"id": "Q2_CONTEXT", "category": "governance_posture", "tier": 2, "sector": "common", "answer_type": "open_text", "text": "Briefly note any known regulatory findings, audit gaps, or board-level concerns relating to digital sovereignty.", "writes": [], "note": "One of only two open-text fields; Tier 2 only."},
+
+    {"id": "Q2_EXIT", "category": "governance_posture", "tier": 2, "sector": "finance", "answer_type": "open_text", "shown_if": {"fact": "ict_concentration_risk", "op": "is_true"}, "text": "Describe the exit strategy for your most critical ICT provider.", "writes": [], "readiness": {"regime": "dora", "dimension": "exit_strategy"}, "note": "Facilitated evidence probe."}
+  ],
+
+  "open_items_for_ashutosh": [
+    "Confirm the three intermediate maturity-stage labels (Aware / Structured / Managed are placeholders) against your existing Digital Sovereignty deck.",
+    "Confirm regime weights in scoring — current weights favour DORA (0.30), UK operational resilience (0.20), GDPR + transfer/jurisdiction (0.30 combined) as the sharpest-teeth items for finance.",
+    "Legal validation flagged where grade is 'needs_legal_review' or 'partial' (notably NIS2 residual scope by member state, and EEA transfer conclusions).",
+    "CTPP list (19 designated under DORA as of Nov 2025) and UK CTP designations (first tranche July 2026) should be maintained as a lookup so Q_CTP can be pre-filled from a provider name in a later iteration.",
+    "Decide whether 'insurer/reinsurer/intermediary' and the market-infrastructure cluster should be split into distinct fin_entity_type options for finer DORA proportionality."
+  ]
+}
