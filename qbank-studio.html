@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Question Bank Studio — LTIMindtree Accelerator Platform</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --ground:#0A1826;--panel:#0F2438;--panel2:#12304A;--line:#22415C;
+  --ink:#E8EFF6;--mut:#93A8BD;--mutd:#6E869C;
+  --navy:#003865;--red:#F15F53;--amber:#FBAE40;--steel:#57B6C2;--lilac:#9B82D0;--blue:#58A6E0;--green:#3FB98A;
+}
+*{box-sizing:border-box;}html,body{margin:0;padding:0;height:100%;}
+body{font-family:'IBM Plex Sans',system-ui,sans-serif;color:var(--ink);background:var(--ground);line-height:1.5;}
+.mono{font-family:'IBM Plex Mono',monospace;}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--steel);}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif;letter-spacing:-.01em;margin:0;}
+
+/* shell */
+.bar{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+ padding:11px clamp(14px,2.5vw,26px);border-bottom:1px solid var(--line);background:rgba(10,24,38,.9);position:sticky;top:0;z-index:20;}
+.brand{display:flex;align-items:center;gap:10px;cursor:pointer;}
+.mark{width:28px;height:28px;border-radius:6px;background:conic-gradient(from 210deg,var(--red),var(--amber),var(--steel),var(--red));box-shadow:inset 0 0 0 3px var(--ground);flex:none;}
+.brand img{height:28px;max-width:140px;object-fit:contain;}
+.bw b{font-family:'Space Grotesk',sans-serif;font-size:14.5px;font-weight:600;display:block;line-height:1.2;}
+.bw span{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;color:var(--mutd);text-transform:uppercase;}
+.ph{font-family:'IBM Plex Mono',monospace;font-size:8px;letter-spacing:.1em;color:var(--amber);border:1px solid var(--line);border-radius:4px;padding:1px 4px;margin-left:6px;}
+.tabs{display:flex;gap:4px;}
+.tab{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--mut);background:none;border:1px solid transparent;padding:7px 12px;border-radius:8px;cursor:pointer;}
+.tab:hover{color:var(--ink);}.tab.on{background:var(--panel);color:var(--ink);border-color:var(--line);}
+.barmeta{display:flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mutd);}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green);}
+.dot.warn{background:var(--amber);}.dot.err{background:var(--red);}
+
+.btn{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:13px;padding:9px 15px;border-radius:9px;cursor:pointer;border:1px solid transparent;transition:background .12s,border-color .12s;}
+.btn.primary{background:var(--red);color:#160404;}.btn.primary:hover{background:#ff6f63;}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line);}.btn.ghost:hover{border-color:var(--steel);}
+.btn.sm{font-size:11.5px;padding:6px 11px;}
+.btn.danger{background:transparent;color:var(--red);border:1px solid rgba(241,95,83,.4);}
+.btn.danger:hover{background:rgba(241,95,83,.1);}
+.btn:disabled{opacity:.4;cursor:not-allowed;}
+
+.wrap{max-width:1280px;margin:0 auto;padding:20px clamp(14px,2.5vw,26px) 60px;}
+.split{display:grid;grid-template-columns:330px 1fr;gap:18px;align-items:start;}
+.card{border:1px solid var(--line);border-radius:13px;background:var(--panel);padding:16px;}
+.card h3{font-size:14.5px;margin-bottom:10px;}
+.hint{color:var(--mut);font-size:12.5px;margin:0 0 12px;}
+.field{margin-bottom:13px;}
+.field label{display:block;font-size:11.5px;font-weight:600;margin-bottom:5px;color:var(--mut);}
+.inp,select,textarea{width:100%;padding:9px 11px;border-radius:8px;border:1px solid var(--line);background:var(--ground);color:var(--ink);font-family:inherit;font-size:13.5px;}
+.inp:focus,select:focus,textarea:focus{outline:none;border-color:var(--steel);}
+textarea{resize:vertical;min-height:64px;}
+.inp.mono,textarea.mono{font-family:'IBM Plex Mono',monospace;font-size:12px;}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+.chk{display:flex;align-items:center;gap:8px;font-size:13px;cursor:pointer;padding:7px 0;}
+.chk input{accent-color:var(--red);width:15px;height:15px;}
+
+/* question list */
+.qlist{display:flex;flex-direction:column;gap:5px;max-height:66vh;overflow-y:auto;padding-right:4px;}
+.secgroup{margin-bottom:10px;}
+.sechead{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:6px 8px;border-radius:7px;background:var(--ground);margin-bottom:4px;}
+.sechead .sn{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--steel);letter-spacing:.08em;}
+.sechead .sl{flex:1;font-size:12.5px;font-weight:600;}
+.qrow{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;border:1px solid transparent;background:var(--ground);cursor:pointer;font-size:12.5px;}
+.qrow:hover{border-color:var(--line);}
+.qrow.sel{border-color:var(--red);background:rgba(241,95,83,.09);}
+.qid{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--mutd);min-width:36px;}
+.qt{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.qbadge{font-family:'IBM Plex Mono',monospace;font-size:8.5px;padding:2px 5px;border-radius:4px;border:1px solid var(--line);color:var(--mutd);white-space:nowrap;}
+.qbadge.crit{color:var(--red);border-color:rgba(241,95,83,.4);}
+.qbadge.err{color:var(--red);border-color:var(--red);background:rgba(241,95,83,.12);}
+.qmove{display:flex;flex-direction:column;gap:1px;}
+.qmove button{width:18px;height:14px;border:none;background:none;color:var(--mutd);cursor:pointer;font-size:8px;padding:0;line-height:1;}
+.qmove button:hover{color:var(--ink);}
+
+/* option editor */
+.optrow{display:grid;grid-template-columns:1fr 70px auto;gap:8px;align-items:center;margin-bottom:7px;}
+.optrow.nosc{grid-template-columns:1fr auto;}
+.iconbtn{width:28px;height:28px;border-radius:7px;border:1px solid var(--line);background:var(--ground);color:var(--mut);cursor:pointer;font-size:12px;display:flex;align-items:center;justify-content:center;}
+.iconbtn:hover{border-color:var(--red);color:var(--red);}
+.pill{font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 7px;border-radius:999px;border:1px solid var(--line);color:var(--mut);}
+.pill.ok{color:var(--green);border-color:rgba(63,185,138,.4);}
+.pill.warn{color:var(--amber);border-color:rgba(251,174,64,.4);}
+.pill.err{color:var(--red);border-color:rgba(241,95,83,.4);}
+
+.stat{display:flex;gap:20px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mut);}
+.stat b{color:var(--ink);font-size:18px;font-family:'Space Grotesk',sans-serif;display:block;}
+.btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+
+.vitem{display:flex;gap:10px;padding:9px 11px;border-radius:8px;background:var(--ground);margin-bottom:6px;font-size:12.5px;align-items:flex-start;}
+.vsev{font-family:'IBM Plex Mono',monospace;font-size:9px;padding:2px 6px;border-radius:4px;flex:none;margin-top:1px;}
+.vsev.err{background:rgba(241,95,83,.15);color:var(--red);}
+.vsev.warn{background:rgba(251,174,64,.15);color:var(--amber);}
+.vsev.info{background:rgba(87,182,194,.15);color:var(--steel);}
+.vmsg{flex:1;} .vwhere{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--mutd);margin-top:2px;}
+
+table.tbl{width:100%;border-collapse:collapse;font-size:12.5px;}
+table.tbl th,table.tbl td{text-align:left;padding:8px 9px;border-bottom:1px solid var(--line);vertical-align:top;}
+table.tbl th{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--mutd);}
+
+.prof{border:1px solid var(--line);border-radius:11px;padding:14px;background:var(--ground);cursor:pointer;margin-bottom:9px;}
+.prof:hover{border-color:var(--steel);}
+.prof.sel{border-color:var(--red);background:rgba(241,95,83,.07);}
+.profname{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:14px;margin-bottom:3px;}
+.profdesc{color:var(--mut);font-size:12px;line-height:1.45;}
+.proftools{font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--mutd);margin-top:7px;}
+
+.dropzone{border:1px dashed var(--line);border-radius:11px;padding:26px;text-align:center;color:var(--mut);font-size:13px;background:var(--ground);}
+.dropzone.hot{border-color:var(--steel);background:rgba(87,182,194,.06);}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--panel2);border:1px solid var(--steel);padding:10px 17px;border-radius:9px;font-size:13px;z-index:99;box-shadow:0 8px 30px rgba(0,0,0,.45);max-width:80vw;}
+.toast.err{border-color:var(--red);}
+.empty{color:var(--mutd);font-size:13px;text-align:center;padding:36px 16px;}
+code{font-family:'IBM Plex Mono',monospace;font-size:11.5px;background:var(--ground);padding:1px 5px;border-radius:4px;color:var(--steel);}
+
+@media(max-width:900px){.split{grid-template-columns:1fr;}.row2,.row3{grid-template-columns:1fr;}}
+:focus-visible{outline:2px solid var(--steel);outline-offset:2px;}
+</style>
+</head>
+<body>
+<header class="bar">
+  <div class="brand" id="brand"></div>
+  <div class="tabs" id="tabs">
+    <button class="tab" data-t="questions">Questions</button>
+    <button class="tab" data-t="sections">Sections</button>
+    <button class="tab" data-t="scoring">Scoring</button>
+    <button class="tab" data-t="validate">Validate</button>
+    <button class="tab" data-t="io">Import / Export</button>
+    <button class="tab" data-t="bake">Publish</button>
+  </div>
+  <div class="barmeta"><span class="dot" id="hdot"></span><span id="hmeta"></span></div>
+</header>
+<div id="app"></div>
+<input type="file" id="fLogo" accept="image/*" style="display:none"/>
+<input type="file" id="fImport" accept=".json,application/json" style="display:none"/>
+<input type="file" id="fHtml" accept=".html,text/html" style="display:none"/>
+
+<script>
+/* =====================================================================
+   LTM QUESTION BANK STUDIO
+   Common core schema + per-tool profiles.
+   The Studio holds banks in the common schema and exports either the
+   common format or each accelerator's NATIVE format — so existing tools
+   need no changes to benefit.
+   ===================================================================== */
+
+const SCHEMA = "ltm-qbank/1.0";
+
+/* ---------- answer type library (shared across all accelerators) ---------- */
+const TYPES = {
+  single_select:   {label:"Single select",       opts:"scored",  desc:"One choice. Each option carries a score."},
+  multi_select:    {label:"Multi select",        opts:"scored",  desc:"Several choices. Scores sum, capped at 100. Supports an exclusive 'none' option."},
+  boolean:         {label:"Yes / No",            opts:"none",    desc:"Two-state. Yes=100, No=0."},
+  boolean_dk:      {label:"Yes / No / Don't know",opts:"none",   desc:"Three-state. 'Don't know' scores worst-case and flags a blind spot."},
+  rating_1_5:      {label:"Rating 1–5",          opts:"labels",  desc:"Five-point scale with a label per point."},
+  slider_percent:  {label:"Percentage slider",   opts:"slider",  desc:"0–100 style slider. Can be inverted where lower is better."},
+  slider_signed:   {label:"Signed slider",       opts:"slider",  desc:"Range that crosses zero, e.g. −25% to +200% growth."},
+  slider_currency: {label:"Currency slider",     opts:"slider",  desc:"Logarithmic money slider for spend bands."},
+  range:           {label:"Numeric range",       opts:"slider",  desc:"Plain numeric range, e.g. count of member states."},
+  card_select:     {label:"Card select",         opts:"cards",   desc:"Visual single select with an icon per card."},
+  allocation_100:  {label:"100-point allocation",opts:"buckets", desc:"Distribute 100 points across named buckets."},
+  drag_order:      {label:"Drag to rank",        opts:"plain",   desc:"Ordered list. Can score against an ideal order, or stay unscored."},
+  open_text:       {label:"Open text",           opts:"none",    desc:"Free text. Never scored — captured as evidence."}
+};
+
+/* ---------- tool profiles ---------- */
+const PROFILES = {
+  signal_scoring:{
+    name:"Signal scoring",
+    desc:"Questions feed weighted signals which aggregate into an index and a derived value model.",
+    tools:["FinOps Value Case"],
+    nativeId:"value_case",
+    ext:[
+      {key:"signals",label:"Signals fed",kind:"signalList",help:"Which signals this question contributes to, and at what weight."},
+      {key:"dkBlind",label:"Blind-spot text",kind:"text",help:"Shown in the report when the answer is \"don't know\"."}
+    ],
+    scoringBlocks:["signals","verdictBands","serviceAreas"]
+  },
+  staged_gating:{
+    name:"Staged gating",
+    desc:"Questions belong to sequential stages. A stage passes only when the weighted score clears a threshold and every critical question meets its minimum.",
+    tools:["FinOps Maturity Screen"],
+    nativeId:"finops_maturity",
+    ext:[
+      {key:"stage",label:"Stage",kind:"stageRef",help:"Which maturity stage this question belongs to."},
+      {key:"critical",label:"Critical",kind:"bool",help:"Blocks stage progression until met, regardless of overall score."},
+      {key:"weight",label:"Weight",kind:"number",help:"Relative weight within the stage."},
+      {key:"domain",label:"Domain",kind:"text",help:"Capability domain for the breakdown chart."}
+    ],
+    scoringBlocks:["stages","domains"]
+  },
+  rules_engine:{
+    name:"Rules engine",
+    desc:"Answers write facts. Facts trigger graded findings against a regime or rule register. Readiness scored per dimension.",
+    tools:["Sovereign Screen"],
+    nativeId:"sovereign",
+    ext:[
+      {key:"sector",label:"Sector",kind:"text",help:"common, or a vertical id such as finance or health."},
+      {key:"writes",label:"Writes facts",kind:"list",help:"Fact keys this answer sets directly (boolean and range types)."},
+      {key:"readiness",label:"Readiness mapping",kind:"readinessList",help:"Regime and dimension this question scores against."}
+    ],
+    scoringBlocks:["regimes","facts"]
+  },
+  simple_survey:{
+    name:"Simple survey",
+    desc:"Weighted questions with no gating or fact model. The default for a new accelerator.",
+    tools:["(new tools)"],
+    nativeId:"common",
+    ext:[{key:"weight",label:"Weight",kind:"number",help:"Relative weight in the overall score."}],
+    scoringBlocks:[]
+  }
+};
+
+/* ---------- starter bank ---------- */
+function newBank(profile){
+  return {
+    $schema:SCHEMA,
+    meta:{id:"new-accelerator",name:"New Accelerator",profile:profile||"simple_survey",
+      version:"0.1.0",lastReviewed:new Date().toISOString().slice(0,10),
+      disclaimer:"Indicative assessment based on self-reported inputs."},
+    sections:[{id:"s1",n:"01",label:"First section",blurb:"What this section establishes."}],
+    questions:[],
+    scoring:{},
+    assets:{}
+  };
+}
+
+/* ---------- state ---------- */
+const S={bank:newBank("simple_survey"),tab:"questions",selQ:null,logo:null,
+  bakeHtml:"",bakeName:""};
+const $=s=>document.querySelector(s);
+const app=$("#app");
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
+function uid(p){let n=1;while(S.bank.questions.some(q=>q.id===p+n))n++;return p+n;}
+function prof(){return PROFILES[S.bank.meta.profile]||PROFILES.simple_survey;}
+function today(){return new Date().toISOString().slice(0,10);}
+let tT=null;
+function toast(m,err){let t=$(".toast");if(!t){t=document.createElement("div");document.body.appendChild(t);}
+  t.className="toast"+(err?" err":"");t.textContent=m;clearTimeout(tT);tT=setTimeout(()=>t.remove(),3400);}
+function dl(name,text,type){const b=new Blob([text],{type:type||"application/json"});const u=URL.createObjectURL(b);
+  const a=document.createElement("a");a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),900);}
+
+/* ---------- validation ---------- */
+function validate(){
+  const out=[],B=S.bank,P=prof();
+  const ids={};
+  B.questions.forEach(q=>{ids[q.id]=(ids[q.id]||0)+1;});
+  Object.keys(ids).forEach(id=>{if(ids[id]>1)out.push({sev:"err",msg:"Duplicate question id",where:id});});
+  const secIds=B.sections.map(s=>s.id);
+  B.questions.forEach(q=>{
+    if(!q.text||!q.text.trim())out.push({sev:"err",msg:"Question has no text",where:q.id});
+    if(!TYPES[q.type])out.push({sev:"err",msg:"Unknown answer type: "+q.type,where:q.id});
+    if(q.section&&!secIds.includes(q.section))out.push({sev:"err",msg:"Points at a section that does not exist ("+q.section+")",where:q.id});
+    const shape=TYPES[q.type]?TYPES[q.type].opts:null;
+    if(shape==="scored"){
+      if(!q.options||!q.options.length)out.push({sev:"err",msg:"Select question has no options",where:q.id});
+      else{
+        const unscored=q.options.filter(o=>typeof o.score!=="number").length;
+        if(unscored===q.options.length)out.push({sev:"warn",msg:"No option carries a score — this question cannot contribute to any result",where:q.id});
+        else if(unscored>0)out.push({sev:"warn",msg:unscored+" option(s) missing a score",where:q.id});
+        if(q.type==="single_select"&&q.options.length&&!q.options.some(o=>o.score>=90))
+          out.push({sev:"info",msg:"No option scores near 100 — the best available answer still loses points",where:q.id});
+      }
+    }
+    if(shape==="labels"&&(!q.labels||q.labels.length!==5))out.push({sev:"warn",msg:"Rating needs exactly 5 labels",where:q.id});
+    if(shape==="slider"&&(!q.slider||q.slider.min===undefined||q.slider.max===undefined))out.push({sev:"err",msg:"Slider has no min/max defined",where:q.id});
+    if(shape==="slider"&&q.slider&&q.slider.min>=q.slider.max)out.push({sev:"err",msg:"Slider min is not below max",where:q.id});
+    if(shape==="buckets"&&(!q.buckets||q.buckets.length<2))out.push({sev:"err",msg:"Allocation needs at least 2 buckets",where:q.id});
+    if(shape==="plain"&&(!q.options||q.options.length<2))out.push({sev:"err",msg:"Ranking needs at least 2 items",where:q.id});
+    if(q.shownIf&&q.shownIf.fact){
+      const writers=B.questions.filter(x=>(x.ext&&Array.isArray(x.ext.writes)&&x.ext.writes.includes(q.shownIf.fact))
+        ||(x.options||[]).some(o=>o.factValue&&Object.keys(o.factValue).includes(q.shownIf.fact)));
+      if(!writers.length)out.push({sev:"warn",msg:"Condition depends on fact \""+q.shownIf.fact+"\" that no question writes",where:q.id});
+    }
+    // profile-specific
+    if(P.nativeId==="value_case"){
+      const sg=q.ext&&q.ext.signals;
+      if(q.type!=="open_text"&&(!sg||!sg.length))out.push({sev:"info",msg:"Feeds no signal — will not affect the result",where:q.id});
+      if(sg)sg.forEach(s=>{if(!(B.scoring.signals||[]).some(x=>x.id===s.id))out.push({sev:"err",msg:"Feeds unknown signal \""+s.id+"\"",where:q.id});});
+    }
+    if(P.nativeId==="finops_maturity"){
+      const st=q.ext&&q.ext.stage;
+      if(!st)out.push({sev:"err",msg:"No stage assigned",where:q.id});
+      else if(!(B.scoring.stages||[]).some(x=>x.id===st))out.push({sev:"err",msg:"Points at unknown stage \""+st+"\"",where:q.id});
+    }
+  });
+  if(P.nativeId==="value_case"){
+    (B.scoring.signals||[]).forEach(sig=>{
+      const fed=B.questions.some(q=>q.ext&&(q.ext.signals||[]).some(s=>s.id===sig.id));
+      if(!fed)out.push({sev:"warn",msg:"Signal \""+sig.id+"\" has no question feeding it and will never score",where:"scoring"});
+    });
+  }
+  if(P.nativeId==="finops_maturity"){
+    (B.scoring.stages||[]).forEach(st=>{
+      const qs=B.questions.filter(q=>q.ext&&q.ext.stage===st.id);
+      if(!qs.length)out.push({sev:"warn",msg:"Stage \""+st.id+"\" has no questions",where:"scoring"});
+      else if(!qs.some(q=>q.ext.critical))out.push({sev:"info",msg:"Stage \""+st.id+"\" has no critical question — nothing gates progression",where:"scoring"});
+    });
+  }
+  if(!B.questions.length)out.push({sev:"warn",msg:"Bank has no questions yet",where:"bank"});
+  const order={err:0,warn:1,info:2};
+  out.sort((a,b)=>order[a.sev]-order[b.sev]);
+  return out;
+}
+
+/* ---------- render ---------- */
+function render(){
+  document.querySelectorAll(".tab").forEach(t=>t.classList.toggle("on",t.dataset.t===S.tab));
+  $("#brand").innerHTML=S.logo?'<img src="'+S.logo+'" alt="LTM"/>'
+    :'<span class="mark"></span><span class="bw"><b>Question Bank Studio</b><span>LTIMindtree Accelerator Platform</span></span><span class="ph">LOGO</span>';
+  const v=validate(),errs=v.filter(x=>x.sev==="err").length,warns=v.filter(x=>x.sev==="warn").length;
+  $("#hdot").className="dot"+(errs?" err":warns?" warn":"");
+  $("#hmeta").textContent=S.bank.questions.length+" questions · "+(errs?errs+" errors":warns?warns+" warnings":"valid");
+  const V={questions:vQuestions,sections:vSections,scoring:vScoring,validate:vValidate,io:vIO,bake:vBake};
+  app.innerHTML='<div class="wrap">'+(V[S.tab]||vQuestions)()+'</div>';
+}
+
+function vQuestions(){
+  const B=S.bank,P=prof();
+  let list="";
+  B.sections.forEach(sec=>{
+    const qs=B.questions.filter(q=>q.section===sec.id);
+    list+='<div class="secgroup"><div class="sechead"><span class="sn">'+esc(sec.n||"")+'</span><span class="sl">'+esc(sec.label)+'</span>'
+      +'<button class="btn ghost sm" data-a="addQ" data-sec="'+sec.id+'">+ Question</button></div>';
+    list+=qs.length?qs.map(q=>qRow(q)).join(""):'<div class="empty" style="padding:14px;font-size:12px">No questions yet</div>';
+    list+='</div>';
+  });
+  const orphan=B.questions.filter(q=>!B.sections.some(s=>s.id===q.section));
+  if(orphan.length)list+='<div class="secgroup"><div class="sechead"><span class="sn">!!</span><span class="sl" style="color:var(--red)">Unassigned</span></div>'+orphan.map(qRow).join("")+'</div>';
+
+  const q=B.questions.find(x=>x.id===S.selQ);
+  return '<div class="split"><div>'
+    +'<div class="card"><h3>'+esc(B.meta.name)+'</h3>'
+    +'<p class="hint">'+esc(P.name)+' profile · '+B.questions.length+' questions across '+B.sections.length+' sections</p>'
+    +'<div class="qlist">'+(list||'<div class="empty">No sections yet — add one first</div>')+'</div></div></div>'
+    +'<div>'+(q?qEditor(q):'<div class="card"><div class="empty">Select a question to edit, or add a new one.</div></div>')+'</div></div>';
+}
+function qRow(q){
+  const v=validate().filter(x=>x.where===q.id&&x.sev==="err").length;
+  const t=TYPES[q.type];
+  return '<div class="qrow'+(S.selQ===q.id?' sel':'')+'" data-a="selQ" data-id="'+q.id+'">'
+    +'<span class="qmove"><button data-a="mvUp" data-id="'+q.id+'">▲</button><button data-a="mvDn" data-id="'+q.id+'">▼</button></span>'
+    +'<span class="qid">'+esc(q.id)+'</span><span class="qt">'+esc(q.text||"(no text)")+'</span>'
+    +(q.ext&&q.ext.critical?'<span class="qbadge crit">CRIT</span>':'')
+    +'<span class="qbadge">'+esc(t?t.label.split(" ")[0]:q.type)+'</span>'
+    +(v?'<span class="qbadge err">'+v+'</span>':'')+'</div>';
+}
+function qEditor(q){
+  const P=prof(),t=TYPES[q.type]||{},shape=t.opts;
+  const typeOpts=Object.keys(TYPES).map(k=>'<option value="'+k+'"'+(q.type===k?' selected':'')+'>'+TYPES[k].label+'</option>').join("");
+  const secOpts=S.bank.sections.map(s=>'<option value="'+s.id+'"'+(q.section===s.id?' selected':'')+'>'+esc(s.label)+'</option>').join("");
+
+  let body="";
+  if(shape==="scored"||shape==="cards"){
+    body='<div class="field"><label>Options'+(shape==="cards"?' (icon + label)':' (label + score 0–100)')+'</label>'
+      +(q.options||[]).map((o,i)=>'<div class="optrow">'
+        +'<input class="inp" value="'+esc(o.label||"")+'" data-qf="optLabel" data-i="'+i+'" placeholder="Option text"/>'
+        +'<input class="inp mono" type="number" min="0" max="100" value="'+(o.score!=null?o.score:"")+'" data-qf="optScore" data-i="'+i+'" placeholder="—"/>'
+        +'<button class="iconbtn" data-a="delOpt" data-i="'+i+'">✕</button></div>').join("")
+      +'<button class="btn ghost sm" data-a="addOpt">+ Add option</button>'
+      +(q.type==="multi_select"?'<label class="chk" style="margin-top:8px"><input type="checkbox" data-qf="hasExclusive" '+((q.options||[]).some(o=>o.exclusive)?"checked":"")+'/> Last option is exclusive (a "none of these" answer)</label>':'')
+      +'</div>';
+  } else if(shape==="labels"){
+    body='<div class="field"><label>Scale labels (1 → 5)</label>'
+      +(q.labels||["","","","",""]).map((l,i)=>'<div class="optrow nosc"><input class="inp" value="'+esc(l)+'" data-qf="label" data-i="'+i+'" placeholder="Point '+(i+1)+'"/><span class="pill">'+(i*25)+'</span></div>').join("")+'</div>';
+  } else if(shape==="slider"){
+    const sl=q.slider||{};
+    body='<div class="field"><label>Slider configuration</label><div class="row3">'
+      +'<input class="inp mono" type="number" value="'+(sl.min!=null?sl.min:0)+'" data-qf="slMin" placeholder="min"/>'
+      +'<input class="inp mono" type="number" value="'+(sl.max!=null?sl.max:100)+'" data-qf="slMax" placeholder="max"/>'
+      +'<input class="inp mono" type="number" value="'+(sl.step||1)+'" data-qf="slStep" placeholder="step"/></div>'
+      +'<div class="row2" style="margin-top:8px">'
+      +'<input class="inp" value="'+esc(sl.suffix||"")+'" data-qf="slSuffix" placeholder="suffix e.g. %"/>'
+      +'<input class="inp mono" type="number" value="'+(sl.default!=null?sl.default:"")+'" data-qf="slDefault" placeholder="default"/></div>'
+      +'<label class="chk"><input type="checkbox" data-qf="invert" '+(q.invert?"checked":"")+'/> Invert — lower values score better (e.g. waste %, variance)</label></div>';
+  } else if(shape==="buckets"){
+    body='<div class="field"><label>Allocation buckets</label>'
+      +(q.buckets||[]).map((b,i)=>'<div class="optrow nosc"><input class="inp" value="'+esc(b.label||"")+'" data-qf="bucketLabel" data-i="'+i+'" placeholder="Bucket name"/>'
+        +'<button class="iconbtn" data-a="delBucket" data-i="'+i+'">✕</button></div>').join("")
+      +'<button class="btn ghost sm" data-a="addBucket">+ Add bucket</button></div>';
+  } else if(shape==="plain"){
+    body='<div class="field"><label>Items to rank</label>'
+      +(q.options||[]).map((o,i)=>'<div class="optrow nosc"><input class="inp" value="'+esc(typeof o==="string"?o:o.label)+'" data-qf="plainItem" data-i="'+i+'"/>'
+        +'<button class="iconbtn" data-a="delOpt" data-i="'+i+'">✕</button></div>').join("")
+      +'<button class="btn ghost sm" data-a="addOpt">+ Add item</button>'
+      +'<label class="chk" style="margin-top:8px"><input type="checkbox" data-qf="scoreOrder" '+(q.ideal?"checked":"")+'/> Score against the order shown above as ideal</label></div>';
+  }
+
+  // profile extensions
+  let extHtml="";
+  P.ext.forEach(f=>{
+    const val=(q.ext||{})[f.key];
+    if(f.kind==="bool")
+      extHtml+='<label class="chk"><input type="checkbox" data-ext="'+f.key+'" '+(val?"checked":"")+'/> '+esc(f.label)+'</label><p class="hint" style="margin:0 0 10px 24px;font-size:11.5px">'+esc(f.help)+'</p>';
+    else if(f.kind==="number")
+      extHtml+='<div class="field"><label>'+esc(f.label)+'</label><input class="inp mono" type="number" step="0.5" value="'+(val!=null?val:1)+'" data-ext="'+f.key+'"/><p class="hint" style="margin-top:4px;font-size:11.5px">'+esc(f.help)+'</p></div>';
+    else if(f.kind==="stageRef"){
+      const so=(S.bank.scoring.stages||[]).map(s=>'<option value="'+s.id+'"'+(val===s.id?' selected':'')+'>'+esc(s.name||s.id)+'</option>').join("");
+      extHtml+='<div class="field"><label>'+esc(f.label)+'</label><select data-ext="'+f.key+'"><option value="">— none —</option>'+so+'</select></div>';
+    } else if(f.kind==="signalList"){
+      const sigs=S.bank.scoring.signals||[];
+      extHtml+='<div class="field"><label>'+esc(f.label)+'</label>'
+        +(sigs.length?sigs.map(sg=>{
+          const found=(val||[]).find(x=>x.id===sg.id);
+          return '<div class="optrow"><label class="chk" style="padding:0"><input type="checkbox" data-sig="'+sg.id+'" '+(found?"checked":"")+'/> '+esc(sg.label||sg.id)+'</label>'
+            +'<input class="inp mono" type="number" step="0.5" min="0" value="'+(found?found.w:1)+'" data-sigw="'+sg.id+'" '+(found?"":"disabled")+'/><span></span></div>';
+        }).join(""):'<p class="hint">Define signals in the Scoring tab first.</p>')
+        +'<p class="hint" style="margin-top:4px;font-size:11.5px">'+esc(f.help)+'</p></div>';
+    } else if(f.kind==="list")
+      extHtml+='<div class="field"><label>'+esc(f.label)+'</label><input class="inp mono" value="'+esc((val||[]).join(", "))+'" data-ext="'+f.key+'" data-list="1" placeholder="comma separated"/><p class="hint" style="margin-top:4px;font-size:11.5px">'+esc(f.help)+'</p></div>';
+    else if(f.kind==="readinessList")
+      extHtml+='<div class="field"><label>'+esc(f.label)+'</label><input class="inp mono" value="'+esc((val||[]).map(r=>r.regime+"."+r.dimension).join(", "))+'" data-ext="'+f.key+'" data-readiness="1" placeholder="regime.dimension, regime.dimension"/><p class="hint" style="margin-top:4px;font-size:11.5px">'+esc(f.help)+'</p></div>';
+    else
+      extHtml+='<div class="field"><label>'+esc(f.label)+'</label><input class="inp" value="'+esc(val||"")+'" data-ext="'+f.key+'"/><p class="hint" style="margin-top:4px;font-size:11.5px">'+esc(f.help)+'</p></div>';
+  });
+
+  const cond=q.shownIf||{};
+  return '<div class="card"><div style="display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px">'
+    +'<h3 style="margin:0">Edit <span class="mono" style="color:var(--steel)">'+esc(q.id)+'</span></h3>'
+    +'<div style="display:flex;gap:7px"><button class="btn ghost sm" data-a="dupQ">Duplicate</button><button class="btn danger sm" data-a="delQ">Delete</button></div></div>'
+    +'<div class="row2"><div class="field"><label>Question id</label><input class="inp mono" value="'+esc(q.id)+'" data-qf="id"/></div>'
+    +'<div class="field"><label>Section</label><select data-qf="section">'+secOpts+'</select></div></div>'
+    +'<div class="field"><label>Question text</label><textarea data-qf="text">'+esc(q.text||"")+'</textarea></div>'
+    +'<div class="field"><label>Hint (optional)</label><input class="inp" value="'+esc(q.hint||"")+'" data-qf="hint" placeholder="Shown under the question"/></div>'
+    +'<div class="row2"><div class="field"><label>Answer type</label><select data-qf="type">'+typeOpts+'</select>'
+    +'<p class="hint" style="margin-top:5px;font-size:11.5px">'+esc(t.desc||"")+'</p></div>'
+    +'<div class="field"><label>Tier</label><select data-qf="tier"><option value="1"'+(q.tier!==2?' selected':'')+'>1 — self-serve</option><option value="2"'+(q.tier===2?' selected':'')+'>2 — facilitated</option></select></div></div>'
+    +body
+    +'<div style="display:flex;gap:18px;flex-wrap:wrap;margin:4px 0 10px">'
+    +'<label class="chk"><input type="checkbox" data-qf="allowNA" '+(q.allowNA?"checked":"")+'/> Allow "not applicable"</label>'
+    +'<label class="chk"><input type="checkbox" data-qf="allowDK" '+(q.allowDK?"checked":"")+'/> Allow "don\'t know"</label></div>'
+    +'<div class="field"><label>Show only if (optional)</label><div class="row3">'
+    +'<input class="inp mono" value="'+esc(cond.fact||"")+'" data-qf="condFact" placeholder="fact key"/>'
+    +'<select data-qf="condOp"><option value="">op</option>'
+    +["is_true","is_false","eq","neq","in","includes_any","gte","lte"].map(o=>'<option value="'+o+'"'+(cond.op===o?' selected':'')+'>'+o+'</option>').join("")+'</select>'
+    +'<input class="inp mono" value="'+esc(cond.value!=null?(Array.isArray(cond.value)?cond.value.join(","):cond.value):"")+'" data-qf="condValue" placeholder="value"/></div></div>'
+    +(extHtml?'<div style="border-top:1px solid var(--line);margin-top:14px;padding-top:14px"><div class="eyebrow" style="margin-bottom:10px">'+esc(P.name)+' fields</div>'+extHtml+'</div>':'')
+    +'</div>';
+}
+
+function vSections(){
+  const B=S.bank;
+  return '<div class="split"><div class="card"><h3>Bank details</h3>'
+    +'<div class="field"><label>Accelerator name</label><input class="inp" value="'+esc(B.meta.name)+'" data-mf="name"/></div>'
+    +'<div class="field"><label>Bank id</label><input class="inp mono" value="'+esc(B.meta.id)+'" data-mf="id"/></div>'
+    +'<div class="field"><label>Version</label><input class="inp mono" value="'+esc(B.meta.version)+'" data-mf="version"/></div>'
+    +'<div class="field"><label>Last reviewed</label><input class="inp mono" type="date" value="'+esc(B.meta.lastReviewed)+'" data-mf="lastReviewed"/></div>'
+    +'<div class="field"><label>Disclaimer</label><textarea data-mf="disclaimer">'+esc(B.meta.disclaimer||"")+'</textarea></div>'
+    +'<div class="btnrow"><button class="btn ghost sm" data-a="setLogo">Set LTM logo</button></div></div>'
+    +'<div><div class="card"><h3>Profile</h3><p class="hint">The profile decides which scoring fields each question carries. Changing it preserves questions but clears profile-specific fields.</p>'
+    +Object.keys(PROFILES).map(k=>{const p=PROFILES[k];
+      return '<div class="prof'+(B.meta.profile===k?' sel':'')+'" data-a="setProfile" data-p="'+k+'">'
+        +'<div class="profname">'+esc(p.name)+'</div><div class="profdesc">'+esc(p.desc)+'</div>'
+        +'<div class="proftools">USED BY: '+esc(p.tools.join(", "))+'</div></div>';}).join("")
+    +'</div>'
+    +'<div class="card" style="margin-top:16px"><h3>Sections</h3><p class="hint">Questions group under sections. Order here is the order respondents see.</p>'
+    +B.sections.map((s,i)=>'<div class="optrow" style="grid-template-columns:60px 1fr 1fr auto">'
+      +'<input class="inp mono" value="'+esc(s.n||"")+'" data-sf="n" data-i="'+i+'" placeholder="01"/>'
+      +'<input class="inp" value="'+esc(s.label)+'" data-sf="label" data-i="'+i+'" placeholder="Label"/>'
+      +'<input class="inp" value="'+esc(s.blurb||"")+'" data-sf="blurb" data-i="'+i+'" placeholder="Blurb"/>'
+      +'<button class="iconbtn" data-a="delSec" data-i="'+i+'">✕</button></div>').join("")
+    +'<button class="btn ghost sm" data-a="addSec">+ Add section</button></div></div></div>';
+}
+
+function vScoring(){
+  const B=S.bank,P=prof();
+  if(!P.scoringBlocks.length)
+    return '<div class="card"><h3>Scoring</h3><p class="hint">The <b>'+esc(P.name)+'</b> profile scores on question weights alone — there is nothing further to configure here. Set each question\'s weight in the Questions tab.</p></div>';
+  let h="";
+  if(P.scoringBlocks.includes("signals")){
+    const sigs=B.scoring.signals||[];
+    h+='<div class="card"><h3>Signals</h3><p class="hint">Questions feed these. Weights should sum to 1.0 — currently <b>'+sigs.reduce((a,s)=>a+(Number(s.weight)||0),0).toFixed(2)+'</b>.</p>'
+      +sigs.map((s,i)=>'<div class="optrow" style="grid-template-columns:110px 1fr 80px auto">'
+        +'<input class="inp mono" value="'+esc(s.id)+'" data-scf="signals.id" data-i="'+i+'" placeholder="id"/>'
+        +'<input class="inp" value="'+esc(s.label||"")+'" data-scf="signals.label" data-i="'+i+'" placeholder="Label"/>'
+        +'<input class="inp mono" type="number" step="0.01" value="'+(s.weight!=null?s.weight:0)+'" data-scf="signals.weight" data-i="'+i+'"/>'
+        +'<button class="iconbtn" data-a="delSig" data-i="'+i+'">✕</button></div>').join("")
+      +'<button class="btn ghost sm" data-a="addSig">+ Add signal</button></div>';
+  }
+  if(P.scoringBlocks.includes("stages")){
+    const st=B.scoring.stages||[];
+    h+='<div class="card" style="margin-top:16px"><h3>Stages</h3><p class="hint">Sequential gates. A stage passes when its weighted score meets the threshold <b>and</b> every critical question meets the critical minimum.</p>'
+      +'<div class="optrow" style="grid-template-columns:1fr 90px 90px auto;padding-bottom:5px;border-bottom:1px solid var(--line);margin-bottom:8px">'
+      +'<span class="eyebrow">Stage</span><span class="eyebrow">Threshold</span><span class="eyebrow">Crit min</span><span></span></div>'
+      +st.map((s,i)=>'<div class="optrow" style="grid-template-columns:1fr 90px 90px auto">'
+        +'<input class="inp" value="'+esc(s.name||s.id)+'" data-scf="stages.name" data-i="'+i+'"/>'
+        +'<input class="inp mono" type="number" value="'+(s.threshold!=null?s.threshold:70)+'" data-scf="stages.threshold" data-i="'+i+'"/>'
+        +'<input class="inp mono" type="number" value="'+(s.critMin!=null?s.critMin:80)+'" data-scf="stages.critMin" data-i="'+i+'"/>'
+        +'<button class="iconbtn" data-a="delStage" data-i="'+i+'">✕</button></div>').join("")
+      +'<button class="btn ghost sm" data-a="addStage">+ Add stage</button></div>';
+  }
+  if(P.scoringBlocks.includes("regimes")||P.scoringBlocks.includes("serviceAreas")||P.scoringBlocks.includes("domains")){
+    const key=P.scoringBlocks.includes("regimes")?"regimes":P.scoringBlocks.includes("serviceAreas")?"serviceAreas":"domains";
+    const arr=B.scoring[key]||[];
+    h+='<div class="card" style="margin-top:16px"><h3>'+key.replace(/([A-Z])/g," $1").replace(/^./,c=>c.toUpperCase())+'</h3>'
+      +'<p class="hint">This block is large and structured. Edit it as JSON — the Studio validates references against it.</p>'
+      +'<textarea class="mono" style="min-height:220px" data-scjson="'+key+'">'+esc(JSON.stringify(arr,null,2))+'</textarea>'
+      +'<button class="btn ghost sm" style="margin-top:8px" data-a="applyScJson" data-k="'+key+'">Apply</button></div>';
+  }
+  return h;
+}
+
+function vValidate(){
+  const v=validate();
+  const c={err:v.filter(x=>x.sev==="err").length,warn:v.filter(x=>x.sev==="warn").length,info:v.filter(x=>x.sev==="info").length};
+  return '<div class="card"><h3>Validation</h3>'
+    +'<div class="stat" style="margin:12px 0 16px"><span><b style="color:'+(c.err?"var(--red)":"var(--green)")+'">'+c.err+'</b>errors</span>'
+    +'<span><b style="color:'+(c.warn?"var(--amber)":"var(--mut)")+'">'+c.warn+'</b>warnings</span>'
+    +'<span><b>'+c.info+'</b>notes</span>'
+    +'<span><b>'+S.bank.questions.length+'</b>questions</span></div>'
+    +'<p class="hint">Errors will break the accelerator. Warnings mean a question or signal exists but can never affect a result — usually a wiring mistake, occasionally deliberate.</p>'
+    +(v.length?v.map(x=>'<div class="vitem"><span class="vsev '+x.sev+'">'+x.sev.toUpperCase()+'</span>'
+      +'<span class="vmsg">'+esc(x.msg)+'<div class="vwhere">'+esc(x.where)+'</div></span></div>').join("")
+      :'<div class="empty">Nothing to report — the bank is clean.</div>')+'</div>';
+}
+
+function vIO(){
+  return '<div class="split"><div>'
+    +'<div class="card"><h3>Import</h3><p class="hint">Drop in a bank exported from any LTM accelerator. The Studio detects the format and converts it to the common schema.</p>'
+    +'<div class="dropzone" id="drop">Drop a JSON file here, or <button class="btn ghost sm" data-a="pickImport">choose a file</button></div>'
+    +'<div class="field" style="margin-top:14px"><label>Or paste JSON</label><textarea class="mono" id="pasteJson" style="min-height:130px" placeholder="Paste an exported bank"></textarea></div>'
+    +'<button class="btn primary sm" data-a="importPaste">Import pasted JSON</button></div>'
+    +'<div class="card" style="margin-top:16px"><h3>Recognised formats</h3>'
+    +'<table class="tbl"><tbody>'
+    +'<tr><td>Common schema</td><td><code>ltm-qbank/1.0</code></td></tr>'
+    +'<tr><td>Sovereign Screen</td><td>detected by <code>regimes[]</code></td></tr>'
+    +'<tr><td>FinOps Maturity</td><td>detected by <code>meta.stages[]</code></td></tr>'
+    +'<tr><td>FinOps Value Case</td><td>detected by <code>meta.signals[]</code></td></tr>'
+    +'<tr><td>Legacy FinOps v3</td><td>detected by top-level <code>stages[]</code></td></tr>'
+    +'</tbody></table></div></div>'
+    +'<div><div class="card"><h3>Export</h3><p class="hint">Common schema is the portable master. Native export writes the exact shape a given accelerator already imports — so existing tools need no changes.</p>'
+    +'<div class="btnrow"><button class="btn primary sm" data-a="exCommon">Common schema ↓</button>'
+    +'<button class="btn ghost sm" data-a="exNative">Native for this profile ↓</button>'
+    +'<button class="btn ghost sm" data-a="exCsv">CSV (Excel) ↓</button></div>'
+    +'<p class="hint" style="margin-top:14px">Native target: <b>'+esc(prof().tools.join(", "))+'</b></p></div>'
+    +'<div class="card" style="margin-top:16px"><h3>Start fresh</h3><p class="hint">Create an empty bank on a chosen profile.</p>'
+    +'<div class="btnrow">'+Object.keys(PROFILES).map(k=>'<button class="btn ghost sm" data-a="newBank" data-p="'+k+'">'+esc(PROFILES[k].name)+'</button>').join("")+'</div></div></div></div>';
+}
+
+function vBake(){
+  return '<div class="split"><div class="card"><h3>Publish into a tool</h3>'
+    +'<p class="hint">Load an accelerator HTML file, and the Studio replaces its embedded question bank with this one — producing a single distributable file you can send to a client. The tool stays self-contained and offline-capable.</p>'
+    +'<div class="dropzone" id="dropHtml">Drop an accelerator <code>.html</code> here, or <button class="btn ghost sm" data-a="pickHtml">choose a file</button></div>'
+    +(S.bakeHtml?'<div style="margin-top:14px"><span class="pill ok">Loaded: '+esc(S.bakeName)+' · '+Math.round(S.bakeHtml.length/1024)+'kb</span>'
+      +'<div class="btnrow"><button class="btn primary sm" data-a="doBake">Publish with this bank ↓</button>'
+      +'<button class="btn ghost sm" data-a="clearBake">Clear</button></div></div>':"")
+    +'</div>'
+    +'<div class="card"><h3>How publishing works</h3>'
+    +'<p class="hint">Each accelerator holds its bank in a JavaScript object called <code>DEFAULT_KB</code>. Publishing swaps that object for the current bank, converted to that tool\'s native shape.</p>'
+    +'<p class="hint">For the cleanest results, wrap the bank in a retrofitted tool like this — the Studio then replaces exactly the marked region:</p>'
+    +'<textarea class="mono" readonly style="min-height:120px">/* QBANK:START */\nconst DEFAULT_KB = { ... };\n/* QBANK:END */</textarea>'
+    +'<p class="hint" style="margin-top:10px">Without the markers the Studio falls back to brace-matching from <code>const DEFAULT_KB = {</code>, which works on all three existing tools but is less robust to future edits.</p></div></div>';
+}
+
+/* ---------- converters ---------- */
+function detectFormat(o){
+  if(o&&o.$schema===SCHEMA)return "common";
+  if(o&&Array.isArray(o.regimes))return "sovereign";
+  if(o&&o.meta&&Array.isArray(o.meta.stages)&&Array.isArray(o.questions))return "finops_maturity";
+  if(o&&o.meta&&Array.isArray(o.meta.signals))return "value_case";
+  if(o&&Array.isArray(o.stages)&&!o.questions)return "legacy_v3";
+  return null;
+}
+function toCommon(o,fmt){
+  if(fmt==="common")return o;
+  const B=newBank("simple_survey");
+  const mapType=t=>({single_select:"single_select",multi_select:"multi_select",multi_select_logo:"multi_select",
+    boolean:"boolean",boolean_dk:"boolean_dk",rating_1_5:"rating_1_5",range:"range",
+    slider_percent:"slider_percent",slider_signed:"slider_signed",slider_currency:"slider_currency",
+    card_select:"card_select",allocation_100:"allocation_100",drag_order:"drag_order",open_text:"open_text"}[t]||t);
+
+  if(fmt==="sovereign"){
+    B.meta={...B.meta,id:"sovereign-screen",name:"Sovereign Screen",profile:"rules_engine",
+      version:o.meta.schema_version||"1.0.0",lastReviewed:o.meta.last_reviewed||today(),disclaimer:o.meta.disclaimer||""};
+    B.sections=(o.sections||[]).map(s=>({id:s.cat,n:s.n,label:s.label,blurb:s.blurb}));
+    B.questions=(o.questions||[]).map(q=>({
+      id:q.id,section:q.category,text:q.text,hint:q.hint||"",type:mapType(q.answer_type),
+      tier:q.tier||1,allowNA:!!q.allow_not_applicable,
+      options:(q.options||[]).map(op=>typeof op==="string"?{label:op}:{label:op.label,score:op.score,factValue:op.fact_value}),
+      slider:q.range?{min:q.range.min,max:q.range.max,step:q.range.step,suffix:q.range.suffix}:undefined,
+      shownIf:q.shown_if,
+      ext:{sector:q.sector||"common",writes:q.writes||[],
+        readiness:q.readiness?(Array.isArray(q.readiness)?q.readiness:[q.readiness]).map(r=>({regime:r.regime,dimension:r.dimension})):[]}
+    }));
+    B.scoring={regimes:o.regimes||[],facts:o.facts||[]};
+  } else if(fmt==="finops_maturity"){
+    B.meta={...B.meta,id:"finops-maturity",name:"FinOps Maturity Screen",profile:"staged_gating",
+      version:o.meta.schema_version||"1.0.0",lastReviewed:o.meta.last_reviewed||today(),disclaimer:o.meta.disclaimer||""};
+    B.sections=(o.meta.stages||[]).map(s=>({id:s.id,n:"0"+s.n,label:s.name,blurb:s.desc||""}));
+    B.questions=(o.questions||[]).map(q=>({
+      id:q.id,section:q.stage,text:q.text,hint:q.hint||"",type:mapType(q.answer_type),tier:1,
+      options:(q.options||[]).map(op=>typeof op==="string"?{label:op}:{label:op.label,score:op.score}),
+      labels:q.labels,slider:q.range,invert:!!q.invert,allowNA:!!q.allow_not_applicable,
+      ext:{stage:q.stage,critical:!!q.critical,weight:q.weight||1,domain:q.domain||""}
+    }));
+    B.scoring={stages:(o.meta.stages||[]).map(s=>({id:s.id,name:s.name,threshold:s.threshold,critMin:s.crit_min,color:s.color})),
+      domains:o.meta.domains||[]};
+  } else if(fmt==="value_case"){
+    B.meta={...B.meta,id:"finops-value-case",name:"FinOps Value Case",profile:"signal_scoring",
+      version:o.meta.schema_version||"1.0.0",lastReviewed:o.meta.last_reviewed||today(),disclaimer:o.meta.disclaimer||""};
+    B.sections=(o.sections||[]).map(s=>({id:s.id,n:s.n,label:s.label,blurb:s.blurb}));
+    B.questions=(o.questions||[]).map(q=>({
+      id:q.id,section:q.section,text:q.text,hint:q.hint||"",type:mapType(q.answer_type),tier:1,
+      options:(q.options||[]).map(op=>typeof op==="string"?{label:op}:Object.assign({},op)),
+      labels:q.labels,slider:q.slider,buckets:q.buckets,invert:!!q.invert,
+      nativeType:(q.answer_type!==mapType(q.answer_type))?q.answer_type:undefined,
+      allowDK:!!q.allow_dk,
+      ext:{signals:(q.signals||[]).map(s=>({id:s.id,w:(s.w!=null?s.w:s.weight)})),dkBlind:q.dk_blind||""}
+    }));
+    B.scoring={signals:(o.meta.signals||[]).map(s=>({id:s.id,label:s.label,weight:s.weight,color:s.color})),
+      verdictBands:o.meta.verdict_bands||[],serviceAreas:o.meta.service_areas||[]};
+    B.assets={caseStudies:o.meta.case_studies||[],brochure:o.meta.brochure||{},
+      benchmarks:o.meta.benchmarks,wasteModel:o.meta.waste_model};
+  } else if(fmt==="legacy_v3"){
+    B.meta={...B.meta,id:"finops-legacy",name:"FinOps Maturity (imported v3)",profile:"staged_gating"};
+    B.sections=(o.stages||[]).map((s,i)=>({id:"st"+i,n:"0"+(i+1),label:s.name||("Stage "+(i+1)),blurb:s.desc||""}));
+    B.questions=[];
+    (o.stages||[]).forEach((s,i)=>(s.questions||[]).forEach((q,j)=>{
+      B.questions.push({id:q.id||("Q"+i+j),section:"st"+i,text:q.text||"",type:"rating_1_5",tier:1,
+        labels:["Not at all","Rarely","Partially","Largely","Fully"],
+        ext:{stage:"st"+i,critical:!!q.critical,weight:1,domain:q.type||""}});
+    }));
+    B.scoring={stages:(o.stages||[]).map((s,i)=>({id:"st"+i,name:s.name||("Stage "+(i+1)),
+      threshold:Math.round(((s.threshold||3.5)/5)*100),critMin:Math.round(((s.critMinRating||4)/5)*100)})),domains:[]};
+  }
+  return B;
+}
+function toNative(B){
+  const P=PROFILES[B.meta.profile]||PROFILES.simple_survey;
+  const id=P.nativeId;
+  if(id==="value_case"){
+    return {meta:{schema_version:B.meta.version,instrument:B.meta.name,last_reviewed:B.meta.lastReviewed,
+        disclaimer:B.meta.disclaimer,
+        currencies:[{id:"gbp",symbol:"£"},{id:"usd",symbol:"$"},{id:"eur",symbol:"€"},{id:"inr",symbol:"₹"}],
+        signals:(B.scoring.signals||[]).map(s=>({id:s.id,label:s.label,weight:s.weight,color:s.color||"#57B6C2"})),
+        benchmarks:(B.assets&&B.assets.benchmarks)||{},waste_model:(B.assets&&B.assets.wasteModel)||{},
+        verdict_bands:B.scoring.verdictBands||[],service_areas:B.scoring.serviceAreas||[],
+        case_studies:(B.assets&&B.assets.caseStudies)||[],brochure:(B.assets&&B.assets.brochure)||{}},
+      sections:B.sections.map(s=>({id:s.id,n:s.n,label:s.label,blurb:s.blurb})),
+      questions:B.questions.map(q=>{const o={id:q.id,section:q.section,answer_type:q.nativeType||q.type,
+        signals:((q.ext&&q.ext.signals)||[]).map(s=>({id:s.id,w:s.w})),text:q.text};
+        if(q.hint)o.hint=q.hint;
+        if(q.options&&q.options.length){
+          o.options=(q.type==="drag_order")
+            ? q.options.map(op=>typeof op==="string"?op:op.label)
+            : q.options.map(op=>{const r=Object.assign({},op);
+                if(r.score===undefined)delete r.score; if(!r.exclusive)delete r.exclusive; return r;});
+        }
+        if(q.labels)o.labels=q.labels; if(q.slider)o.slider=q.slider; if(q.buckets)o.buckets=q.buckets;
+        if(q.invert)o.invert=true; if(q.allowDK&&q.type!=="boolean_dk")o.allow_dk=true;
+        if(q.ext&&q.ext.dkBlind)o.dk_blind=q.ext.dkBlind;
+        if(q.shownIf)o.shown_if=q.shownIf;
+        return o;})};
+  }
+  if(id==="finops_maturity"){
+    return {meta:{schema_version:B.meta.version,framework:B.meta.name,last_reviewed:B.meta.lastReviewed,
+        disclaimer:B.meta.disclaimer,scale:"0-100 normalised",
+        domains:B.scoring.domains||[],
+        stages:(B.scoring.stages||[]).map((s,i)=>({id:s.id,n:i+1,name:s.name,color:s.color||"#57B6C2",
+          threshold:s.threshold,crit_min:s.critMin,require_all_crits:true,desc:s.desc||"",aim:s.aim||""}))},
+      questions:B.questions.map(q=>{const o={id:q.id,stage:(q.ext&&q.ext.stage)||q.section,
+        domain:(q.ext&&q.ext.domain)||"",critical:!!(q.ext&&q.ext.critical),weight:(q.ext&&q.ext.weight)||1,
+        answer_type:q.type,text:q.text};
+        if(q.options&&q.options.length)o.options=(q.type==="drag_order")
+          ? q.options.map(op=>typeof op==="string"?op:op.label)
+          : q.options.map(op=>{const r={label:op.label};if(op.score!=null)r.score=op.score;return r;});
+        if(q.labels)o.labels=q.labels; if(q.slider)o.range=q.slider; if(q.invert)o.invert=true;
+        if(q.allowNA)o.allow_not_applicable=true; if(q.shownIf)o.shown_if=q.shownIf;
+        o.remediation=q.remediation||""; return o;})};
+  }
+  if(id==="sovereign"){
+    return {meta:{schema_version:B.meta.version,last_reviewed:B.meta.lastReviewed,disclaimer:B.meta.disclaimer},
+      facts:B.scoring.facts||[],regimes:B.scoring.regimes||[],
+      sections:B.sections.map(s=>({cat:s.id,n:s.n,label:s.label,blurb:s.blurb})),
+      questions:B.questions.map(q=>{const o={id:q.id,sector:(q.ext&&q.ext.sector)||"common",
+        category:q.section,tier:q.tier||1,answer_type:q.type,text:q.text};
+        if(q.hint)o.hint=q.hint;
+        if(q.ext&&q.ext.writes&&q.ext.writes.length)o.writes=q.ext.writes;
+        if(q.allowNA)o.allow_not_applicable=true;
+        if(q.options&&q.options.length)o.options=(q.type==="drag_order")
+          ? q.options.map(op=>typeof op==="string"?op:op.label)
+          : q.options.map(op=>{const r={label:op.label};
+              if(op.factValue)r.fact_value=op.factValue;if(op.score!=null)r.score=op.score;return r;});
+        if(q.slider)o.range=q.slider;
+        if(q.ext&&q.ext.readiness&&q.ext.readiness.length)
+          o.readiness=q.ext.readiness.length===1?q.ext.readiness[0]:q.ext.readiness;
+        if(q.shownIf)o.shown_if=q.shownIf;
+        return o;})};
+  }
+  return B;
+}
+function toCsv(){
+  const q2=v=>{const s=String(v==null?"":v);return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s;};
+  const rows=[["id","section","type","tier","text","hint","options","ext"].join(",")];
+  S.bank.questions.forEach(q=>{
+    let opts="";
+    if(q.options&&q.options.length)opts=q.options.map(o=>o.label+(o.score!=null?"::"+o.score:"")).join(" | ");
+    else if(q.buckets)opts=q.buckets.map(b=>b.label).join(" | ");
+    else if(q.labels)opts=q.labels.join(" | ");
+    else if(q.slider)opts="min="+q.slider.min+"; max="+q.slider.max;
+    rows.push([q.id,q.section,q.type,q.tier||1,q.text,q.hint||"",opts,JSON.stringify(q.ext||{})].map(q2).join(","));
+  });
+  return rows.join("\n");
+}
+
+/* ---------- bake ---------- */
+function bake(){
+  const html=S.bakeHtml;
+  const native=JSON.stringify(toNative(S.bank),null,2);
+  const marked=/\/\*\s*QBANK:START\s*\*\/[\s\S]*?\/\*\s*QBANK:END\s*\*\//;
+  if(marked.test(html))
+    return html.replace(marked,"/* QBANK:START */\nconst DEFAULT_KB = "+native+";\n/* QBANK:END */");
+  // fallback: brace-match from the declaration
+  const start=html.indexOf("const DEFAULT_KB");
+  if(start<0)return null;
+  const open=html.indexOf("{",start);
+  if(open<0)return null;
+  let d=0,end=-1,inStr=false,strCh="",prev="";
+  for(let i=open;i<html.length;i++){
+    const c=html[i];
+    if(inStr){ if(c===strCh&&prev!=="\\")inStr=false; }
+    else if(c==='"'||c==="'"){inStr=true;strCh=c;}
+    else if(c==="{")d++;
+    else if(c==="}"){d--;if(d===0){end=i;break;}}
+    prev=c;
+  }
+  if(end<0)return null;
+  return html.slice(0,start)+"/* QBANK:START */\nconst DEFAULT_KB = "+native+";\n/* QBANK:END */"+html.slice(end+1).replace(/^\s*;/,"");
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click",e=>{
+  const el=e.target.closest("[data-a],[data-t]");if(!el)return;
+  if(el.dataset.t){S.tab=el.dataset.t;render();return;}
+  const a=el.dataset.a,B=S.bank,i=Number(el.dataset.i);
+  const q=B.questions.find(x=>x.id===S.selQ);
+  if(a==="selQ"){S.selQ=el.dataset.id;render();}
+  else if(a==="addQ"){const nq={id:uid("Q"),section:el.dataset.sec,text:"",type:"single_select",tier:1,
+      options:[{label:"",score:100},{label:"",score:50},{label:"",score:0}],ext:{}};
+    if(prof().nativeId==="finops_maturity")nq.ext={stage:el.dataset.sec,critical:false,weight:1,domain:""};
+    B.questions.push(nq);S.selQ=nq.id;render();}
+  else if(a==="dupQ"&&q){const c=JSON.parse(JSON.stringify(q));c.id=uid("Q");
+    B.questions.splice(B.questions.indexOf(q)+1,0,c);S.selQ=c.id;render();toast("Duplicated as "+c.id);}
+  else if(a==="delQ"&&q){B.questions.splice(B.questions.indexOf(q),1);S.selQ=null;render();}
+  else if(a==="mvUp"||a==="mvDn"){const id=el.dataset.id;const idx=B.questions.findIndex(x=>x.id===id);
+    const sec=B.questions[idx].section;
+    const sibs=B.questions.map((x,n)=>({x,n})).filter(o=>o.x.section===sec);
+    const p=sibs.findIndex(o=>o.x.id===id);const t=p+(a==="mvUp"?-1:1);
+    if(t<0||t>=sibs.length)return;
+    const A=sibs[p].n,Bn=sibs[t].n;
+    [B.questions[A],B.questions[Bn]]=[B.questions[Bn],B.questions[A]];render();}
+  else if(a==="addOpt"&&q){q.options=q.options||[];
+    q.options.push(TYPES[q.type].opts==="plain"?{label:"New item"}:{label:"",score:0});render();}
+  else if(a==="delOpt"&&q){q.options.splice(i,1);render();}
+  else if(a==="addBucket"&&q){q.buckets=q.buckets||[];q.buckets.push({id:"b"+(q.buckets.length+1),label:"",color:"#57B6C2"});render();}
+  else if(a==="delBucket"&&q){q.buckets.splice(i,1);render();}
+  else if(a==="addSec"){B.sections.push({id:"s"+(B.sections.length+1),n:String(B.sections.length+1).padStart(2,"0"),label:"New section",blurb:""});render();}
+  else if(a==="delSec"){const s=B.sections[i];
+    if(B.questions.some(x=>x.section===s.id)){toast("Move or delete its questions first",true);return;}
+    B.sections.splice(i,1);render();}
+  else if(a==="setProfile"){const p=el.dataset.p;
+    if(p===B.meta.profile)return;
+    B.meta.profile=p;B.questions.forEach(x=>x.ext={});B.scoring=B.scoring||{};
+    if(p==="signal_scoring"&&!B.scoring.signals)B.scoring.signals=[{id:"signal1",label:"First signal",weight:1}];
+    if(p==="staged_gating"&&!B.scoring.stages)B.scoring.stages=[{id:"st1",name:"Stage 1",threshold:70,critMin:80}];
+    render();toast("Profile changed — profile-specific fields cleared");}
+  else if(a==="addSig"){B.scoring.signals=B.scoring.signals||[];
+    B.scoring.signals.push({id:"sig"+(B.scoring.signals.length+1),label:"New signal",weight:0});render();}
+  else if(a==="delSig"){B.scoring.signals.splice(i,1);render();}
+  else if(a==="addStage"){B.scoring.stages=B.scoring.stages||[];
+    B.scoring.stages.push({id:"st"+(B.scoring.stages.length+1),name:"New stage",threshold:70,critMin:80});render();}
+  else if(a==="delStage"){B.scoring.stages.splice(i,1);render();}
+  else if(a==="applyScJson"){const k=el.dataset.k;
+    try{B.scoring[k]=JSON.parse(document.querySelector('[data-scjson="'+k+'"]').value);render();toast("Applied");}
+    catch(err){toast("Invalid JSON — "+err.message,true);}}
+  else if(a==="setLogo"){$("#fLogo").click();}
+  else if(a==="pickImport"){$("#fImport").click();}
+  else if(a==="pickHtml"){$("#fHtml").click();}
+  else if(a==="importPaste"){const t=$("#pasteJson").value.trim();
+    if(!t){toast("Nothing pasted",true);return;} doImport(t);}
+  else if(a==="exCommon"){dl((B.meta.id||"bank")+"-common-"+today()+".json",JSON.stringify(B,null,2));toast("Common schema exported");}
+  else if(a==="exNative"){dl((B.meta.id||"bank")+"-native-"+today()+".json",JSON.stringify(toNative(B),null,2));
+    toast("Native export for "+prof().tools.join(", "));}
+  else if(a==="exCsv"){dl((B.meta.id||"bank")+"-"+today()+".csv",toCsv(),"text/csv");toast("CSV exported");}
+  else if(a==="newBank"){S.bank=newBank(el.dataset.p);S.selQ=null;S.tab="sections";render();toast("New bank created");}
+  else if(a==="doBake"){const out=bake();
+    if(!out){toast("Could not find DEFAULT_KB in that file",true);return;}
+    dl(S.bakeName.replace(/\.html$/,"")+"-published.html",out,"text/html");toast("Published — bank injected");}
+  else if(a==="clearBake"){S.bakeHtml="";S.bakeName="";render();}
+});
+
+document.addEventListener("input",e=>{
+  const el=e.target,B=S.bank;const q=B.questions.find(x=>x.id===S.selQ);
+  const i=el.dataset.i!==undefined?Number(el.dataset.i):null;
+  if(el.dataset.mf){B.meta[el.dataset.mf]=el.value;if(el.dataset.mf==="name")render();return;}
+  if(el.dataset.sf){B.sections[i][el.dataset.sf]=el.value;return;}
+  if(el.dataset.scf){const[blk,f]=el.dataset.scf.split(".");
+    const v=(f==="weight"||f==="threshold"||f==="critMin")?Number(el.value):el.value;
+    B.scoring[blk][i][f]=v;return;}
+  if(!q)return;
+  const f=el.dataset.qf;
+  if(f==="id"){const old=q.id;q.id=el.value;S.selQ=el.value;
+    if(old!==el.value)render();return;}
+  if(f==="text"||f==="hint"){q[f]=el.value;return;}
+  if(f==="section"){q.section=el.value;render();return;}
+  if(f==="type"){q.type=el.value;
+    const sh=TYPES[q.type].opts;
+    if(sh==="scored"&&!q.options)q.options=[{label:"",score:100},{label:"",score:0}];
+    if(sh==="labels"&&!q.labels)q.labels=["","","","",""];
+    if(sh==="slider"&&!q.slider)q.slider={min:0,max:100,step:5,suffix:"%",default:50};
+    if(sh==="buckets"&&!q.buckets)q.buckets=[{id:"b1",label:""},{id:"b2",label:""}];
+    if(sh==="plain"&&!q.options)q.options=[{label:"Item one"},{label:"Item two"}];
+    render();return;}
+  if(f==="tier"){q.tier=Number(el.value);return;}
+  if(f==="allowNA"){q.allowNA=el.checked;return;}
+  if(f==="allowDK"){q.allowDK=el.checked;return;}
+  if(f==="invert"){q.invert=el.checked;return;}
+  if(f==="optLabel"){q.options[i].label=el.value;return;}
+  if(f==="optScore"){q.options[i].score=el.value===""?undefined:Number(el.value);return;}
+  if(f==="plainItem"){q.options[i]={label:el.value};if(q.ideal)q.ideal=q.options.map(o=>o.label);return;}
+  if(f==="label"){q.labels[i]=el.value;return;}
+  if(f==="bucketLabel"){q.buckets[i].label=el.value;return;}
+  if(f==="scoreOrder"){q.ideal=el.checked?q.options.map(o=>o.label):undefined;return;}
+  if(f==="hasExclusive"){if(q.options&&q.options.length){q.options.forEach(o=>delete o.exclusive);
+    if(el.checked)q.options[q.options.length-1].exclusive=true;}return;}
+  if(f&&f.startsWith("sl")){q.slider=q.slider||{};
+    const k={slMin:"min",slMax:"max",slStep:"step",slSuffix:"suffix",slDefault:"default"}[f];
+    q.slider[k]=(k==="suffix")?el.value:Number(el.value);return;}
+  if(f&&f.startsWith("cond")){q.shownIf=q.shownIf||{};
+    const k={condFact:"fact",condOp:"op",condValue:"value"}[f];
+    let v=el.value;
+    if(k==="value"&&v.includes(","))v=v.split(",").map(x=>x.trim());
+    q.shownIf[k]=v;
+    if(!q.shownIf.fact&&!q.shownIf.op)delete q.shownIf;
+    return;}
+  if(el.dataset.ext){q.ext=q.ext||{};const k=el.dataset.ext;
+    if(el.type==="checkbox")q.ext[k]=el.checked;
+    else if(el.dataset.list)q.ext[k]=el.value.split(",").map(s=>s.trim()).filter(Boolean);
+    else if(el.dataset.readiness)q.ext[k]=el.value.split(",").map(s=>s.trim()).filter(Boolean)
+      .map(s=>{const[r,d]=s.split(".");return{regime:r,dimension:d};});
+    else if(el.type==="number")q.ext[k]=Number(el.value);
+    else q.ext[k]=el.value;
+    if(el.type==="checkbox")render();
+    return;}
+  if(el.dataset.sig){q.ext=q.ext||{};q.ext.signals=q.ext.signals||[];
+    const id=el.dataset.sig;
+    if(el.checked)q.ext.signals.push({id,w:1});
+    else q.ext.signals=q.ext.signals.filter(s=>s.id!==id);
+    render();return;}
+  if(el.dataset.sigw){q.ext=q.ext||{};const s=(q.ext.signals||[]).find(x=>x.id===el.dataset.sigw);
+    if(s)s.w=Number(el.value);return;}
+});
+document.addEventListener("change",e=>{
+  if(e.target.dataset.qf==="type"||e.target.dataset.qf==="section")return; // handled on input
+});
+
+/* files */
+function doImport(text){
+  let o;try{o=JSON.parse(text);}catch(err){toast("Invalid JSON — "+err.message,true);return;}
+  const fmt=detectFormat(o);
+  if(!fmt){toast("Unrecognised format — see Recognised formats",true);return;}
+  S.bank=toCommon(o,fmt);S.selQ=null;S.tab="questions";render();
+  toast("Imported as "+fmt.replace(/_/g," ")+" → "+S.bank.questions.length+" questions");
+}
+$("#fImport").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();r.onload=()=>{doImport(r.result);e.target.value="";};r.readAsText(f);});
+$("#fHtml").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();r.onload=()=>{S.bakeHtml=r.result;S.bakeName=f.name;render();
+    toast("Loaded "+f.name);e.target.value="";};r.readAsText(f);});
+$("#fLogo").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();r.onload=()=>{S.logo=r.result;render();toast("Logo set");e.target.value="";};r.readAsDataURL(f);});
+
+document.addEventListener("dragover",e=>{const z=e.target.closest("#drop,#dropHtml");if(z){e.preventDefault();z.classList.add("hot");}});
+document.addEventListener("dragleave",e=>{const z=e.target.closest("#drop,#dropHtml");if(z)z.classList.remove("hot");});
+document.addEventListener("drop",e=>{
+  const z=e.target.closest("#drop,#dropHtml");if(!z)return;e.preventDefault();z.classList.remove("hot");
+  const f=e.dataTransfer.files[0];if(!f)return;const r=new FileReader();
+  if(z.id==="drop"){r.onload=()=>doImport(r.result);r.readAsText(f);}
+  else{r.onload=()=>{S.bakeHtml=r.result;S.bakeName=f.name;render();toast("Loaded "+f.name);};r.readAsText(f);}
+});
+
+render();
+</script>
+</body>
+</html>
