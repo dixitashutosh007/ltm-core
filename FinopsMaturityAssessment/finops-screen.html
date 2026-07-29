@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>FinOps Maturity Screen — Cloud Financial Management Accelerator · LTM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --ground:#0A1826; --panel:#0F2438; --panel2:#12304A; --line:#22415C;
+  --ink:#E8EFF6; --mut:#93A8BD; --mutd:#6E869C;
+  --navy:#003865; --red:#F15F53; --amber:#FBAE40; --steel:#57B6C2; --lilac:#9B82D0; --blue:#58A6E0; --green:#3FB98A; --purple:#442671;
+}
+*{box-sizing:border-box;}
+html,body{margin:0;padding:0;}
+body{font-family:'IBM Plex Sans',system-ui,sans-serif; color:var(--ink); background:var(--ground); line-height:1.5; min-height:100vh;}
+.gridbg{position:fixed; inset:0; pointer-events:none; opacity:.5; z-index:0;
+  background-image:linear-gradient(rgba(87,182,194,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(87,182,194,.05) 1px,transparent 1px);
+  background-size:48px 48px; mask-image:radial-gradient(ellipse at 50% 0%,#000 30%,transparent 78%);}
+.mono{font-family:'IBM Plex Mono',monospace;}
+.eyebrow{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--steel);}
+h1,h2,h3{font-family:'Space Grotesk',sans-serif; letter-spacing:-.01em; margin:0;}
+.h1{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:clamp(28px,5vw,50px); line-height:1.05; letter-spacing:-.02em; margin:.15em 0;}
+.h1.sm{font-size:clamp(24px,4vw,38px);}
+.h2{font-size:22px; font-weight:600;}
+.lead{color:var(--mut); font-size:17px; max-width:56ch;}
+.blurb{color:var(--mut); font-size:14px; margin:2px 0 0;}
+
+/* header */
+.bar{position:relative; z-index:2; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap;
+  padding:14px clamp(16px,4vw,40px); border-bottom:1px solid var(--line); background:rgba(10,24,38,.72); backdrop-filter:blur(6px);}
+.brand{display:flex; align-items:center; gap:14px;}
+.ltmlogo{display:flex; align-items:center; gap:9px; cursor:pointer;}
+.ltmmark{width:30px; height:30px; border-radius:6px; background:conic-gradient(from 210deg,var(--red),var(--amber),var(--steel),var(--red)); box-shadow:inset 0 0 0 3px var(--ground); flex:none;}
+.ltmlogo img{height:30px; max-width:150px; object-fit:contain;}
+.ltmword{line-height:1.1;}
+.ltmword b{font-family:'Space Grotesk',sans-serif; font-size:15px; font-weight:600;}
+.ltmword span{display:block; font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.14em; color:var(--mutd); text-transform:uppercase;}
+.ph-note{font-family:'IBM Plex Mono',monospace; font-size:8px; letter-spacing:.1em; color:var(--amber); border:1px solid var(--line); border-radius:4px; padding:1px 4px; margin-left:6px;}
+.nav{display:flex; gap:6px; align-items:center;}
+.navbtn{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.03em; color:var(--mut); background:none; border:1px solid transparent; padding:7px 13px; border-radius:8px; cursor:pointer;}
+.navbtn:hover{color:var(--ink);}
+.navbtn.on{background:var(--panel); color:var(--ink); border-color:var(--line);}
+
+/* layout */
+.wrap{position:relative; z-index:1; max-width:1080px; margin:0 auto; padding:30px clamp(16px,4vw,40px) 60px;}
+.steps{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:22px;}
+.stepchip{display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--mutd); padding:6px 12px; border:1px solid var(--line); border-radius:999px;}
+.stepchip .n{font-family:'IBM Plex Mono',monospace; font-size:11px;}
+.stepchip.on{color:var(--ink); border-color:var(--steel);}
+.stepchip.done{color:var(--steel);}
+
+/* buttons */
+.btn{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14px; padding:11px 18px; border-radius:10px; cursor:pointer; border:1px solid transparent; transition:transform .12s,background .12s,border-color .12s;}
+.btn:hover{transform:translateY(-1px);}
+.btn.primary{background:var(--red); color:#160404;}
+.btn.primary:hover{background:#ff6f63;}
+.btn.ghost{background:transparent; color:var(--ink); border:1px solid var(--line);}
+.btn.ghost:hover{border-color:var(--steel);}
+.btn.lg{font-size:16px; padding:14px 24px;}
+.btn.sm{font-size:12.5px; padding:8px 13px;}
+.btn:disabled{opacity:.4; cursor:not-allowed; transform:none;}
+
+/* forms */
+.field{margin-bottom:18px;}
+.field label{display:block; font-size:13px; font-weight:600; margin-bottom:7px;}
+.input,.textarea,select{width:100%; padding:12px 14px; border-radius:10px; border:1px solid var(--line); background:var(--panel); color:var(--ink); font-family:inherit; font-size:14.5px;}
+.input:focus,.textarea:focus,select:focus{outline:none; border-color:var(--steel);}
+.textarea{min-height:88px; resize:vertical;}
+.grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px;}
+.logoup{display:flex; align-items:center; gap:16px;}
+.logobox{width:96px; height:96px; border:1px dashed var(--line); border-radius:12px; display:flex; align-items:center; justify-content:center; text-align:center; background:var(--panel); overflow:hidden; flex:none;}
+.logobox img{max-width:100%; max-height:100%; object-fit:contain;}
+.logobox span{font-size:11px; color:var(--mutd); padding:6px;}
+
+/* intro signature — the FinOps thesis */
+.signature{display:grid; grid-template-columns:1fr auto 1fr; align-items:center; margin:30px 0; border:1px solid var(--line); border-radius:14px; overflow:hidden; background:var(--panel);}
+.signode{padding:20px 22px;}
+.signode.alt{text-align:right; background:linear-gradient(90deg,transparent,rgba(63,185,138,.10));}
+.sigk{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--mutd);}
+.sigv{font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:600; margin-top:4px;}
+.sigbridge{min-height:64px; width:170px; display:flex; align-items:center; justify-content:center; border-left:1px dashed var(--line); border-right:1px dashed var(--line);}
+.sigbridge span{font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.06em; color:var(--amber); text-align:center; padding:0 8px;}
+
+/* stage rail */
+.shell{display:grid; grid-template-columns:250px 1fr; border:1px solid var(--line); border-radius:16px; overflow:hidden; background:rgba(15,36,56,.4);}
+.rail{border-right:1px solid var(--line); padding:20px 12px; display:flex; flex-direction:column; gap:3px;}
+.railitem{display:flex; align-items:center; gap:10px; padding:10px 12px; border-radius:9px; border:none; background:none; color:var(--mut); cursor:pointer; text-align:left; font-size:13.5px; width:100%;}
+.railitem:hover{background:var(--panel);}
+.railitem.active{background:var(--panel); color:var(--ink);}
+.railn{font-family:'IBM Plex Mono',monospace; font-size:11px; color:var(--mutd); width:16px;}
+.raill{flex:1;}
+.railscore{font-family:'IBM Plex Mono',monospace; font-size:11px;}
+.railitem.pass .railscore{color:var(--green);}
+.railitem.fail .railscore{color:var(--red);}
+.raildot{width:7px; height:7px; border-radius:50%; background:var(--line); flex:none;}
+.railitem.pass .raildot{background:var(--green);}
+.railitem.fail .raildot{background:var(--red);}
+.main{padding:24px clamp(16px,3vw,32px) 30px;}
+
+/* stage gate panel */
+.gate{display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; padding:14px 16px; border-radius:12px; border:1px solid var(--line); background:var(--panel); margin-bottom:22px;}
+.gatestats{display:flex; gap:22px; flex-wrap:wrap; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--mut);}
+.gatestats b{color:var(--ink); font-family:'Space Grotesk',sans-serif; font-size:17px;}
+.gatemsg{font-size:12.5px; font-family:'IBM Plex Mono',monospace;}
+.gatemsg.ok{color:var(--green);} .gatemsg.warn{color:var(--amber);} .gatemsg.neutral{color:var(--mutd);}
+.progress{height:4px; background:var(--line); border-radius:2px; overflow:hidden; margin-top:12px; width:100%;}
+.progressfill{height:100%; background:linear-gradient(90deg,var(--steel),var(--green)); transition:width .3s;}
+.progressfill.low{background:linear-gradient(90deg,var(--red),var(--amber));}
+
+.sechead{display:flex; gap:14px; align-items:flex-start; margin-bottom:8px;}
+.secn{font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--red); border:1px solid var(--line); border-radius:8px; padding:6px 9px; white-space:nowrap;}
+
+/* questions */
+.qs{display:flex; flex-direction:column; gap:22px; margin-top:20px;}
+.q{border-top:1px solid var(--line); padding-top:20px;}
+.q:first-child{border-top:none; padding-top:0;}
+.qhead{display:flex; align-items:flex-start; gap:10px; margin-bottom:6px;}
+.qtext{font-size:15.5px; font-weight:500; flex:1;}
+.qbadges{display:flex; gap:6px; flex:none; flex-wrap:wrap; justify-content:flex-end;}
+.badge{font-family:'IBM Plex Mono',monospace; font-size:9.5px; letter-spacing:.08em; padding:3px 7px; border-radius:999px; border:1px solid var(--line); color:var(--mutd); text-transform:uppercase; white-space:nowrap;}
+.badge.crit{color:var(--red); border-color:rgba(241,95,83,.5); background:rgba(241,95,83,.08);}
+.badge.dom{color:var(--steel);}
+.qhint{color:var(--amber); font-size:12.5px; margin-bottom:10px; font-family:'IBM Plex Mono',monospace;}
+.opts{display:flex; flex-direction:column; gap:8px; margin-top:12px;}
+.opt{display:flex; align-items:center; gap:11px; text-align:left; padding:12px 15px; border-radius:10px; border:1px solid var(--line); background:var(--panel); color:var(--ink); cursor:pointer; font-size:14.5px;}
+.opt:hover{border-color:var(--steel);}
+.opt.sel{border-color:var(--red); background:rgba(241,95,83,.08);}
+.optdot{width:13px; height:13px; border-radius:50%; border:2px solid var(--mutd); flex:none;}
+.opt.sel .optdot{border-color:var(--red); background:var(--red); box-shadow:inset 0 0 0 2px var(--panel);}
+.optbox{width:18px; height:18px; border-radius:5px; border:2px solid var(--mutd); flex:none; display:flex; align-items:center; justify-content:center; font-size:11px; color:var(--ground);}
+.opt.sel .optbox{border-color:var(--red); background:var(--red);}
+.opt.na{border-style:dashed; color:var(--mut);}
+.bool{display:flex; gap:8px; margin-top:12px;}
+.boolbtn{flex:1; padding:13px; border-radius:10px; border:1px solid var(--line); background:var(--panel); color:var(--ink); font-family:'Space Grotesk',sans-serif; font-weight:600; cursor:pointer;}
+.boolbtn:hover{border-color:var(--steel);}
+.boolbtn.on{border-color:var(--red); background:rgba(241,95,83,.1);}
+.rating{display:grid; grid-template-columns:repeat(5,1fr); gap:8px; margin-top:12px;}
+.ratebtn{display:flex; flex-direction:column; align-items:center; gap:4px; padding:12px 6px; border-radius:10px; border:1px solid var(--line); background:var(--panel); color:var(--mut); cursor:pointer;}
+.ratebtn:hover{border-color:var(--steel);}
+.ratebtn.on{border-color:var(--amber); background:rgba(251,174,64,.1); color:var(--ink);}
+.raten{font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:600;}
+.ratel{font-size:10.5px; text-align:center; line-height:1.25;}
+.rangewrap{display:flex; align-items:center; gap:16px; margin-top:14px;}
+.range{flex:1; accent-color:var(--red);}
+.rangeval{font-size:15px; min-width:110px; text-align:right; font-family:'Space Grotesk',sans-serif; font-weight:600;}
+.drag{list-style:none; margin:12px 0 0; padding:0; display:flex; flex-direction:column; gap:8px;}
+.dragitem{display:flex; align-items:center; gap:12px; padding:11px 14px; border-radius:10px; border:1px solid var(--line); background:var(--panel);}
+.dragrank{color:var(--red); font-size:14px; font-family:'IBM Plex Mono',monospace;}
+.draglabel{flex:1; font-size:14.5px;}
+.dragctl{display:flex; gap:4px;}
+.dragctl button{width:26px; height:26px; border-radius:6px; border:1px solid var(--line); background:var(--ground); color:var(--mut); cursor:pointer; font-size:10px;}
+.dragctl button:disabled{opacity:.3; cursor:not-allowed;}
+.notetoggle{margin-top:10px; background:none; border:none; color:var(--steel); font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.06em; cursor:pointer; padding:0;}
+.notetoggle:hover{color:var(--ink);}
+.notebox{width:100%; min-height:70px; margin-top:8px; padding:11px 13px; border-radius:10px; border:1px dashed var(--line); background:var(--ground); color:var(--ink); font-family:inherit; font-size:13.5px; resize:vertical;}
+.notebox:focus{outline:none; border-color:var(--steel); border-style:solid;}
+.navrow{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:30px; padding-top:20px; border-top:1px solid var(--line);}
+.navmeta{font-size:12px; color:var(--mutd); font-family:'IBM Plex Mono',monospace;}
+
+/* bank */
+.bankgrid{display:flex; flex-direction:column; gap:18px;}
+.panelcard{border:1px solid var(--line); border-radius:14px; background:var(--panel); padding:20px;}
+.stat{display:flex; gap:26px; flex-wrap:wrap; font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--mut);}
+.stat b{color:var(--ink); font-size:20px; font-family:'Space Grotesk',sans-serif; display:block;}
+.btnrow{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;}
+table.qtable{width:100%; border-collapse:collapse; font-size:13px;}
+table.qtable th,table.qtable td{text-align:left; padding:9px 10px; border-bottom:1px solid var(--line); vertical-align:top;}
+table.qtable th{font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--mutd);}
+.pill{font-family:'IBM Plex Mono',monospace; font-size:10px; padding:2px 7px; border-radius:999px; border:1px solid var(--line); color:var(--mut); white-space:nowrap;}
+.pill.crit{color:var(--red); border-color:rgba(241,95,83,.5);}
+.jsoned{width:100%; min-height:300px; font-family:'IBM Plex Mono',monospace; font-size:12px; line-height:1.5; padding:14px; border-radius:10px; border:1px solid var(--line); background:var(--ground); color:var(--ink); resize:vertical; white-space:pre;}
+.toast{position:fixed; bottom:22px; left:50%; transform:translateX(-50%); background:var(--panel2); border:1px solid var(--steel); color:var(--ink); padding:11px 18px; border-radius:10px; font-size:13.5px; z-index:50; box-shadow:0 8px 30px rgba(0,0,0,.4);}
+.tunerow{display:grid; grid-template-columns:1.4fr repeat(3,1fr); gap:10px; align-items:center; padding:10px 0; border-bottom:1px solid var(--line); font-size:13px;}
+.tunerow:last-child{border-bottom:none;}
+.tunerow .sname{font-family:'Space Grotesk',sans-serif; font-weight:600; display:flex; align-items:center; gap:8px;}
+.tunedot{width:9px; height:9px; border-radius:50%; flex:none;}
+.tuneinput{width:100%; padding:8px 10px; border-radius:8px; border:1px solid var(--line); background:var(--ground); color:var(--ink); font-family:'IBM Plex Mono',monospace; font-size:13px;}
+.tunehead{font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--mutd);}
+
+/* ===== REPORT ===== */
+.reportwrap{position:relative; z-index:1; padding:24px clamp(12px,3vw,32px) 60px;}
+.reportbar{display:flex; gap:10px; justify-content:flex-end; margin-bottom:16px; flex-wrap:wrap;}
+.paper{background:#fff; color:#16202B; border-radius:14px; overflow:hidden; box-shadow:0 20px 60px rgba(0,0,0,.4); max-width:840px; margin:0 auto; font-family:'IBM Plex Sans',sans-serif;}
+.paper .cover{padding:38px 44px 30px; border-bottom:3px solid var(--navy); background:linear-gradient(180deg,#F5F8FB,#fff);}
+.covertop{display:flex; align-items:flex-start; justify-content:space-between; gap:20px; margin-bottom:26px;}
+.coverlogo{display:flex; align-items:center; gap:9px;}
+.coverlogo .ltmmark{box-shadow:inset 0 0 0 3px #F5F8FB;}
+.coverlogo b{font-family:'Space Grotesk',sans-serif; font-size:15px; color:#0A1826;}
+.coverlogo span{display:block; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.14em; color:#7089A0; text-transform:uppercase;}
+.coverlogo img{height:34px; max-width:170px; object-fit:contain;}
+.reptitle{font-family:'Space Grotesk',sans-serif; font-size:30px; font-weight:600; color:#0A1826; line-height:1.1;}
+.repsub{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--red); margin-top:8px;}
+.covermeta{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:26px;}
+.metablock .mlab{font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:#7089A0; margin-bottom:6px;}
+.metablock .mval{font-size:15px; font-weight:600; color:#16202B;}
+.metablock .mline{font-size:13px; color:#48586A;}
+.orgident{display:flex; align-items:center; gap:12px;}
+.orgident img{height:40px; max-width:120px; object-fit:contain; border-radius:4px;}
+.paper .body{padding:32px 44px 40px;}
+.repsec{margin-bottom:30px;}
+.repsec h3{font-family:'Space Grotesk',sans-serif; font-size:16px; color:#0A1826; margin-bottom:14px; padding-bottom:8px; border-bottom:1px solid #E3EAF1;}
+.rephero{display:flex; align-items:center; gap:24px; flex-wrap:wrap;}
+.repscore{width:112px; height:112px; border-radius:50%; border:2px solid var(--navy); display:flex; flex-direction:column; align-items:center; justify-content:center; flex:none; background:#F5F8FB;}
+.repscore b{font-family:'Space Grotesk',sans-serif; font-size:32px; color:var(--navy); line-height:1;}
+.repscore span{font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.12em; text-transform:uppercase; color:#7089A0; margin-top:4px;}
+.repstage b{font-family:'Space Grotesk',sans-serif; font-size:24px; color:#0A1826;}
+.repstage p{color:#48586A; font-size:14px; margin:6px 0 0; max-width:50ch;}
+.rgauge{margin:22px 0 6px;}
+.rgtrack{position:relative; height:14px; border-radius:7px; background:#EAF0F6; border:1px solid #D4DEE8; overflow:hidden; display:flex;}
+.rgseg{flex:1; border-right:1px solid #fff;}
+.rgseg:last-child{border-right:none;}
+.rglabels{display:grid; grid-template-columns:repeat(5,1fr); margin-top:9px;}
+.rgst{font-size:11px; color:#7089A0; padding-right:6px;}
+.rgst.on{color:#0A1826; font-weight:600;}
+.rgst .n{font-family:'IBM Plex Mono',monospace; font-size:10px; display:block; color:#9AA8B6;}
+.rgst.on .n{color:var(--red);}
+.repstat{display:flex; gap:26px; flex-wrap:wrap; font-family:'IBM Plex Mono',monospace; font-size:13px; color:#48586A; margin-top:16px;}
+.repstat b{color:#0A1826;}
+.stagetable{width:100%; border-collapse:collapse; font-size:13px;}
+.stagetable th,.stagetable td{text-align:left; padding:10px 8px; border-bottom:1px solid #E3EAF1;}
+.stagetable th{font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:#7089A0;}
+.stagetable td.num{font-family:'IBM Plex Mono',monospace; text-align:right;}
+.stbadge{font-family:'IBM Plex Mono',monospace; font-size:10px; padding:3px 8px; border-radius:999px; border:1px solid;}
+.dombar{display:flex; align-items:center; gap:12px; margin-bottom:9px;}
+.domname{font-size:13px; width:150px; flex:none; color:#16202B;}
+.domtrack{flex:1; height:8px; border-radius:4px; background:#EAF0F6; overflow:hidden;}
+.domfill{height:100%;}
+.domval{font-family:'IBM Plex Mono',monospace; font-size:11px; color:#7089A0; width:38px; text-align:right;}
+.horizon{border:1px solid #E3EAF1; border-radius:10px; padding:16px 18px; margin-bottom:12px;}
+.horizonhead{display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:4px; flex-wrap:wrap;}
+.horizonname{font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; color:#0A1826;}
+.horizonwhen{font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:#fff; padding:3px 9px; border-radius:999px;}
+.horizonaim{color:#48586A; font-size:12.5px; margin-bottom:12px;}
+.action{padding:10px 0; border-top:1px solid #F0F4F8;}
+.action:first-of-type{border-top:none;}
+.actiontop{display:flex; align-items:flex-start; gap:9px;}
+.actionmark{font-family:'IBM Plex Mono',monospace; font-size:10px; color:#fff; background:var(--navy); border-radius:4px; padding:2px 6px; flex:none; margin-top:2px;}
+.actionmark.crit{background:var(--red);}
+.actiontext{font-size:13.5px; color:#16202B; font-weight:500;}
+.actionmeta{font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:#7089A0; margin-top:3px;}
+.notecard{border-left:3px solid var(--steel); background:#F5F8FB; padding:10px 14px; margin-bottom:8px; border-radius:0 6px 6px 0;}
+.notecard .nq{font-size:12px; color:#7089A0; margin-bottom:3px;}
+.notecard .nt{font-size:13px; color:#16202B;}
+.repfoot{padding:20px 44px 30px; border-top:1px solid #E3EAF1; color:#7089A0; font-size:11.5px;}
+.repfoot .disc{margin-top:8px;}
+
+@media (max-width:820px){
+  .shell{grid-template-columns:1fr;}
+  .rail{flex-direction:row; overflow-x:auto; border-right:none; border-bottom:1px solid var(--line);}
+  .railitem{flex:none;}
+  .grid2,.covermeta{grid-template-columns:1fr;}
+  .signature{grid-template-columns:1fr;}
+  .sigbridge{width:auto; border-left:none; border-right:none; border-top:1px dashed var(--line);}
+  .signode.alt{text-align:left;}
+  .tunerow{grid-template-columns:1fr 1fr;}
+  .rating{grid-template-columns:repeat(3,1fr);}
+}
+:focus-visible{outline:2px solid var(--steel); outline-offset:2px;}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;}}
+
+@media print{
+  @page{margin:14mm;}
+  body{background:#fff;}
+  .gridbg,.bar,.reportbar,.no-print{display:none!important;}
+  .reportwrap{padding:0;}
+  .paper{box-shadow:none; border-radius:0; max-width:none; margin:0;}
+  .repsec,.horizon,.stagetable tr{page-break-inside:avoid;}
+  .repsec h3{page-break-after:avoid;}
+}
+</style>
+</head>
+<body>
+<div class="gridbg"></div>
+<header class="bar no-print">
+  <div class="brand">
+    <div class="ltmlogo" id="ltmLogo" title="Set LTM logo (your property)"></div>
+  </div>
+  <div class="nav" id="topnav">
+    <button class="navbtn" data-nav="assessment">Assessment</button>
+    <button class="navbtn" data-nav="bank">Question Bank</button>
+  </div>
+</header>
+<div id="app"></div>
+<input type="file" id="fileLtm" accept="image/*" style="display:none"/>
+<input type="file" id="fileOrg" accept="image/*" style="display:none"/>
+<input type="file" id="fileImport" accept=".json,application/json" style="display:none"/>
+<input type="file" id="fileCsv" accept=".csv,text/csv" style="display:none"/>
+
+<script>
+/* =====================================================================
+   FinOps Maturity Screen — knowledge base
+   Scoring is normalised 0–100 across all answer types so that mixed
+   formats (select, multi, boolean, range, rating, order) can share one
+   gate model. Stage passes when weighted score >= threshold AND every
+   critical question scores >= crit_min.
+   ===================================================================== */
+const DEFAULT_KB = {
+  meta:{
+    schema_version:"1.0.0",
+    framework:"FinOps Maturity Assessment",
+    last_reviewed:"2026-07-22",
+    scale:"0-100 normalised",
+    disclaimer:"Indicative maturity screen based on self-reported inputs. Scores reflect the responses given and are intended to prioritise action, not to certify compliance or guarantee savings.",
+    gating_note:"Maturity is the highest stage passed with all preceding stages also passed. A stage passes only when its weighted score meets the threshold and every critical question meets the critical minimum — criticals are structural prerequisites, so a high average cannot compensate for a missing foundation.",
+    domains:[
+      {id:"governance", label:"Governance & accountability", color:"#9B82D0"},
+      {id:"visibility",  label:"Visibility & reporting",      color:"#58A6E0"},
+      {id:"optimization",label:"Optimisation & efficiency",   color:"#3FB98A"},
+      {id:"automation",  label:"Automation & engineering",    color:"#FBAE40"},
+      {id:"culture",     label:"Culture & accountability",    color:"#57B6C2"}
+    ],
+    stages:[
+      {id:"chaos",       n:1, name:"Chaos",       color:"#F15F53", threshold:60, crit_min:70, require_all_crits:true,
+       desc:"Foundational governance, security controls and basic billing visibility must exist before meaningful FinOps work can begin.",
+       aim:"Establish who owns what, and get trustworthy billing data flowing."},
+      {id:"informed",    n:2, name:"Informed",    color:"#FBAE40", threshold:65, crit_min:70, require_all_crits:true,
+       desc:"Cost visibility, tagging discipline and a regular rhythm of cost review are established and shared across teams.",
+       aim:"Make spend visible and attributable, and build the review cadence."},
+      {id:"optimized",   n:3, name:"Optimised",   color:"#3FB98A", threshold:70, crit_min:75, require_all_crits:true,
+       desc:"The organisation actively reduces waste, uses commitment-based discounts and embeds cost discipline into engineering decisions.",
+       aim:"Convert visibility into recurring, measurable savings."},
+      {id:"automated",   n:4, name:"Automated",   color:"#58A6E0", threshold:75, crit_min:75, require_all_crits:true,
+       desc:"Cost governance is enforced programmatically through policy-as-code, automation pipelines and engineering KPIs.",
+       aim:"Make the efficient path the default path, without manual effort."},
+      {id:"transparent", n:5, name:"Transparent", color:"#9B82D0", threshold:80, crit_min:80, require_all_crits:true,
+       desc:"Full financial accountability, unit economics and real-time integration into business planning and pricing.",
+       aim:"Run cloud as a business input, priced and margin-managed."}
+    ]
+  },
+
+  questions:[
+    /* ================= STAGE 1 — CHAOS ================= */
+    {id:"C1", stage:"chaos", domain:"governance", critical:true, weight:2, answer_type:"single_select",
+     text:"Is MFA enforced on root / master accounts, with access control policies applied across all accounts?",
+     options:[{label:"Enforced everywhere, with policy and periodic review",score:100},{label:"Enforced on root, partial elsewhere",score:65},{label:"Enforced on some accounts only",score:30},{label:"Not enforced / unknown",score:0}],
+     remediation:"Enforce MFA on all root and privileged accounts and apply baseline access-control policy org-wide."},
+    {id:"C2", stage:"chaos", domain:"visibility", critical:true, weight:2, answer_type:"single_select",
+     text:"Is granular billing and usage data exported to a centralised, durable store?",
+     options:[{label:"Yes — automated daily export to a central store",score:100},{label:"Exported, but partial or manual",score:55},{label:"Console access only, no export",score:20},{label:"No",score:0}],
+     remediation:"Enable granular billing exports (CUR / Cost Details / BigQuery billing export) into a central, queryable store."},
+    {id:"C3", stage:"chaos", domain:"visibility", critical:false, weight:1, answer_type:"boolean",
+     text:"Are billing alarms configured and actively alerting when spend crosses defined thresholds?",
+     remediation:"Configure account-level budget alarms with escalation to a named owner."},
+    {id:"C4", stage:"chaos", domain:"culture", critical:true, weight:1.5, answer_type:"boolean",
+     text:"Does the finance team have read-only access to cloud billing consoles and cost dashboards?",
+     remediation:"Grant finance read-only billing access so cost conversations start from shared data."},
+    {id:"C5", stage:"chaos", domain:"governance", critical:true, weight:2, answer_type:"single_select",
+     text:"Does an account / subscription ownership registry exist with a named owner per account?",
+     options:[{label:"Yes — complete and actively maintained",score:100},{label:"Exists but incomplete or stale",score:50},{label:"Informal knowledge only",score:20},{label:"No registry",score:0}],
+     remediation:"Build an account registry with a named owner, cost centre and environment for every account or subscription."},
+    {id:"C6", stage:"chaos", domain:"governance", critical:false, weight:1, answer_type:"single_select",
+     text:"Are production and non-production environments separated with distinct billing identities?",
+     options:[{label:"Fully separated accounts / subscriptions",score:100},{label:"Partially separated",score:55},{label:"Shared, separated by tags only",score:30},{label:"No separation",score:0}],
+     remediation:"Separate prod and non-prod into distinct accounts so spend and blast radius are independently controllable."},
+    {id:"C7", stage:"chaos", domain:"culture", critical:false, weight:1.5, answer_type:"single_select",
+     text:"Is a single team or individual formally accountable for cloud spend governance?",
+     options:[{label:"Yes — named, resourced and mandated",score:100},{label:"Named, but without clear mandate or time",score:55},{label:"Shared informally across teams",score:25},{label:"No one accountable",score:0}],
+     remediation:"Appoint a named FinOps owner with an explicit mandate and allocated capacity."},
+    {id:"C8", stage:"chaos", domain:"visibility", critical:false, weight:1, answer_type:"multi_select",
+     text:"Which foundational cost artefacts exist today?",
+     options:[{label:"Consolidated billing across accounts",score:25},{label:"A current inventory of cloud accounts",score:25},{label:"A documented cloud cost baseline",score:25},{label:"Named commercial / contract owner per provider",score:25}],
+     remediation:"Close the missing foundational artefacts — consolidated billing, account inventory, cost baseline and contract ownership."},
+
+    /* ================= STAGE 2 — INFORMED ================= */
+    {id:"I1", stage:"informed", domain:"governance", critical:true, weight:2, answer_type:"single_select",
+     text:"Is a tagging / metadata strategy formally defined and documented (cost centre, environment, application, owner)?",
+     options:[{label:"Documented, mandated and version-controlled",score:100},{label:"Documented but not consistently mandated",score:60},{label:"Informal conventions only",score:25},{label:"None",score:0}],
+     remediation:"Publish a mandatory tagging standard covering cost centre, environment, application and owner."},
+    {id:"I2", stage:"informed", domain:"visibility", critical:true, weight:2, answer_type:"range",
+     text:"What percentage of active compute and storage resources currently carry complete, valid tags?",
+     range:{min:0,max:100,step:5,suffix:"%"},
+     remediation:"Drive tag coverage above 80% — start with the highest-spend resource groups, then enforce at creation."},
+    {id:"I3", stage:"informed", domain:"visibility", critical:false, weight:1.5, answer_type:"single_select",
+     text:"Are budgets configured per business unit or project, with alerts on forecast breach?",
+     options:[{label:"Yes — per BU with forecast-based alerting",score:100},{label:"Budgets set, actuals-based alerts only",score:60},{label:"A single organisation-wide budget",score:30},{label:"No budgets",score:0}],
+     remediation:"Set budgets at BU or product level and alert on forecast breach, not just actual breach."},
+    {id:"I4", stage:"informed", domain:"culture", critical:false, weight:1.5, answer_type:"single_select",
+     text:"Can engineering teams see their own cost data without raising a request?",
+     options:[{label:"Yes — self-service dashboards per team",score:100},{label:"Available, but hard to navigate or find",score:55},{label:"On request only",score:25},{label:"Not available to engineers",score:0}],
+     remediation:"Give every team a self-service cost view scoped to what they own."},
+    {id:"I5", stage:"informed", domain:"visibility", critical:false, weight:1, answer_type:"single_select",
+     text:"How often are showback reports distributed to teams?",
+     options:[{label:"Weekly or continuously available",score:100},{label:"Monthly",score:75},{label:"Quarterly",score:40},{label:"Ad hoc or never",score:0}],
+     remediation:"Establish at least a monthly showback rhythm before attempting chargeback."},
+    {id:"I6", stage:"informed", domain:"visibility", critical:false, weight:1, answer_type:"boolean",
+     text:"Is cost anomaly detection enabled and alerting on unexpected spend spikes?",
+     remediation:"Turn on native anomaly detection and route alerts to the owning team, not a shared mailbox."},
+    {id:"I7", stage:"informed", domain:"optimization", critical:false, weight:1, answer_type:"single_select",
+     text:"Are orphaned resources (unattached volumes, idle IPs, stale snapshots) identified and reviewed?",
+     options:[{label:"Automated detection with a review cadence",score:100},{label:"Reviewed periodically, manually",score:55},{label:"Only during incidents or audits",score:25},{label:"Not reviewed",score:0}],
+     remediation:"Stand up recurring orphaned-resource reporting with an owner and a disposal path."},
+    {id:"I8", stage:"informed", domain:"culture", critical:true, weight:1.5, answer_type:"rating_1_5",
+     text:"How confidently can engineering teams explain their month-over-month cost variance?",
+     labels:["Not at all","Rarely","Sometimes","Usually","Consistently"],
+     remediation:"Run variance walkthroughs in team reviews until teams can narrate their own cost movements."},
+    {id:"I9", stage:"informed", domain:"culture", critical:false, weight:1, answer_type:"single_select",
+     text:"What cadence exists for reviewing cloud cost trends at team or BU level?",
+     options:[{label:"Weekly or bi-weekly",score:100},{label:"Monthly",score:70},{label:"Quarterly",score:35},{label:"None",score:0}],
+     remediation:"Introduce a fortnightly cost review owned by the team, not by finance."},
+
+    /* ================= STAGE 3 — OPTIMISED ================= */
+    {id:"O1", stage:"optimized", domain:"optimization", critical:true, weight:2, answer_type:"range",
+     text:"What percentage of eligible on-demand spend is covered by commitments (RIs, Savings Plans, CUDs)?",
+     range:{min:0,max:100,step:5,suffix:"%"},
+     remediation:"Build a commitment strategy targeting 70%+ coverage of stable baseline workloads, with a renewal calendar."},
+    {id:"O2", stage:"optimized", domain:"optimization", critical:true, weight:2, answer_type:"single_select",
+     text:"How regularly are rightsizing recommendations reviewed and actioned by engineering teams?",
+     options:[{label:"Bi-weekly or faster, with tracked actions",score:100},{label:"Monthly",score:65},{label:"Quarterly or ad hoc",score:30},{label:"Not reviewed",score:0}],
+     remediation:"Put rightsizing into the sprint cadence with tracked completion, not a periodic report nobody owns."},
+    {id:"O3", stage:"optimized", domain:"optimization", critical:false, weight:1, answer_type:"range",
+     text:"What proportion of total storage cost is attributable to orphaned or idle resources?",
+     range:{min:0,max:25,step:1,suffix:"%"}, invert:true,
+     remediation:"Drive orphaned storage below 2% through lifecycle automation and a standing clean-up backlog."},
+    {id:"O4", stage:"optimized", domain:"optimization", critical:false, weight:1, answer_type:"range",
+     text:"What share of compute spend runs on Spot / Preemptible / transient capacity where workloads permit?",
+     range:{min:0,max:60,step:5,suffix:"%"},
+     remediation:"Identify interruption-tolerant workloads and shift them to spot capacity with graceful handling."},
+    {id:"O5", stage:"optimized", domain:"culture", critical:true, weight:1.5, answer_type:"single_select",
+     text:"Is cost impact a mandatory evaluation criterion in architecture and design reviews?",
+     options:[{label:"Mandatory, with documented cost analysis",score:100},{label:"Expected but inconsistently applied",score:55},{label:"Considered only for large projects",score:30},{label:"Not part of design review",score:0}],
+     remediation:"Add a required cost-impact section to the architecture review template and enforce it at approval."},
+    {id:"O6", stage:"optimized", domain:"governance", critical:false, weight:1.5, answer_type:"single_select",
+     text:"How are commitment-based discounts managed?",
+     options:[{label:"Centrally, with documented coverage and renewal strategy",score:100},{label:"Centrally, but reactively",score:60},{label:"Team by team",score:25},{label:"Unmanaged",score:0}],
+     remediation:"Centralise commitment management with a documented coverage target and renewal calendar."},
+    {id:"O7", stage:"optimized", domain:"optimization", critical:false, weight:1, answer_type:"boolean",
+     text:"Has data egress and cross-region transfer architecture been reviewed and optimised for cost?",
+     remediation:"Run an egress and inter-region traffic review — often one of the largest unexamined line items."},
+    {id:"O8", stage:"optimized", domain:"culture", critical:false, weight:1, answer_type:"rating_1_5",
+     text:"To what extent are teams recognised or rewarded for eliminating cloud waste?",
+     labels:["Never","Rarely","Occasionally","Regularly","Systematically"],
+     remediation:"Introduce visible recognition for savings delivered, so efficiency competes with feature delivery."},
+    {id:"O9", stage:"optimized", domain:"optimization", critical:false, weight:1, answer_type:"single_select",
+     text:"Does a cost optimisation backlog exist and get groomed within regular engineering sprints?",
+     options:[{label:"Yes — groomed and delivered each sprint",score:100},{label:"Exists but rarely prioritised",score:45},{label:"Ad hoc list",score:20},{label:"No backlog",score:0}],
+     remediation:"Create a standing optimisation backlog with committed sprint capacity."},
+    {id:"O10", stage:"optimized", domain:"optimization", critical:false, weight:1, answer_type:"drag_order",
+     text:"Rank these levers by how much value they have delivered in your environment — most delivered first.",
+     options:["Commitment discounts","Rightsizing","Waste elimination","Storage lifecycle","Architecture change"],
+     ideal:["Commitment discounts","Rightsizing","Waste elimination","Storage lifecycle","Architecture change"],
+     remediation:"Revisit under-exploited levers — most estates leave commitment coverage and rightsizing on the table longest."},
+
+    /* ================= STAGE 4 — AUTOMATED ================= */
+    {id:"A1", stage:"automated", domain:"automation", critical:true, weight:2, answer_type:"single_select",
+     text:"Is tagging enforced automatically through policy-as-code (OPA, Azure Policy, SCPs, Org Policies)?",
+     options:[{label:"Enforced at creation, blocking non-compliant resources",score:100},{label:"Detective policy with automated remediation",score:70},{label:"Detective only, manual fixes",score:40},{label:"No automated enforcement",score:0}],
+     remediation:"Move tagging from detective to preventive — block or auto-tag non-compliant resources at creation."},
+    {id:"A2", stage:"automated", domain:"automation", critical:false, weight:1.5, answer_type:"single_select",
+     text:"Are non-production resources automatically parked or shut down outside working hours?",
+     options:[{label:"Automated across most non-prod",score:100},{label:"Automated for some environments",score:60},{label:"Manual shutdowns",score:25},{label:"Always on",score:0}],
+     remediation:"Automate non-prod scheduling — typically the fastest large saving available without architecture change."},
+    {id:"A3", stage:"automated", domain:"automation", critical:false, weight:1, answer_type:"single_select",
+     text:"Do automated lifecycle policies govern object storage tiering, snapshot expiry and log retention?",
+     options:[{label:"Comprehensive lifecycle automation",score:100},{label:"Partial coverage",score:55},{label:"Manual clean-up",score:20},{label:"None",score:0}],
+     remediation:"Apply lifecycle policies to storage, snapshots and logs so retention cost decays automatically."},
+    {id:"A4", stage:"automated", domain:"visibility", critical:true, weight:2, answer_type:"range",
+     text:"Over the last rolling quarter, what has been your cloud spend forecast variance (actual vs predicted)?",
+     range:{min:0,max:40,step:1,suffix:"%"}, invert:true,
+     remediation:"Tighten forecast variance below 10% — instrument drivers, not just totals, to explain the gap."},
+    {id:"A5", stage:"automated", domain:"automation", critical:false, weight:1, answer_type:"single_select",
+     text:"Are container resource requests and limits tuned automatically or via pipeline guardrails?",
+     options:[{label:"Automated tuning in pipelines",score:100},{label:"Guardrails with manual tuning",score:60},{label:"Set once, rarely revisited",score:25},{label:"Not managed",score:0}],
+     remediation:"Introduce automated request/limit tuning — container over-provisioning is usually invisible in billing data."},
+    {id:"A6", stage:"automated", domain:"culture", critical:true, weight:1.5, answer_type:"single_select",
+     text:"Are FinOps or cost-efficiency metrics formally included in engineering OKRs or KPIs?",
+     options:[{label:"Yes — measured and reviewed with delivery metrics",score:100},{label:"Included but not actively tracked",score:50},{label:"Discussed informally",score:20},{label:"Not included",score:0}],
+     remediation:"Place a cost-efficiency measure alongside delivery metrics in engineering objectives."},
+    {id:"A7", stage:"automated", domain:"automation", critical:false, weight:1, answer_type:"boolean",
+     text:"Does automated handling and graceful recovery exist for Spot / Preemptible interruptions?",
+     remediation:"Implement interruption handling so spot adoption is not blocked by reliability concerns."},
+    {id:"A8", stage:"automated", domain:"visibility", critical:false, weight:1, answer_type:"single_select",
+     text:"Does cost and usage data flow automatically into internal reporting or executive dashboards?",
+     options:[{label:"Automated pipeline into BI",score:100},{label:"Semi-automated with manual steps",score:55},{label:"Manual spreadsheet reporting",score:25},{label:"No regular reporting",score:0}],
+     remediation:"Automate the cost data pipeline into BI to remove manual reporting effort and lag."},
+    {id:"A9", stage:"automated", domain:"culture", critical:false, weight:1.5, answer_type:"single_select",
+     text:"Do engineers receive automated cost feedback inside their normal workflow (CI/CD, pull requests)?",
+     options:[{label:"Yes — cost impact surfaced pre-merge",score:100},{label:"Post-deployment notifications",score:60},{label:"Periodic reports only",score:25},{label:"No feedback loop",score:0}],
+     remediation:"Surface cost deltas at pull-request time, where the decision is still cheap to change."},
+
+    /* ================= STAGE 5 — TRANSPARENT ================= */
+    {id:"T1", stage:"transparent", domain:"governance", critical:true, weight:2, answer_type:"single_select",
+     text:"How mature is chargeback to business units and cost centres?",
+     options:[{label:"Full automated chargeback into financial systems",score:100},{label:"Chargeback for major units, some allocation gaps",score:65},{label:"Showback only",score:35},{label:"Neither",score:0}],
+     remediation:"Progress from showback to automated chargeback, resolving shared-cost allocation rules first."},
+    {id:"T2", stage:"transparent", domain:"visibility", critical:true, weight:2, answer_type:"single_select",
+     text:"Are unit economics defined and tracked (cost per transaction, per API call, per active user, per order)?",
+     options:[{label:"Defined, tracked and trended for key services",score:100},{label:"Defined for some services",score:60},{label:"Under development",score:30},{label:"Not defined",score:0}],
+     remediation:"Define one unit metric per major product line and trend it — the anchor of business-level FinOps."},
+    {id:"T3", stage:"transparent", domain:"visibility", critical:true, weight:1.5, answer_type:"single_select",
+     text:"Is cost forecasting integrated into business BI platforms or financial planning tools?",
+     options:[{label:"Integrated and used in planning cycles",score:100},{label:"Integrated but not used in planning",score:55},{label:"Standalone forecasts only",score:25},{label:"No forecasting",score:0}],
+     remediation:"Connect cloud forecasting to the planning cycle so cloud becomes a budgeted business input."},
+    {id:"T4", stage:"transparent", domain:"visibility", critical:false, weight:1, answer_type:"boolean",
+     text:"Is cost per tenant or per customer tracked and used to inform pricing and margin decisions?",
+     remediation:"Instrument per-tenant cost to expose margin variance across the customer base."},
+    {id:"T5", stage:"transparent", domain:"culture", critical:false, weight:1, answer_type:"rating_1_5",
+     text:"How embedded are scorecards, leaderboards or similar mechanisms in promoting cost awareness?",
+     labels:["Absent","Minimal","Emerging","Established","Pervasive"],
+     remediation:"Introduce lightweight scorecards to sustain attention once the initial optimisation push fades."},
+    {id:"T6", stage:"transparent", domain:"optimization", critical:true, weight:2, answer_type:"range",
+     text:"What proportion of the total cloud bill is currently waste or idle resource cost?",
+     range:{min:0,max:30,step:1,suffix:"%"}, invert:true,
+     remediation:"Hold waste below 5% of spend through continuous detection and automated reclamation."},
+    {id:"T7", stage:"transparent", domain:"culture", critical:false, weight:1, answer_type:"rating_1_5",
+     text:"To what extent does cost efficiency feature in team or individual performance evaluation?",
+     labels:["Not at all","Rarely","Sometimes","Frequently","Consistently"],
+     remediation:"Reflect efficiency outcomes in performance conversations to make ownership durable."},
+    {id:"T8", stage:"transparent", domain:"governance", critical:false, weight:1.5, answer_type:"single_select",
+     text:"Do cloud unit economics directly inform product roadmap and pricing decisions?",
+     options:[{label:"Yes — a standing input to roadmap and pricing",score:100},{label:"Consulted occasionally",score:50},{label:"Rarely referenced",score:20},{label:"Never",score:0}],
+     remediation:"Bring unit economics into roadmap and pricing forums as a standing agenda item."}
+  ]
+};
+
+/* ---------------- scoring engine ---------------- */
+function qScore(q,a){
+  if(a===undefined||a===null||a==="__NA__") return null;
+  switch(q.answer_type){
+    case "single_select":{ const o=q.options[a]; return o&&typeof o.score==="number"?o.score:null; }
+    case "multi_select":{ if(!Array.isArray(a)||!a.length) return 0;
+      let t=0; a.forEach(i=>{const o=q.options[i]; if(o&&typeof o.score==="number") t+=o.score;});
+      return Math.max(0,Math.min(100,t)); }
+    case "boolean": return a===true?100:0;
+    case "rating_1_5": return ((a-1)/4)*100;
+    case "range":{ const r=q.range; const span=r.max-r.min; if(!span) return 0;
+      let p=((a-r.min)/span)*100; if(q.invert) p=100-p; return Math.max(0,Math.min(100,p)); }
+    case "drag_order":{ const ideal=q.ideal||q.options; if(!Array.isArray(a)||a.length!==ideal.length) return null;
+      let dist=0; a.forEach((item,i)=>{ const j=ideal.indexOf(item); if(j>=0) dist+=Math.abs(i-j); });
+      const n=ideal.length; const worst=Math.floor(n*n/2)||1;
+      return Math.max(0,Math.min(100,Math.round((1-dist/worst)*100))); }
+    case "open_text": return null;
+    default: return null;
+  }
+}
+function stageQuestions(kb,stageId){ return kb.questions.filter(q=>q.stage===stageId); }
+function stageScore(kb,stageId,answers){
+  const qs=stageQuestions(kb,stageId);
+  let tot=0,wt=0,answered=0;
+  qs.forEach(q=>{ const a=answers[q.id]; if(a===undefined) return; answered++;
+    const s=qScore(q,a); if(s===null) return; const w=q.weight||1; tot+=s*w; wt+=w; });
+  return { score: wt?Math.round(tot/wt):null, answered, total:qs.length };
+}
+function stageCriticals(kb,stageId,answers){
+  const st=kb.meta.stages.find(s=>s.id===stageId);
+  const crits=stageQuestions(kb,stageId).filter(q=>q.critical);
+  let pass=0; const failing=[];
+  crits.forEach(q=>{ const s=qScore(q,answers[q.id]);
+    if(s!==null && s>=st.crit_min) pass++; else failing.push(q); });
+  return { pass, total:crits.length, failing };
+}
+function stageStatus(kb,stageId,answers){
+  const st=kb.meta.stages.find(s=>s.id===stageId);
+  const {score,answered}=stageScore(kb,stageId,answers);
+  if(score===null||answered===0) return "unanswered";
+  const c=stageCriticals(kb,stageId,answers);
+  const critsOk = st.require_all_crits ? c.failing.length===0 : true;
+  return (score>=st.threshold && critsOk) ? "passed" : "failed";
+}
+function maturity(kb,answers){
+  let idx=-1;
+  for(let i=0;i<kb.meta.stages.length;i++){
+    if(stageStatus(kb,kb.meta.stages[i].id,answers)==="passed") idx=i; else break;
+  }
+  return idx; // -1 = below stage 1
+}
+function domainScores(kb,answers){
+  const acc={};
+  kb.questions.forEach(q=>{ const s=qScore(q,answers[q.id]); if(s===null) return;
+    const d=q.domain||"other"; acc[d]=acc[d]||{t:0,w:0};
+    const w=q.weight||1; acc[d].t+=s*w; acc[d].w+=w; });
+  const out={}; Object.keys(acc).forEach(d=>{ out[d]=Math.round(acc[d].t/acc[d].w); });
+  return out;
+}
+function overallScore(kb,answers){
+  let t=0,w=0;
+  kb.questions.forEach(q=>{ const s=qScore(q,answers[q.id]); if(s===null) return;
+    const ww=q.weight||1; t+=s*ww; w+=ww; });
+  return w?Math.round(t/w):null;
+}
+
+/* ---------------- roadmap ---------------- */
+function buildRoadmap(kb,answers){
+  const stages=kb.meta.stages;
+  const mIdx=maturity(kb,answers);
+  const nextIdx=Math.min(mIdx+1,stages.length-1);
+  const gaps=[];
+  stages.forEach((st,si)=>{
+    const par = st.crit_min;
+    stageQuestions(kb,st.id).forEach(q=>{
+      const a=answers[q.id];
+      const s=qScore(q,a);
+      const unanswered=(a===undefined);
+      const target=q.critical?st.crit_min:st.threshold;
+      if(unanswered || (s!==null && s<target)){
+        gaps.push({q, stage:st, stageIdx:si, score:s, unanswered, target, gapSize:(s===null?100:target-s)});
+      }
+    });
+  });
+  const rank=(a,b)=> (b.q.critical?1:0)-(a.q.critical?1:0) || (b.q.weight||1)-(a.q.weight||1) || b.gapSize-a.gapSize;
+  const midIdx=Math.min(nextIdx+1,stages.length-1);
+  const short = gaps.filter(g=>g.stageIdx<=nextIdx && g.q.critical).sort(rank);
+  const mid   = gaps.filter(g=>(g.stageIdx<=nextIdx && !g.q.critical) || (g.stageIdx===midIdx && midIdx>nextIdx && g.q.critical)).sort(rank);
+  const long  = gaps.filter(g=>g.stageIdx>nextIdx && !(g.stageIdx===midIdx && g.q.critical)).sort(rank);
+  return {
+    mIdx, nextIdx,
+    horizons:[
+      {key:"short", name:"Short term", when:"0–3 months", color:"#F15F53",
+       aim: mIdx<stages.length-1 ? ("Unblock the gate into "+stages[nextIdx].name+" — these are structural prerequisites, not optional improvements.") : "Protect the position — close any critical control that has slipped.",
+       items:short},
+      {key:"mid", name:"Mid term", when:"3–9 months", color:"#FBAE40",
+       aim:"Lift the weighted score through remaining gaps at the target stage, and begin the prerequisites for the stage after it.",
+       items:mid},
+      {key:"long", name:"Long term", when:"9–24 months", color:"#57B6C2",
+       aim:"Build toward the later stages once the foundation holds.",
+       items:long}
+    ]
+  };
+}
+
+/* ---------------- state ---------------- */
+const S={
+  kb: deepClone(DEFAULT_KB),
+  tab:"assessment",
+  screen:"intro",           // intro | org | respondent | assess | report
+  stageIdx:0,
+  org:{name:"",logo:null,sector:"",spend:"",details:""},
+  respondent:{name:"",role:"",email:"",date:todayISO()},
+  answers:{}, notes:{}, openNotes:{},
+  ltmLogo:null
+};
+function deepClone(o){ return JSON.parse(JSON.stringify(o)); }
+function todayISO(){ return new Date().toISOString().slice(0,10); }
+function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+const $=s=>document.querySelector(s);
+const app=$("#app");
+
+/* ---------------- render ---------------- */
+function render(){
+  document.querySelectorAll("#topnav .navbtn").forEach(b=>b.classList.toggle("on",b.dataset.nav===S.tab));
+  const logo=$("#ltmLogo");
+  logo.innerHTML = S.ltmLogo
+    ? '<img src="'+S.ltmLogo+'" alt="LTM logo"/>'
+    : '<span class="ltmmark"></span><span class="ltmword"><b>LTM</b><span>FinOps Maturity Accelerator</span></span><span class="ph-note">LOGO · CLICK TO SET</span>';
+  if(S.tab==="bank"){ app.innerHTML=viewBank(); return; }
+  if(S.screen==="intro"){ app.innerHTML=viewIntro(); return; }
+  if(S.screen==="org"){ app.innerHTML=viewOrg(); return; }
+  if(S.screen==="respondent"){ app.innerHTML=viewRespondent(); return; }
+  if(S.screen==="assess"){ app.innerHTML=viewAssess(); return; }
+  if(S.screen==="report"){ app.innerHTML=viewReport(); return; }
+}
+function stepChips(active){
+  const steps=[["org","Organisation"],["respondent","Respondent"],["assess","Assessment"],["report","Report"]];
+  const ai=steps.findIndex(s=>s[0]===active);
+  return '<div class="steps">'+steps.map(([k,l],i)=>{
+    const cls=k===active?"on":(i<ai?"done":"");
+    return '<span class="stepchip '+cls+'"><span class="n mono">0'+(i+1)+'</span>'+l+(i<ai?' ✓':'')+'</span>';
+  }).join("")+'</div>';
+}
+
+function viewIntro(){
+  const st=S.kb.meta.stages;
+  return '<main class="wrap"><div style="max-width:780px">'
+    +'<div class="eyebrow">Cloud financial management · Maturity triage</div>'
+    +'<h1 class="h1">Spend visibility is not<br/>spend control.</h1>'
+    +'<p class="lead">A staged assessment of cloud financial maturity — where you actually sit today, what is blocking the next stage, and the sequence of moves that gets you there. Each stage gates the next: foundations cannot be skipped by scoring well elsewhere.</p>'
+    +'<div class="signature"><div class="signode"><div class="sigk">What most teams have</div><div class="sigv">Dashboards and reports</div></div>'
+    +'<div class="sigbridge"><span>the gap where savings leak</span></div>'
+    +'<div class="signode alt"><div class="sigk">What changes cost</div><div class="sigv">Ownership and defaults</div></div></div>'
+    +'<div class="panelcard" style="margin-bottom:24px"><div class="eyebrow" style="margin-bottom:12px">The five stages</div>'
+    +'<div style="display:flex;flex-wrap:wrap;gap:10px">'+st.map(s=>'<span class="pill" style="color:'+s.color+';border-color:'+s.color+'66;font-size:11px;padding:5px 11px">'+s.n+' · '+esc(s.name)+'</span>').join("")+'</div>'
+    +'<p class="blurb" style="margin-top:12px">'+esc(S.kb.meta.gating_note)+'</p></div>'
+    +'<div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">'
+    +'<button class="btn primary lg" data-action="goto" data-screen="org">Begin assessment →</button>'
+    +'<span class="blurb">'+S.kb.questions.length+' questions across 5 stages · roughly 15 minutes</span></div>'
+    +'</div></main>';
+}
+
+function fieldHtml(label,obj,key,type,ph,val){
+  if(type==="textarea") return '<div class="field"><label>'+label+'</label><textarea class="textarea" data-model="'+obj+'.'+key+'" placeholder="'+esc(ph)+'">'+esc(val)+'</textarea></div>';
+  return '<div class="field"><label>'+label+'</label><input class="input" type="'+(type==="date"?"date":"text")+'" data-model="'+obj+'.'+key+'" placeholder="'+esc(ph)+'" value="'+esc(val)+'"/></div>';
+}
+function viewOrg(){
+  const o=S.org;
+  return '<main class="wrap">'+stepChips("org")
+    +'<h2 class="h2">Organisation being assessed</h2><p class="blurb" style="margin-bottom:22px">Appears on the report cover.</p>'
+    +'<div class="panelcard" style="max-width:720px">'
+    +fieldHtml("Organisation name","org","name","input","e.g. Northwind Retail Group",o.name)
+    +'<div class="field"><label>Organisation logo</label><div class="logoup">'
+    +'<div class="logobox">'+(o.logo?'<img src="'+o.logo+'"/>':'<span>No logo yet</span>')+'</div>'
+    +'<div><button class="btn ghost sm" data-action="uploadOrg">Upload logo</button>'+(o.logo?' <button class="btn ghost sm" data-action="clearOrgLogo">Remove</button>':'')+'</div></div></div>'
+    +'<div class="grid2">'+fieldHtml("Sector","org","sector","input","e.g. Retail",o.sector)
+    +fieldHtml("Approx. annual cloud spend","org","spend","input","e.g. £12m",o.spend)+'</div>'
+    +fieldHtml("Scope / context","org","details","textarea","Which providers, business units or workloads are in scope (optional)",o.details)
+    +'</div>'
+    +'<div class="navrow" style="max-width:720px"><button class="btn ghost" data-action="goto" data-screen="intro">← Back</button>'
+    +'<button class="btn primary" data-action="orgNext" '+(o.name?'':'disabled')+'>Continue →</button></div></main>';
+}
+function viewRespondent(){
+  const r=S.respondent;
+  return '<main class="wrap">'+stepChips("respondent")
+    +'<h2 class="h2">Who is completing this assessment</h2><p class="blurb" style="margin-bottom:22px">Recorded on the report for attribution.</p>'
+    +'<div class="panelcard" style="max-width:720px"><div class="grid2">'
+    +fieldHtml("Full name","respondent","name","input","e.g. Daniel Okafor",r.name)
+    +fieldHtml("Role / title","respondent","role","input","e.g. Head of Cloud Platform",r.role)+'</div><div class="grid2">'
+    +fieldHtml("Email","respondent","email","input","name@company.com",r.email)
+    +fieldHtml("Date","respondent","date","date","",r.date)+'</div></div>'
+    +'<div class="navrow" style="max-width:720px"><button class="btn ghost" data-action="goto" data-screen="org">← Back</button>'
+    +'<button class="btn primary" data-action="respNext" '+(r.name?'':'disabled')+'>Start assessment →</button></div></main>';
+}
+
+function viewAssess(){
+  const kb=S.kb, stages=kb.meta.stages;
+  S.stageIdx=Math.max(0,Math.min(S.stageIdx,stages.length-1));
+  const st=stages[S.stageIdx];
+  const qs=stageQuestions(kb,st.id);
+  const sc=stageScore(kb,st.id,S.answers);
+  const cr=stageCriticals(kb,st.id,S.answers);
+  const status=stageStatus(kb,st.id,S.answers);
+
+  const rail=stages.map((s,i)=>{
+    const stat=stageStatus(kb,s.id,S.answers);
+    const sco=stageScore(kb,s.id,S.answers).score;
+    return '<button class="railitem'+(i===S.stageIdx?' active':'')+(stat==="passed"?' pass':stat==="failed"?' fail':'')+'" data-action="gotoStage" data-i="'+i+'">'
+      +'<span class="raildot" style="'+(stat==="unanswered"?'':'background:'+(stat==="passed"?'var(--green)':'var(--red)'))+'"></span>'
+      +'<span class="railn">0'+s.n+'</span><span class="raill">'+esc(s.name)+'</span>'
+      +'<span class="railscore">'+(sco!==null?sco:'')+'</span></button>';
+  }).join("");
+
+  let gmsg,gcls;
+  if(sc.score===null){ gmsg="Answer the questions to evaluate this stage"; gcls="neutral"; }
+  else if(status==="passed"){ gmsg="✓ Stage passed — score "+sc.score+" ≥ "+st.threshold+", all criticals met"; gcls="ok"; }
+  else { const bits=[];
+    if(sc.score<st.threshold) bits.push("score "+sc.score+" below threshold "+st.threshold);
+    if(cr.failing.length) bits.push(cr.failing.length+" critical"+(cr.failing.length>1?"s":"")+" below "+st.crit_min);
+    gmsg="⚠ "+bits.join("; "); gcls="warn"; }
+  const pct=sc.score!==null?sc.score:0;
+
+  return '<main class="wrap">'+stepChips("assess")
+    +'<div class="shell"><nav class="rail">'+rail+'</nav><section class="main">'
+    +'<div class="sechead"><span class="secn">STAGE 0'+st.n+'</span><div><h2 class="h2">'+esc(st.name)+'</h2><p class="blurb">'+esc(st.desc)+'</p></div></div>'
+    +'<div class="gate"><div class="gatestats">'
+    +'<span><b>'+(sc.score!==null?sc.score:'—')+'</b>score / '+st.threshold+'</span>'
+    +'<span><b>'+cr.pass+'/'+cr.total+'</b>criticals ≥ '+st.crit_min+'</span>'
+    +'<span><b>'+sc.answered+'/'+sc.total+'</b>answered</span></div>'
+    +'<div class="gatemsg '+gcls+'">'+esc(gmsg)+'</div>'
+    +'<div class="progress"><div class="progressfill'+(sc.score!==null&&sc.score<st.threshold?' low':'')+'" style="width:'+pct+'%"></div></div></div>'
+    +'<div class="qs">'+qs.map(renderQuestion).join("")+'</div>'
+    +'<div class="navrow"><button class="btn ghost" data-action="stageBack">'+(S.stageIdx===0?'← Respondent':'← Previous stage')+'</button>'
+    +'<span class="navmeta">'+sc.answered+'/'+sc.total+' answered</span>'
+    +(S.stageIdx<stages.length-1
+      ? '<span style="display:flex;gap:8px"><button class="btn ghost" data-action="goReport">Skip to report</button><button class="btn primary" data-action="stageNext">Next stage →</button></span>'
+      : '<button class="btn primary" data-action="goReport">See report →</button>')
+    +'</div></section></div></main>';
+}
+
+function renderQuestion(q){
+  const a=S.answers[q.id];
+  const dom=(S.kb.meta.domains.find(d=>d.id===q.domain)||{}).label||q.domain||"";
+  let body="";
+  if(q.answer_type==="single_select"){
+    body='<div class="opts">'+q.options.map((o,i)=>'<button class="opt'+(a===i?' sel':'')+'" data-action="ansSingle" data-q="'+q.id+'" data-i="'+i+'"><span class="optdot"></span>'+esc(o.label)+'</button>').join("")
+      +'<button class="opt na'+(a==="__NA__"?' sel':'')+'" data-action="ansNA" data-q="'+q.id+'">Not applicable</button></div>';
+  } else if(q.answer_type==="multi_select"){
+    const arr=Array.isArray(a)?a:[];
+    body='<div class="opts">'+q.options.map((o,i)=>'<button class="opt'+(arr.includes(i)?' sel':'')+'" data-action="ansMulti" data-q="'+q.id+'" data-i="'+i+'"><span class="optbox">'+(arr.includes(i)?'✓':'')+'</span>'+esc(o.label)+'</button>').join("")
+      +'<button class="opt na'+(a==="__NA__"?' sel':'')+'" data-action="ansNA" data-q="'+q.id+'">Not applicable</button></div>';
+  } else if(q.answer_type==="boolean"){
+    body='<div class="bool"><button class="boolbtn'+(a===true?' on':'')+'" data-action="ansBool" data-q="'+q.id+'" data-v="true">Yes</button>'
+      +'<button class="boolbtn'+(a===false?' on':'')+'" data-action="ansBool" data-q="'+q.id+'" data-v="false">No</button></div>';
+  } else if(q.answer_type==="rating_1_5"){
+    const labels=q.labels||["1","2","3","4","5"];
+    body='<div class="rating">'+[1,2,3,4,5].map(n=>'<button class="ratebtn'+(a===n?' on':'')+'" data-action="ansRate" data-q="'+q.id+'" data-v="'+n+'"><span class="raten">'+n+'</span><span class="ratel">'+esc(labels[n-1])+'</span></button>').join("")+'</div>';
+  } else if(q.answer_type==="range"){
+    const r=q.range; const v=(a===undefined?r.min:a);
+    body='<div class="rangewrap"><input class="range" type="range" min="'+r.min+'" max="'+r.max+'" step="'+(r.step||1)+'" value="'+v+'" data-action="ansRange" data-q="'+q.id+'"/>'
+      +'<div class="rangeval" id="rv_'+q.id+'">'+v+(r.suffix||"")+'</div></div>';
+  } else if(q.answer_type==="drag_order"){
+    const order=Array.isArray(a)?a:q.options.slice();
+    body='<ol class="drag">'+order.map((it,i)=>'<li class="dragitem"><span class="dragrank">'+(i+1)+'</span><span class="draglabel">'+esc(it)+'</span>'
+      +'<span class="dragctl"><button data-action="dragUp" data-q="'+q.id+'" data-i="'+i+'" '+(i===0?'disabled':'')+'>▲</button>'
+      +'<button data-action="dragDown" data-q="'+q.id+'" data-i="'+i+'" '+(i===order.length-1?'disabled':'')+'>▼</button></span></li>').join("")+'</ol>';
+  } else if(q.answer_type==="open_text"){
+    body='<textarea class="notebox" data-action="ansText" data-q="'+q.id+'" placeholder="'+esc(q.placeholder||"")+'">'+esc(a==="__NA__"?"":(a||""))+'</textarea>';
+  }
+  const noteOpen=S.openNotes[q.id]||(S.notes[q.id]&&S.notes[q.id].length);
+  const note='<button class="notetoggle" data-action="toggleNote" data-q="'+q.id+'">'+(noteOpen?'− Hide note':'+ Add evidence / note')+'</button>'
+    +(noteOpen?'<textarea class="notebox" data-action="noteText" data-q="'+q.id+'" placeholder="Evidence, caveats or context for this answer — included in the report.">'+esc(S.notes[q.id]||"")+'</textarea>':'');
+  return '<div class="q"><div class="qhead"><div class="qtext">'+esc(q.text)+'</div><div class="qbadges">'
+    +(q.critical?'<span class="badge crit">Critical</span>':'')
+    +'<span class="badge dom">'+esc(dom)+'</span>'
+    +'<span class="badge">×'+(q.weight||1)+'</span></div></div>'
+    +(q.hint?'<div class="qhint">'+esc(q.hint)+'</div>':'')
+    +body+note+'</div>';
+}
+
+/* ---------------- report ---------------- */
+function viewReport(){
+  const kb=S.kb, stages=kb.meta.stages;
+  const mIdx=maturity(kb,S.answers);
+  const cur = mIdx>=0?stages[mIdx]:null;
+  const overall=overallScore(kb,S.answers);
+  const doms=domainScores(kb,S.answers);
+  const rm=buildRoadmap(kb,S.answers);
+  const o=S.org, r=S.respondent;
+  const ltm = S.ltmLogo?'<img src="'+S.ltmLogo+'" alt="LTM"/>'
+    :'<span class="ltmmark"></span><span><b>LTM</b><span>FinOps Maturity Accelerator</span></span>';
+  const orgIdent=(o.logo?'<img src="'+o.logo+'"/>':'')+'<div><div class="mval">'+esc(o.name||"—")+'</div><div class="mline">'+esc([o.sector,o.spend].filter(Boolean).join(" · "))+'</div></div>';
+
+  // gauge
+  const gauge='<div class="rgauge"><div class="rgtrack">'
+    +stages.map((s,i)=>'<div class="rgseg" style="background:'+(i<=mIdx?s.color:"#EAF0F6")+'"></div>').join("")
+    +'</div><div class="rglabels">'+stages.map((s,i)=>'<div class="rgst'+(i===mIdx?' on':'')+'"><span class="n">0'+s.n+'</span>'+esc(s.name)+'</div>').join("")+'</div></div>';
+
+  // stage table
+  const rows=stages.map(s=>{
+    const sc=stageScore(kb,s.id,S.answers), cr=stageCriticals(kb,s.id,S.answers), stt=stageStatus(kb,s.id,S.answers);
+    const col=stt==="passed"?"#2F8F5B":stt==="failed"?"#C0392B":"#8494A4";
+    const lab=stt==="passed"?"Passed":stt==="failed"?"Not met":"Not assessed";
+    return '<tr><td><b>'+s.n+' · '+esc(s.name)+'</b></td>'
+      +'<td class="num">'+(sc.score!==null?sc.score:"—")+'</td><td class="num">'+s.threshold+'</td>'
+      +'<td class="num">'+cr.pass+'/'+cr.total+'</td>'
+      +'<td><span class="stbadge" style="color:'+col+';border-color:'+col+'">'+lab+'</span></td></tr>';
+  }).join("");
+
+  // domains
+  const domHtml=kb.meta.domains.map(d=>{ const v=doms[d.id];
+    return '<div class="dombar"><div class="domname">'+esc(d.label)+'</div><div class="domtrack"><div class="domfill" style="width:'+(v||0)+'%;background:'+d.color+'"></div></div><div class="domval">'+(v!=null?v:"—")+'</div></div>';
+  }).join("");
+
+  // narrative
+  const nextS = rm.nextIdx>=0?stages[rm.nextIdx]:null;
+  const blockers=rm.horizons[0].items.length;
+  let narrative;
+  if(mIdx<0){
+    narrative="The organisation has not yet cleared the foundational stage. "+(blockers?("There "+(blockers===1?"is 1 critical control":"are "+blockers+" critical controls")+" outstanding — until these are in place, spend data cannot be trusted enough to act on."):"Complete the Chaos-stage questions to establish the baseline.");
+  } else if(mIdx===stages.length-1){
+    narrative="The organisation has cleared all five stages. Focus shifts from building capability to sustaining it — watch for control drift as the estate and teams change.";
+  } else {
+    narrative="The organisation sits at Stage "+cur.n+" · "+cur.name+". "+(nextS?("Progression to "+nextS.name+" is gated by "+(blockers?(blockers+" outstanding critical "+(blockers===1?"control":"controls")):"the remaining weighted score")+". "):"")+esc(nextS?nextS.aim:"");
+  }
+
+  // horizons
+  const horizonHtml=rm.horizons.map(h=>{
+    if(!h.items.length) return '<div class="horizon"><div class="horizonhead"><span class="horizonname">'+h.name+'</span><span class="horizonwhen" style="background:'+h.color+'">'+h.when+'</span></div>'
+      +'<div class="horizonaim">Nothing outstanding in this horizon.</div></div>';
+    const items=h.items.slice(0,8).map(g=>'<div class="action"><div class="actiontop">'
+      +'<span class="actionmark'+(g.q.critical?' crit':'')+'">'+(g.q.critical?'CRIT':'S'+g.stage.n)+'</span>'
+      +'<div><div class="actiontext">'+esc(g.q.remediation||g.q.text)+'</div>'
+      +'<div class="actionmeta">Stage '+g.stage.n+' · '+esc(g.stage.name)+' · '+(g.unanswered?"not assessed":("scored "+g.score+" against target "+g.target))+'</div></div></div></div>').join("");
+    const more=h.items.length>8?'<div class="actionmeta" style="margin-top:8px">+ '+(h.items.length-8)+' further items in this horizon</div>':'';
+    return '<div class="horizon"><div class="horizonhead"><span class="horizonname">'+h.name+'</span><span class="horizonwhen" style="background:'+h.color+'">'+h.when+'</span></div>'
+      +'<div class="horizonaim">'+esc(h.aim)+'</div>'+items+more+'</div>';
+  }).join("");
+
+  // notes
+  const noteList=Object.keys(S.notes).filter(k=>S.notes[k]&&S.notes[k].trim()).map(k=>{
+    const q=kb.questions.find(x=>x.id===k); if(!q) return "";
+    return '<div class="notecard"><div class="nq">'+esc(q.text)+'</div><div class="nt">'+esc(S.notes[k])+'</div></div>';
+  }).join("");
+
+  return '<div class="reportwrap">'
+    +'<div class="reportbar no-print"><button class="btn ghost" data-action="goto" data-screen="assess">← Edit answers</button>'
+    +'<button class="btn ghost" data-action="exportResults">Export results JSON ↓</button>'
+    +'<button class="btn primary" data-action="printPdf">Download PDF ↓</button></div>'
+    +'<div class="paper">'
+    +'<div class="cover"><div class="covertop"><div class="coverlogo">'+ltm+'</div>'
+    +'<div style="text-align:right"><div class="mono" style="font-size:10px;letter-spacing:.12em;color:#7089A0">PREPARED '+esc(r.date)+'</div></div></div>'
+    +'<div class="reptitle">FinOps Maturity Assessment</div><div class="repsub">Cloud financial management · Staged maturity screen</div>'
+    +'<div class="covermeta"><div class="metablock"><div class="mlab">Organisation assessed</div><div class="orgident">'+orgIdent+'</div></div>'
+    +'<div class="metablock"><div class="mlab">Respondent</div><div class="mval">'+esc(r.name||"—")+'</div><div class="mline">'+esc([r.role,r.email].filter(Boolean).join(" · "))+'</div></div></div>'
+    +(o.details?'<div class="metablock" style="margin-top:20px"><div class="mlab">Scope</div><div class="mline">'+esc(o.details)+'</div></div>':'')
+    +'</div><div class="body">'
+    // 1 current maturity
+    +'<div class="repsec"><h3>1 · Current maturity</h3><div class="rephero">'
+    +'<div class="repscore"><b>'+(mIdx>=0?mIdx+1:0)+'</b><span>of 5 stages</span></div>'
+    +'<div class="repstage"><b>'+(cur?esc(cur.name):"Below Stage 1")+'</b><p>'+(cur?esc(cur.desc):"Foundational controls are not yet in place.")+'</p></div></div>'
+    +gauge
+    +'<div class="repstat"><span>Overall weighted score <b>'+(overall!=null?overall:"—")+'</b>/100</span>'
+    +'<span>Questions answered <b>'+Object.keys(S.answers).length+'</b>/'+kb.questions.length+'</span>'
+    +'<span>Critical blockers <b>'+blockers+'</b></span></div></div>'
+    // 2 assessment
+    +'<div class="repsec"><h3>2 · Assessment</h3>'
+    +'<p class="rwhy" style="color:#48586A;font-size:14px;margin-top:0">'+narrative+'</p>'
+    +'<table class="stagetable"><thead><tr><th>Stage</th><th style="text-align:right">Score</th><th style="text-align:right">Threshold</th><th style="text-align:right">Criticals</th><th>Status</th></tr></thead><tbody>'+rows+'</tbody></table>'
+    +'<div style="margin-top:22px"><div class="mlab" style="font-family:\'IBM Plex Mono\',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#7089A0;margin-bottom:10px">Capability by domain</div>'+domHtml+'</div></div>'
+    // 3 plan
+    +'<div class="repsec"><h3>3 · Recommended plan</h3>'
+    +'<p style="color:#48586A;font-size:13.5px;margin-top:0;margin-bottom:16px">Sequenced by dependency, not by ease. Critical items gate stage progression and are listed first regardless of effort.</p>'
+    +horizonHtml+'</div>'
+    +(noteList?'<div class="repsec"><h3>4 · Respondent notes</h3>'+noteList+'</div>':'')
+    +'<div class="repsec"><h3>Method</h3><p style="color:#48586A;font-size:13px;margin:0">'+esc(kb.meta.gating_note)+' All answer formats are normalised to a 0–100 score and weighted by question. Framework last reviewed '+esc(kb.meta.last_reviewed)+'.</p></div>'
+    +'</div><div class="repfoot">Prepared with the LTM FinOps Maturity Accelerator.<div class="disc">'+esc(kb.meta.disclaimer)+'</div></div>'
+    +'</div></div>';
+}
+
+/* ---------------- question bank ---------------- */
+function viewBank(){
+  const kb=S.kb;
+  const stageName=id=>{const s=kb.meta.stages.find(x=>x.id===id); return s?s.n+" · "+s.name:id;};
+  const rows=kb.questions.map(q=>'<tr><td class="mono">'+esc(q.id)+'</td><td>'+esc(stageName(q.stage))+'</td>'
+    +'<td><span class="pill">'+esc(q.domain||"")+'</span></td>'
+    +'<td>'+(q.critical?'<span class="pill crit">critical</span>':'')+'</td>'
+    +'<td class="mono">'+(q.weight||1)+'</td>'
+    +'<td><span class="pill">'+esc(q.answer_type)+'</span></td>'
+    +'<td>'+esc(q.text)+'</td></tr>').join("");
+  const tune=kb.meta.stages.map((s,i)=>'<div class="tunerow"><div class="sname"><span class="tunedot" style="background:'+s.color+'"></span>'+s.n+' · '+esc(s.name)+'</div>'
+    +'<input class="tuneinput" type="number" min="0" max="100" value="'+s.threshold+'" data-tune="threshold" data-i="'+i+'"/>'
+    +'<input class="tuneinput" type="number" min="0" max="100" value="'+s.crit_min+'" data-tune="crit_min" data-i="'+i+'"/>'
+    +'<select class="tuneinput" data-tune="require_all_crits" data-i="'+i+'"><option value="yes"'+(s.require_all_crits?' selected':'')+'>All criticals</option><option value="no"'+(!s.require_all_crits?' selected':'')+'>Score only</option></select></div>').join("");
+  const counts={};
+  kb.questions.forEach(q=>counts[q.answer_type]=(counts[q.answer_type]||0)+1);
+  const typeChips=Object.keys(counts).map(t=>'<span class="pill">'+esc(t)+' × '+counts[t]+'</span>').join(" ");
+
+  return '<main class="wrap"><div class="eyebrow">Admin</div><h1 class="h1 sm">Question bank</h1>'
+    +'<p class="lead" style="margin-bottom:20px">Manage the framework — questions, weights, criticals and the maturity thresholds that gate each stage. Export to version it, import to swap it.</p>'
+    +'<div class="bankgrid">'
+    +'<div class="panelcard"><div class="stat">'
+    +'<span><b>'+kb.questions.length+'</b>questions</span><span><b>'+kb.meta.stages.length+'</b>stages</span>'
+    +'<span><b>'+kb.questions.filter(q=>q.critical).length+'</b>critical</span>'
+    +'<span><b>'+kb.meta.domains.length+'</b>domains</span></div>'
+    +'<div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap">'+typeChips+'</div>'
+    +'<div class="btnrow"><button class="btn primary sm" data-action="exportKb">Export JSON ↓</button>'
+    +'<button class="btn ghost sm" data-action="exportCsv">Export CSV (Excel) ↓</button>'
+    +'<button class="btn ghost sm" data-action="importKb">Import JSON ↑</button>'
+    +'<button class="btn ghost sm" data-action="importCsv">Import CSV ↑</button>'
+    +'<button class="btn ghost sm" data-action="setLtm">Set LTM logo</button>'
+    +'<button class="btn ghost sm" data-action="resetKb">Reset to default</button></div></div>'
+
+    +'<div class="panelcard"><h2 class="h2" style="font-size:16px;margin-bottom:4px">Maturity tuning</h2>'
+    +'<p class="blurb" style="margin-bottom:14px">Adjust what each stage requires. Threshold is the weighted score needed; critical minimum is the score every critical question must reach.</p>'
+    +'<div class="tunerow" style="border-bottom:1px solid var(--line)"><div class="tunehead">Stage</div><div class="tunehead">Threshold</div><div class="tunehead">Critical min</div><div class="tunehead">Gate rule</div></div>'
+    +tune+'</div>'
+
+    +'<div class="panelcard"><h2 class="h2" style="font-size:16px;margin-bottom:12px">Questions</h2>'
+    +'<div style="overflow-x:auto"><table class="qtable"><thead><tr><th>ID</th><th>Stage</th><th>Domain</th><th>Flag</th><th>Wt</th><th>Type</th><th>Question</th></tr></thead><tbody>'+rows+'</tbody></table></div></div>'
+
+    +'<div class="panelcard"><h2 class="h2" style="font-size:16px;margin-bottom:6px">Advanced — edit JSON</h2>'
+    +'<p class="blurb" style="margin-bottom:12px">The complete framework. Edit and apply, or paste an exported file.</p>'
+    +'<textarea class="jsoned" id="jsoned" spellcheck="false">'+esc(JSON.stringify(kb,null,2))+'</textarea>'
+    +'<div class="btnrow"><button class="btn primary sm" data-action="applyJson">Apply changes</button><button class="btn ghost sm" data-action="revertJson">Revert</button></div></div>'
+    +'</div></main>';
+}
+
+/* ---------------- CSV ---------------- */
+function toCsv(kb){
+  const esc2=v=>{ const s=String(v==null?"":v); return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s; };
+  const head=["id","stage","domain","critical","weight","answer_type","text","options","remediation"];
+  const lines=[head.join(",")];
+  kb.questions.forEach(q=>{
+    let opts="";
+    if(q.answer_type==="single_select"||q.answer_type==="multi_select") opts=(q.options||[]).map(o=>o.label+"::"+(o.score!=null?o.score:0)).join(" | ");
+    else if(q.answer_type==="drag_order") opts=(q.options||[]).join(" | ");
+    else if(q.answer_type==="range") opts="min="+q.range.min+"; max="+q.range.max+"; step="+(q.range.step||1)+"; suffix="+(q.range.suffix||"")+(q.invert?"; invert=true":"");
+    else if(q.answer_type==="rating_1_5") opts=(q.labels||[]).join(" | ");
+    lines.push([q.id,q.stage,q.domain||"",q.critical?"yes":"no",q.weight||1,q.answer_type,q.text,opts,q.remediation||""].map(esc2).join(","));
+  });
+  return lines.join("\n");
+}
+function parseCsv(text){
+  const rows=[]; let cur=[],val="",inQ=false;
+  for(let i=0;i<text.length;i++){ const c=text[i];
+    if(inQ){ if(c==='"'){ if(text[i+1]==='"'){val+='"';i++;} else inQ=false; } else val+=c; }
+    else { if(c==='"') inQ=true;
+      else if(c===','){ cur.push(val); val=""; }
+      else if(c==='\n'){ cur.push(val); rows.push(cur); cur=[]; val=""; }
+      else if(c!=='\r') val+=c; } }
+  if(val.length||cur.length){ cur.push(val); rows.push(cur); }
+  return rows.filter(r=>r.length>1);
+}
+function csvToQuestions(rows){
+  const head=rows[0].map(h=>h.trim().toLowerCase());
+  const idx=n=>head.indexOf(n);
+  const out=[];
+  for(let i=1;i<rows.length;i++){
+    const r=rows[i]; if(!r[idx("id")]) continue;
+    const type=(r[idx("answer_type")]||"single_select").trim();
+    const q={ id:r[idx("id")].trim(), stage:(r[idx("stage")]||"").trim(), domain:(r[idx("domain")]||"").trim(),
+      critical:/^(yes|true|1)$/i.test((r[idx("critical")]||"").trim()), weight:Number(r[idx("weight")]||1)||1,
+      answer_type:type, text:(r[idx("text")]||"").trim(), remediation:(r[idx("remediation")]||"").trim() };
+    const opts=(r[idx("options")]||"").trim();
+    if(type==="single_select"||type==="multi_select"){
+      q.options=opts.split("|").filter(Boolean).map(s=>{ const p=s.split("::"); return {label:(p[0]||"").trim(), score:Number(p[1]||0)||0}; });
+    } else if(type==="drag_order"){ q.options=opts.split("|").map(s=>s.trim()).filter(Boolean); q.ideal=q.options.slice(); }
+    else if(type==="rating_1_5"){ const l=opts.split("|").map(s=>s.trim()).filter(Boolean); if(l.length===5) q.labels=l; }
+    else if(type==="range"){ const o={min:0,max:100,step:1,suffix:""};
+      opts.split(";").forEach(p=>{ const [k,v]=p.split("="); if(!k) return; const key=k.trim();
+        if(key==="min")o.min=Number(v); else if(key==="max")o.max=Number(v); else if(key==="step")o.step=Number(v);
+        else if(key==="suffix")o.suffix=(v||"").trim(); else if(key==="invert")q.invert=/true/i.test(v||""); });
+      q.range=o; }
+    out.push(q);
+  }
+  return out;
+}
+
+/* ---------------- events ---------------- */
+let toastTimer=null;
+function toast(m){ let t=$(".toast"); if(!t){t=document.createElement("div");t.className="toast";document.body.appendChild(t);} t.textContent=m; clearTimeout(toastTimer); toastTimer=setTimeout(()=>t.remove(),2600); }
+function setModel(p,v){ const [o,k]=p.split("."); S[o][k]=v; }
+function download(name,text,type){ const b=new Blob([text],{type:type||"application/json"}); const u=URL.createObjectURL(b);
+  const a=document.createElement("a"); a.href=u; a.download=name; a.click(); setTimeout(()=>URL.revokeObjectURL(u),1000); }
+
+document.addEventListener("click",e=>{
+  const el=e.target.closest("[data-action],[data-nav]"); if(!el) return;
+  if(el.dataset.nav){ S.tab=el.dataset.nav; render(); return; }
+  const a=el.dataset.action;
+  if(a==="goto"){ S.tab="assessment"; S.screen=el.dataset.screen; render(); window.scrollTo(0,0); }
+  else if(a==="orgNext"){ if(!S.org.name) return; S.screen="respondent"; render(); }
+  else if(a==="respNext"){ if(!S.respondent.name) return; S.screen="assess"; S.stageIdx=0; render(); }
+  else if(a==="stageBack"){ if(S.stageIdx===0){S.screen="respondent";} else S.stageIdx--; render(); window.scrollTo(0,0); }
+  else if(a==="stageNext"){ S.stageIdx++; render(); window.scrollTo(0,0); }
+  else if(a==="gotoStage"){ S.stageIdx=Number(el.dataset.i); render(); window.scrollTo(0,0); }
+  else if(a==="goReport"){ S.screen="report"; render(); window.scrollTo(0,0); }
+  else if(a==="printPdf"){ window.print(); }
+  // answers
+  else if(a==="ansSingle"){ const q=el.dataset.q,i=Number(el.dataset.i); S.answers[q]=(S.answers[q]===i?undefined:i); if(S.answers[q]===undefined) delete S.answers[q]; render(); }
+  else if(a==="ansMulti"){ const q=el.dataset.q,i=Number(el.dataset.i); const arr=Array.isArray(S.answers[q])?S.answers[q].slice():[];
+    const p=arr.indexOf(i); if(p>=0)arr.splice(p,1); else arr.push(i); if(arr.length) S.answers[q]=arr; else delete S.answers[q]; render(); }
+  else if(a==="ansNA"){ const q=el.dataset.q; if(S.answers[q]==="__NA__") delete S.answers[q]; else S.answers[q]="__NA__"; render(); }
+  else if(a==="ansBool"){ const q=el.dataset.q,v=el.dataset.v==="true"; if(S.answers[q]===v) delete S.answers[q]; else S.answers[q]=v; render(); }
+  else if(a==="ansRate"){ const q=el.dataset.q,v=Number(el.dataset.v); if(S.answers[q]===v) delete S.answers[q]; else S.answers[q]=v; render(); }
+  else if(a==="dragUp"||a==="dragDown"){ const q=el.dataset.q,i=Number(el.dataset.i);
+    const qq=S.kb.questions.find(x=>x.id===q); const order=Array.isArray(S.answers[q])?S.answers[q].slice():qq.options.slice();
+    const j=i+(a==="dragUp"?-1:1); if(j<0||j>=order.length) return; [order[i],order[j]]=[order[j],order[i]]; S.answers[q]=order; render(); }
+  else if(a==="toggleNote"){ const q=el.dataset.q; S.openNotes[q]=!S.openNotes[q]; render(); }
+  // bank
+  else if(a==="exportKb"){ download("finops-framework-"+todayISO()+".json",JSON.stringify(S.kb,null,2)); toast("Framework exported"); }
+  else if(a==="exportCsv"){ download("finops-questions-"+todayISO()+".csv",toCsv(S.kb),"text/csv"); toast("CSV exported — opens in Excel"); }
+  else if(a==="importKb"){ $("#fileImport").click(); }
+  else if(a==="importCsv"){ $("#fileCsv").click(); }
+  else if(a==="resetKb"){ S.kb=deepClone(DEFAULT_KB); S.answers={}; S.notes={}; render(); toast("Reset to default framework"); }
+  else if(a==="setLtm"){ $("#fileLtm").click(); }
+  else if(a==="applyJson"){ try{ const p=JSON.parse($("#jsoned").value); if(validateKb(p)){ S.kb=p; S.answers={}; render(); toast("Changes applied"); } }catch(err){ toast("Invalid JSON — "+err.message); } }
+  else if(a==="revertJson"){ render(); }
+  else if(a==="exportResults"){ download("finops-results-"+todayISO()+".json",JSON.stringify({org:S.org,respondent:S.respondent,answers:S.answers,notes:S.notes,maturity:maturity(S.kb,S.answers)+1,overall:overallScore(S.kb,S.answers)},null,2)); toast("Results exported"); }
+  else if(a==="uploadOrg"){ $("#fileOrg").click(); }
+  else if(a==="clearOrgLogo"){ S.org.logo=null; render(); }
+});
+$("#ltmLogo").addEventListener("click",()=>$("#fileLtm").click());
+
+document.addEventListener("input",e=>{
+  const el=e.target;
+  if(el.dataset.model){ setModel(el.dataset.model,el.value);
+    const nb=document.querySelector('[data-action="orgNext"]'); if(nb&&el.dataset.model==="org.name") nb.disabled=!el.value;
+    const rb=document.querySelector('[data-action="respNext"]'); if(rb&&el.dataset.model==="respondent.name") rb.disabled=!el.value;
+    return; }
+  if(el.dataset.action==="ansText"){ const q=el.dataset.q; if(el.value) S.answers[q]=el.value; else delete S.answers[q]; return; }
+  if(el.dataset.action==="noteText"){ S.notes[el.dataset.q]=el.value; return; }
+  if(el.dataset.action==="ansRange"){ const q=el.dataset.q,v=Number(el.value); S.answers[q]=v;
+    const qq=S.kb.questions.find(x=>x.id===q); const lab=$("#rv_"+q); if(lab) lab.textContent=v+((qq.range&&qq.range.suffix)||"");
+    return; }
+  if(el.dataset.tune){ const i=Number(el.dataset.i), f=el.dataset.tune;
+    if(f==="require_all_crits") S.kb.meta.stages[i][f]=(el.value==="yes");
+    else S.kb.meta.stages[i][f]=Math.max(0,Math.min(100,Number(el.value)||0));
+    return; }
+});
+document.addEventListener("change",e=>{
+  const el=e.target;
+  if(el.dataset.tune==="require_all_crits"){ S.kb.meta.stages[Number(el.dataset.i)].require_all_crits=(el.value==="yes"); }
+});
+
+$("#fileLtm").addEventListener("change",e=>readImg(e,"ltm"));
+$("#fileOrg").addEventListener("change",e=>readImg(e,"org"));
+function readImg(e,which){ const f=e.target.files[0]; if(!f) return; const rd=new FileReader();
+  rd.onload=()=>{ if(which==="ltm") S.ltmLogo=rd.result; else S.org.logo=rd.result; render(); toast(which==="ltm"?"LTM logo set":"Logo added"); };
+  rd.readAsDataURL(f); e.target.value=""; }
+
+$("#fileImport").addEventListener("change",e=>{ const f=e.target.files[0]; if(!f) return; const rd=new FileReader();
+  rd.onload=()=>{ try{ const p=JSON.parse(rd.result);
+      if(p && Array.isArray(p.stages) && !p.questions){ const conv=convertLegacy(p); if(conv){ S.kb=conv; S.answers={}; S.notes={}; render(); toast("Legacy framework imported and converted"); return; } }
+      if(validateKb(p)){ S.kb=p; S.answers={}; S.notes={}; render(); toast("Framework imported"); }
+    }catch(err){ toast("Import failed — invalid JSON"); } e.target.value=""; };
+  rd.readAsText(f); });
+
+$("#fileCsv").addEventListener("change",e=>{ const f=e.target.files[0]; if(!f) return; const rd=new FileReader();
+  rd.onload=()=>{ try{ const rows=parseCsv(rd.result); const qs=csvToQuestions(rows);
+      if(!qs.length){ toast("No questions found in CSV"); return; }
+      const ids=new Set(S.kb.meta.stages.map(s=>s.id));
+      const bad=qs.filter(q=>!ids.has(q.stage));
+      if(bad.length){ toast("CSV has "+bad.length+" row(s) with unknown stage id"); return; }
+      S.kb.questions=qs; S.answers={}; S.notes={}; render(); toast(qs.length+" questions imported from CSV");
+    }catch(err){ toast("CSV import failed — "+err.message); } e.target.value=""; };
+  rd.readAsText(f); });
+
+/* legacy (v3) format converter: stages[] each with questions[] of 1–5 weights */
+function convertLegacy(p){
+  try{
+    const stages=p.stages.map((s,i)=>({ id:(s.name||("stage"+i)).toLowerCase().replace(/[^a-z0-9]+/g,"_"), n:i+1,
+      name:s.name||("Stage "+(i+1)), color:s.color||"#57B6C2",
+      threshold:Math.round(((s.threshold||3.5)/5)*100), crit_min:Math.round(((s.critMinRating||4)/5)*100),
+      require_all_crits:s.requireAllCrits!==false, desc:s.desc||"", aim:"" }));
+    const questions=[];
+    p.stages.forEach((s,i)=>{ (s.questions||[]).forEach((q,j)=>{
+      questions.push({ id:(q.id||("Q"+i+j)), stage:stages[i].id, domain:(q.type==="cultural"?"culture":"governance"),
+        critical:!!q.critical, weight:1, answer_type:"rating_1_5", text:q.text||"",
+        labels:["Not at all","Rarely","Partially","Largely","Fully"], remediation:"" });
+    });});
+    const kb=deepClone(DEFAULT_KB);
+    kb.meta.stages=stages; kb.questions=questions;
+    return kb;
+  }catch(e){ return null; }
+}
+
+function validateKb(k){
+  if(!k||!k.meta||!Array.isArray(k.meta.stages)||!Array.isArray(k.questions)){ toast("Not a valid framework (need meta.stages and questions)"); return false; }
+  if(!Array.isArray(k.meta.domains)) k.meta.domains=DEFAULT_KB.meta.domains;
+  return true;
+}
+
+render();
+</script>
+</body>
+</html>
