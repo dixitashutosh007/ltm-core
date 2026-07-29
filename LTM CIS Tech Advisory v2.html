@@ -1,0 +1,1182 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CIS Tech Advisory — It's time to Out Create | LTM</title>
+  <meta name="description" content="CIS Tech Advisory — advisory-led services for public cloud, digital sovereignty and AI infusion. It's time to Out Create." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --coral: #ff5e4f;
+      --coral-deep: #e5412f;
+      --coral-tint: #fff0ee;
+      --ink: #141414;
+      --black: #0d0d0d;
+      --graphite: #5a5a5a;
+      --paper: #f4f4f3;
+      --paper-warm: #f7f5f2;
+      --hairline: #e4e2df;
+      --white: #ffffff;
+      --navy: #141414;
+      --navy-deep: #0d0d0d;
+      --navy-tint: #f4f4f3;
+      --red: #ff5e4f;
+      --amber: #ff5e4f;
+
+      --display: 'Archivo', -apple-system, 'Segoe UI', system-ui, sans-serif;
+      --sans: 'Inter', -apple-system, 'Segoe UI', system-ui, sans-serif;
+
+      --max-w: 1200px;
+      --gutter: clamp(1.25rem, 4vw, 3rem);
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      color: var(--ink);
+      background: var(--white);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.55;
+      font-size: 16px;
+    }
+    a { color: inherit; text-decoration: none; }
+    img, svg { display: block; max-width: 100%; }
+
+    /* Header */
+    .site-header {
+      border-bottom: 1px solid var(--hairline);
+      background: var(--white);
+      position: sticky; top: 0; z-index: 20;
+    }
+    .site-header .wrap {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 1rem var(--gutter);
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 2rem;
+    }
+    .brand { display: flex; align-items: center; gap: 0.7rem; }
+    .brand img { height: 32px; width: auto; }
+    .brand .brand-div { width: 1px; height: 26px; background: var(--hairline); }
+    .brand .brand-sub { font-family: var(--sans); font-weight: 600; font-size: 0.9rem; letter-spacing: 0.02em; color: var(--ink); }
+    .site-nav { display: flex; gap: 2rem; font-size: 0.9rem; color: var(--graphite); }
+    .site-nav a:hover { color: var(--navy); }
+    .header-cta {
+      display: inline-block;
+      background: var(--navy); color: var(--white);
+      padding: 0.55rem 1.1rem;
+      font-size: 0.85rem; font-weight: 500;
+      border-radius: 999px;
+    }
+    .header-cta:hover { background: var(--navy-deep); }
+    @media (max-width: 720px) {
+      .site-nav { display: none; }
+    }
+
+    /* Hero */
+    .hero {
+      background: var(--coral); color: var(--white);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute;
+      top: -25%; right: -10%; width: 55%; height: 150%;
+      background:
+        radial-gradient(circle at center, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 58%),
+        radial-gradient(circle at 60% 40%, rgba(13,13,13,0.10) 0%, rgba(13,13,13,0) 62%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: clamp(4rem, 10vw, 7.5rem) var(--gutter) clamp(3rem, 8vw, 5rem);
+      position: relative;
+      display: grid; grid-template-columns: minmax(0, 1fr) auto;
+      gap: 3rem; align-items: end;
+    }
+    .eyebrow {
+      display: inline-block; font-size: 0.75rem;
+      font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--white); opacity: 0.85; margin-bottom: 1.25rem;
+    }
+    .hero h1 {
+      font-family: var(--display); font-weight: 700;
+      font-size: clamp(2.75rem, 6.5vw, 5rem); line-height: 1.05;
+      letter-spacing: -0.02em; margin: 0 0 1.25rem; max-width: 15ch;
+    }
+    .hero h1 em { font-style: normal; color: var(--black); }
+    .hero .tagline-line {
+      font-family: var(--display);
+      font-weight: 500;
+      font-size: clamp(1rem, 1.4vw, 1.15rem);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--black);
+      margin: 0 0 1.5rem;
+    }
+    .hero .tagline {
+      font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+      color: rgba(255,255,255,0.92); max-width: 46ch;
+      margin: 0 0 2.25rem; line-height: 1.4;
+    }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+    .brochure-btn {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: var(--white); color: var(--navy);
+      font-weight: 500; font-size: 0.95rem;
+      padding: 0.9rem 1.5rem; border-radius: 999px;
+      transition: transform 0.15s ease, background 0.15s ease;
+    }
+    .brochure-btn:hover { background: var(--black); color: var(--white); transform: translateY(-1px); }
+    .brochure-btn svg { width: 16px; height: 16px; }
+    .ghost-btn {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: transparent; color: var(--white);
+      font-weight: 500; font-size: 0.95rem;
+      padding: 0.85rem 1.4rem; border-radius: 999px;
+      border: 1.5px solid rgba(255,255,255,0.7);
+    }
+    .ghost-btn:hover { background: rgba(255,255,255,0.12); border-color: var(--white); }
+
+    .hero-index {
+      font-family: var(--display); color: rgba(255,255,255,0.4);
+      line-height: 1; text-align: right; display: none;
+    }
+    .hero-index .num { font-size: 5rem; font-weight: 400; color: rgba(255,255,255,0.9); display: block; }
+    .hero-index .label {
+      font-family: var(--sans); font-size: 0.75rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+    }
+    @media (min-width: 900px) { .hero-index { display: block; } }
+
+    /* Intro */
+    .intro { background: var(--white); padding: clamp(3.5rem, 6vw, 5rem) var(--gutter) clamp(2rem, 4vw, 3rem); }
+    .intro-inner {
+      max-width: var(--max-w); margin: 0 auto;
+      display: grid; grid-template-columns: minmax(0, 6.5rem) minmax(0, 1fr);
+      gap: clamp(1rem, 4vw, 3rem); align-items: start;
+    }
+    .intro-label {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--red); padding-top: 0.4rem;
+    }
+    .intro p {
+      font-family: var(--display); font-weight: 700;
+      font-size: clamp(1.35rem, 2.4vw, 1.85rem); line-height: 1.35;
+      color: var(--ink); margin: 0; max-width: 42ch;
+    }
+    .intro p em { font-style: normal; color: var(--coral); }
+
+    /* Tabs */
+    .tabs {
+      background: var(--white); border-bottom: 1px solid var(--hairline);
+      position: sticky; top: 72px; z-index: 15;
+    }
+    .tabs-inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 var(--gutter);
+      display: flex; gap: 0; overflow-x: auto; scrollbar-width: none;
+    }
+    .tabs-inner::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      appearance: none; background: none; border: 0;
+      border-bottom: 2px solid transparent;
+      font-family: var(--sans); font-size: 0.95rem; font-weight: 500;
+      color: var(--graphite); padding: 1.25rem 1.5rem; cursor: pointer;
+      white-space: nowrap; display: flex; align-items: center; gap: 0.6rem;
+    }
+    .tab-btn .tab-num { font-family: var(--display); font-size: 0.75rem; color: var(--graphite); opacity: 0.5; }
+    .tab-btn:hover { color: var(--navy); }
+    .tab-btn:hover .tab-num { color: var(--red); opacity: 1; }
+    .tab-btn[aria-selected="true"] { color: var(--navy); border-color: var(--red); }
+    .tab-btn[aria-selected="true"] .tab-num { color: var(--red); opacity: 1; }
+    .tab-btn:focus-visible { outline: 2px solid var(--red); outline-offset: -6px; border-radius: 4px; }
+
+    .tab-panel { display: none; }
+    .tab-panel[aria-hidden="false"] { display: block; }
+
+    .tab-intro { background: var(--white); padding: clamp(3rem, 5vw, 4.5rem) var(--gutter) clamp(1.5rem, 3vw, 2.5rem); }
+    .tab-intro-inner {
+      max-width: var(--max-w); margin: 0 auto;
+      display: grid; grid-template-columns: minmax(0, 6.5rem) minmax(0, 1fr);
+      gap: clamp(1rem, 4vw, 3rem); align-items: start;
+    }
+    .tab-intro-label {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--navy); padding-top: 0.4rem;
+    }
+    .tab-intro p { font-size: 1.05rem; line-height: 1.6; color: var(--graphite); margin: 0; max-width: 62ch; }
+
+    /* Offerings */
+    .offerings { padding: clamp(2rem, 4vw, 3rem) var(--gutter) clamp(4rem, 6vw, 6rem); }
+    .offerings-inner { max-width: var(--max-w); margin: 0 auto; }
+    .offering {
+      display: grid; grid-template-columns: 1fr;
+      gap: clamp(1.5rem, 3vw, 2.5rem); align-items: center;
+      padding: clamp(2rem, 4vw, 3.5rem) 0;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .offering:last-child { border-bottom: 0; }
+    @media (min-width: 800px) {
+      .offering { grid-template-columns: 5fr 6fr; gap: clamp(2rem, 5vw, 4rem); }
+      .offering.reverse .offering-visual { order: 2; }
+    }
+    .offering-visual { aspect-ratio: 4 / 3; background: var(--paper); border-radius: 4px; overflow: hidden; position: relative; }
+    .offering-visual svg { width: 100%; height: 100%; }
+    .offering-content h3 {
+      font-family: var(--display); font-weight: 700;
+      font-size: clamp(1.55rem, 2.4vw, 2rem); line-height: 1.15;
+      letter-spacing: -0.01em; color: var(--navy); margin: 0 0 1.25rem;
+    }
+    .offering-content ul { list-style: none; padding: 0; margin: 0; }
+    .offering-content li {
+      position: relative; padding: 0.5rem 0 0.5rem 1.75rem;
+      font-size: 0.98rem; color: var(--ink); line-height: 1.55;
+      border-top: 1px solid var(--hairline);
+    }
+    .offering-content li:first-child { border-top: 0; padding-top: 0.25rem; }
+    .offering-content li:last-child { padding-bottom: 0.25rem; }
+    .offering-content li::before {
+      content: ''; position: absolute;
+      left: 0.15rem; top: 1rem;
+      width: 0.85rem; height: 1px; background: var(--red);
+    }
+    .offering-content li:first-child::before { top: 0.75rem; }
+
+    /* Delivery */
+    .delivery { background: var(--paper-warm); padding: clamp(3.5rem, 6vw, 5.5rem) var(--gutter); }
+    .delivery-inner { max-width: var(--max-w); margin: 0 auto; }
+    .delivery-header {
+      display: grid; grid-template-columns: minmax(0, 6.5rem) minmax(0, 1fr);
+      gap: clamp(1rem, 4vw, 3rem); margin-bottom: clamp(2.5rem, 4vw, 3.5rem); align-items: start;
+    }
+    .delivery-label {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--red); padding-top: 0.6rem;
+    }
+    .delivery h2 {
+      font-family: var(--display); font-weight: 700;
+      font-size: clamp(2rem, 3.6vw, 2.75rem); line-height: 1.1;
+      letter-spacing: -0.02em; color: var(--navy); margin: 0 0 0.8rem;
+    }
+    .delivery-lead { font-size: 1.05rem; color: var(--graphite); max-width: 55ch; margin: 0; line-height: 1.55; }
+    .phases { display: grid; grid-template-columns: 1fr; gap: 1.25rem; }
+    @media (min-width: 720px) { .phases { grid-template-columns: repeat(3, 1fr); gap: clamp(1rem, 2vw, 1.75rem); } }
+    .phase { background: var(--white); padding: 1.75rem; border-radius: 6px; display: flex; flex-direction: column; gap: 0.75rem; }
+    .phase-num { font-family: var(--display); font-size: 1.5rem; color: var(--red); line-height: 1; }
+    .phase h4 {
+      font-family: var(--sans); font-size: 0.75rem; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); margin: 0;
+    }
+    .phase p { margin: 0; color: var(--graphite); font-size: 0.95rem; line-height: 1.55; }
+    .delivery-note {
+      margin-top: 2rem; padding: 1.5rem 1.75rem; background: var(--navy); color: var(--white);
+      border-radius: 6px; font-size: 0.95rem; line-height: 1.55;
+      display: flex; gap: 1rem; align-items: start;
+    }
+    .delivery-note strong { color: var(--coral); font-weight: 600; }
+    .delivery-note-icon {
+      flex: none; width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(255,94,79,0.18); display: grid; place-items: center;
+    }
+    .delivery-note-icon svg { width: 16px; height: 16px; color: var(--coral); }
+
+    /* Accelerators */
+    .accelerators { background: var(--white); padding: clamp(4rem, 7vw, 6.5rem) var(--gutter); }
+    .accelerators-inner { max-width: var(--max-w); margin: 0 auto; }
+    .accel-header {
+      display: grid; grid-template-columns: minmax(0, 6.5rem) minmax(0, 1fr);
+      gap: clamp(1rem, 4vw, 3rem); margin-bottom: clamp(2.5rem, 5vw, 4rem); align-items: start;
+    }
+    .accel-label {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--red); padding-top: 0.6rem;
+    }
+    .accel-header h2 {
+      font-family: var(--display); font-weight: 700;
+      font-size: clamp(2rem, 3.6vw, 2.75rem); line-height: 1.1;
+      letter-spacing: -0.02em; color: var(--navy);
+      margin: 0 0 0.8rem; max-width: 22ch;
+    }
+    .accel-lead { font-size: 1.05rem; color: var(--graphite); max-width: 62ch; line-height: 1.55; margin: 0; }
+    .accel-grid { display: grid; grid-template-columns: 1fr; gap: 0; }
+    @media (min-width: 720px) { .accel-grid { grid-template-columns: repeat(2, 1fr); } }
+    .accel {
+      padding: 2rem 0; border-top: 1px solid var(--hairline);
+      display: grid; grid-template-columns: 4.5rem 1fr;
+      gap: 1.5rem; align-items: start;
+      transition: background 0.15s ease;
+    }
+    .accel:hover { background: var(--coral-tint); }
+    @media (min-width: 720px) {
+      .accel { padding: 2.25rem clamp(1.25rem, 2vw, 2rem) 2.25rem 0; }
+      .accel:nth-child(2n) { padding-left: clamp(1.25rem, 2vw, 2rem); padding-right: 0; border-left: 1px solid var(--hairline); }
+      .accel:nth-child(-n+2) { border-top: 1px solid var(--hairline); }
+    }
+    .accel-num { font-family: var(--display); font-size: 2.25rem; font-weight: 400; color: var(--red); line-height: 1; margin-top: 0.15rem; }
+    .accel h3 { font-family: var(--sans); font-weight: 600; font-size: 1.05rem; color: var(--navy); margin: 0 0 0.6rem; }
+    .accel p { color: var(--graphite); margin: 0 0 0.85rem; font-size: 0.95rem; line-height: 1.6; }
+    .accel-link {
+      display: inline-flex; align-items: center; gap: 0.4rem;
+      font-size: 0.85rem; font-weight: 600; color: var(--coral-deep);
+      letter-spacing: 0.02em;
+    }
+    .accel-link:hover { color: var(--navy); }
+    .accel-link svg { width: 14px; height: 14px; }
+    .accel-badge {
+      display: inline-block; font-size: 0.65rem;
+      font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--coral-deep); background: var(--coral-tint);
+      padding: 0.15rem 0.5rem; border-radius: 999px;
+      margin-left: 0.4rem; vertical-align: middle;
+    }
+
+    /* Thought Leadership */
+    .thought {
+      background: var(--paper-warm);
+      padding: clamp(4rem, 7vw, 6rem) 0;
+      overflow: hidden;
+    }
+    .thought-header {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 0 var(--gutter);
+      display: grid; grid-template-columns: minmax(0, 6.5rem) minmax(0, 1fr) auto;
+      gap: clamp(1rem, 4vw, 3rem); margin-bottom: clamp(2rem, 4vw, 3rem);
+      align-items: end;
+    }
+    .thought-label {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--red);
+    }
+    .thought-header h2 {
+      font-family: var(--display); font-weight: 700;
+      font-size: clamp(2rem, 3.6vw, 2.75rem); line-height: 1.1;
+      letter-spacing: -0.02em; color: var(--navy); margin: 0; max-width: 22ch;
+    }
+    .thought-header h2 em { font-style: normal; color: var(--coral); }
+    .thought-controls { display: flex; gap: 0.5rem; }
+    .thought-btn {
+      appearance: none; border: 1px solid var(--hairline); background: var(--white);
+      width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+      display: grid; place-items: center; color: var(--navy);
+    }
+    .thought-btn:hover { background: var(--navy); color: var(--white); border-color: var(--navy); }
+    .thought-btn svg { width: 16px; height: 16px; }
+    .thought-scroller {
+      display: flex; gap: 1.25rem;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      padding: 0.5rem var(--gutter) 1.5rem;
+      scrollbar-width: thin;
+    }
+    .thought-scroller::-webkit-scrollbar { height: 6px; }
+    .thought-scroller::-webkit-scrollbar-thumb { background: var(--hairline); border-radius: 3px; }
+    .thought-card {
+      flex: 0 0 clamp(260px, 32vw, 340px);
+      background: var(--white); border-radius: 8px; overflow: hidden;
+      scroll-snap-align: start;
+      border: 1px solid var(--hairline);
+      display: flex; flex-direction: column;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .thought-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(20,20,20,0.08); }
+    .thought-cover {
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, var(--coral) 0%, var(--coral-deep) 100%);
+      position: relative;
+    }
+    .thought-cover.alt-1 { background: linear-gradient(135deg, #141414 0%, #3a3a3a 100%); }
+    .thought-cover.alt-2 { background: linear-gradient(135deg, #ffb4ac 0%, var(--coral) 100%); }
+    .thought-cover.alt-3 { background: linear-gradient(135deg, #0d0d0d 0%, var(--coral-deep) 100%); }
+    .thought-cover.alt-4 { background: linear-gradient(135deg, var(--coral-tint) 0%, #ffb4ac 100%); }
+    .thought-cover .cover-tag {
+      position: absolute; top: 0.9rem; left: 0.9rem;
+      font-size: 0.65rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--white); background: rgba(13,13,13,0.5);
+      padding: 0.25rem 0.6rem; border-radius: 999px;
+      backdrop-filter: blur(4px);
+    }
+    .thought-body { padding: 1.25rem 1.4rem 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; flex: 1; }
+    .thought-meta { font-size: 0.75rem; color: var(--graphite); letter-spacing: 0.06em; text-transform: uppercase; }
+    .thought-card h3 {
+      font-family: var(--display); font-weight: 700;
+      font-size: 1.1rem; line-height: 1.25; color: var(--navy); margin: 0;
+    }
+    .thought-card p { font-size: 0.9rem; color: var(--graphite); line-height: 1.5; margin: 0; }
+    .thought-card .read-more {
+      margin-top: auto; padding-top: 0.75rem;
+      font-size: 0.8rem; font-weight: 600; color: var(--coral-deep);
+      letter-spacing: 0.02em;
+    }
+
+    /* Key Partnerships */
+    .partners { background: var(--white); padding: clamp(3.5rem, 6vw, 5rem) var(--gutter); border-top: 1px solid var(--hairline); }
+    .partners-inner { max-width: var(--max-w); margin: 0 auto; }
+    .partners-header {
+      display: grid; grid-template-columns: minmax(0, 6.5rem) minmax(0, 1fr);
+      gap: clamp(1rem, 4vw, 3rem); margin-bottom: clamp(2rem, 4vw, 2.75rem); align-items: start;
+    }
+    .partners-label {
+      font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--red); padding-top: 0.4rem;
+    }
+    .partners-header h2 {
+      font-family: var(--display); font-weight: 700;
+      font-size: clamp(1.65rem, 2.8vw, 2.15rem); line-height: 1.15;
+      letter-spacing: -0.02em; color: var(--navy); margin: 0 0 0.6rem; max-width: 26ch;
+    }
+    .partners-header p { color: var(--graphite); margin: 0; font-size: 1rem; max-width: 55ch; line-height: 1.55; }
+    .partner-strip {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 1px;
+      background: var(--hairline);
+      border: 1px solid var(--hairline);
+      border-radius: 6px; overflow: hidden;
+    }
+    @media (min-width: 640px) { .partner-strip { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 960px) { .partner-strip { grid-template-columns: repeat(5, 1fr); } }
+    .partner {
+      background: var(--white); padding: 1.75rem 1rem;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 96px; text-align: center;
+      font-family: var(--display); font-weight: 700; font-size: 1.05rem;
+      color: var(--navy); letter-spacing: -0.01em;
+    }
+    .partner .p-sub { display: block; font-family: var(--sans); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--graphite); margin-top: 0.25rem; }
+
+    /* CTA */
+    .cta { background: var(--navy); color: var(--white); padding: clamp(4rem, 7vw, 6rem) var(--gutter); position: relative; overflow: hidden; }
+    .cta::before {
+      content: ''; position: absolute; left: -10%; bottom: -60%;
+      width: 45%; height: 180%;
+      background: radial-gradient(circle at center, rgba(255,94,79,0.22) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .cta-inner { max-width: var(--max-w); margin: 0 auto; position: relative; display: grid; grid-template-columns: 1fr; gap: 2rem; align-items: center; }
+    @media (min-width: 720px) { .cta-inner { grid-template-columns: 1fr auto; gap: 4rem; } }
+    .cta h2 {
+      font-family: var(--display); font-weight: 700;
+      font-size: clamp(2rem, 4vw, 3rem); line-height: 1.1;
+      letter-spacing: -0.02em; color: var(--white); margin: 0 0 1rem; max-width: 22ch;
+    }
+    .cta h2 em { font-style: normal; color: var(--coral); }
+    .cta p { color: rgba(255,255,255,0.8); margin: 0; font-size: 1.05rem; max-width: 45ch; }
+    .cta-btn {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      background: var(--white); color: var(--navy);
+      padding: 1rem 1.75rem; border-radius: 999px;
+      font-weight: 500; font-size: 1rem; white-space: nowrap;
+    }
+    .cta-btn:hover { background: var(--coral); color: var(--white); transform: translateY(-1px); }
+    .cta-btn svg { width: 16px; height: 16px; }
+
+    /* Footer */
+    .site-footer { background: var(--navy-deep); color: rgba(255,255,255,0.55); padding: 2.5rem var(--gutter); font-size: 0.85rem; }
+    .site-footer-inner { max-width: var(--max-w); margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; align-items: center; }
+    .site-footer img { height: 22px; width: auto; opacity: 0.85; filter: brightness(0) invert(1); }
+    .site-footer .foot-tag { color: var(--coral); font-family: var(--display); font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; font-size: 0.75rem; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; animation: none !important; }
+      html { scroll-behavior: auto; }
+    }
+    :focus-visible { outline: 2px solid var(--red); outline-offset: 2px; }
+  </style>
+</head>
+<body>
+
+<!-- Site header -->
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#" aria-label="LTM — CIS Tech Advisory">
+      <img src="https://www.ltm.com/content/dam/ltimcorporatewebsite/refresh-images/LTM-Logo.svg" alt="LTM" />
+      <span class="brand-div"></span>
+      <span class="brand-sub">CIS Tech Advisory</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="#panel-cloud">Public Cloud</a>
+      <a href="#panel-sov">Sovereignty</a>
+      <a href="#panel-ai">AI Infusion</a>
+      <a href="#accelerators">Accelerators</a>
+      <a href="#thought">Insights</a>
+    </nav>
+    <a href="#cta" class="header-cta">Contact</a>
+  </div>
+</header>
+
+<!-- Hero -->
+<section class="hero" aria-labelledby="hero-title">
+  <div class="hero-inner">
+    <div>
+      <span class="eyebrow">CIS Tech Advisory</span>
+      <p class="tagline-line">It's time to Out Create.</p>
+      <h1 id="hero-title">Out Create clarity, control and <em>cloud value.</em></h1>
+      <p class="tagline">Advisory that leads to action — helping CIOs, CTOs and CDOs decide what to do about cloud, sovereignty and AI, then delivering the plan.</p>
+      <div class="hero-ctas">
+        <a href="CIS%20Tech%20Consulting%20Brochure.pdf" class="brochure-btn" download>
+          Download Brochure
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 1.5v9m0 0l3.5-3.5M8 10.5L4.5 7M2 13.5h12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+        <a href="#accelerators" class="ghost-btn">
+          Explore Accelerators
+          <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 8h12m0 0L9 3m5 5l-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="hero-index" aria-hidden="true">
+      <span class="num">03</span>
+      <span class="label">Live Advisory<br />Pillars</span>
+    </div>
+  </div>
+</section>
+
+<!-- Intro -->
+<section class="intro" aria-labelledby="intro-title">
+  <div class="intro-inner">
+    <div class="intro-label" id="intro-title">The Brief</div>
+    <p>Enterprise IT is now a board-level conversation — regulatory, economic and architectural at once. CIS Tech Advisory helps enterprises <em>Out Create</em> the answer: where the estate stands today, what to do about it, and how to keep control of data, systems and spend as the environment changes.</p>
+  </div>
+</section>
+
+<!-- Tabs -->
+<div class="tabs" role="tablist" aria-label="CIS Tech Advisory offerings">
+  <div class="tabs-inner">
+    <button role="tab" id="tab-cloud" aria-controls="panel-cloud" aria-selected="true" class="tab-btn" data-tab="cloud">
+      <span class="tab-num">01</span> Public Cloud
+    </button>
+    <button role="tab" id="tab-sov" aria-controls="panel-sov" aria-selected="false" tabindex="-1" class="tab-btn" data-tab="sov">
+      <span class="tab-num">02</span> Digital Sovereignty
+    </button>
+    <button role="tab" id="tab-ai" aria-controls="panel-ai" aria-selected="false" tabindex="-1" class="tab-btn" data-tab="ai">
+      <span class="tab-num">03</span> AI Infusion
+    </button>
+  </div>
+</div>
+
+<!-- PUBLIC CLOUD -->
+<section id="panel-cloud" role="tabpanel" aria-labelledby="tab-cloud" aria-hidden="false" class="tab-panel">
+  <div class="tab-intro">
+    <div class="tab-intro-inner">
+      <div class="tab-intro-label">Public Cloud · Out Class the estate</div>
+      <p>Turn cloud from a technology footprint into a governed source of business value. From the anchor-cloud decision to workload placement, FinOps, AI-ready foundations and architectural health — advisory that decides what runs where, spends intelligently on every dollar and every token, and modernises with a plan the board can fund.</p>
+    </div>
+  </div>
+  <div class="offerings"><div class="offerings-inner">
+
+    <article class="offering">
+      <div class="offering-visual">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Workload placement grid">
+          <rect width="400" height="300" fill="#f4f4f3"/>
+          <g stroke="#141414" stroke-width="1" fill="none" opacity="0.35">
+            <line x1="0" y1="75" x2="400" y2="75"/><line x1="0" y1="150" x2="400" y2="150"/><line x1="0" y1="225" x2="400" y2="225"/>
+            <line x1="100" y1="0" x2="100" y2="300"/><line x1="200" y1="0" x2="200" y2="300"/><line x1="300" y1="0" x2="300" y2="300"/>
+          </g>
+          <circle cx="150" cy="112" r="18" fill="#141414"/>
+          <circle cx="250" cy="112" r="12" fill="#ff5e4f"/>
+          <circle cx="350" cy="187" r="16" fill="#141414"/>
+          <circle cx="50" cy="187" r="14" fill="#ffb4ac"/>
+          <rect x="120" y="82" width="60" height="60" fill="none" stroke="#ff5e4f" stroke-width="1.5" stroke-dasharray="3 3"/>
+        </svg>
+      </div>
+      <div class="offering-content">
+        <h3>Right Cloud Strategy &amp; Workload Placement</h3>
+        <ul>
+          <li>Determines the right primary (anchor) cloud and the deliberate balance across multiple clouds</li>
+          <li>Places each workload where it belongs — public, private, hybrid or repatriated — weighed across value, resilience, sovereignty, latency and data gravity</li>
+          <li>Surfaces lock-in and exit risk early, with first-pass mitigation for the largest hyperscaler dependencies</li>
+          <li>Defines a target cloud operating model and guardrails to prevent accidental multicloud sprawl</li>
+          <li>Produces a defensible placement heatmap and anchor-cloud stance the board, procurement and regulators can back</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="offering reverse">
+      <div class="offering-visual">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="FinOps maturity trajectory">
+          <rect width="400" height="300" fill="#f4f4f3"/>
+          <g stroke="#141414" stroke-width="1" opacity="0.3"><line x1="40" y1="260" x2="360" y2="260"/><line x1="40" y1="260" x2="40" y2="40"/></g>
+          <path d="M40 240 Q120 220, 160 180 T280 100 T360 60" fill="none" stroke="#ff5e4f" stroke-width="3" stroke-linecap="round"/>
+          <g fill="#141414"><circle cx="80" cy="230" r="5"/><circle cx="160" cy="180" r="5"/><circle cx="240" cy="130" r="5"/><circle cx="320" cy="80" r="5"/></g>
+          <circle cx="360" cy="60" r="7" fill="#ffb4ac"/>
+        </svg>
+      </div>
+      <div class="offering-content">
+        <h3>FinOps Excellence</h3>
+        <ul>
+          <li>Establishes a maturity baseline across five stages — from Chaos to Automated — with capability-level scoring</li>
+          <li>Analyses cloud bill and usage data to surface prioritised savings opportunities with dollar-impact bands</li>
+          <li>Designs the cultural side of FinOps — roles, cadence, showback and chargeback — alongside the technical optimisation</li>
+          <li>Extends governance beyond cloud to AI, GenAI, SaaS and licensing spend, aligned to FOCUS data standards</li>
+          <li>Delivers a Crawl-Walk-Run elevation roadmap and KPI scorecard the finance and engineering teams jointly own</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="offering">
+      <div class="offering-visual">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Layered cloud foundation">
+          <rect width="400" height="300" fill="#f4f4f3"/>
+          <rect x="60" y="200" width="280" height="50" fill="#141414" opacity="0.85"/>
+          <rect x="80" y="145" width="240" height="45" fill="#141414" opacity="0.65"/>
+          <rect x="100" y="95" width="200" height="40" fill="#141414" opacity="0.45"/>
+          <circle cx="200" cy="60" r="22" fill="#ffb4ac"/>
+          <circle cx="200" cy="60" r="12" fill="#ff5e4f"/>
+        </svg>
+      </div>
+      <div class="offering-content">
+        <h3>AI-Ready Cloud Foundations</h3>
+        <ul>
+          <li>Reviews the cloud and data landscape to determine whether AI at scale is genuinely supportable today</li>
+          <li>Surfaces gaps in landing zone, data platform, MLOps posture and inference footprint that block AI adoption</li>
+          <li>Identifies foundational investments needed before AI use cases can safely reach production</li>
+          <li>Aligns cost, responsible-AI and EU AI Act guardrails into the cloud foundation from day one</li>
+          <li>Produces a readiness scorecard and prioritised remediation plan against the intended AI use-case portfolio</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="offering reverse">
+      <div class="offering-visual">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Phased roadmap">
+          <rect width="400" height="300" fill="#f4f4f3"/>
+          <line x1="50" y1="150" x2="350" y2="150" stroke="#141414" stroke-width="1.5" opacity="0.4"/>
+          <circle cx="100" cy="150" r="10" fill="#141414"/>
+          <circle cx="200" cy="150" r="10" fill="#ff5e4f"/>
+          <circle cx="300" cy="150" r="10" fill="#ffb4ac"/>
+        </svg>
+      </div>
+      <div class="offering-content">
+        <h3>Cloud Strategy &amp; Adoption Roadmap</h3>
+        <ul>
+          <li>Establishes a coherent cloud strategy aligned to business goals — not a set of disconnected point moves</li>
+          <li>Assesses readiness across strategy, applications, infrastructure, security, operating model, FinOps and skills</li>
+          <li>Produces a directional 6R / 7R disposition per application at a portfolio level</li>
+          <li>Sequences Immediate, Short-term and Long-term actions with owners, dependencies and cost bands</li>
+          <li>Delivers a board-ready adoption narrative and a mobilisable first phase ready to fund</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="offering">
+      <div class="offering-visual">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Six-pillar hexagon">
+          <rect width="400" height="300" fill="#f4f4f3"/>
+          <g transform="translate(200,150)">
+            <polygon points="0,-90 78,-45 78,45 0,90 -78,45 -78,-45" fill="none" stroke="#141414" stroke-width="1.2" opacity="0.4"/>
+            <polygon points="0,-70 60,-35 40,25 0,55 -55,30 -65,-40" fill="rgba(255,94,79,0.2)" stroke="#ff5e4f" stroke-width="1.75"/>
+          </g>
+        </svg>
+      </div>
+      <div class="offering-content">
+        <h3>AI-Powered Well-Architected Review</h3>
+        <ul>
+          <li>Assesses infrastructure and priority workloads against hyperscaler well-architected principles across six pillars</li>
+          <li>Uses AI-assisted analysis to review far more configuration and telemetry than a manual review of the same duration</li>
+          <li>Prioritises findings across reliability, security, cost, operations, performance and sustainability</li>
+          <li>Surfaces cost and security quick wins early — a natural tie-in to FinOps and resilience workstreams</li>
+          <li>Establishes a repeatable baseline to track architecture health over time as the estate evolves</li>
+        </ul>
+      </div>
+    </article>
+
+  </div></div>
+</section>
+
+<!-- DIGITAL SOVEREIGNTY -->
+<section id="panel-sov" role="tabpanel" aria-labelledby="tab-sov" aria-hidden="true" class="tab-panel">
+  <div class="tab-intro">
+    <div class="tab-intro-inner">
+      <div class="tab-intro-label">Digital Sovereignty · Out Standing under scrutiny</div>
+      <p>Sovereignty is now a board-level operating question, not a compliance footnote. With DORA, NIS2 and the EU AI Act converging through 2026, advisory that answers it clearly — where the organisation stands, what to do about it, and how to keep data, systems and operations under control if regulatory or geopolitical conditions change.</p>
+    </div>
+  </div>
+  <div class="offerings"><div class="offerings-inner">
+
+    <article class="offering">
+      <div class="offering-visual">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Seven-lens compass">
+          <rect width="400" height="300" fill="#f4f4f3"/>
+          <g transform="translate(200,150)">
+            <circle r="95" fill="none" stroke="#141414" stroke-width="1" opacity="0.35"/>
+            <circle r="65" fill="none" stroke="#141414" stroke-width="1" opacity="0.25"/>
+            <g stroke="#141414" stroke-width="1" opacity="0.4">
+              <line x1="0" y1="-95" x2="0" y2="95"/><line x1="-95" y1="0" x2="95" y2="0"/>
+              <line x1="-67" y1="-67" x2="67" y2="67"/><line x1="67" y1="-67" x2="-67" y2="67"/>
+            </g>
+            <circle r="12" fill="#ff5e4f"/>
+          </g>
+        </svg>
+      </div>
+      <div class="offering-content">
+        <h3>Quick Sovereignty Posture Assessment</h3>
+        <ul>
+          <li>Delivers a fast, board-ready read on sovereignty exposure — before any budget is committed</li>
+          <li>Cuts through the confusion between "data residency" and true digital sovereignty</li>
+          <li>Assesses posture across seven lenses: strategic, jurisdictional, data, cloud, data centre, AI, and operational resilience</li>
+          <li>Creates a single common view across teams hearing DORA, EU AI Act, NIS2 and EUCS separately</li>
+          <li>Produces a 30 / 60 / 90-day no-regret action list and a first-pass hyperscaler concentration scorecard</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="offering reverse">
+      <div class="offering-visual">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Risk register grid">
+          <rect width="400" height="300" fill="#f4f4f3"/>
+          <rect x="52" y="62" width="146" height="91" fill="#ffb4ac" opacity="0.45"/>
+          <rect x="202" y="62" width="146" height="91" fill="#ff5e4f" opacity="0.7"/>
+          <rect x="52" y="157" width="146" height="91" fill="#141414" opacity="0.15"/>
+          <rect x="202" y="157" width="146" height="91" fill="#ffb4ac" opacity="0.35"/>
+        </svg>
+      </div>
+      <div class="offering-content">
+        <h3>Sovereignty Readiness Assessment</h3>
+        <ul>
+          <li>Moves the organisation from awareness to a defensible, evidence-based readiness baseline</li>
+          <li>Produces a detailed sovereignty risk register scored against regulatory and operational impact</li>
+          <li>Co-creates target-state principles and guardrails with IT, security, legal and business stakeholders</li>
+          <li>Delivers a costed, sequenced 12–18 month remediation roadmap tied to 2026 regulatory deadlines</li>
+          <li>Provides a first-pass exit or multi-vendor strategy to reduce hyperscaler concentration risk</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="offering">
+      <div class="offering-visual">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Application portfolio waves">
+          <rect width="400" height="300" fill="#f4f4f3"/>
+          <rect x="30" y="60" width="340" height="50" fill="#141414" opacity="0.1"/>
+          <rect x="30" y="125" width="340" height="50" fill="#141414" opacity="0.1"/>
+          <rect x="30" y="190" width="340" height="50" fill="#141414" opacity="0.1"/>
+        </svg>
+      </div>
+      <div class="offering-content">
+        <h3>Application Portfolio Mapping &amp; Roadmap</h3>
+        <ul>
+          <li>Maps the application portfolio against sovereignty, business-criticality and modernization lenses</li>
+          <li>Assigns a clear per-application disposition — the "6 Rs" mapped explicitly to sovereignty need</li>
+          <li>Sequences a wave-based modernization and migration roadmap that de-risks execution</li>
+          <li>Identifies sovereignty-sensitive and high-criticality applications needing action first</li>
+          <li>Attaches indicative effort, complexity and cost bands — a ready input to the business case</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="offering reverse">
+      <div class="offering-visual">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Regulatory alignment framework">
+          <rect width="400" height="300" fill="#f4f4f3"/>
+          <g transform="translate(200,150)">
+            <path d="M0,-70 L50,-50 L50,20 Q50,55 0,70 Q-50,55 -50,20 L-50,-50 Z" fill="#141414"/>
+          </g>
+        </svg>
+      </div>
+      <div class="offering-content">
+        <h3>Regulatory Alignment &amp; Exit Strategy</h3>
+        <ul>
+          <li>Maps the current estate against DORA, NIS2, the EU AI Act and EUCS in a single alignment view</li>
+          <li>Assesses hyperscaler and third-party ICT concentration risk at the workload and contract level</li>
+          <li>Develops first-pass exit and multi-vendor options aligned to sovereign cloud and open-source alternatives</li>
+          <li>Supports the case for sovereign cloud partnerships without vendor lock-in</li>
+          <li>Produces evidence and narrative that stands up to regulator, auditor and board scrutiny</li>
+        </ul>
+      </div>
+    </article>
+
+  </div></div>
+</section>
+
+<!-- AI INFUSION -->
+<section id="panel-ai" role="tabpanel" aria-labelledby="tab-ai" aria-hidden="true" class="tab-panel">
+  <div class="tab-intro">
+    <div class="tab-intro-inner">
+      <div class="tab-intro-label">AI Infusion · Out Create with AI</div>
+      <p>Turn scattered AI experiments into a prioritised, funded and governed adoption path. Advisory that identifies where GenAI and agentic AI will move the numbers, assesses whether the data and cloud foundation can support them, and builds the responsible-AI guardrails needed for a 2026 regulatory environment.</p>
+    </div>
+  </div>
+  <div class="offerings"><div class="offerings-inner">
+
+    <article class="offering">
+      <div class="offering-visual">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Use-case value quadrant">
+          <rect width="400" height="300" fill="#f4f4f3"/>
+          <g stroke="#141414" stroke-width="1" opacity="0.35"><line x1="60" y1="150" x2="340" y2="150"/><line x1="200" y1="50" x2="200" y2="250"/></g>
+          <circle cx="260" cy="200" r="22" fill="#ff5e4f" opacity="0.85"/>
+          <circle cx="290" cy="180" r="15" fill="#ffb4ac" opacity="0.85"/>
+          <circle cx="245" cy="215" r="11" fill="#141414"/>
+        </svg>
+      </div>
+      <div class="offering-content">
+        <h3>AI Opportunity &amp; Value Advisory</h3>
+        <ul>
+          <li>Reviews process and value-chain landscape to surface high-value AI infusion opportunities</li>
+          <li>Scores use cases across value, effort, risk and data-readiness — not tech for its own sake</li>
+          <li>Distinguishes GenAI, agentic AI and classical ML use cases and their respective adoption paths</li>
+          <li>Prioritises a first wave of use cases with expected outcomes and KPIs the business will recognise</li>
+          <li>Provides directional build-buy-partner options and platform choices across hyperscaler and specialist AI</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="offering reverse">
+      <div class="offering-visual">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Data foundation readiness">
+          <rect width="400" height="300" fill="#f4f4f3"/>
+          <g transform="translate(200,180)">
+            <ellipse cx="0" cy="-40" rx="70" ry="15" fill="#141414"/>
+            <rect x="-70" y="-40" width="140" height="70" fill="#141414"/>
+            <ellipse cx="0" cy="30" rx="70" ry="15" fill="#0d0d0d"/>
+          </g>
+        </svg>
+      </div>
+      <div class="offering-content">
+        <h3>AI Readiness &amp; Data Foundation Assessment</h3>
+        <ul>
+          <li>Assesses whether the existing data and cloud foundation can support AI at meaningful scale</li>
+          <li>Surfaces gaps in data quality, classification, lineage and platform capability that block adoption</li>
+          <li>Reviews AI-relevant cloud posture — model hosting, inference footprint, data movement and cost</li>
+          <li>Identifies foundational investments needed before AI use cases can safely reach production</li>
+          <li>Produces a readiness scorecard and prioritised remediation list against the intended use-case portfolio</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="offering">
+      <div class="offering-visual">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Risk tiers">
+          <rect width="400" height="300" fill="#f4f4f3"/>
+          <polygon points="200,55 240,110 160,110" fill="#ff5e4f"/>
+          <polygon points="160,110 240,110 275,175 125,175" fill="#ffb4ac"/>
+          <polygon points="125,175 275,175 320,250 80,250" fill="#141414"/>
+        </svg>
+      </div>
+      <div class="offering-content">
+        <h3>Responsible AI &amp; Governance Advisory</h3>
+        <ul>
+          <li>Maps AI use cases against EU AI Act risk categories and high-risk system obligations from August 2026</li>
+          <li>Establishes a responsible-AI governance model — roles, review cadence, escalation and audit trail</li>
+          <li>Defines guardrails across bias, transparency, human oversight and data handling per use-case class</li>
+          <li>Aligns responsible-AI governance with existing risk, security and compliance functions</li>
+          <li>Delivers an AI governance blueprint the CIO, CISO, legal and business can jointly operate</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="offering reverse">
+      <div class="offering-visual">
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AI cost per token trend">
+          <rect width="400" height="300" fill="#f4f4f3"/>
+          <path d="M50 220 Q120 200, 160 165 T280 90 T360 40" fill="none" stroke="#ff5e4f" stroke-width="2.5" stroke-dasharray="6 4"/>
+          <path d="M50 220 Q120 210, 160 195 T280 165 T360 145" fill="none" stroke="#141414" stroke-width="2.5"/>
+        </svg>
+      </div>
+      <div class="offering-content">
+        <h3>AI Cost &amp; FinOps for AI</h3>
+        <ul>
+          <li>Extends FinOps discipline to AI, GenAI and agentic workloads before spend becomes unmanageable</li>
+          <li>Establishes tagging, allocation and forecasting practices for token, inference and training cost</li>
+          <li>Surfaces early optimisation opportunities across model choice, caching, prompt design and platform</li>
+          <li>Aligns AI spend to business value with per-use-case unit economics and ROI tracking</li>
+          <li>Prepares the organisation for AI cost governance to become a board-level metric</li>
+        </ul>
+      </div>
+    </article>
+
+  </div></div>
+</section>
+
+<!-- Delivery -->
+<section class="delivery" aria-labelledby="delivery-title">
+  <div class="delivery-inner">
+    <div class="delivery-header">
+      <div class="delivery-label">Delivery</div>
+      <div>
+        <h2 id="delivery-title">Understand · Ideate · Accelerate</h2>
+        <p class="delivery-lead">Every engagement — across every offering — runs on the same three-phase Out Create cadence, right-sized to the scope and delivered largely offshore.</p>
+      </div>
+    </div>
+
+    <div class="phases">
+      <div class="phase">
+        <div class="phase-num">01</div>
+        <h4>Understand</h4>
+        <p>Document intake, stakeholder interviews and landscape mapping to establish the honest current state.</p>
+      </div>
+      <div class="phase">
+        <div class="phase-num">02</div>
+        <h4>Ideate</h4>
+        <p>Co-created working sessions with your teams — priorities, target-state options and trade-offs made in the open.</p>
+      </div>
+      <div class="phase">
+        <div class="phase-num">03</div>
+        <h4>Accelerate</h4>
+        <p>Final report, executive playback and a mobilisation-ready set of next actions the organisation can fund.</p>
+      </div>
+    </div>
+
+    <div class="delivery-note">
+      <div class="delivery-note-icon" aria-hidden="true">
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 1v3M8 12v3M15 8h-3M4 8H1M12.95 3.05l-2.12 2.12M5.17 10.83l-2.12 2.12M12.95 12.95l-2.12-2.12M5.17 5.17L3.05 3.05" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </div>
+      <p><strong>Weekly checkpoints</strong> confirm findings, manage scope and keep the client in control throughout. Advisory that leads to action, at roughly one-third of Tier-1 consulting fees.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Accelerators -->
+<section class="accelerators" id="accelerators" aria-labelledby="accel-title">
+  <div class="accelerators-inner">
+    <div class="accel-header">
+      <div class="accel-label">Accelerators</div>
+      <div>
+        <h2 id="accel-title">Tools that help you Out Create the answer</h2>
+        <p class="accel-lead">Every engagement is backed by a suite of in-house accelerators — purpose-built to compress diagnostic time, sharpen recommendations, and give clients working artefacts they can use long after the engagement ends. Several are available now as free, guided self-assessments.</p>
+      </div>
+    </div>
+
+    <div class="accel-grid">
+
+      <article class="accel">
+        <div class="accel-num">01</div>
+        <div>
+          <h3>Sovereign Compass <span class="accel-badge">Free</span></h3>
+          <p>The fundamental first-look accelerator for digital sovereignty. Helps organisations assess whether — and where — they need sovereignty controls before committing any budget, with an evidence-based posture read and no-regret actions in hours.</p>
+          <a class="accel-link" href="https://ltm-core.s3.us-east-1.amazonaws.com/sovereign-screen.html" target="_blank" rel="noopener">
+            Launch tool
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 3h7v7M13 3L6 10M11 8v5H3V5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="accel">
+        <div class="accel-num">02</div>
+        <div>
+          <h3>Regulatory Alignment &amp; Exit Strategy</h3>
+          <p>The L2 sovereignty accelerator — a Data Residency &amp; Jurisdiction Audit. Gauges compliance against targeted jurisdictions and sovereignty frameworks (DORA, NIS2, EU AI Act, EUCS) with a focus on where data actually lives, moves and is processed.</p>
+          <a class="accel-link" href="https://ltm-core.s3.us-east-1.amazonaws.com/Data-Residency-Jurisdiction-Audit.html" target="_blank" rel="noopener">
+            Launch tool
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 3h7v7M13 3L6 10M11 8v5H3V5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="accel">
+        <div class="accel-num">03</div>
+        <div>
+          <h3>FinOps Value Case</h3>
+          <p>Answers the question every finance leader is asking: "Do we actually need FinOps?" A guided value-case accelerator that sizes the opportunity from a handful of estate inputs and returns a directional ROI band you can take into a funding conversation.</p>
+          <a class="accel-link" href="http://ltm-core.s3-website-us-east-1.amazonaws.com/finops-value-case.html" target="_blank" rel="noopener">
+            Launch tool
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 3h7v7M13 3L6 10M11 8v5H3V5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="accel">
+        <div class="accel-num">04</div>
+        <div>
+          <h3>FinOps Maturity Assessment <span class="accel-badge">Free</span></h3>
+          <p>Inspired by the FinOps Foundation's five-stage maturity model, delivers a rapid capability-level read of where the client's practice stands today — and lays out a realistic Crawl-Walk-Run path to Out Class the peer set.</p>
+          <a class="accel-link" href="http://ltm-core.s3-website-us-east-1.amazonaws.com/finops-screen.html" target="_blank" rel="noopener">
+            Launch tool
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 3h7v7M13 3L6 10M11 8v5H3V5h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="accel">
+        <div class="accel-num">05</div>
+        <div>
+          <h3>CIS Operating Model Designer</h3>
+          <p>Lets clients rapidly rebuild and stress-test their cloud operating model. Propose changes to structure, roles and cadence and immediately see the pros and cons the advisor would flag — a working sandbox for operating-model decisions.</p>
+          <span class="accel-link" style="color: var(--graphite);">Available with engagement</span>
+        </div>
+      </article>
+
+      <article class="accel">
+        <div class="accel-num">06</div>
+        <div>
+          <h3>CIS Business Case Analyser</h3>
+          <p>Takes a handful of inputs about the organisation — estate size, cloud footprint, industry, drivers — and returns a CIO / CTO-level cloud transformation business case with a directional ROI band. A fast, credible start to board-ready funding conversations.</p>
+          <span class="accel-link" style="color: var(--graphite);">Available with engagement</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- Thought Leadership -->
+<section class="thought" id="thought" aria-labelledby="thought-title">
+  <div class="thought-header">
+    <div class="thought-label">Insights</div>
+    <h2 id="thought-title">Thought leadership that helps you <em>Out Create</em></h2>
+    <div class="thought-controls">
+      <button class="thought-btn" data-scroll="prev" aria-label="Scroll insights left">
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="thought-btn" data-scroll="next" aria-label="Scroll insights right">
+        <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <div class="thought-scroller" id="thoughtScroller" tabindex="0" aria-label="Thought leadership carousel">
+
+    <article class="thought-card">
+      <div class="thought-cover alt-1"><span class="cover-tag">POV</span></div>
+      <div class="thought-body">
+        <div class="thought-meta">Point of View · Placeholder</div>
+        <h3>The Anchor-Cloud Decision: Out Class the multicloud sprawl</h3>
+        <p>Why picking a deliberate primary cloud beats accidental multicloud — and how to defend the choice to the board.</p>
+        <span class="read-more">Read more →</span>
+      </div>
+    </article>
+
+    <article class="thought-card">
+      <div class="thought-cover"><span class="cover-tag">Research</span></div>
+      <div class="thought-body">
+        <div class="thought-meta">Research · Placeholder</div>
+        <h3>Sovereignty in 2026: What DORA, NIS2 and the EU AI Act actually demand</h3>
+        <p>A single alignment view across the converging regulations — and what "no-regret" actions look like now.</p>
+        <span class="read-more">Read more →</span>
+      </div>
+    </article>
+
+    <article class="thought-card">
+      <div class="thought-cover alt-2"><span class="cover-tag">Playbook</span></div>
+      <div class="thought-body">
+        <div class="thought-meta">Playbook · Placeholder</div>
+        <h3>FinOps for AI: Out Create unit economics before spend runs away</h3>
+        <p>Extending tagging, allocation and forecasting from cloud to token, inference and training cost.</p>
+        <span class="read-more">Read more →</span>
+      </div>
+    </article>
+
+    <article class="thought-card">
+      <div class="thought-cover alt-3"><span class="cover-tag">Case Study</span></div>
+      <div class="thought-body">
+        <div class="thought-meta">Case Study · Placeholder</div>
+        <h3>An Out Standing sovereignty readout in eight weeks</h3>
+        <p>How one European financial services group moved from awareness to a costed remediation roadmap.</p>
+        <span class="read-more">Read more →</span>
+      </div>
+    </article>
+
+    <article class="thought-card">
+      <div class="thought-cover alt-4"><span class="cover-tag">POV</span></div>
+      <div class="thought-body">
+        <div class="thought-meta">Point of View · Placeholder</div>
+        <h3>Well-Architected, AI-Powered: reviewing the estate at machine speed</h3>
+        <p>What changes when AI-assisted analysis reads far more configuration than a human review of the same duration.</p>
+        <span class="read-more">Read more →</span>
+      </div>
+    </article>
+
+    <article class="thought-card">
+      <div class="thought-cover"><span class="cover-tag">Guide</span></div>
+      <div class="thought-body">
+        <div class="thought-meta">Guide · Placeholder</div>
+        <h3>Responsible AI, operationalised: from framework to Friday</h3>
+        <p>Turning EU AI Act obligations into a governance model the CIO, CISO, legal and business can jointly run.</p>
+        <span class="read-more">Read more →</span>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- Key Partnerships -->
+<section class="partners" aria-labelledby="partners-title">
+  <div class="partners-inner">
+    <div class="partners-header">
+      <div class="partners-label">Partnerships</div>
+      <div>
+        <h2 id="partners-title">Key partners we Out Create with</h2>
+        <p>Advisory backed by deep, hands-on partnerships across hyperscalers, platform vendors and sovereign cloud specialists.</p>
+      </div>
+    </div>
+
+    <div class="partner-strip">
+      <div class="partner">AWS<span class="p-sub">Hyperscaler</span></div>
+      <div class="partner">Microsoft Azure<span class="p-sub">Hyperscaler</span></div>
+      <div class="partner">ServiceNow<span class="p-sub">Platform</span></div>
+      <div class="partner">HP<span class="p-sub">Infrastructure</span></div>
+      <div class="partner">MontiCloud<span class="p-sub">Sovereign Cloud</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="cta" aria-labelledby="cta-title">
+  <div class="cta-inner">
+    <div>
+      <h2 id="cta-title">Ready to <em>Out Create</em> your next move?</h2>
+      <p>Connect with our CIS Tech Advisory team. One week to a first read on your estate — no commitment beyond a conversation.</p>
+    </div>
+    <a href="mailto:cistechadvisory@ltm.com" class="cta-btn">
+      Connect with our team
+      <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M2 8h12m0 0L9 3m5 5l-5 5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="site-footer-inner">
+    <div style="display:flex; align-items:center; gap: 0.85rem;">
+      <img src="https://www.ltm.com/content/dam/ltimcorporatewebsite/refresh-images/LTM-Logo.svg" alt="LTM" />
+      <span>© LTM · CIS Tech Advisory</span>
+    </div>
+    <div class="foot-tag">It's time to Out Create</div>
+    <div>An L&amp;T Group Company</div>
+  </div>
+</footer>
+
+<script>
+  // Tabs
+  (function () {
+    const tabs = Array.from(document.querySelectorAll('[role="tab"]'));
+    const panels = Array.from(document.querySelectorAll('[role="tabpanel"]'));
+    function activate(tab, setFocus) {
+      tabs.forEach(t => {
+        const selected = t === tab;
+        t.setAttribute('aria-selected', selected);
+        t.setAttribute('tabindex', selected ? '0' : '-1');
+      });
+      panels.forEach(p => {
+        p.setAttribute('aria-hidden', p.getAttribute('aria-labelledby') !== tab.id);
+      });
+      if (setFocus) tab.focus();
+    }
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => activate(tab, false));
+      tab.addEventListener('keydown', e => {
+        const idx = tabs.indexOf(tab);
+        if (e.key === 'ArrowRight') { e.preventDefault(); activate(tabs[(idx + 1) % tabs.length], true); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); activate(tabs[(idx - 1 + tabs.length) % tabs.length], true); }
+        else if (e.key === 'Home') { e.preventDefault(); activate(tabs[0], true); }
+        else if (e.key === 'End') { e.preventDefault(); activate(tabs[tabs.length - 1], true); }
+      });
+    });
+  })();
+
+  // Thought Leadership horizontal scroll
+  (function () {
+    const scroller = document.getElementById('thoughtScroller');
+    if (!scroller) return;
+    document.querySelectorAll('.thought-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const dir = btn.getAttribute('data-scroll') === 'next' ? 1 : -1;
+        const card = scroller.querySelector('.thought-card');
+        const step = card ? card.getBoundingClientRect().width + 20 : 300;
+        scroller.scrollBy({ left: dir * step, behavior: 'smooth' });
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
