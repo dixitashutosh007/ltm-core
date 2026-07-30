@@ -301,3 +301,97 @@ Ranked by risk of a customer reading a legally-wrong conclusion:
 6. **Legal sign-off** on the final KB before it goes public.
 
 Given the file is a **bundled single-page HTML** and JSX source is out of scope (per your instruction), all of the above are string edits inside the embedded `const DEFAULT_KB = {...}` block. That block is at offset ~7.35 MB in the file but is straight JavaScript object literal — safe to edit with targeted replacements.
+
+---
+
+## 10. Sources & methodology
+
+Every regime, article citation, penalty figure and applicability rule discussed in this review — and every rule now shipping in the tool's knowledge base — is drawn from the sources below. Preference: official EU / UK government publishers first, then the standing supervisory authorities, then well-recognised regulator commentary. No blog posts, no vendor whitepapers, no LLM guesses.
+
+The same list has been baked into the tool itself as a `sources:[{name,url}]` array on each regime in `DEFAULT_KB` (patch: `scripts/patch-sovereign-screen.py`), so a customer reading the report can click through to the authoritative text for any regime call.
+
+### 10.1 EU legislation (primary sources — EUR-Lex)
+
+| Regime | Legal instrument | Authoritative source |
+|---|---|---|
+| DORA | Regulation (EU) 2022/2554 | https://eur-lex.europa.eu/eli/reg/2022/2554/oj |
+| NIS2 | Directive (EU) 2022/2555 | https://eur-lex.europa.eu/eli/dir/2022/2555/oj |
+| EU GDPR | Regulation (EU) 2016/679 | https://eur-lex.europa.eu/eli/reg/2016/679/oj |
+| EU AI Act | Regulation (EU) 2024/1689 | https://eur-lex.europa.eu/eli/reg/2024/1689/oj |
+| EU Data Act | Regulation (EU) 2023/2854 | https://eur-lex.europa.eu/eli/reg/2023/2854/oj |
+| MiCA (not yet in KB) | Regulation (EU) 2023/1114 | https://eur-lex.europa.eu/eli/reg/2023/1114/oj |
+| eIDAS 2 (not yet in KB) | Regulation (EU) 2024/1183 | https://eur-lex.europa.eu/eli/reg/2024/1183/oj |
+
+### 10.2 UK legislation (primary sources — legislation.gov.uk)
+
+| Regime | Legal instrument | Authoritative source |
+|---|---|---|
+| UK Critical Third Parties | Financial Services and Markets Act 2023, Part 9 | https://www.legislation.gov.uk/ukpga/2023/29/contents |
+| UK GDPR (retained) | Retained Regulation (EU) 2016/679 | https://www.legislation.gov.uk/eur/2016/679/contents |
+| Data Protection Act 2018 | UK Public General Acts | https://www.legislation.gov.uk/ukpga/2018/12/contents |
+| PECR | The Privacy and Electronic Communications (EC Directive) Regulations 2003 | https://www.legislation.gov.uk/uksi/2003/2426/contents |
+| Data (Use and Access) Act 2025 | UK Public General Acts | https://www.legislation.gov.uk/ukpga/2025/18 |
+
+### 10.3 Supervisory / regulator publications
+
+| Item | Source |
+|---|---|
+| FCA PS21/3 — Building operational resilience | https://www.fca.org.uk/publications/policy-statements/ps21-3-building-operational-resilience |
+| PRA SS2/21 — Operational resilience | https://www.bankofengland.co.uk/prudential-regulation/publication/2021/march/operational-resilience-impact-tolerances-for-important-business-services-ss |
+| Bank of England — Operational resilience hub | https://www.bankofengland.co.uk/prudential-regulation/regulation/operational-resilience |
+| FCA PS24/16 — Operational resilience: Critical Third Parties | https://www.fca.org.uk/publications/policy-statements/ps24-16-operational-resilience-critical-third-parties |
+| PRA PS16/24 — CTPs to the UK financial sector | https://www.bankofengland.co.uk/prudential-regulation/publication/2024/november/operational-resilience-critical-third-parties-to-the-uk-financial-sector |
+| European Commission — DORA implementing acts | https://finance.ec.europa.eu/regulation-and-supervision/financial-services-legislation/implementing-and-delegated-acts/digital-operational-resilience-act_en |
+| EBA — DORA regulation & policy hub | https://www.eba.europa.eu/regulation-and-policy/digital-operational-resilience-act-dora |
+| ENISA — NIS2 hub | https://www.enisa.europa.eu/topics/nis-directive |
+| European Commission — EU AI Act | https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai |
+| European Commission — EU Data Act | https://digital-strategy.ec.europa.eu/en/policies/data-act |
+| EDPB — European Data Protection Board | https://edpb.europa.eu/edpb_en |
+| EDPB — Schrems II recommendations on supplementary measures | https://edpb.europa.eu/our-work-tools/our-documents/recommendations/recommendations-012020-measures-supplement-transfer_en |
+| European Commission — EU-US Data Privacy Framework | https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/eu-us-data-privacy-framework_en |
+| ICO — Information Commissioner's Office | https://ico.org.uk/ |
+
+### 10.4 US legislation referenced
+
+| Item | Source |
+|---|---|
+| CLOUD Act (Pub. L. 115-141, Div. V) — DOJ overview | https://www.justice.gov/criminal/criminal-oia/cloud-act |
+| CLOUD Act — Congress record | https://www.congress.gov/bill/115th-congress/house-bill/4943 |
+
+### 10.5 How each conclusion in this review is drawn
+
+| Claim in this review | Authority the claim rests on |
+|---|---|
+| DORA covers ~20 categories of financial entity | Regulation (EU) 2022/2554, Art. 2(1) |
+| Initial DORA incident notification is ~4h after classification, 72h intermediate, 1 month final | Commission Delegated Regulation on incident reporting (RTS under DORA Art. 20) |
+| TLPT under DORA is ≥ every 3 years for significant entities | Regulation (EU) 2022/2554, Art. 26–27 |
+| DORA is lex specialis over NIS2 for financial entities' ICT-risk / incident-reporting duties | Directive (EU) 2022/2555, Art. 4; Regulation (EU) 2022/2554, Art. 1(2) |
+| AI Act Art. 99 penalties are tiered (€35m/7% for prohibited practices; €15m/3% for high-risk violations; €7.5m/1% for incorrect info) | Regulation (EU) 2024/1689, Art. 99 |
+| AI Act Annex III item 5(c) covers *life and health* insurance risk/pricing only | Regulation (EU) 2024/1689, Annex III item 5(c) |
+| GDPR Art. 9 special categories (financial data is NOT one of them) | Regulation (EU) 2016/679, Art. 9(1) |
+| GDPR extraterritoriality: establishment OR targeting/monitoring of individuals in EU | Regulation (EU) 2016/679, Art. 3 |
+| GDPR Chapter V restrictions on international transfers | Regulation (EU) 2016/679, Chapter V (Arts. 44–50) |
+| EU-US Data Privacy Framework provides adequacy for DPF-certified US recipients (July 2023) | Commission Implementing Decision (EU) 2023/1795 |
+| US CLOUD Act: US law-enforcement access to data held by US-jurisdiction providers regardless of physical location | 18 U.S.C. §2713 (as amended by CLOUD Act 2018) |
+| UK operational resilience — impact tolerances / mapping / self-assessment framework | FCA PS21/3; PRA SS2/21; Bank of England SS1/21 |
+| UK CTP regime — six Fundamental Rules; joint FCA/PRA/BoE oversight | FSMA 2023 Part 9; FCA PS24/16; PRA PS16/24 |
+| UK DUAA 2025 amends UK GDPR / DPA 2018 / PECR in phased commencement | Data (Use and Access) Act 2025 (schedules and commencement orders) |
+
+### 10.6 What is deliberately NOT relied on
+
+- **LLM-generated summaries** — no regime, article, or penalty above was taken from an AI summary; each is from the source text or the supervising authority's own publication.
+- **Vendor whitepapers / analyst notes** — useful for context, but never cited as the authority for a regulatory claim in this tool.
+- **News articles** — used only to date-stamp facts that change (e.g., number of designated DORA CTPPs), and only after cross-checking against the ESAs' own designation register.
+
+### 10.7 Refresh policy
+
+Every regime source above has a "last-checked" date implicit in the KB's `last_reviewed` field (currently 2026-07-30). Recommend a **quarterly** re-check for:
+
+- new DORA CTPP designations (ESAs' register)
+- AI Act phased commencement (Art. 113 dates)
+- DUAA 2025 commencement orders (UK, phased)
+- Any European Commission adequacy decisions (DPF-adjacent)
+- Any Schrems / CJEU rulings affecting Chapter V
+
+Assign a named owner (default: CIS Tech Advisory practice lead) for the refresh cadence, and re-run this review on each cycle.
+
