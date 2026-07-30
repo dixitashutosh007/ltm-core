@@ -153,6 +153,93 @@ def inject_sources(data: str) -> tuple[str, int]:
         injected += 1
     return data, injected
 
+# --- New readiness questions ---------------------------------------------
+#
+# Six of the nine regimes ship with declared readiness_dimensions but ZERO
+# questions tagged for them. Every assessment on those regimes therefore
+# renders "Not yet scored / Readiness questions were not completed".
+#
+# The eight questions below cover every unscored regime × dimension pair,
+# each conditionally shown so a customer only sees the ones relevant to
+# their profile. All are rating_1_5 for consistency with the existing QR_*
+# questions. Fact-value merging in computeFacts() only writes for
+# single/multi/boolean/range answer types, so rating_1_5 questions can be
+# added without affecting the fact graph.
+#
+# JSON-escape reminder: this string is inserted verbatim into the raw
+# file, which is the JSON encoding of the JS source. Only \" \\ \/ \b \f
+# \n \r \t \uXXXX are valid JSON escapes. No apostrophes escaped with \'.
+NEW_READINESS_QUESTIONS = (
+    r',\n    '
+    # 1. NIS2 residual — corporate cyber hygiene
+    r'{id:\"QR_NIS2\", category:\"resilience_posture\", tier:1, answer_type:\"rating_1_5\", '
+    r'shown_if:{all:[{fact:\"entity_role\",op:\"eq\",value:\"financial_entity\"},{fact:\"establishment_eu\",op:\"is_true\"}]}, '
+    r'text:\"How mature are your corporate-level cyber hygiene controls (asset inventory, patching, MFA, security awareness training)?\", '
+    r'readiness:{regime:\"nis2_residual\",dimension:\"corporate_cyber_hygiene\"}},\n    '
+
+    # 2. UK CTP — dependency readiness
+    r'{id:\"QR_UKCTP\", category:\"resilience_posture\", tier:1, answer_type:\"rating_1_5\", '
+    r'shown_if:{all:[{fact:\"entity_role\",op:\"eq\",value:\"financial_entity\"},{fact:\"establishment_uk\",op:\"is_true\"}]}, '
+    r'text:\"How well documented is your dependency on providers that could be (or are) designated UK Critical Third Parties, including exit and substitutability plans?\", '
+    r'readiness:{regime:\"uk_ctp\",dimension:\"ctp_dependency\"}},\n    '
+
+    # 3. EU GDPR — data-protection governance
+    r'{id:\"QR_EUDP_GOV\", category:\"resilience_posture\", tier:1, answer_type:\"rating_1_5\", '
+    r'shown_if:{all:[{fact:\"processes_personal_data\",op:\"is_true\"},{any:[{fact:\"establishment_eu\",op:\"is_true\"},{fact:\"offers_services_eu\",op:\"is_true\"},{fact:\"data_subjects_geo\",op:\"includes_any\",value:[\"EU\"]}]}]}, '
+    r'text:\"How mature is your EU data-protection governance (DPO where required, records of processing, DPIAs, breach process)?\", '
+    r'readiness:{regime:\"eu_gdpr\",dimension:\"data_protection_governance\"}},\n    '
+
+    # 4. EU GDPR — transfer compliance
+    r'{id:\"QR_EUDP_TRANSFER\", category:\"resilience_posture\", tier:1, answer_type:\"rating_1_5\", '
+    r'shown_if:{all:[{fact:\"processes_personal_data\",op:\"is_true\"},{any:[{fact:\"establishment_eu\",op:\"is_true\"},{fact:\"offers_services_eu\",op:\"is_true\"},{fact:\"data_subjects_geo\",op:\"includes_any\",value:[\"EU\"]}]}]}, '
+    r'text:\"How complete is your Chapter V transfer-mechanism coverage (adequacy, SCCs, BCRs, TIAs) for cross-border flows of EU personal data?\", '
+    r'readiness:{regime:\"eu_gdpr\",dimension:\"transfer_compliance\"}},\n    '
+
+    # 5. UK GDPR — data-protection governance
+    r'{id:\"QR_UKDP\", category:\"resilience_posture\", tier:1, answer_type:\"rating_1_5\", '
+    r'shown_if:{all:[{fact:\"processes_personal_data\",op:\"is_true\"},{any:[{fact:\"establishment_uk\",op:\"is_true\"},{fact:\"offers_services_uk\",op:\"is_true\"},{fact:\"data_subjects_geo\",op:\"includes_any\",value:[\"UK\"]}]}]}, '
+    r'text:\"How mature is your UK data-protection governance (ICO registration, DPO where required, records of processing, PECR compliance)?\", '
+    r'readiness:{regime:\"uk_gdpr\",dimension:\"data_protection_governance\"}},\n    '
+
+    # 6. EU AI Act — AI data governance
+    r'{id:\"QR_AI_DGOV\", category:\"resilience_posture\", tier:1, answer_type:\"rating_1_5\", '
+    r'shown_if:{all:[{any:[{fact:\"uses_high_risk_ai\",op:\"is_true\"},{fact:\"uses_other_ai\",op:\"is_true\"}]},{any:[{fact:\"establishment_eu\",op:\"is_true\"},{fact:\"offers_services_eu\",op:\"is_true\"}]}]}, '
+    r'text:\"How mature is your AI data governance (data quality, provenance, bias assessment of training and inference data)?\", '
+    r'readiness:{regime:\"eu_ai_act\",dimension:\"ai_data_governance\"}},\n    '
+
+    # 7. EU AI Act — high-risk AI controls
+    r'{id:\"QR_AI_CTRL\", category:\"resilience_posture\", tier:1, answer_type:\"rating_1_5\", '
+    r'shown_if:{all:[{fact:\"uses_high_risk_ai\",op:\"is_true\"},{any:[{fact:\"establishment_eu\",op:\"is_true\"},{fact:\"offers_services_eu\",op:\"is_true\"}]}]}, '
+    r'text:\"How mature are your high-risk AI controls (risk-management system, human oversight, technical documentation, event logging, conformity)?\", '
+    r'readiness:{regime:\"eu_ai_act\",dimension:\"ai_risk_controls\"}},\n    '
+
+    # 8. EU Data Act — portability and switching (provider side)
+    r'{id:\"QR_DATA_ACT\", category:\"resilience_posture\", tier:1, answer_type:\"rating_1_5\", '
+    r'shown_if:{fact:\"entity_role\",op:\"eq\",value:\"ict_provider_to_finance\"}, '
+    r'text:\"How ready are you to meet EU Data Act cloud switching and portability duties (customer-facing switching terms, interoperability, safeguards against unlawful third-country access to non-personal data)?\", '
+    r'readiness:{regime:\"eu_data_act\",dimension:\"portability_switching\"}}'
+)
+# Marker for idempotency — check for one of the new IDs before inserting
+NEW_QUESTIONS_MARKER = r'QR_NIS2'
+
+# Insertion point: right after QR_TRANSFER (the last existing tier-1
+# readiness question) and before the tier-2 Q2_PRIORITY marker.
+INSERTION_ANCHOR = r'{label:\"No\",fact_value:{},score:0}]},\n    {id:\"Q2_PRIORITY\"'
+INSERTION_REPLACEMENT = (
+    r'{label:\"No\",fact_value:{},score:0}]}'
+    + NEW_READINESS_QUESTIONS
+    + r',\n    {id:\"Q2_PRIORITY\"'
+)
+
+
+def inject_readiness_questions(data: str) -> tuple[str, bool]:
+    if NEW_QUESTIONS_MARKER in data:
+        return data, False
+    if INSERTION_ANCHOR not in data:
+        raise SystemExit(f"\n  ✗ readiness insertion anchor not found — file structure may have changed")
+    return data.replace(INSERTION_ANCHOR, INSERTION_REPLACEMENT, 1), True
+
+
 def json_safety_check(data: str) -> None:
     """After edits, verify each <script type='__bundler/...'> payload
     still parses as JSON. Fail loud if not — the bundler will refuse to
@@ -186,6 +273,8 @@ def main() -> int:
         print(f"  ✓ patched: {old[:60]!r}")
     data, injected = inject_sources(data)
     print(f"  sources injected into {injected} regime(s)")
+    data, added = inject_readiness_questions(data)
+    print(f"  readiness questions added: {'yes (8)' if added else 'already present'}")
     json_safety_check(data)
     print("  ✓ all bundler payloads still parse as valid JSON")
     FILE.write_text(data, encoding="utf-8")
