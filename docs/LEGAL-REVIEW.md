@@ -35,8 +35,9 @@ SHA of the promoted build.
 
 | Date | Phase | SHA | Reviewed by | Decision | Notes |
 |---|---|---|---|---|---|
-| 2026-07-30 | 0 — Guardrails | b93bd78 | Ashutosh Dixit | approved (implicit by "start Phase 1" instruction 2026-07-30) | Version stamp only; no legal/regime changes. Prod not yet promoted — will promote when Phase 1 is signed off (avoid two prod cutovers same day). |
-| 2026-07-30 | 1 — Legal defensibility (8 items) | *(pending — SHA below on commit)* | Ashutosh Dixit | *pending* | Staging URL: https://ltm-core.s3.us-east-1.amazonaws.com/sovereign-screen-staging.html · Diff summary: docs/SOVEREIGN-SCREEN-ROADMAP.md §Phase 1 |
+| 2026-07-30 | 0 — Guardrails | b93bd78 | Ashutosh Dixit | approved (implicit by "start Phase 1" instruction 2026-07-30) | Version stamp only; no legal/regime changes. |
+| 2026-07-30 | 1 — Legal defensibility (8 items) | 2413594 | Ashutosh Dixit | approved (Option A: "Sign-off + Phase 2 in parallel" 2026-07-30) | 8 items: DPF adequacy, Q_SOVOFFER controls, Q_HYPER widened, UK AI regime, MiCA regime, grade relabel, Q_CTP unknown escalation, QR_UKCTP widened. Promoted to prod on same day as Phase 0. |
+| 2026-07-30 | 2 — Screening completeness (8 items) | *(pending — SHA on commit)* | Ashutosh Dixit | *pending* | Staging URL: https://ltm-core.s3.us-east-1.amazonaws.com/sovereign-screen-staging.html · 3 new questions (biometric KYC, employment AI, GPAI); 7 new rules wiring 4 previously-dead facts (special_category_data, company_size, eu_member_state_count, data_volume_band) + AI Act Art. 51+ GPAI. Additive: no existing regime call changes. |
 
 *(Add one row per promotion. Never delete rows — the log is the audit trail.)*
 
