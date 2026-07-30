@@ -35,7 +35,8 @@ SHA of the promoted build.
 
 | Date | Phase | SHA | Reviewed by | Decision | Notes |
 |---|---|---|---|---|---|
-| 2026-07-30 | 0 — Guardrails | *(pending, see below)* | Ashutosh Dixit | *pending* | Staging URL: https://ltm-core.s3.us-east-1.amazonaws.com/sovereign-screen-staging.html |
+| 2026-07-30 | 0 — Guardrails | b93bd78 | Ashutosh Dixit | approved (implicit by "start Phase 1" instruction 2026-07-30) | Version stamp only; no legal/regime changes. Prod not yet promoted — will promote when Phase 1 is signed off (avoid two prod cutovers same day). |
+| 2026-07-30 | 1 — Legal defensibility (8 items) | *(pending — SHA below on commit)* | Ashutosh Dixit | *pending* | Staging URL: https://ltm-core.s3.us-east-1.amazonaws.com/sovereign-screen-staging.html · Diff summary: docs/SOVEREIGN-SCREEN-ROADMAP.md §Phase 1 |
 
 *(Add one row per promotion. Never delete rows — the log is the audit trail.)*
 
