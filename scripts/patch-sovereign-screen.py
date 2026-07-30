@@ -42,9 +42,14 @@ EDITS = [
     ),
 
     # --- FIX 4: DORA CTP designation count ---
+    # NOTE: the template payload is JSON-encoded; the only escapes JSON
+    # accepts are \" \\ \/ \b \f \n \r \t \uXXXX. Do NOT put \' or any
+    # other non-JSON escape into replacement text — it will crash the
+    # bundler with "Bad escaped character in JSON". Use plain apostrophes
+    # or drop them.
     (
         r'ICT providers to finance can be designated Critical ICT Third-Party Providers under direct ESA oversight (19 designated as of Nov 2025, incl. AWS, Azure, Google Cloud, IBM, Bloomberg).',
-        r'ICT providers to finance can be designated Critical ICT Third-Party Providers (CTPPs) under direct ESA oversight (DORA Art. 31). The first tranche of designations includes major hyperscalers and market-data providers; consult the ESAs\\\' register for the current list.',
+        r'ICT providers to finance can be designated Critical ICT Third-Party Providers (CTPPs) under direct ESA oversight (DORA Art. 31). The first tranche of designations includes major hyperscalers and market-data providers; consult the ESAs register for the current list.',
     ),
 
     # --- Update meta last_reviewed + disclaimer clarity ---
@@ -97,7 +102,7 @@ SOURCES = {
         ("Data Protection Act 2018", "https://www.legislation.gov.uk/ukpga/2018/12/contents"),
         ("PECR (Privacy and Electronic Communications Regulations 2003)", "https://www.legislation.gov.uk/uksi/2003/2426/contents"),
         ("Data (Use and Access) Act 2025", "https://www.legislation.gov.uk/ukpga/2025/18"),
-        ("ICO — Information Commissioner\\\'s Office", "https://ico.org.uk/"),
+        ("ICO — Information Commissioner Office", "https://ico.org.uk/"),
     ],
     "data_transfer_jurisdiction": [
         ("GDPR Chapter V (international transfers) — EUR-Lex", "https://eur-lex.europa.eu/eli/reg/2016/679/oj"),
@@ -148,6 +153,23 @@ def inject_sources(data: str) -> tuple[str, int]:
         injected += 1
     return data, injected
 
+def json_safety_check(data: str) -> None:
+    """After edits, verify each <script type='__bundler/...'> payload
+    still parses as JSON. Fail loud if not — the bundler will refuse to
+    unpack, showing 'Bad escaped character in JSON' on the home screen."""
+    import json, re
+    for tag in ('__bundler/manifest', '__bundler/template', '__bundler/ext_resources'):
+        m = re.search(r'<script type="'+re.escape(tag)+r'">', data)
+        if not m:
+            continue
+        end = data.find('</script>', m.end())
+        payload = data[m.end():end]
+        try:
+            json.loads(payload)
+        except json.JSONDecodeError as e:
+            ctx = payload[max(0, e.pos-60):e.pos+60]
+            raise SystemExit(f"\n  ✗ {tag} JSON invalid after patch: {e}\n    context: {ctx!r}\n    REFUSING TO SAVE — restore from git and adjust replacements.")
+
 def main() -> int:
     data = FILE.read_text(encoding="utf-8")
     before_len = len(data)
@@ -164,6 +186,8 @@ def main() -> int:
         print(f"  ✓ patched: {old[:60]!r}")
     data, injected = inject_sources(data)
     print(f"  sources injected into {injected} regime(s)")
+    json_safety_check(data)
+    print("  ✓ all bundler payloads still parse as valid JSON")
     FILE.write_text(data, encoding="utf-8")
     print(f"\n  file: {FILE}")
     print(f"  size delta: {len(data)-before_len:+d} bytes")
