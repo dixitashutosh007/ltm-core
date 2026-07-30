@@ -6,42 +6,79 @@
     {
       "src": "LTM CIS Tech Advisory v2.html",
       "key": "LTM-CIS-Tech-Advisory-v2.html",
-      "contentType": "text/html; charset=utf-8"
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
     },
     {
       "src": "LTM CIS Tech Advisory.html",
       "key": "LTM-CIS-Tech-Advisory.html",
-      "contentType": "text/html; charset=utf-8"
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
     },
     {
       "src": "CIS Tech Consulting Brochure.pdf",
       "key": "CIS-Tech-Consulting-Brochure.pdf",
-      "contentType": "application/pdf"
+      "contentType": "application/pdf",
+      "stage": "prod"
     },
+
     {
       "src": "Data-Sovereignty-Value-Case-Tool/Sovereign Screen (standalone).html",
       "key": "sovereign-screen.html",
-      "contentType": "text/html; charset=utf-8"
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
     },
+    {
+      "src": "Data-Sovereignty-Value-Case-Tool/Sovereign Screen (standalone).html",
+      "key": "sovereign-screen-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
+    },
+
     {
       "src": "finops-value-case/FinOps Value Case (LTM).html",
       "key": "finops-value-case.html",
-      "contentType": "text/html; charset=utf-8"
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
     },
+    {
+      "src": "finops-value-case/FinOps Value Case (LTM).html",
+      "key": "finops-value-case-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
+    },
+
     {
       "src": "FinopsMaturityAssessment/FinOps Maturity Screen (LTM).html",
       "key": "finops-screen.html",
-      "contentType": "text/html; charset=utf-8"
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
     },
+    {
+      "src": "FinopsMaturityAssessment/FinOps Maturity Screen (LTM).html",
+      "key": "finops-screen-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
+    },
+
     {
       "src": "Digital Sovereignty Data Residency Jurisdiction Audit/LTM-Data Residency & Jurisdiction Audit.html",
       "key": "Data-Residency-Jurisdiction-Audit.html",
-      "contentType": "text/html; charset=utf-8"
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
     },
+    {
+      "src": "Digital Sovereignty Data Residency Jurisdiction Audit/LTM-Data Residency & Jurisdiction Audit.html",
+      "key": "Data-Residency-Jurisdiction-Audit-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
+    },
+
     {
       "src": "Question Bank Studio (LTM).html",
       "key": "qbank-studio.html",
-      "contentType": "text/html; charset=utf-8"
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
     }
   ]
 }

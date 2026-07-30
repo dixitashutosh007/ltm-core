@@ -62,6 +62,19 @@ EDITS = [
         r'disclaimer:\"Preliminary, indicative triage. Not legal advice. All regime calls depend on specific facts and must be confirmed with qualified counsel and, where relevant, your competent supervisory authority. See the Sources & Methodology section of the report for the authoritative references behind each regime.\"',
     ),
 
+    # --- Phase 0: version stamp — bump schema_version to a proper semver
+    # so every report carries a citeable framework version. A prefix on
+    # the disclaimer makes the version + review date visible wherever the
+    # disclaimer is rendered (report cover, chip popover, PDF export). ---
+    (
+        r'schema_version:\"0.1.0\"',
+        r'schema_version:\"1.0.0\"',
+    ),
+    (
+        r'disclaimer:\"Preliminary, indicative triage. Not legal advice.',
+        r'disclaimer:\"Framework v1.0.0 · reviewed 2026-07-30 · Phase 1 (UK & EU). Preliminary, indicative triage. Not legal advice.',
+    ),
+
     # --- Placeholder-note cleanup (item #15) ---
     (
         r'note:\"Middle three labels are placeholders â reconcile with the LTM Digital Sovereignty deck.\", stages:',

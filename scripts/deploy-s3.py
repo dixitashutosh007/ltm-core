@@ -1,10 +1,20 @@
 #!/usr/bin/env python3
-"""Sync LTM assets to S3.
+"""Sync LTM assets to S3, with staging / prod targeting.
 
 Reads bucket + file list from deploy.config.json.
 Credentials come from environment: AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
 (never from the repo). Region can be overridden with AWS_REGION.
+
+Usage:
+  python scripts/deploy-s3.py                     # both (default; keeps prev behaviour)
+  python scripts/deploy-s3.py --target staging    # staging keys only
+  python scripts/deploy-s3.py --target prod       # prod keys only
+  python scripts/deploy-s3.py --target both       # explicit
+
+Each entry in deploy.config.json may declare stage: "prod" | "staging".
+Entries without stage default to "prod" for backwards compatibility.
 """
+import argparse
 import json
 import os
 import sys
@@ -34,8 +44,16 @@ def upload(src_rel: str, key: str, content_type: str, acl: str) -> None:
     print(f"  ✓ {src_rel}  →  s3://{bucket}/{key}")
 
 def main() -> int:
-    print(f"Deploying to s3://{bucket}  (region={region})")
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--target", choices=("prod", "staging", "both"), default="both",
+                    help="Which stage's entries to publish (default: both)")
+    args = ap.parse_args()
+
+    print(f"Deploying to s3://{bucket}  (region={region}, target={args.target})")
     for item in CFG["files"]:
+        stage = item.get("stage", "prod")
+        if args.target != "both" and stage != args.target:
+            continue
         upload(
             item["src"],
             item["key"],
