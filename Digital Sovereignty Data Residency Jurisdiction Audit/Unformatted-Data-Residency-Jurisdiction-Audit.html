@@ -415,24 +415,24 @@ textarea{resize:vertical;min-height:70px}
 const BANK = {
   meta: {
     name: "Data Residency & Jurisdiction Audit",
-    version: "1.0.0",
+    version: "1.3.0",
     profile: "rules-engine",
     delivery: "single-file-html",
-    updated: "2026-07",
+    updated: "2026-07-31",
     disclaimer: "This assessment provides advisory guidance to support architecture and governance decisions. It is not a legal opinion. Specific interpretations of GDPR, NIS2, DORA, the EU AI Act, EUCS and UK data protection law should be confirmed with qualified counsel and your competent supervisory authority."
   },
 
   regulations: [
-    { id:"gdpr",   name:"GDPR",        full:"General Data Protection Regulation (EU) 2016/679", tag:"EU · Personal data", desc:"Lawful processing, international transfers (Ch. V), processor obligations, security of processing." },
-    { id:"ukgdpr", name:"UK GDPR",     full:"UK GDPR & Data Protection Act 2018", tag:"UK · Personal data", desc:"Post-Brexit UK regime; international transfers via IDTA / UK Addendum; ICO oversight." },
-    { id:"nis2",   name:"NIS2",        full:"Directive (EU) 2022/2555 on network & information security", tag:"EU · Cyber resilience", desc:"Essential/important entity duties, supply-chain security, governance accountability, incident reporting." },
-    { id:"dora",   name:"DORA",        full:"Digital Operational Resilience Act (EU) 2022/2554", tag:"EU · Financial services", desc:"ICT risk management, third-party risk, register of information, critical function outsourcing, concentration risk." },
-    { id:"aiact",  name:"EU AI Act",   full:"Regulation (EU) 2024/1689 on Artificial Intelligence", tag:"EU · AI systems", desc:"Data governance for high-risk AI (Art. 10), record-keeping, human oversight, GPAI obligations." },
-    { id:"eucs",   name:"EUCS",        full:"EU Cybersecurity Certification Scheme for Cloud Services", tag:"EU · Cloud assurance", desc:"Assurance levels (Basic/Substantial/High) and sovereignty-related requirements for cloud services." },
-    { id:"dataact", name:"EU Data Act",  full:"Regulation (EU) 2023/2854 on harmonised rules on fair access to and use of data", tag:"EU · cloud switching & non-personal data access", desc:"Cloud switching and portability obligations for data-processing services; safeguards against unlawful third-country access to non-personal data held in the EU. Applies from 12 September 2025; switching provisions phased." },
-    { id:"ukopres", name:"UK Op Res",    full:"FCA PS21/3; PRA SS2/21 — Operational Resilience", tag:"UK · financial services resilience", desc:"Impact tolerances for important business services, mapping, scenario testing, self-assessment and outsourcing / third-party risk expectations." },
-    { id:"ukctp",   name:"UK CTP",       full:"Financial Services and Markets Act 2023, Part 9; FCA PS24/16; PRA PS16/24", tag:"UK · CTP oversight", desc:"HM Treasury designations of Critical Third Parties to the UK financial sector; joint FCA / PRA / BoE oversight; six Fundamental Rules." },
-    { id:"ukai",    name:"UK AI approach", full:"ICO Guidance on AI and data protection; FCA AI update; PRA/BoE SS1/23 (Model risk management for AI/ML)", tag:"UK · principles-based AI regulation", desc:"UK operates a principles-based, regulator-led approach to AI rather than a UK equivalent of the EU AI Act. ICO guidance on AI and data protection, FCA supervisory expectations for AI in regulated activities, and PRA/BoE SS1/23 on model risk management for AI/ML apply. Track further UK regulatory evolution." }
+    { id:"gdpr",   name:"GDPR",        full:"General Data Protection Regulation (EU) 2016/679", tag:"EU · Personal data", desc:"Lawful processing, international transfers (Ch. V), processor obligations, security of processing." , sources:[{name:"Regulation (EU) 2016/679 (GDPR) — EUR-Lex",url:"https://eur-lex.europa.eu/eli/reg/2016/679/oj"},{name:"EDPB — European Data Protection Board",url:"https://edpb.europa.eu/edpb_en"},{name:"EU-US Data Privacy Framework — Commission",url:"https://commission.europa.eu/law/law-topic/data-protection/international-dimension-data-protection/eu-us-data-privacy-framework_en"}]},
+    { id:"ukgdpr", name:"UK GDPR",     full:"UK GDPR & Data Protection Act 2018", tag:"UK · Personal data", desc:"Post-Brexit UK regime; international transfers via IDTA / UK Addendum; ICO oversight." , sources:[{name:"UK GDPR — legislation.gov.uk (retained)",url:"https://www.legislation.gov.uk/eur/2016/679/contents"},{name:"Data Protection Act 2018",url:"https://www.legislation.gov.uk/ukpga/2018/12/contents"},{name:"PECR (SI 2003/2426)",url:"https://www.legislation.gov.uk/uksi/2003/2426/contents"},{name:"Data (Use and Access) Act 2025",url:"https://www.legislation.gov.uk/ukpga/2025/18"},{name:"ICO",url:"https://ico.org.uk/"}]},
+    { id:"nis2",   name:"NIS2",        full:"Directive (EU) 2022/2555 on network & information security", tag:"EU · Cyber resilience", desc:"Essential/important entity duties, supply-chain security, governance accountability, incident reporting." , sources:[{name:"Directive (EU) 2022/2555 (NIS2) — EUR-Lex",url:"https://eur-lex.europa.eu/eli/dir/2022/2555/oj"},{name:"ENISA — NIS Directive hub",url:"https://www.enisa.europa.eu/topics/nis-directive"}]},
+    { id:"dora",   name:"DORA",        full:"Digital Operational Resilience Act (EU) 2022/2554", tag:"EU · Financial services", desc:"ICT risk management, third-party risk, register of information, critical function outsourcing, concentration risk." , sources:[{name:"Regulation (EU) 2022/2554 (DORA) — EUR-Lex",url:"https://eur-lex.europa.eu/eli/reg/2022/2554/oj"},{name:"Commission — DORA implementing acts",url:"https://finance.ec.europa.eu/regulation-and-supervision/financial-services-legislation/implementing-and-delegated-acts/digital-operational-resilience-act_en"},{name:"EBA — DORA hub",url:"https://www.eba.europa.eu/regulation-and-policy/digital-operational-resilience-act-dora"}]},
+    { id:"aiact",  name:"EU AI Act",   full:"Regulation (EU) 2024/1689 on Artificial Intelligence", tag:"EU · AI systems", desc:"Data governance for high-risk AI (Art. 10), record-keeping, human oversight, GPAI obligations." , sources:[{name:"Regulation (EU) 2024/1689 (AI Act) — EUR-Lex",url:"https://eur-lex.europa.eu/eli/reg/2024/1689/oj"},{name:"Commission — EU AI Act",url:"https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai"}]},
+    { id:"eucs",   name:"EUCS",        full:"EU Cybersecurity Certification Scheme for Cloud Services", tag:"EU · Cloud assurance", desc:"Assurance levels (Basic/Substantial/High) and sovereignty-related requirements for cloud services." , sources:[{name:"Regulation (EU) 2019/881 (Cybersecurity Act) — EUR-Lex",url:"https://eur-lex.europa.eu/eli/reg/2019/881/oj"},{name:"ENISA — EUCS candidate scheme",url:"https://www.enisa.europa.eu/topics/certification/eucs-cloud-services-scheme"}]},
+    { id:"dataact", name:"EU Data Act",  full:"Regulation (EU) 2023/2854 on harmonised rules on fair access to and use of data", tag:"EU · cloud switching & non-personal data access", desc:"Cloud switching and portability obligations for data-processing services; safeguards against unlawful third-country access to non-personal data held in the EU. Applies from 12 September 2025; switching provisions phased." , sources:[{name:"Regulation (EU) 2023/2854 (Data Act) — EUR-Lex",url:"https://eur-lex.europa.eu/eli/reg/2023/2854/oj"},{name:"Commission — EU Data Act",url:"https://digital-strategy.ec.europa.eu/en/policies/data-act"}]},
+    { id:"ukopres", name:"UK Op Res",    full:"FCA PS21/3; PRA SS2/21 — Operational Resilience", tag:"UK · financial services resilience", desc:"Impact tolerances for important business services, mapping, scenario testing, self-assessment and outsourcing / third-party risk expectations." , sources:[{name:"FCA PS21/3 — Building operational resilience",url:"https://www.fca.org.uk/publications/policy-statements/ps21-3-building-operational-resilience"},{name:"PRA SS2/21 — Operational resilience",url:"https://www.bankofengland.co.uk/prudential-regulation/publication/2021/march/operational-resilience-impact-tolerances-for-important-business-services-ss"},{name:"Bank of England — Operational resilience",url:"https://www.bankofengland.co.uk/prudential-regulation/regulation/operational-resilience"}]},
+    { id:"ukctp",   name:"UK CTP",       full:"Financial Services and Markets Act 2023, Part 9; FCA PS24/16; PRA PS16/24", tag:"UK · CTP oversight", desc:"HM Treasury designations of Critical Third Parties to the UK financial sector; joint FCA / PRA / BoE oversight; six Fundamental Rules." , sources:[{name:"FSMA 2023 — Critical Third Parties (Part 9)",url:"https://www.legislation.gov.uk/ukpga/2023/29/contents"},{name:"FCA PS24/16 — Operational resilience: CTPs",url:"https://www.fca.org.uk/publications/policy-statements/ps24-16-operational-resilience-critical-third-parties"},{name:"PRA PS16/24 — CTPs to the UK financial sector",url:"https://www.bankofengland.co.uk/prudential-regulation/publication/2024/november/operational-resilience-critical-third-parties-to-the-uk-financial-sector"}]},
+    { id:"ukai",    name:"UK AI approach", full:"ICO Guidance on AI and data protection; FCA AI update; PRA/BoE SS1/23 (Model risk management for AI/ML)", tag:"UK · principles-based AI regulation", desc:"UK operates a principles-based, regulator-led approach to AI rather than a UK equivalent of the EU AI Act. ICO guidance on AI and data protection, FCA supervisory expectations for AI in regulated activities, and PRA/BoE SS1/23 on model risk management for AI/ML apply. Track further UK regulatory evolution." , sources:[{name:"ICO — Guidance on AI and data protection",url:"https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/artificial-intelligence/guidance-on-ai-and-data-protection/"},{name:"FCA — AI update",url:"https://www.fca.org.uk/publications/corporate-documents/our-approach-artificial-intelligence"},{name:"PRA / Bank of England SS1/23 — Model risk",url:"https://www.bankofengland.co.uk/prudential-regulation/publication/2023/may/model-risk-management-principles-for-banks-ss"},{name:"UK Government — Pro-innovation approach to AI",url:"https://www.gov.uk/government/publications/ai-regulation-a-pro-innovation-approach"}]}
   ],
 
   sectors: [
@@ -1212,11 +1212,15 @@ function collectAllFindings(){
 /* ---------- RAG rollup ---------- */
 function ragForRegulation(regId, findings){
   const rf=findings.filter(f=>f.reg===regId);
-  const assessed=STATE.activeQuestions.some(q=>(q.refs||[]).some(r=>r.reg===regId) || (q.appliesTo&&(q.appliesTo.regulations||[]).includes(regId)));
+  // Answered = at least one active question referencing this regulation HAS an answer.
+  const answered=STATE.activeQuestions.some(q=>{
+    const refs=(q.refs||[]).some(r=>r.reg===regId) || (q.appliesTo&&(q.appliesTo.regulations||[]).includes(regId));
+    return refs && STATE.answers[q.id]!==undefined;
+  });
   if(rf.some(f=>f.severity==='critical'||f.severity==='high')) return {rag:'red', status:'Non-compliant', count:rf.length};
   if(rf.some(f=>f.severity==='medium')) return {rag:'amber', status:'Partial — action required', count:rf.length};
-  if(assessed) return {rag:'green', status:'No material gaps found', count:rf.length};
-  return {rag:'grey', status:'Not assessed', count:0};
+  if(answered) return {rag:'green', status:'No material gaps found', count:rf.length};
+  return {rag:'grey', status:'Not answered — cannot assess', count:0};
 }
 
 /* ---------- posture score ---------- */
@@ -1272,6 +1276,7 @@ function coverBlock(score,label,counts,findings){
   return `<div class="print-cover">
     <div class="eyebrow">CIS Tech Advisory · Digital Sovereignty</div>
     <h1 style="font-size:34px;margin:6px 0 10px">Data Residency &amp; Jurisdiction Audit</h1>
+    <div class="mono" style="font-size:11px;color:var(--ink3);letter-spacing:.08em;margin:-2px 0 8px">FRAMEWORK v${BANK.meta.version} · REVIEWED ${BANK.meta.updated}</div>
     <p class="lede" style="color:var(--ink2);max-width:720px">A regulator-aware assessment of data location, cross-border transfer exposure and remediation priorities for <b>${o.name}</b>.</p>
     <div class="grid3" style="margin:26px 0 8px">
       <div class="card"><div class="mono" style="font-size:11px;color:var(--ink3);letter-spacing:.08em">ORGANISATION</div><div style="font-family:var(--font-h);font-size:18px;margin-top:6px">${o.name}</div><div style="font-size:12px;color:var(--ink3);margin-top:4px">${o.hq||'—'} · ${o.size||'—'} employees</div></div>

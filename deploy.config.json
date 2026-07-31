@@ -92,6 +92,19 @@
       "key": "sovereign-screen-changelog-staging.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "staging"
+    },
+
+    {
+      "src": "dr-j-changelog.html",
+      "key": "dr-j-changelog.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
+    },
+    {
+      "src": "dr-j-changelog.html",
+      "key": "dr-j-changelog-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
     }
   ]
 }

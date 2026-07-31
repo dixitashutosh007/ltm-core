@@ -119,6 +119,12 @@ def apply_edits(js: str) -> tuple[str, int]:
 
 
 def semantic_check(js: str) -> None:
+    # Hard JS-syntax guard: literal `\n` (backslash-n) followed by whitespace
+    # and an identifier is a smoking gun for a raw-string insertion bug that
+    # left `\n` as two literal characters in the JS body — invalid syntax.
+    bad = re.findall(r'\\n\s+id:"', js)
+    if bad:
+        raise SystemExit(f"  ✗ JS SYNTAX BUG: found {len(bad)} literal '\\n id:\"' occurrence(s) — a raw-string insertion left \\n as literal chars. REFUSING TO SAVE.")
     if 'var BANK = {' not in js and 'const BANK = {' not in js:
         raise SystemExit("  ✗ BANK missing")
     for needle, label in [

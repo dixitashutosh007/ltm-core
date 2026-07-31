@@ -1,4 +1,8 @@
-# Sovereign Screen — Refresh cadence
+# CIS Tech Advisory — Refresh cadence
+
+**Scope:** covers both **Sovereign Screen** (16 regimes) and **Data Residency & Jurisdiction Audit / DR&J** (10 regulations). Every regulation is reviewed at least quarterly; every framework change is logged in the corresponding tool's changelog page.
+
+## Sovereign Screen
 
 Regulations move. Static knowledge bases drift. This document sets the schedule and the ownership that keep the Sovereign Screen accurate for real customers.
 
@@ -78,13 +82,37 @@ Review the last quarter's inbound feedback (via the in-tool feedback pill or Con
 
 Log every item; act on the actionable ones.
 
-## Review log
+## Review log (Sovereign Screen)
 
 Every review — even a "nothing to change" one — is logged here so the audit trail shows the framework was checked, not just left alone.
 
 | Date | Owner | Notes | Framework version after review |
 |---|---|---|---|
 | 2026-07-30 | Ashutosh Dixit | Baseline. All 16 regimes cited to primary sources. All 5 previously-dead facts wired (except `sovereign_offering_status` which is used for readiness scoring). Source-URL health check to be automated. | v1.3.0 |
+
+---
+
+## Data Residency & Jurisdiction Audit (DR&J)
+
+Same owner, same 48-hour SLA. Same quarterly cadence dates (1 Feb / 1 May / 1 Aug / 1 Nov).
+
+### DR&J-specific out-of-cycle triggers
+
+- EDPB or ICO guidance update on transfer mechanisms (DPF, SCCs, TIA).
+- Commerce Department update to the DPF Program list (recipient certifications).
+- New EU Data Act commencement milestone (switching provisions phase in through 2027).
+- New EIOPA cloud outsourcing guidelines (EIOPA-BoS updates).
+- New EBA outsourcing / ICT guidelines updates.
+- FCA / PRA operational-resilience or CTP supervisory publications.
+- Any HM Treasury CTP designation.
+
+### Review log (DR&J)
+
+| Date | Owner | Notes | Framework version after review |
+|---|---|---|---|
+| 2026-07-31 | Ashutosh Dixit | Baseline. 10 regulations, 35 questions, all with sources[] citations. Ships with DPF adequacy handling, UK Op Res / UK CTP / EU Data Act / UK AI advisory regimes, GPAI question, EUCS Basic tier, DORA RTS 4h/72h/1-month cadence. RAG algorithm now correctly reports "not answered" when questions unanswered. | v1.3.0 |
+
+---
 
 ## Escalation
 
