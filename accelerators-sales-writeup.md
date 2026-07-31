@@ -21,7 +21,7 @@ Four accelerators are ready for field use. Two sit under the **Digital Sovereign
   - Sector-aware (initial content set tuned for financial services).
   - Guided questionnaire, progress rail, and branded report cover with the customer's logo.
   - Editable question bank — content can be versioned, exported, and swapped per sector without a code change.
-- **URL / location:** `Data-Sovereignty-Value-Case-Tool/sovereign-screen.html` (hostable as a standalone page on LTM microsite).
+- **URL:** https://ltm-core.s3.us-east-1.amazonaws.com/sovereign-screen.html
 - **What problem it solves:**
   - Most clients conflate data residency with data sovereignty and are blind to extraterritorial reach (e.g. US CLOUD Act on EU-hosted workloads).
   - Boards want a one-page answer to *"are we exposed?"* before funding a full audit.
@@ -44,7 +44,7 @@ Four accelerators are ready for field use. Two sit under the **Digital Sovereign
   - Phased roadmap — comprehensive strategy plus task-level remediation steps (Phase 1 / 2 / 3).
   - Board-ready PDF export — cover page, findings, remediation, disclaimer — consulting-grade output.
   - Configurable question bank (drawer-managed) so the same tool serves multiple sectors.
-- **URL / location:** `Digital Sovereignty Data Residency Jurisdiction Audit/LTM-Data Residency & Jurisdiction Audit.html`
+- **URL:** https://ltm-core.s3.us-east-1.amazonaws.com/Data-Residency-Jurisdiction-Audit.html
 - **What problem it solves:**
   - Clients cannot demonstrate to regulators (or their own boards) that they know where regulated data sits and who can reach it.
   - Sub-processor sprawl silently moves data across jurisdictions with no owner tracking it.
@@ -67,7 +67,7 @@ Four accelerators are ready for field use. Two sit under the **Digital Sovereign
   - Branded, downloadable value-case report with organisation logo and respondent attribution.
   - ~8 minutes, no data leaves the browser — safe to run in a live customer meeting.
   - Configurable question bank so benchmarks and thresholds can be refreshed each year.
-- **URL / location:** `finops-value-case/FinOps Value Case (LTM).html`
+- **URL:** http://ltm-core.s3-website-us-east-1.amazonaws.com/finops-value-case.html
 - **What problem it solves:**
   - Customers know cloud is expensive but cannot put a number on the waste — every FinOps conversation stalls at "prove it".
   - Sales needs a fast, defensible qualification step before pitching a full FinOps engagement.
@@ -89,7 +89,7 @@ Four accelerators are ready for field use. Two sit under the **Digital Sovereign
   - Identifies the *specific* blocker to the next maturity stage (not a generic score).
   - Configurable question bank (`finops-qbank-2026-05-08.json`) — content can be refreshed as the FinOps Foundation framework evolves.
   - Consulting-grade PDF with staged maturity view, gaps, and recommended sequence of interventions.
-- **URL / location:** `FinopsMaturityAssessment/FinOps Maturity Screen (LTM).html`
+- **URL:** http://ltm-core.s3-website-us-east-1.amazonaws.com/finops-screen.html
 - **What problem it solves:**
   - Clients over-invest in tooling and dashboards while the underlying **ownership, defaults, and accountability** stay broken — savings leak from the same gap year after year.
   - Executives want a defensible baseline and a "what next" answer, not another benchmark deck.
