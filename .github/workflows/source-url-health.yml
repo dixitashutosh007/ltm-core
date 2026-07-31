@@ -1,0 +1,30 @@
+name: Sovereign Screen — source URL health check
+
+on:
+  # Monthly on the 1st at 06:00 UTC
+  schedule:
+    - cron: "0 6 1 * *"
+  # And on any change to the Sovereign Screen HTML or the checker script
+  push:
+    branches: [main]
+    paths:
+      - "Data-Sovereignty-Value-Case-Tool/**"
+      - "scripts/check-sources.py"
+      - ".github/workflows/source-url-health.yml"
+  workflow_dispatch:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run source-URL health check
+        run: |
+          python scripts/check-sources.py \
+            "Data-Sovereignty-Value-Case-Tool/Sovereign Screen (standalone).html"

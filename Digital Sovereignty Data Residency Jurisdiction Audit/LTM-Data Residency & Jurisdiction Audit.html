@@ -17,7 +17,7 @@
       This page requires JavaScript to display.
     </div>
   </noscript>
-<!-- LTM_CONTACT_OVERLAY_v2 -->
+<!-- LTM_CONTACT_OVERLAY_v3 -->
 <script>
 (function () {
   if (window.__LTM_CU_INJECTED) return; window.__LTM_CU_INJECTED = true;
@@ -48,6 +48,14 @@
     + "display:inline-flex;align-items:center;gap:6px}"
     + ".ltm-cu-chip:hover{background:#000}"
     + ".ltm-cu-chip .ltm-cu-chip-dot{width:8px;height:8px;border-radius:50%;background:#ff5e4f;flex:none}"
+    /* Feedback pill — bottom-left, next to disclaimer chip */
+    + ".ltm-cu-fb{position:fixed;left:14px;bottom:56px;z-index:2147482998;"
+    + "background:#fff;color:#141414;border:1px solid #d9d9d9;cursor:pointer;"
+    + "font:600 11px/1 Inter,-apple-system,sans-serif;letter-spacing:.08em;text-transform:uppercase;"
+    + "padding:8px 11px;border-radius:999px;box-shadow:0 2px 8px rgba(0,0,0,.10);"
+    + "display:inline-flex;align-items:center;gap:6px}"
+    + ".ltm-cu-fb:hover{background:#f4f4f3;border-color:#ff5e4f;color:#e5412f}"
+    + ".ltm-cu-fb .ltm-cu-fb-icon{font-size:12px;line-height:1}"
 
     /* Disclaimer popover — anchored above the chip */
     + ".ltm-cu-pop{position:fixed;left:14px;bottom:56px;z-index:2147482999;"
@@ -96,7 +104,7 @@
     +   ".ltm-cu-pop{left:8px;right:8px;bottom:52px;width:auto}"
     + "}"
     + "@media print{"
-    +   ".ltm-cu-tab,.ltm-cu-chip,.ltm-cu-pop,.ltm-cu-modal{display:none !important}"
+    +   ".ltm-cu-tab,.ltm-cu-chip,.ltm-cu-pop,.ltm-cu-modal,.ltm-cu-fb{display:none !important}"
     + "}";
 
   function inject() {
@@ -117,6 +125,36 @@
     chip.setAttribute("aria-expanded", "false");
     chip.innerHTML = "<span class='ltm-cu-chip-dot'></span>Disclaimer";
     document.body.appendChild(chip);
+
+    /* Feedback pill (bottom-left, above the disclaimer chip). Opens a
+       fresh mailto to Ashutosh with framework + page URL prefilled. No
+       cookies, no tracking — user reviews and sends from their mail app. */
+    var fb = document.createElement("button");
+    fb.id = "ltm-cu-fb"; fb.className = "ltm-cu-fb"; fb.type = "button";
+    fb.setAttribute("aria-label", "Send feedback about this assessment");
+    fb.innerHTML = "<span class='ltm-cu-fb-icon'>✎</span>Feedback";
+    fb.onclick = function(){
+      var lines = [
+        "Hi Ashutosh,","",
+        "Feedback on the " + CFG.accelerator + " (" + CFG.framework + "):",
+        "  Page: " + window.location.href,
+        "",
+        "What worked well:",
+        "  ",
+        "What could be clearer or more accurate:",
+        "  ",
+        "Suggested change (if any):",
+        "  ",
+        "",
+        "Thanks."
+      ];
+      var subject = CFG.accelerator + " — feedback (" + CFG.framework + ")";
+      var href = "mailto:" + encodeURIComponent(CFG.to)
+        + "?subject=" + encodeURIComponent(subject)
+        + "&body=" + encodeURIComponent(lines.join("\n"));
+      window.location.href = href;
+    };
+    document.body.appendChild(fb);
 
     /* Disclaimer popover */
     var pop = document.createElement("div");

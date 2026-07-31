@@ -79,6 +79,19 @@
       "key": "qbank-studio.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "prod"
+    },
+
+    {
+      "src": "sovereign-screen-changelog.html",
+      "key": "sovereign-screen-changelog.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
+    },
+    {
+      "src": "sovereign-screen-changelog.html",
+      "key": "sovereign-screen-changelog-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
     }
   ]
 }

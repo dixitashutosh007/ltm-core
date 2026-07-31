@@ -38,7 +38,8 @@ SHA of the promoted build.
 | 2026-07-30 | 0 — Guardrails | b93bd78 | Ashutosh Dixit | approved (implicit by "start Phase 1" instruction 2026-07-30) | Version stamp only; no legal/regime changes. |
 | 2026-07-30 | 1 — Legal defensibility (8 items) | 2413594 | Ashutosh Dixit | approved (Option A: "Sign-off + Phase 2 in parallel" 2026-07-30) | 8 items: DPF adequacy, Q_SOVOFFER controls, Q_HYPER widened, UK AI regime, MiCA regime, grade relabel, Q_CTP unknown escalation, QR_UKCTP widened. Promoted to prod on same day as Phase 0. |
 | 2026-07-30 | 2 — Screening completeness (8 items) | 41730e1 | Ashutosh Dixit | approved (implicit by "carry on with next step" 2026-07-30) | 3 new questions (biometric KYC, employment AI, GPAI); 7 new rules wiring 4 previously-dead facts; AI Act Art. 51+ GPAI (3 rules). Promoted to prod 2026-07-30 14:56:58 UTC. |
-| 2026-07-30 | 3 — New regime coverage (5 regimes) | *(pending — SHA on commit)* | Ashutosh Dixit | *pending* | Staging URL: https://ltm-core.s3.us-east-1.amazonaws.com/sovereign-screen-staging.html · Additive: EUCS, PSD2/PSD3, CRR/CRD + EBA outsourcing, Solvency II, eIDAS 2. Each an independent block; no changes to existing regimes. |
+| 2026-07-30 | 3 — New regime coverage (5 regimes) | 9fcab18 | Ashutosh Dixit | approved (implicit by "continue with next step" 2026-07-30) | Additive: EUCS, PSD2/PSD3, CRR/CRD + EBA outsourcing, Solvency II, eIDAS 2. Each an independent block; no changes to existing regimes. Promoted to prod 2026-07-30. |
+| 2026-07-30 | 4 — Ongoing (analytics, feedback, refresh, changelog, health-check) | *(SHA on commit)* | Ashutosh Dixit + DPO for analytics | *split* | See below — safe items (changelog, refresh cadence, source-URL health check, in-tool feedback widget) shipped; analytics behind DPO gate. |
 
 *(Add one row per promotion. Never delete rows — the log is the audit trail.)*
 
