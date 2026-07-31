@@ -1,6 +1,6 @@
 # CIS Tech Advisory — Refresh cadence
 
-**Scope:** covers both **Sovereign Screen** (16 regimes) and **Data Residency & Jurisdiction Audit / DR&J** (10 regulations). Every regulation is reviewed at least quarterly; every framework change is logged in the corresponding tool's changelog page.
+**Scope:** covers **Sovereign Screen** (16 regimes), **Data Residency & Jurisdiction Audit / DR&J** (10 regulations), **FinOps Value Case** (4 benchmark sources + BFSI modifiers) and **FinOps Maturity Screen** (44 questions across 5 stages, aligned to FinOps Framework references). Every framework or regulation change is reviewed at least quarterly; every change is logged in the corresponding tool's customer-facing changelog page.
 
 ## Sovereign Screen
 
@@ -114,8 +114,71 @@ Same owner, same 48-hour SLA. Same quarterly cadence dates (1 Feb / 1 May / 1 Au
 
 ---
 
+---
+
+## FinOps Value Case (FVC)
+
+Same owner, same 48-hour SLA. Same quarterly cadence dates (1 Feb / 1 May / 1 Aug / 1 Nov).
+
+The FVC differs from Sovereign Screen and DR&J: it opines on financial opportunity, not regulation. The equivalent of "regulatory currency" for FVC is **benchmark currency** — the industry waste-rate anchors it uses must remain valid.
+
+### FVC-specific out-of-cycle triggers
+
+- New **Flexera State of the Cloud** annual release (typically Q1/Q2).
+- New **FinOps Foundation State of FinOps** annual release.
+- New **Harness Cloud Cost Management** report or equivalent (waste-floor anchor).
+- Material change in the LTM engagement dataset feeding the BFSI directional modifiers (`bfsi_modifiers.factors`).
+- Any customer challenge to a specific waste-band figure — reproduce the calculation, verify the anchor, respond.
+
+### What each FVC review must check
+
+- **Benchmark currency.** Each entry in `meta.benchmarks.sources[]` still points at the current version of the named report; note the release year and n-size.
+- **BFSI modifier factors.** Rationales still hold (regulatory testing, DR duplication, residency, lift-and-shift, change control, commitment conservatism). Adjust `pts` values only against demonstrable engagement data — never speculatively.
+- **Waste band boundaries.** `waste_model.bands[]` low/high pairs still straddle the multi-year 27–32% band and the Harness 21% floor at the correct capability tiers.
+- **Currency list.** `meta.currencies[]` covers the currencies used by active customers. FX is not converted — the currency selector renames the symbol only; document this.
+- **Sector gate.** BFSI uplift fires only when `sector_class === "bfsi"` (post-Phase 1). Verify the report basis line reflects the customer's classification.
+- **Placeholder-asset audit.** Confirm no `status:"placeholder"` entries in `meta.case_studies[]` or `meta.brochure` reach a customer.
+
+### Review log (FVC)
+
+| Date | Owner | Notes | Framework version after review |
+|---|---|---|---|
+| 2026-07-31 | Ashutosh Dixit | Baseline + Phase 1 (BFSI sector gate, currency freeze, "not financial advice" disclaimer append, framework stamp on cover). 29 questions, 5 signals, 4 waste bands + BFSI uplift with capability-scaled ceiling. **Ship-blocker outstanding:** 3 case studies + brochure are placeholder PDFs — must be resolved (real PDFs or drop sections) before next customer demo. | v1.0.1 |
+
+---
+
+## FinOps Maturity Screen (FMS)
+
+Same owner, same 48-hour SLA. Same quarterly cadence dates (1 Feb / 1 May / 1 Aug / 1 Nov).
+
+The FMS is a maturity screen aligned to FinOps Framework references. It uses the FinOps mark under a non-affiliation notice (per Phase 1), so the trademark position must remain accurate at every review.
+
+### FMS-specific out-of-cycle triggers
+
+- New **FinOps Framework** version release by the FinOps Foundation (changes to Crawl / Walk / Run stage definitions or capability domains).
+- New **FinOps Foundation State of FinOps** annual release (practitioner-signal shifts that could reweight critical questions).
+- Any material change to the FinOps Foundation's trademark or brand-guidelines position — refresh the non-affiliation notice.
+- Reported inaccuracy in a stage's gating, or a customer challenge to a specific critical-question threshold.
+
+### What each FMS review must check
+
+- **Framework alignment.** The 5 stages (Chaos → Informed → Optimised → Automated → Transparent) still map cleanly onto FinOps Framework capabilities. Note any new capability we should add a question for.
+- **Trademark position.** `meta.disclaimer` still carries the non-affiliation notice: *"Aligned to FinOps Framework references. Not an official FinOps Foundation assessment or certification. 'FinOps' is a trademark of the FinOps Foundation."*
+- **Critical-question gates.** Each stage's 3–4 criticals still represent hard prerequisites (not "nice to haves"). Verify `crit_min` cutoffs still make partial-credit answers a legitimate stage-fail signal, not a surprise.
+- **Domain balance.** 44 questions across 5 domains — governance 8, visibility 12, optimisation 10, automation 5, culture 9. Rebalance only with cause.
+- **Remediation strings.** Each `remediation` string is still a concrete next step; no rot from renamed cloud features (e.g., "Cost Explorer", "Cost Details").
+
+### Review log (FMS)
+
+| Date | Owner | Notes | Framework version after review |
+|---|---|---|---|
+| 2026-07-31 | Ashutosh Dixit | Baseline + Phase 1 (FinOps Foundation TM non-affiliation notice, C1 reframed from MFA/security to account-ownership + access model, framework stamp on cover). 44 questions, 5 stages, 17 criticals, 5 capability domains. Contiguous-stage progression + critical-question gate verified working. | v1.0.1 |
+
+---
+
 ## Escalation
 
 - **Legal question** about a specific rationale: reply on the relevant `docs/LEGAL-REVIEW.md` thread with the text quoted.
 - **Suspected legally-wrong output in prod**: invoke `docs/ROLLBACK.md` immediately (protect the customer), then debate the fix on staging.
 - **New regulation that can't wait**: out-of-cycle review + Phase-1-style patch → staging → sign-off → prod, same workflow.
+- **Trademark position challenge** (FMS): treat as legal-review priority — refresh the non-affiliation notice text and redeploy inside the SLA.

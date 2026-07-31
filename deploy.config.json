@@ -105,6 +105,32 @@
       "key": "dr-j-changelog-staging.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "staging"
+    },
+
+    {
+      "src": "finops-value-case-changelog.html",
+      "key": "finops-value-case-changelog.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
+    },
+    {
+      "src": "finops-value-case-changelog.html",
+      "key": "finops-value-case-changelog-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
+    },
+
+    {
+      "src": "finops-maturity-changelog.html",
+      "key": "finops-maturity-changelog.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
+    },
+    {
+      "src": "finops-maturity-changelog.html",
+      "key": "finops-maturity-changelog-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
     }
   ]
 }
