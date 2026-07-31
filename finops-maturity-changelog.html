@@ -69,6 +69,32 @@
 <main>
 
 <article class="release">
+  <h2>Framework v1.0.3 — Phase 3</h2>
+  <p class="meta"><strong>Released:</strong> 31 July 2026 &nbsp;·&nbsp; <strong>Scope:</strong> Hygiene.</p>
+  <p>Three items that improve traceability and make the "how much of this can I trust" question answerable at a glance:</p>
+  <ul>
+    <li><strong>Chaos-stage billing-export question reworded</strong> for pass-fail clarity. The middle option ("Exported, but partial or manual") now reads <em>"Exported, but partial or manual (does not yet cover all providers / accounts)"</em> — makes the Chaos crit-min:70 fail signal explicit to the respondent, so a partial-credit answer no longer surprises them when the stage doesn't pass.</li>
+    <li><strong>Source attribution on the report Method section.</strong> New <code>meta.sources[]</code> pointing to the FinOps Foundation FinOps Framework, State of FinOps 2026, and the Flexera State of the Cloud series. Rendered as clickable links (open in new tab) directly on the Method paragraph.</li>
+    <li><strong>Confidence indicator chip</strong> alongside the "Critical blockers" tile: <em>Reasonable / Moderate / Low confidence</em> driven by the scored-to-total ratio. Mirrors the FinOps Value Case confidence pattern — a customer looking at their maturity screen can see at a glance whether the sample is thin.</li>
+  </ul>
+  <div class="signoff"><span class="dot"></span>Legal review sign-off: Ashutosh Dixit (ashutosh.dixit@ltm.com)</div>
+</article>
+
+<article class="release">
+  <h2>Framework v1.0.2 — Phase 2</h2>
+  <p class="meta"><strong>Released:</strong> 31 July 2026 &nbsp;·&nbsp; <strong>Scope:</strong> Scoring correctness.</p>
+  <p>Five items that improve the calibration of the maturity call and give respondents a legitimate "we don't know" answer:</p>
+  <ul>
+    <li><strong>"Unsure" (don't-know) answer</strong> added to six yes/no questions (billing alarms, finance-access, anomaly detection, egress review, spot interruption handling, per-tenant cost). Unsure answers are excluded from the weighted mean instead of scoring 0, and every Unsure lands on a new <strong>Blind spots</strong> section of the report with a specific narrative — <em>"anomaly-detection state is unknown — spikes are being discovered by whoever notices the bill first"</em> — so the customer can see exactly what's untested.</li>
+    <li><strong>C4 remediation softened</strong>: <em>"Work with your cloud platform team to grant finance read-only billing / cost console access"</em> — respondents typically don't own the RBAC config, so the original directive over-scoped their authority.</li>
+    <li><strong>Culture domain relabelled "Culture & engineering behaviour"</strong> so its bar on the "Capability by domain" chart is no longer confusable with the Governance & accountability bar.</li>
+    <li><strong>O10 drag-order is now informational</strong>, not scored. Ranking cost levers by delivered value in <em>your</em> environment is legitimately different from any fixed universal ideal; scoring against a fixed order penalised customers with atypical estates.</li>
+    <li><strong>C8 gains an exclusive "None of these" option</strong> so respondents can affirmatively say no foundational cost artefacts exist — cleaner than leaving the multi-select empty.</li>
+  </ul>
+  <div class="signoff"><span class="dot"></span>Legal review sign-off: Ashutosh Dixit (ashutosh.dixit@ltm.com)</div>
+</article>
+
+<article class="release">
   <h2>Framework v1.0.1 — Phase 1</h2>
   <p class="meta"><strong>Released:</strong> 31 July 2026 &nbsp;·&nbsp; <strong>Scope:</strong> Legal defensibility.</p>
   <p>Three items that close labelling and attribution risks identified in the initial deep review:</p>
