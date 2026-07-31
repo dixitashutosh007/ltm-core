@@ -39,7 +39,8 @@ SHA of the promoted build.
 | 2026-07-30 | 1 — Legal defensibility (8 items) | 2413594 | Ashutosh Dixit | approved (Option A: "Sign-off + Phase 2 in parallel" 2026-07-30) | 8 items: DPF adequacy, Q_SOVOFFER controls, Q_HYPER widened, UK AI regime, MiCA regime, grade relabel, Q_CTP unknown escalation, QR_UKCTP widened. Promoted to prod on same day as Phase 0. |
 | 2026-07-30 | 2 — Screening completeness (8 items) | 41730e1 | Ashutosh Dixit | approved (implicit by "carry on with next step" 2026-07-30) | 3 new questions (biometric KYC, employment AI, GPAI); 7 new rules wiring 4 previously-dead facts; AI Act Art. 51+ GPAI (3 rules). Promoted to prod 2026-07-30 14:56:58 UTC. |
 | 2026-07-30 | 3 — New regime coverage (5 regimes) | 9fcab18 | Ashutosh Dixit | approved (implicit by "continue with next step" 2026-07-30) | Additive: EUCS, PSD2/PSD3, CRR/CRD + EBA outsourcing, Solvency II, eIDAS 2. Each an independent block; no changes to existing regimes. Promoted to prod 2026-07-30. |
-| 2026-07-30 | 4 — Ongoing (analytics, feedback, refresh, changelog, health-check) | *(SHA on commit)* | Ashutosh Dixit + DPO for analytics | *split* | See below — safe items (changelog, refresh cadence, source-URL health check, in-tool feedback widget) shipped; analytics behind DPO gate. |
+| 2026-07-30 | 4 — Ongoing (P4.1–P4.4) | a3b59df | Ashutosh Dixit | approved ("Lets execute" 2026-07-30) | Public changelog + refresh cadence + source-URL health-check workflow + in-tool feedback pill (v3 overlay across all 4 accelerators). Promoted to prod. |
+| 2026-07-30 | 4.5 — Analytics | — | Ashutosh Dixit + DPO | **DEFERRED — DPO gate** | Not started. Requires DPO review of cookie/consent story before build. Tracked as task #29. |
 
 *(Add one row per promotion. Never delete rows — the log is the audit trail.)*
 
