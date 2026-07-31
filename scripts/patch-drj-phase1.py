@@ -155,24 +155,80 @@ EDIT_AUTOSELECT = (
 # P1.3 — Q_D3 (Data Act) — insert after Q_D2, before section E comment
 INSERT_QD3_ANCHOR = r'/* ============ E. THIRD-PARTY PROCESSORS & ICT SUPPLY CHAIN ============ */'
 INSERT_QD3 = (
-    r'{\n      id:"D3", section:"transfers", type:"single", text:"Do you rely on any cloud or data-processing service that would be subject to EU Data Act switching / portability obligations?",\n      help:"The Data Act (Regulation (EU) 2023/2854) applies from 12 September 2025; cloud switching provisions phase in later. Providers and their customers both have roles.",\n      refs:[{reg:"dataact",a:"Chapter VIII"}], appliesTo:{regulations:["dataact"]},\n      options:[\n        { value:"customer", label:"Yes — as a customer of cloud / data-processing services", sev:"low",\n          findings:[{reg:"dataact",a:"Chapter VIII",severity:"low",title:"Data Act switching rights available",detail:"As a customer, the Data Act grants you rights to switch and port data between providers on transparent terms; ensure your contracts reflect these rights.",phase:2,remedy:"Review provider contracts for Data Act switching / portability terms.",steps:["Confirm contract includes Data Act switching provisions","Verify functional-equivalence obligations","Track upcoming Data Act commencement milestones"]}]},\n        { value:"provider", label:"Yes — as a provider of cloud / data-processing services", sev:"high",\n          findings:[{reg:"dataact",a:"Chapter VIII",severity:"high",title:"Data Act provider obligations apply",detail:"As a provider, you must facilitate customer switching, ensure portability of exportable data, meet contractual-fairness rules, and safeguard against unlawful third-country access to non-personal data held in the EU.",phase:1,remedy:"Build a Data Act compliance programme covering switching, portability and non-personal-data access safeguards.",steps:["Document switching / portability procedures","Update customer contracts for Data Act terms","Implement safeguards against unlawful third-country access to non-personal data"]}]},\n        { value:"na", label:"Not applicable / EU Data Act not in scope", sev:"positive", findings:[] }\n      ]\n    },\n\n    /* ============ E. THIRD-PARTY PROCESSORS & ICT SUPPLY CHAIN ============ */'
+    '''{
+      id:"D3", section:"transfers", type:"single", text:"Do you rely on any cloud or data-processing service that would be subject to EU Data Act switching / portability obligations?",
+      help:"The Data Act (Regulation (EU) 2023/2854) applies from 12 September 2025; cloud switching provisions phase in later. Providers and their customers both have roles.",
+      refs:[{reg:"dataact",a:"Chapter VIII"}], appliesTo:{regulations:["dataact"]},
+      options:[
+        { value:"customer", label:"Yes — as a customer of cloud / data-processing services", sev:"low",
+          findings:[{reg:"dataact",a:"Chapter VIII",severity:"low",title:"Data Act switching rights available",detail:"As a customer, the Data Act grants you rights to switch and port data between providers on transparent terms; ensure your contracts reflect these rights.",phase:2,remedy:"Review provider contracts for Data Act switching / portability terms.",steps:["Confirm contract includes Data Act switching provisions","Verify functional-equivalence obligations","Track upcoming Data Act commencement milestones"]}]},
+        { value:"provider", label:"Yes — as a provider of cloud / data-processing services", sev:"high",
+          findings:[{reg:"dataact",a:"Chapter VIII",severity:"high",title:"Data Act provider obligations apply",detail:"As a provider, you must facilitate customer switching, ensure portability of exportable data, meet contractual-fairness rules, and safeguard against unlawful third-country access to non-personal data held in the EU.",phase:1,remedy:"Build a Data Act compliance programme covering switching, portability and non-personal-data access safeguards.",steps:["Document switching / portability procedures","Update customer contracts for Data Act terms","Implement safeguards against unlawful third-country access to non-personal data"]}]},
+        { value:"na", label:"Not applicable / EU Data Act not in scope", sev:"positive", findings:[] }
+      ]
+    },
+
+    /* ============ E. THIRD-PARTY PROCESSORS & ICT SUPPLY CHAIN ============ */'''
 )
 
 # P1.3 — Q_F5 (UK Op Res) — insert before section G comment
 INSERT_QF5_ANCHOR = r'/* ============ G. AI SYSTEMS & DATA GOVERNANCE ============ */'
 INSERT_QF5 = (
-    r'{\n      id:"F5", section:"resilience", type:"single", text:"For UK-regulated financial firms: are impact tolerances set for important business services (UK Operational Resilience)?",\n      help:"FCA PS21/3 and PRA SS2/21 require identification of important business services, impact tolerances, mapping and scenario testing. Since March 2025, firms must be able to remain within tolerances for severe-but-plausible scenarios.",\n      refs:[{reg:"ukopres",a:"FCA PS21/3; PRA SS2/21"}], appliesTo:{regulations:["ukopres"]},\n      options:[\n        { value:"yes", label:"Yes — impact tolerances set, mapping and testing complete", sev:"positive", findings:[]},\n        { value:"partial", label:"Partial — tolerances set but mapping / testing incomplete", sev:"medium",\n          findings:[{reg:"ukopres",a:"FCA PS21/3",severity:"medium",title:"UK Op Res mapping / testing incomplete",detail:"Impact tolerances without complete mapping and scenario testing cannot be shown to be defensible against a severe-but-plausible disruption. Post-March 2025 supervisory expectations require evidence.",phase:2,remedy:"Complete mapping of important business services and scenario testing.",steps:["Complete mapping to underlying resources incl. ICT and data locations","Run severe-but-plausible scenario tests","Update the self-assessment document"]}]},\n        { value:"no", label:"No — not yet established", sev:"high",\n          findings:[{reg:"ukopres",a:"PRA SS2/21",severity:"high",title:"UK operational-resilience framework not established",detail:"Post-March 2025, the FCA and PRA expect firms to be able to demonstrate they can remain within impact tolerances for important business services. Absence is a material gap.",phase:1,remedy:"Stand up the UK Op Res framework as a priority.",steps:["Identify important business services","Set impact tolerances","Map underlying resources","Design and run scenario tests","Produce the self-assessment"]}]},\n        { value:"na", label:"Not applicable (non-UK / non-FS)", sev:"positive", findings:[] }\n      ]\n    },\n\n    /* ============ G. AI SYSTEMS & DATA GOVERNANCE ============ */'
+    '''{
+      id:"F5", section:"resilience", type:"single", text:"For UK-regulated financial firms: are impact tolerances set for important business services (UK Operational Resilience)?",
+      help:"FCA PS21/3 and PRA SS2/21 require identification of important business services, impact tolerances, mapping and scenario testing. Since March 2025, firms must be able to remain within tolerances for severe-but-plausible scenarios.",
+      refs:[{reg:"ukopres",a:"FCA PS21/3; PRA SS2/21"}], appliesTo:{regulations:["ukopres"]},
+      options:[
+        { value:"yes", label:"Yes — impact tolerances set, mapping and testing complete", sev:"positive", findings:[]},
+        { value:"partial", label:"Partial — tolerances set but mapping / testing incomplete", sev:"medium",
+          findings:[{reg:"ukopres",a:"FCA PS21/3",severity:"medium",title:"UK Op Res mapping / testing incomplete",detail:"Impact tolerances without complete mapping and scenario testing cannot be shown to be defensible against a severe-but-plausible disruption. Post-March 2025 supervisory expectations require evidence.",phase:2,remedy:"Complete mapping of important business services and scenario testing.",steps:["Complete mapping to underlying resources incl. ICT and data locations","Run severe-but-plausible scenario tests","Update the self-assessment document"]}]},
+        { value:"no", label:"No — not yet established", sev:"high",
+          findings:[{reg:"ukopres",a:"PRA SS2/21",severity:"high",title:"UK operational-resilience framework not established",detail:"Post-March 2025, the FCA and PRA expect firms to be able to demonstrate they can remain within impact tolerances for important business services. Absence is a material gap.",phase:1,remedy:"Stand up the UK Op Res framework as a priority.",steps:["Identify important business services","Set impact tolerances","Map underlying resources","Design and run scenario tests","Produce the self-assessment"]}]},
+        { value:"na", label:"Not applicable (non-UK / non-FS)", sev:"positive", findings:[] }
+      ]
+    },
+
+    /* ============ G. AI SYSTEMS & DATA GOVERNANCE ============ */'''
 )
 
 # P1.4 + P1.3 — Q_H3 (sovereign controls) + Q_I3 (UK CTP) — insert both before section I / J respectively
 INSERT_QH3_ANCHOR = r'/* ============ I. GOVERNANCE, CONTRACTS & AUDIT RIGHTS ============ */'
 INSERT_QH3 = (
-    r'{\n      id:"H3", section:"cloud", type:"multi", text:"For any \'sovereign-boundary\' or EU-controlled cloud offering, which controls are contractually and operationally in place?",\n      help:"An offering marketed as \'sovereign\' but without contractual, operational and cryptographic controls is not sovereign in a legal sense. This question fires the evidence side of Q_H1.",\n      refs:[{reg:"eucs",a:"Sovereignty"},{reg:"gdpr",a:"Art. 32, 44"}],\n      options:[\n        { value:"eu-personnel", label:"EU-only operations personnel (customer support and platform operators are EU nationals)", sev:"positive", findings:[]},\n        { value:"hyok", label:"Customer-held encryption keys (HYOK / EU-controlled KMS)", sev:"positive", findings:[]},\n        { value:"antidisclosure", label:"Contractual protection against extraterritorial disclosure requests (e.g. CLOUD Act, FISA §702)", sev:"positive", findings:[]},\n        { value:"eu-subprocessors", label:"Sub-processor list restricted to EU-jurisdiction entities", sev:"positive", findings:[]},\n        { value:"local-entity", label:"Local operating entity with EU jurisdiction of dispute resolution", sev:"positive", findings:[]},\n        { value:"none", label:"None of the above / not documented", sev:"high",\n          findings:[{reg:"eucs",a:"Sovereignty",severity:"high",title:"Sovereign offering claimed without documented controls",detail:"An offering marketed as \'sovereign\' but without documented EU-personnel operations, customer-held keys, anti-disclosure clauses or sub-processor limits is not sovereign in a legal sense — CLOUD Act and other extraterritorial exposures remain.",phase:1,remedy:"Document each sovereignty control contractually or select a genuinely sovereign platform.",steps:["Request contractual evidence for each sovereignty claim","Verify EU-personnel operations model","Confirm key custody arrangements","Restrict sub-processor list to EU jurisdictions"]}]}\n      ]\n    },\n\n    /* ============ I. GOVERNANCE, CONTRACTS & AUDIT RIGHTS ============ */'
+    '''{
+      id:"H3", section:"cloud", type:"multi", text:"For any 'sovereign-boundary' or EU-controlled cloud offering, which controls are contractually and operationally in place?",
+      help:"An offering marketed as 'sovereign' but without contractual, operational and cryptographic controls is not sovereign in a legal sense. This question fires the evidence side of Q_H1.",
+      refs:[{reg:"eucs",a:"Sovereignty"},{reg:"gdpr",a:"Art. 32, 44"}],
+      options:[
+        { value:"eu-personnel", label:"EU-only operations personnel (customer support and platform operators are EU nationals)", sev:"positive", findings:[]},
+        { value:"hyok", label:"Customer-held encryption keys (HYOK / EU-controlled KMS)", sev:"positive", findings:[]},
+        { value:"antidisclosure", label:"Contractual protection against extraterritorial disclosure requests (e.g. CLOUD Act, FISA §702)", sev:"positive", findings:[]},
+        { value:"eu-subprocessors", label:"Sub-processor list restricted to EU-jurisdiction entities", sev:"positive", findings:[]},
+        { value:"local-entity", label:"Local operating entity with EU jurisdiction of dispute resolution", sev:"positive", findings:[]},
+        { value:"none", label:"None of the above / not documented", sev:"high",
+          findings:[{reg:"eucs",a:"Sovereignty",severity:"high",title:"Sovereign offering claimed without documented controls",detail:"An offering marketed as 'sovereign' but without documented EU-personnel operations, customer-held keys, anti-disclosure clauses or sub-processor limits is not sovereign in a legal sense — CLOUD Act and other extraterritorial exposures remain.",phase:1,remedy:"Document each sovereignty control contractually or select a genuinely sovereign platform.",steps:["Request contractual evidence for each sovereignty claim","Verify EU-personnel operations model","Confirm key custody arrangements","Restrict sub-processor list to EU jurisdictions"]}]}
+      ]
+    },
+
+    /* ============ I. GOVERNANCE, CONTRACTS & AUDIT RIGHTS ============ */'''
 )
 
 INSERT_QI3_ANCHOR = r'/* ============ J. INCIDENT DETECTION & REPORTING ============ */'
 INSERT_QI3 = (
-    r'{\n      id:"I3", section:"governance", type:"single", text:"For UK-regulated financial firms: do you rely on providers that may be designated Critical Third Parties (CTPs) under FSMA 2023?",\n      help:"HM Treasury (on recommendation of FCA / PRA / BoE) designates CTPs. Designated CTPs are subject to six Fundamental Rules and joint FCA / PRA / BoE oversight. The rules bind the provider, but your own resilience accountability is undiminished.",\n      refs:[{reg:"ukctp",a:"FSMA 2023 Part 9; FCA PS24/16; PRA PS16/24"}], appliesTo:{regulations:["ukctp"]},\n      options:[\n        { value:"yes", label:"Yes — we rely on likely / designated CTPs and understand our own residual duties", sev:"low",\n          findings:[{reg:"ukctp",a:"FSMA 2023 Part 9",severity:"low",title:"CTP dependency identified and managed",detail:"CTP designations bind the provider under FCA / PRA / BoE oversight, but your own outsourcing, resilience and exit-planning duties are undiminished. Maintain governance directly.",phase:2,remedy:"Maintain outsourcing governance and exit-plan readiness for CTP arrangements.",steps:["Identify all critical arrangements with likely CTPs","Confirm outsourcing controls remain in place","Update exit plans and concentration-risk analysis"]}]},\n        { value:"unsure", label:"Unsure — CTP status of key providers not established", sev:"medium",\n          findings:[{reg:"ukctp",a:"FSMA 2023",severity:"medium",title:"CTP dependency status unclear",detail:"Not knowing which of your providers is (or may be) a designated CTP prevents effective concentration-risk and exit-plan design.",phase:2,remedy:"Establish which providers are likely CTPs and plan accordingly.",steps:["List providers supporting important business services","Assess likelihood of CTP designation via HM Treasury","Refresh concentration-risk analysis"]}]},\n        { value:"no", label:"No — no material CTP dependencies", sev:"positive", findings:[]},\n        { value:"na", label:"Not applicable (non-UK / non-FS)", sev:"positive", findings:[] }\n      ]\n    },\n\n    /* ============ J. INCIDENT DETECTION & REPORTING ============ */'
+    '''{
+      id:"I3", section:"governance", type:"single", text:"For UK-regulated financial firms: do you rely on providers that may be designated Critical Third Parties (CTPs) under FSMA 2023?",
+      help:"HM Treasury (on recommendation of FCA / PRA / BoE) designates CTPs. Designated CTPs are subject to six Fundamental Rules and joint FCA / PRA / BoE oversight. The rules bind the provider, but your own resilience accountability is undiminished.",
+      refs:[{reg:"ukctp",a:"FSMA 2023 Part 9; FCA PS24/16; PRA PS16/24"}], appliesTo:{regulations:["ukctp"]},
+      options:[
+        { value:"yes", label:"Yes — we rely on likely / designated CTPs and understand our own residual duties", sev:"low",
+          findings:[{reg:"ukctp",a:"FSMA 2023 Part 9",severity:"low",title:"CTP dependency identified and managed",detail:"CTP designations bind the provider under FCA / PRA / BoE oversight, but your own outsourcing, resilience and exit-planning duties are undiminished. Maintain governance directly.",phase:2,remedy:"Maintain outsourcing governance and exit-plan readiness for CTP arrangements.",steps:["Identify all critical arrangements with likely CTPs","Confirm outsourcing controls remain in place","Update exit plans and concentration-risk analysis"]}]},
+        { value:"unsure", label:"Unsure — CTP status of key providers not established", sev:"medium",
+          findings:[{reg:"ukctp",a:"FSMA 2023",severity:"medium",title:"CTP dependency status unclear",detail:"Not knowing which of your providers is (or may be) a designated CTP prevents effective concentration-risk and exit-plan design.",phase:2,remedy:"Establish which providers are likely CTPs and plan accordingly.",steps:["List providers supporting important business services","Assess likelihood of CTP designation via HM Treasury","Refresh concentration-risk analysis"]}]},
+        { value:"no", label:"No — no material CTP dependencies", sev:"positive", findings:[]},
+        { value:"na", label:"Not applicable (non-UK / non-FS)", sev:"positive", findings:[] }
+      ]
+    },
+
+    /* ============ J. INCIDENT DETECTION & REPORTING ============ */'''
 )
 
 EDITS = [
@@ -223,6 +279,14 @@ def apply_edits(js: str) -> tuple[str, int]:
 
 
 def semantic_check(js: str) -> None:
+    # Hard JS-syntax guard: literal `\n` (backslash-n) followed by whitespace
+    # and an identifier is a smoking gun for a raw-string insertion bug that
+    # left `\n` as two literal characters in the JS body — invalid syntax.
+    # (Legitimate `\n` inside a quoted string is fine; this pattern only
+    # matches outside of a string context.)
+    bad = re.findall(r'\\n\s+id:"', js)
+    if bad:
+        raise SystemExit(f"  ✗ JS SYNTAX BUG: found {len(bad)} literal '\\n id:\"' occurrence(s) — a raw-string insertion left \\n as literal chars. REFUSING TO SAVE.")
     # BANK must still open + close, regulations must include the 3 new ones,
     # questions must include D3/F5/H3/I3.
     if 'var BANK = {' not in js and 'const BANK = {' not in js:
