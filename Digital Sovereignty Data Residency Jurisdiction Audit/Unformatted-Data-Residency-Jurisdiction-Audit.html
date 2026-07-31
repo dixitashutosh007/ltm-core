@@ -431,12 +431,13 @@ const BANK = {
     { id:"eucs",   name:"EUCS",        full:"EU Cybersecurity Certification Scheme for Cloud Services", tag:"EU · Cloud assurance", desc:"Assurance levels (Basic/Substantial/High) and sovereignty-related requirements for cloud services." },
     { id:"dataact", name:"EU Data Act",  full:"Regulation (EU) 2023/2854 on harmonised rules on fair access to and use of data", tag:"EU · cloud switching & non-personal data access", desc:"Cloud switching and portability obligations for data-processing services; safeguards against unlawful third-country access to non-personal data held in the EU. Applies from 12 September 2025; switching provisions phased." },
     { id:"ukopres", name:"UK Op Res",    full:"FCA PS21/3; PRA SS2/21 — Operational Resilience", tag:"UK · financial services resilience", desc:"Impact tolerances for important business services, mapping, scenario testing, self-assessment and outsourcing / third-party risk expectations." },
-    { id:"ukctp",   name:"UK CTP",       full:"Financial Services and Markets Act 2023, Part 9; FCA PS24/16; PRA PS16/24", tag:"UK · CTP oversight", desc:"HM Treasury designations of Critical Third Parties to the UK financial sector; joint FCA / PRA / BoE oversight; six Fundamental Rules." }
+    { id:"ukctp",   name:"UK CTP",       full:"Financial Services and Markets Act 2023, Part 9; FCA PS24/16; PRA PS16/24", tag:"UK · CTP oversight", desc:"HM Treasury designations of Critical Third Parties to the UK financial sector; joint FCA / PRA / BoE oversight; six Fundamental Rules." },
+    { id:"ukai",    name:"UK AI approach", full:"ICO Guidance on AI and data protection; FCA AI update; PRA/BoE SS1/23 (Model risk management for AI/ML)", tag:"UK · principles-based AI regulation", desc:"UK operates a principles-based, regulator-led approach to AI rather than a UK equivalent of the EU AI Act. ICO guidance on AI and data protection, FCA supervisory expectations for AI in regulated activities, and PRA/BoE SS1/23 on model risk management for AI/ML apply. Track further UK regulatory evolution." }
   ],
 
   sectors: [
-    { id:"finserv",   name:"Banking & capital markets", high:true,  regs:["dora","gdpr","nis2","ukopres","ukctp","dataact"] },
-    { id:"insurance", name:"Insurance & pensions",       high:true,  regs:["dora","gdpr","nis2","ukopres","ukctp","dataact"] },
+    { id:"finserv",   name:"Banking & capital markets", high:true,  regs:["dora","gdpr","nis2","ukopres","ukctp","dataact","ukai"] },
+    { id:"insurance", name:"Insurance & pensions",       high:true,  regs:["dora","gdpr","nis2","ukopres","ukctp","dataact","ukai"] },
     { id:"health",    name:"Healthcare providers",       high:true,  regs:["nis2","gdpr"] },
     { id:"pharma",    name:"Pharma & life sciences",     high:true,  regs:["nis2","gdpr","aiact"] },
     { id:"telecom",   name:"Telecom & connectivity",     high:true,  regs:["nis2","gdpr"] },
@@ -782,6 +783,19 @@ const BANK = {
           findings:[{reg:"aiact",a:"Art. 25",severity:"medium",title:"Integrator may become provider under Art. 25",detail:"Firms placing an AI system on the market under their own name may be treated as providers of the resulting system (Art. 25 — provider substitution). Assess whether provider-level obligations attach to the integrated system in addition to base-model provider obligations.",phase:2,remedy:"Assess Art. 25 provider-substitution risk for each integrated GPAI product.",steps:["Map each product embedding third-party GPAI","Determine if you place the system under your own name","Adopt provider-level obligations where applicable"]}]}
       ]
     },
+    {
+      id:"G4", section:"ai", type:"single", text:"For UK-established firms using AI/ML: how aligned is your AI governance with UK principles-based expectations (ICO / FCA / PRA)?",
+      help:"The UK follows a principles-based, regulator-led AI approach. ICO guidance on AI and data protection, FCA supervisory expectations for AI in regulated activities, and PRA/BoE SS1/23 on model risk management for AI/ML apply.",
+      refs:[{reg:"ukai",a:"ICO AI guidance; FCA AI update; PRA/BoE SS1/23"}], appliesTo:{regulations:["ukai"]},
+      options:[
+        { value:"aligned", label:"Yes — governance evidenced against ICO / FCA / PRA principles", sev:"positive", findings:[]},
+        { value:"partial", label:"Partial — awareness of ICO / FCA / PRA expectations, evidence incomplete", sev:"medium",
+          findings:[{reg:"ukai",a:"ICO / FCA / PRA principles",severity:"medium",title:"UK AI governance evidence incomplete",detail:"Principles-based expectations still require evidence — DPIAs for AI processing (ICO), consumer-duty and senior-manager accountability (FCA), and model risk governance (PRA/BoE SS1/23). Partial alignment is a common finding; document controls end-to-end.",phase:2,remedy:"Close the evidence gaps against each supervisor guideline.",steps:["Complete DPIAs for AI processing personal data (ICO)","Document FCA-relevant AI governance for regulated activities","Adopt SS1/23 model risk management framework for material AI/ML"]}]},
+        { value:"none", label:"No — UK AI governance not established", sev:"high",
+          findings:[{reg:"ukai",a:"ICO / FCA / PRA principles",severity:"high",title:"UK AI governance not established",detail:"Absence of AI governance in a UK-regulated firm exposes the firm to ICO enforcement on data-protection aspects and to FCA/PRA supervisory action for regulated activities. PRA/BoE SS1/23 is now the reference framework for banks and insurers on AI/ML model risk.",phase:1,remedy:"Stand up an AI governance framework aligned to the three UK supervisory streams.",steps:["Establish an AI governance forum with named executive owner","Complete DPIAs for AI processing (ICO)","Adopt SS1/23 model risk management principles","Align to FCA senior-manager accountability and consumer duty"]}]},
+        { value:"na", label:"Not applicable (no UK establishment or no AI use)", sev:"positive", findings:[] }
+      ]
+    },
 
     /* ============ H. CLOUD SOVEREIGNTY & ASSURANCE ============ */
     {
@@ -928,7 +942,7 @@ function autoSelectRegs(){
     const s=BANK.sectors.find(x=>x.id===sid); if(s) s.regs.forEach(r=>auto.add(r));
   });
   const fp=document.getElementById('org-footprint').value||'';
-  if(/UK/.test(fp)) { auto.add('ukgdpr'); auto.add('ukopres'); auto.add('ukctp'); }
+  if(/UK/.test(fp)) { auto.add('ukgdpr'); auto.add('ukopres'); auto.add('ukctp'); auto.add('ukai'); }
   if(fp) { auto.add('gdpr'); auto.add('dataact'); }
   auto.forEach(r=>{ if(!STATE.regulations.includes(r)) STATE.regulations.push(r); });
   syncRegChips();
