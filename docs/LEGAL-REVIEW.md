@@ -41,6 +41,7 @@ SHA of the promoted build.
 | 2026-07-30 | 3 — New regime coverage (5 regimes) | 9fcab18 | Ashutosh Dixit | approved (implicit by "continue with next step" 2026-07-30) | Additive: EUCS, PSD2/PSD3, CRR/CRD + EBA outsourcing, Solvency II, eIDAS 2. Each an independent block; no changes to existing regimes. Promoted to prod 2026-07-30. |
 | 2026-07-30 | 4 — Ongoing (P4.1–P4.4) | a3b59df | Ashutosh Dixit | approved ("Lets execute" 2026-07-30) | Public changelog + refresh cadence + source-URL health-check workflow + in-tool feedback pill (v3 overlay across all 4 accelerators). Promoted to prod. |
 | 2026-07-30 | 4.5 — Analytics | — | Ashutosh Dixit + DPO | **DEFERRED — DPO gate** | Not started. Requires DPO review of cookie/consent story before build. Tracked as task #29. |
+| 2026-07-31 | **DR&J** 1 — Legal defensibility (4 items) | *(SHA on commit)* | Ashutosh Dixit | *pending* | Staging URL: https://ltm-core.s3.us-east-1.amazonaws.com/Data-Residency-Jurisdiction-Audit-staging.html · DPF adequacy (Q_D1 / Q_C2 / Q_F1 / Q_G2); Q_C1 GCP split; +3 new regulations (Data Act, UK Op Res, UK CTP) with 3 new questions (Q_D3, Q_F5, Q_I3); Q_H3 sovereign-controls follow-up. Inventory: 6→9 regulations, 29→33 questions. Additive: no existing findings changed. |
 
 *(Add one row per promotion. Never delete rows — the log is the audit trail.)*
 
