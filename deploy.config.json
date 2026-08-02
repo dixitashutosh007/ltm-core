@@ -131,6 +131,19 @@
       "key": "finops-maturity-changelog-staging.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "staging"
+    },
+
+    {
+      "src": "terms-of-use.html",
+      "key": "terms-of-use.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
+    },
+    {
+      "src": "terms-of-use.html",
+      "key": "terms-of-use-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
     }
   ]
 }
