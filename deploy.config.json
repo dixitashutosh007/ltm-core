@@ -4,6 +4,18 @@
   "defaultAcl": "",
   "files": [
     {
+      "src": "LTM-CIS-Tech-Advisory-v3.html",
+      "key": "LTM-CIS-Tech-Advisory-v3.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
+    },
+    {
+      "src": "LTM-CIS-Tech-Advisory-v3.html",
+      "key": "LTM-CIS-Tech-Advisory-v3-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
+    },
+    {
       "src": "LTM CIS Tech Advisory v2.html",
       "key": "LTM-CIS-Tech-Advisory-v2.html",
       "contentType": "text/html; charset=utf-8",
