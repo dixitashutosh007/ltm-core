@@ -303,6 +303,91 @@
 </script>
 </head>
 <body>
+<div id="ltm-boot" role="status" aria-label="Loading assessment">
+  <style>
+    #ltm-boot {
+      position: fixed; inset: 0; z-index: 99999;
+      background: #141414; color: #ffffff;
+      display: flex; align-items: center; justify-content: center;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, "Helvetica Neue", sans-serif;
+      opacity: 1; transition: opacity 320ms ease-out;
+    }
+    #ltm-boot .ltm-boot-inner {
+      max-width: 460px; width: min(88vw, 460px);
+      display: flex; flex-direction: column; align-items: center; gap: 22px;
+      padding: 32px;
+    }
+    #ltm-boot .ltm-boot-brand {
+      display: flex; align-items: center; gap: 14px;
+    }
+    #ltm-boot .ltm-boot-brand img {
+      height: 32px; width: auto; filter: brightness(0) invert(1);
+    }
+    #ltm-boot .ltm-boot-brand .div {
+      width: 1px; height: 26px; background: rgba(255,255,255,0.25);
+    }
+    #ltm-boot .ltm-boot-brand .sub {
+      font-size: 0.85rem; font-weight: 600; letter-spacing: 0.02em;
+      color: rgba(255,255,255,0.9);
+    }
+    #ltm-boot .ltm-boot-tool {
+      font-family: 'Archivo', -apple-system, "Segoe UI", sans-serif;
+      font-size: 1.35rem; font-weight: 700; line-height: 1.2;
+      text-align: center; margin-top: 4px;
+    }
+    #ltm-boot .ltm-boot-tag {
+      font-size: 0.85rem; color: rgba(255,255,255,0.7);
+      text-align: center; max-width: 40ch;
+    }
+    #ltm-boot .ltm-boot-track {
+      width: 100%; height: 3px; background: rgba(255,255,255,0.12);
+      border-radius: 3px; overflow: hidden;
+    }
+    #ltm-boot .ltm-boot-bar {
+      height: 100%; width: 0%; background: #ff5e4f;
+      transition: width 900ms cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #ltm-boot.ltm-boot-out { opacity: 0; pointer-events: none; }
+    @media (prefers-reduced-motion: reduce) {
+      #ltm-boot .ltm-boot-bar { transition: none; width: 100% !important; }
+      #ltm-boot { transition: none; }
+    }
+  </style>
+  <div class="ltm-boot-inner">
+    <div class="ltm-boot-brand">
+      <img src="https://www.ltm.com/content/dam/ltimcorporatewebsite/refresh-images/LTM-Logo.svg" alt="LTM" />
+      <span class="div"></span>
+      <span class="sub">CIS Tech Advisory</span>
+    </div>
+    <div class="ltm-boot-tool">FinOps Value Case</div>
+    <div class="ltm-boot-tag">The unrealised value at stake in your cloud estate</div>
+    <div class="ltm-boot-track"><div class="ltm-boot-bar"></div></div>
+  </div>
+  <script>
+    (function(){
+      var el = document.getElementById('ltm-boot');
+      if (!el) return;
+      var bar = el.querySelector('.ltm-boot-bar');
+      /* fill in two steps so it looks like progress, not a fixed 1s bar */
+      requestAnimationFrame(function(){ bar.style.width = '55%'; });
+      setTimeout(function(){ bar.style.width = '100%'; }, 550);
+      /* Fade out once the underlying app has had a chance to paint */
+      function done(){
+        el.classList.add('ltm-boot-out');
+        setTimeout(function(){ if (el && el.parentNode) el.parentNode.removeChild(el); }, 400);
+      }
+      var minShow = 1050; /* keep visible ~1s for the polish moment */
+      var start = performance.now();
+      function whenReady(){
+        var wait = Math.max(0, minShow - (performance.now() - start));
+        setTimeout(done, wait);
+      }
+      if (document.readyState === 'complete') whenReady();
+      else window.addEventListener('load', whenReady, { once: true });
+    })();
+  </script>
+</div>
+
   <div id="__bundler_thumbnail">
   <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
     <rect width="1200" height="800" fill="#FFFFFF"></rect>
