@@ -7,6 +7,13 @@ export function DataProvider({ children }) {
   const [verticals, setVerticals] = useState(seedData.verticals);
   const [offerings, setOfferings] = useState(seedData.offerings);
   const [methodology] = useState(seedData.methodology);
+  const [toasts, setToasts] = useState([]);
+
+  const addToast = useCallback((message, type = 'info') => {
+    const id = Date.now();
+    setToasts(prev => [...prev, { id, message, type }]);
+    setTimeout(() => setToasts(prev => prev.filter(t => t.id !== id)), 3000);
+  }, []);
 
   const getOfferingsByVertical = useCallback((verticalId) => {
     return offerings.filter(o => o.verticalId === verticalId);
@@ -41,11 +48,48 @@ export function DataProvider({ children }) {
 
   const addOffering = useCallback((offering) => {
     setOfferings(prev => [...prev, offering]);
-  }, []);
+    addToast(`Offering "${offering.name}" added`);
+  }, [addToast]);
+
+  const deleteOffering = useCallback((id) => {
+    setOfferings(prev => prev.filter(o => o.id !== id));
+    addToast('Offering removed');
+  }, [addToast]);
 
   const addVertical = useCallback((vertical) => {
     setVerticals(prev => [...prev, vertical]);
-  }, []);
+    addToast(`Vertical "${vertical.name}" added`);
+  }, [addToast]);
+
+  const importData = useCallback((data) => {
+    let count = 0;
+    if (data.verticals && Array.isArray(data.verticals)) {
+      setVerticals(prev => {
+        const ids = new Set(prev.map(v => v.id));
+        const newOnes = data.verticals.filter(v => !ids.has(v.id));
+        count += newOnes.length;
+        return newOnes.length ? [...prev, ...newOnes] : prev;
+      });
+    }
+    if (data.offerings && Array.isArray(data.offerings)) {
+      setOfferings(prev => {
+        const merged = [...prev];
+        for (const incoming of data.offerings) {
+          const idx = merged.findIndex(o => o.id === incoming.id);
+          if (idx >= 0) {
+            merged[idx] = { ...merged[idx], ...incoming };
+            count++;
+          } else {
+            merged.push(incoming);
+            count++;
+          }
+        }
+        return merged;
+      });
+    }
+    addToast(`Imported ${count} items successfully`, 'success');
+    return count;
+  }, [addToast]);
 
   const exportData = useCallback(() => {
     return JSON.stringify({ verticals, offerings, methodology }, null, 2);
@@ -53,10 +97,10 @@ export function DataProvider({ children }) {
 
   return (
     <DataContext.Provider value={{
-      verticals, offerings, methodology,
+      verticals, offerings, methodology, toasts,
       getOfferingsByVertical, getOffering, getVertical,
-      updateOffering, updateOfferingField, addOffering, addVertical,
-      exportData
+      updateOffering, updateOfferingField, addOffering, deleteOffering,
+      addVertical, importData, exportData, addToast
     }}>
       {children}
     </DataContext.Provider>

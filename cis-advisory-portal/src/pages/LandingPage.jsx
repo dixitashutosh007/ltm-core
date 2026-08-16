@@ -1,5 +1,9 @@
+import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { useData } from '../context/DataContext';
+import { useRole } from '../context/RoleContext';
+import SearchBar from '../components/common/SearchBar';
+import AddOfferingModal from '../components/Editor/AddOfferingModal';
 
 function OfferingCard({ offering }) {
   const stageClass = offering.stage.toLowerCase() === 'diagnose' ? 'stage-diagnose'
@@ -17,15 +21,41 @@ function OfferingCard({ offering }) {
         <span className={`meta-badge ${stageClass}`}>{offering.stage}</span>
         <span className="meta-badge">{offering.duration}</span>
         <span className="meta-badge">{offering.phase}</span>
-        {offering.l2 && <span className="meta-badge" style={{ background: '#D1FAE5', color: '#065F46' }}>L2 Ready</span>}
-        {offering.battleCard && <span className="meta-badge" style={{ background: '#FEF3C7', color: '#92400E' }}>Battle Card</span>}
+        {offering.l2 && <span className="meta-badge badge-l2">L2 Ready</span>}
+        {offering.battleCard && <span className="meta-badge badge-bc">Battle Card</span>}
       </div>
     </Link>
   );
 }
 
 export default function LandingPage() {
-  const { verticals, getOfferingsByVertical } = useData();
+  const { verticals, offerings, getOfferingsByVertical } = useData();
+  const { isEditor } = useRole();
+  const [search, setSearch] = useState('');
+  const [stageFilter, setStageFilter] = useState('');
+  const [showAddModal, setShowAddModal] = useState(false);
+
+  const stats = useMemo(() => ({
+    total: offerings.length,
+    l2Ready: offerings.filter(o => o.l2).length,
+    battleCards: offerings.filter(o => o.battleCard).length,
+    verticals: verticals.length,
+  }), [offerings, verticals]);
+
+  const filteredOfferings = useMemo(() => {
+    const q = search.toLowerCase();
+    return offerings.filter(o => {
+      if (stageFilter && o.stage.toLowerCase() !== stageFilter.toLowerCase()) return false;
+      if (!q) return true;
+      return (o.name + o.tagline + o.buyers + o.pillar).toLowerCase().includes(q);
+    });
+  }, [offerings, search, stageFilter]);
+
+  const filteredVerticals = useMemo(() => {
+    if (!search && !stageFilter) return verticals;
+    const verticalIds = new Set(filteredOfferings.map(o => o.verticalId));
+    return verticals.filter(v => verticalIds.has(v.id));
+  }, [verticals, filteredOfferings, search, stageFilter]);
 
   return (
     <div>
@@ -37,11 +67,49 @@ export default function LandingPage() {
           fixed deliverables, advisory that leads to action — at roughly one-third of
           Tier-1 consulting fees.
         </p>
+        <div className="hero-stats">
+          <div className="hero-stat">
+            <span className="stat-value">{stats.total}</span>
+            <span className="stat-label">Offerings</span>
+          </div>
+          <div className="hero-stat">
+            <span className="stat-value">{stats.verticals}</span>
+            <span className="stat-label">Verticals</span>
+          </div>
+          <div className="hero-stat">
+            <span className="stat-value">{stats.l2Ready}</span>
+            <span className="stat-label">L2 Ready</span>
+          </div>
+          <div className="hero-stat">
+            <span className="stat-value">{stats.battleCards}</span>
+            <span className="stat-label">Battle Cards</span>
+          </div>
+        </div>
       </div>
 
       <div className="verticals-container">
-        {verticals.map(vertical => {
-          const vOfferings = getOfferingsByVertical(vertical.id);
+        <div className="toolbar">
+          <SearchBar value={search} onChange={setSearch} placeholder="Search offerings by name, buyer, pillar..." />
+          <div className="toolbar-right">
+            <select className="filter-select" value={stageFilter} onChange={e => setStageFilter(e.target.value)}>
+              <option value="">All Stages</option>
+              <option value="Diagnose">Diagnose</option>
+              <option value="Design">Design</option>
+              <option value="Mobilise">Mobilise</option>
+            </select>
+            {isEditor && (
+              <button className="btn-primary" onClick={() => setShowAddModal(true)}>
+                + Add Offering
+              </button>
+            )}
+          </div>
+        </div>
+
+        {filteredVerticals.map(vertical => {
+          const vOfferings = (search || stageFilter)
+            ? filteredOfferings.filter(o => o.verticalId === vertical.id)
+            : getOfferingsByVertical(vertical.id);
+          if (vOfferings.length === 0 && (search || stageFilter)) return null;
           return (
             <section className="vertical-section" key={vertical.id} id={vertical.id}>
               <div className="vertical-header">
@@ -62,7 +130,15 @@ export default function LandingPage() {
             </section>
           );
         })}
+
+        {filteredVerticals.length === 0 && (
+          <div className="empty-state" style={{ padding: '60px 24px' }}>
+            <p>No offerings match your search.</p>
+            <button className="download-btn" onClick={() => { setSearch(''); setStageFilter(''); }}>Clear filters</button>
+          </div>
+        )}
       </div>
+      {showAddModal && <AddOfferingModal onClose={() => setShowAddModal(false)} />}
     </div>
   );
 }

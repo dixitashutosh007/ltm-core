@@ -150,25 +150,94 @@
           }
         ],
         "engagementKPIs": [
-          { "kpi": "Quantified opportunity identified", "target": "≥15% of in-scope annualised run-rate" },
-          { "kpi": "Top-20 backlog items with named owner + sizing", "target": "100%" },
-          { "kpi": "Maturity baseline delivered across 6 FinOps domains", "target": "Yes" },
-          { "kpi": "Target operating model signed off by sponsor", "target": "Yes" },
-          { "kpi": "First operating-rhythm meeting chaired by client (W6)", "target": "Yes" },
-          { "kpi": "Executive readout to CIO + CFO", "target": "Yes" },
-          { "kpi": "Client FinOps team confirms handover complete", "target": "Signed handover receipt" },
-          { "kpi": "Sponsor NPS", "target": "≥ +40" }
+          {
+            "kpi": "Quantified opportunity identified",
+            "target": "≥15% of in-scope annualised run-rate"
+          },
+          {
+            "kpi": "Top-20 backlog items with named owner + sizing",
+            "target": "100%"
+          },
+          {
+            "kpi": "Maturity baseline delivered across 6 FinOps domains",
+            "target": "Yes"
+          },
+          {
+            "kpi": "Target operating model signed off by sponsor",
+            "target": "Yes"
+          },
+          {
+            "kpi": "First operating-rhythm meeting chaired by client (W6)",
+            "target": "Yes"
+          },
+          {
+            "kpi": "Executive readout to CIO + CFO",
+            "target": "Yes"
+          },
+          {
+            "kpi": "Client FinOps team confirms handover complete",
+            "target": "Signed handover receipt"
+          },
+          {
+            "kpi": "Sponsor NPS",
+            "target": "≥ +40"
+          }
         ],
         "clientOutcomeKPIs": [
-          { "kpi": "Tag coverage (weighted by spend)", "base": "Measured", "day90": "≥85%", "day180": "≥95%" },
-          { "kpi": "Allocated spend %", "base": "Measured", "day90": "≥90%", "day180": "≥98%" },
-          { "kpi": "Commitment coverage of eligible spend", "base": "Measured", "day90": "≥70%", "day180": "≥80%" },
-          { "kpi": "Commitment utilisation", "base": "Measured", "day90": "≥95%", "day180": "≥98%" },
-          { "kpi": "Forecast accuracy (monthly abs variance)", "base": "Measured", "day90": "≤10%", "day180": "≤5%" },
-          { "kpi": "Realised savings (run-rate)", "base": "0", "day90": "≥5%", "day180": "≥12%" },
-          { "kpi": "Anomalies detected within 48h", "base": "Manual", "day90": "≥80%", "day180": "≥95%" },
-          { "kpi": "Engineering engagement (teams with cost KPI in OKRs)", "base": "Measured", "day90": "≥40%", "day180": "≥75%" },
-          { "kpi": "Unit-economics reported for priority products", "base": "0", "day90": "≥3 products", "day180": "≥6 products" }
+          {
+            "kpi": "Tag coverage (weighted by spend)",
+            "base": "Measured",
+            "day90": "≥85%",
+            "day180": "≥95%"
+          },
+          {
+            "kpi": "Allocated spend %",
+            "base": "Measured",
+            "day90": "≥90%",
+            "day180": "≥98%"
+          },
+          {
+            "kpi": "Commitment coverage of eligible spend",
+            "base": "Measured",
+            "day90": "≥70%",
+            "day180": "≥80%"
+          },
+          {
+            "kpi": "Commitment utilisation",
+            "base": "Measured",
+            "day90": "≥95%",
+            "day180": "≥98%"
+          },
+          {
+            "kpi": "Forecast accuracy (monthly abs variance)",
+            "base": "Measured",
+            "day90": "≤10%",
+            "day180": "≤5%"
+          },
+          {
+            "kpi": "Realised savings (run-rate)",
+            "base": "0",
+            "day90": "≥5%",
+            "day180": "≥12%"
+          },
+          {
+            "kpi": "Anomalies detected within 48h",
+            "base": "Manual",
+            "day90": "≥80%",
+            "day180": "≥95%"
+          },
+          {
+            "kpi": "Engineering engagement (teams with cost KPI in OKRs)",
+            "base": "Measured",
+            "day90": "≥40%",
+            "day180": "≥75%"
+          },
+          {
+            "kpi": "Unit-economics reported for priority products",
+            "base": "0",
+            "day90": "≥3 products",
+            "day180": "≥6 products"
+          }
         ],
         "behaviouralCommitments": [
           "5-day SLA on interview scheduling",
@@ -200,13 +269,48 @@
           "100-day mobilisation plan"
         ],
         "resourceRequirements": [
-          { "role": "Engagement Partner", "fte": "0.2", "weeks": "W1, W3, W5, W6", "level": "Partner" },
-          { "role": "Engagement Lead", "fte": "1.0", "weeks": "W1–W6", "level": "Senior Manager" },
-          { "role": "Senior FinOps Consultant × 2", "fte": "1.0 each", "weeks": "W1–W6", "level": "Manager / Sr Consultant" },
-          { "role": "Cloud Economics Analyst", "fte": "1.0", "weeks": "W1–W5", "level": "Consultant" },
-          { "role": "Data / Tagging SME", "fte": "0.3", "weeks": "W1–W3", "level": "Senior Consultant" },
-          { "role": "Commercial / Contracts SME", "fte": "0.2", "weeks": "W3–W4", "level": "Senior Consultant" },
-          { "role": "Design / Visual Lead", "fte": "0.2", "weeks": "W5–W6", "level": "—" }
+          {
+            "role": "Engagement Partner",
+            "fte": "0.2",
+            "weeks": "W1, W3, W5, W6",
+            "level": "Partner"
+          },
+          {
+            "role": "Engagement Lead",
+            "fte": "1.0",
+            "weeks": "W1–W6",
+            "level": "Senior Manager"
+          },
+          {
+            "role": "Senior FinOps Consultant × 2",
+            "fte": "1.0 each",
+            "weeks": "W1–W6",
+            "level": "Manager / Sr Consultant"
+          },
+          {
+            "role": "Cloud Economics Analyst",
+            "fte": "1.0",
+            "weeks": "W1–W5",
+            "level": "Consultant"
+          },
+          {
+            "role": "Data / Tagging SME",
+            "fte": "0.3",
+            "weeks": "W1–W3",
+            "level": "Senior Consultant"
+          },
+          {
+            "role": "Commercial / Contracts SME",
+            "fte": "0.2",
+            "weeks": "W3–W4",
+            "level": "Senior Consultant"
+          },
+          {
+            "role": "Design / Visual Lead",
+            "fte": "0.2",
+            "weeks": "W5–W6",
+            "level": "—"
+          }
         ],
         "customerCommitment": [
           "Executive sponsor (CIO, CFO or CTO) — 2h/week + W1, W3, W6 attendance",
@@ -229,9 +333,18 @@
         "salesCycle": "6–10 weeks",
         "pitch": "Most enterprises at $10M+ cloud spend have a FinOps team but not FinOps discipline — dashboards no engineer opens and savings the CFO can't tie to the P&L. In six weeks we baseline maturity against the FinOps Foundation framework, quantify a 15–30% run-rate opportunity with named owners, and stand up the operating rhythm that keeps it running after we leave. Advisory-led, not tool-led.",
         "proofPoints": [
-          { "stat": "15–30%", "label": "run-rate opportunity identified within 6 weeks" },
-          { "stat": "6 wks", "label": "to signed operating model + paydown backlog" },
-          { "stat": "±5%", "label": "forecast accuracy achievable within two quarters" }
+          {
+            "stat": "15–30%",
+            "label": "run-rate opportunity identified within 6 weeks"
+          },
+          {
+            "stat": "6 wks",
+            "label": "to signed operating model + paydown backlog"
+          },
+          {
+            "stat": "±5%",
+            "label": "forecast accuracy achievable within two quarters"
+          }
         ],
         "discoveryQuestions": [
           "Who is accountable when cloud spend overruns budget — finance, platform, or the application team that caused it?",
@@ -255,19 +368,52 @@
         ],
         "pricingGuardrail": "Floor USD 180K for the 6-week Jump Start. Fixed-fee only — no gain-share on Jump Start or Realisation. Discounts beyond 15% require Partner approval.",
         "faq": [
-          { "q": "How is this different from a hyperscaler-run cost review?", "a": "Hyperscalers optimise their own bill within their walls. We work multi-cloud, cover commitments across all three CSPs, and design the operating model — not just the savings list." },
-          { "q": "Do you require a specific FinOps tool?", "a": "No. We're consulting-led and tool-agnostic. Where the estate genuinely needs tooling beyond native, we'll recommend based on fit." },
-          { "q": "Can you guarantee savings?", "a": "We commit to a quantified, defensible opportunity ≥15% of in-scope run-rate by Week 5, with named owners. We do not operate a gain-share commercial model." },
-          { "q": "Do you only work with multi-cloud clients?", "a": "No. Single-cloud clients are often where we add the most value." },
-          { "q": "We're mostly lift-and-shift — is this still for us?", "a": "Yes. Lift-and-shift estates are where FinOps discipline pays back fastest." },
-          { "q": "Why 6 weeks, not 3 months?", "a": "Six weeks is the Jump Start cadence — enough for baseline + design + mobilisation. Elevation to Walk/Run is a follow-on engagement." }
+          {
+            "q": "How is this different from a hyperscaler-run cost review?",
+            "a": "Hyperscalers optimise their own bill within their walls. We work multi-cloud, cover commitments across all three CSPs, and design the operating model — not just the savings list."
+          },
+          {
+            "q": "Do you require a specific FinOps tool?",
+            "a": "No. We're consulting-led and tool-agnostic. Where the estate genuinely needs tooling beyond native, we'll recommend based on fit."
+          },
+          {
+            "q": "Can you guarantee savings?",
+            "a": "We commit to a quantified, defensible opportunity ≥15% of in-scope run-rate by Week 5, with named owners. We do not operate a gain-share commercial model."
+          },
+          {
+            "q": "Do you only work with multi-cloud clients?",
+            "a": "No. Single-cloud clients are often where we add the most value."
+          },
+          {
+            "q": "We're mostly lift-and-shift — is this still for us?",
+            "a": "Yes. Lift-and-shift estates are where FinOps discipline pays back fastest."
+          },
+          {
+            "q": "Why 6 weeks, not 3 months?",
+            "a": "Six weeks is the Jump Start cadence — enough for baseline + design + mobilisation. Elevation to Walk/Run is a follow-on engagement."
+          }
         ],
         "objectionHandling": [
-          { "objection": "We already have a FinOps team.", "response": "Great — we're not here to replace them. Most FinOps teams we meet are stuck in reporting mode because they lack the operating rhythm and executive air cover. We amplify them." },
-          { "objection": "Our hyperscaler is doing this for free.", "response": "Hyperscaler teams do great work within their walls. Ask them for a multi-cloud view or a recommendation to move workload off their platform — you'll see the limit." },
-          { "objection": "We tried this two years ago and it didn't stick.", "response": "That's the most common story we hear. The reason is almost always operating model, not analysis — no forum, no KPI, no engineering accountability." },
-          { "objection": "Six weeks feels short for our estate.", "response": "Six weeks is the assessment and mobilisation cadence. Realisation of the backlog is a separate 2–3 quarter engagement." },
-          { "objection": "Can you do this for a fixed % of savings?", "response": "No. Gain-share biases the analysis toward quick wins and away from durable discipline. We're fixed-fee; the value is in the operating model that keeps compounding." }
+          {
+            "objection": "We already have a FinOps team.",
+            "response": "Great — we're not here to replace them. Most FinOps teams we meet are stuck in reporting mode because they lack the operating rhythm and executive air cover. We amplify them."
+          },
+          {
+            "objection": "Our hyperscaler is doing this for free.",
+            "response": "Hyperscaler teams do great work within their walls. Ask them for a multi-cloud view or a recommendation to move workload off their platform — you'll see the limit."
+          },
+          {
+            "objection": "We tried this two years ago and it didn't stick.",
+            "response": "That's the most common story we hear. The reason is almost always operating model, not analysis — no forum, no KPI, no engineering accountability."
+          },
+          {
+            "objection": "Six weeks feels short for our estate.",
+            "response": "Six weeks is the assessment and mobilisation cadence. Realisation of the backlog is a separate 2–3 quarter engagement."
+          },
+          {
+            "objection": "Can you do this for a fixed % of savings?",
+            "response": "No. Gain-share biases the analysis toward quick wins and away from durable discipline. We're fixed-fee; the value is in the operating model that keeps compounding."
+          }
         ],
         "whyWeWin": [
           "Advisory-led, tool-independent — recommend a tool only if needed, and say so plainly",
@@ -279,22 +425,76 @@
           "Fixed-fee commercial discipline — no gain-share theatrics"
         ],
         "competitiveCounters": [
-          { "competitor": "Accenture", "strength": "Scale, hyperscaler alliances, tool partnerships (Apptio)", "counter": "Advisory-led, senior-heavy, tool-independent; recommendation not tied to alliance targets", "trapQuestion": "If our estate doesn't need a new tool, will you tell us — or will your alliance targets push a recommendation?" },
-          { "competitor": "Deloitte", "strength": "CFO relationship, financial rigour, benchmarking data", "counter": "Match CFO framing; add engineering credibility they lack; faster mobilisation", "trapQuestion": "Who from your delivery team has actually run a FinOps operating rhythm inside an engineering org?" },
-          { "competitor": "Infosys / TCS / Wipro", "strength": "Price, delivery scale, existing account footprint", "counter": "Advisory positioning vs delivery-led; senior team on the ground", "trapQuestion": "What proportion of the named team is onshore, senior, and stays through mobilisation?" },
-          { "competitor": "HCLTech / Cognizant", "strength": "Managed FinOps run offerings", "counter": "We don't want your run contract — we make you self-sufficient", "trapQuestion": "Does the team designing the target model also stand to win the run contract?" },
-          { "competitor": "Big 4 (EY, PwC, KPMG)", "strength": "CFO/audit trust, controls framing", "counter": "Match CFO trust with engineering credibility; not conflicted with audit relationship", "trapQuestion": "Is your firm the auditor? What controls does that place on your recommendations?" },
-          { "competitor": "Hyperscaler ProServe", "strength": "Free/discounted, deep native knowledge", "counter": "Multi-cloud neutrality; not incentivised to lock you deeper into one CSP", "trapQuestion": "Are you comfortable with a vendor whose commercial success depends on you consuming more of their cloud?" }
+          {
+            "competitor": "Accenture",
+            "strength": "Scale, hyperscaler alliances, tool partnerships (Apptio)",
+            "counter": "Advisory-led, senior-heavy, tool-independent; recommendation not tied to alliance targets",
+            "trapQuestion": "If our estate doesn't need a new tool, will you tell us — or will your alliance targets push a recommendation?"
+          },
+          {
+            "competitor": "Deloitte",
+            "strength": "CFO relationship, financial rigour, benchmarking data",
+            "counter": "Match CFO framing; add engineering credibility they lack; faster mobilisation",
+            "trapQuestion": "Who from your delivery team has actually run a FinOps operating rhythm inside an engineering org?"
+          },
+          {
+            "competitor": "Infosys / TCS / Wipro",
+            "strength": "Price, delivery scale, existing account footprint",
+            "counter": "Advisory positioning vs delivery-led; senior team on the ground",
+            "trapQuestion": "What proportion of the named team is onshore, senior, and stays through mobilisation?"
+          },
+          {
+            "competitor": "HCLTech / Cognizant",
+            "strength": "Managed FinOps run offerings",
+            "counter": "We don't want your run contract — we make you self-sufficient",
+            "trapQuestion": "Does the team designing the target model also stand to win the run contract?"
+          },
+          {
+            "competitor": "Big 4 (EY, PwC, KPMG)",
+            "strength": "CFO/audit trust, controls framing",
+            "counter": "Match CFO trust with engineering credibility; not conflicted with audit relationship",
+            "trapQuestion": "Is your firm the auditor? What controls does that place on your recommendations?"
+          },
+          {
+            "competitor": "Hyperscaler ProServe",
+            "strength": "Free/discounted, deep native knowledge",
+            "counter": "Multi-cloud neutrality; not incentivised to lock you deeper into one CSP",
+            "trapQuestion": "Are you comfortable with a vendor whose commercial success depends on you consuming more of their cloud?"
+          }
         ],
         "differentiators": [
-          { "title": "Advisory practice inside a full-stack engineering firm", "description": "Advisory rigour with delivery credibility on tap; independent P&L means clients are never handed off to a delivery org that renegotiates the strategy." },
-          { "title": "Cross-pillar coherence — FinOps doesn't sit alone", "description": "Plugs into IT for the Future, TOM, Right Cloud Strategy & Workload Placement, and TokenOps." },
-          { "title": "Hyperscaler-neutral, hyperscaler-fluent", "description": "Deep certified engineering across AWS, Azure and GCP; no commercial dependency on any one hyperscaler's growth." },
-          { "title": "First-mover on TokenOps", "description": "Distinct offering for GenAI consumption governance — the sibling of FinOps with different unit metrics." },
-          { "title": "Onshore-heavy advisory, global-scale delivery", "description": "Engagement Lead and Partner always onshore; ≥70% of Jump Start team onshore/near-shore." },
-          { "title": "FinOps Foundation aligned, framework-honest", "description": "Delivered against the FinOps Foundation framework, not a proprietary construct." },
-          { "title": "Fixed-fee, fixed-cadence, fixed exit criteria", "description": "6-week fixed-fee engagement with named deliverables and owners. No scope creep." },
-          { "title": "Independent of run economics", "description": "Our advisory recommendation is not tied to a downstream managed-service contract." }
+          {
+            "title": "Advisory practice inside a full-stack engineering firm",
+            "description": "Advisory rigour with delivery credibility on tap; independent P&L means clients are never handed off to a delivery org that renegotiates the strategy."
+          },
+          {
+            "title": "Cross-pillar coherence — FinOps doesn't sit alone",
+            "description": "Plugs into IT for the Future, TOM, Right Cloud Strategy & Workload Placement, and TokenOps."
+          },
+          {
+            "title": "Hyperscaler-neutral, hyperscaler-fluent",
+            "description": "Deep certified engineering across AWS, Azure and GCP; no commercial dependency on any one hyperscaler's growth."
+          },
+          {
+            "title": "First-mover on TokenOps",
+            "description": "Distinct offering for GenAI consumption governance — the sibling of FinOps with different unit metrics."
+          },
+          {
+            "title": "Onshore-heavy advisory, global-scale delivery",
+            "description": "Engagement Lead and Partner always onshore; ≥70% of Jump Start team onshore/near-shore."
+          },
+          {
+            "title": "FinOps Foundation aligned, framework-honest",
+            "description": "Delivered against the FinOps Foundation framework, not a proprietary construct."
+          },
+          {
+            "title": "Fixed-fee, fixed-cadence, fixed exit criteria",
+            "description": "6-week fixed-fee engagement with named deliverables and owners. No scope creep."
+          },
+          {
+            "title": "Independent of run economics",
+            "description": "Our advisory recommendation is not tied to a downstream managed-service contract."
+          }
         ]
       }
     },
@@ -380,23 +580,76 @@
           "No executive sponsor with cross-functional mandate"
         ],
         "weekPlan": [
-          { "week": "W1–W2", "phase": "UNDERSTAND", "focus": "Discovery & Mapping", "activities": "Stakeholder interviews across Legal, DPO, CISO, CIO, Procurement. Data flow mapping. Workload inventory and classification. Regulatory framework alignment." },
-          { "week": "W3–W4", "phase": "UNDERSTAND", "focus": "Seven-Lens Assessment", "activities": "Assess each workload across seven sovereignty lenses. Score severity, defensibility and remediation complexity. Map regulatory obligations to estate components." },
-          { "week": "W5–W6", "phase": "IDEATE", "focus": "Target-State & Options", "activities": "Co-create target-state architecture options. Evaluate sovereign cloud and EU-zone alternatives. Trade-off analysis across cost, complexity, and compliance." },
-          { "week": "W7–W8", "phase": "OUTCREATE", "focus": "Roadmap & Evidence Pack", "activities": "Finalise 12-month remediation roadmap. Build board-ready narrative and evidence pack. Executive readout. Handover documentation." }
+          {
+            "week": "W1–W2",
+            "phase": "UNDERSTAND",
+            "focus": "Discovery & Mapping",
+            "activities": "Stakeholder interviews across Legal, DPO, CISO, CIO, Procurement. Data flow mapping. Workload inventory and classification. Regulatory framework alignment."
+          },
+          {
+            "week": "W3–W4",
+            "phase": "UNDERSTAND",
+            "focus": "Seven-Lens Assessment",
+            "activities": "Assess each workload across seven sovereignty lenses. Score severity, defensibility and remediation complexity. Map regulatory obligations to estate components."
+          },
+          {
+            "week": "W5–W6",
+            "phase": "IDEATE",
+            "focus": "Target-State & Options",
+            "activities": "Co-create target-state architecture options. Evaluate sovereign cloud and EU-zone alternatives. Trade-off analysis across cost, complexity, and compliance."
+          },
+          {
+            "week": "W7–W8",
+            "phase": "OUTCREATE",
+            "focus": "Roadmap & Evidence Pack",
+            "activities": "Finalise 12-month remediation roadmap. Build board-ready narrative and evidence pack. Executive readout. Handover documentation."
+          }
         ],
         "engagementKPIs": [
-          { "kpi": "Seven-lens assessment completed for all in-scope workloads", "target": "100%" },
-          { "kpi": "Regulatory obligation heat map delivered", "target": "Yes" },
-          { "kpi": "Target-state architecture options paper signed off", "target": "Yes" },
-          { "kpi": "Board-ready evidence pack delivered", "target": "Yes" },
-          { "kpi": "Executive readout to CIO + General Counsel", "target": "Yes" },
-          { "kpi": "Sponsor NPS", "target": "≥ +40" }
+          {
+            "kpi": "Seven-lens assessment completed for all in-scope workloads",
+            "target": "100%"
+          },
+          {
+            "kpi": "Regulatory obligation heat map delivered",
+            "target": "Yes"
+          },
+          {
+            "kpi": "Target-state architecture options paper signed off",
+            "target": "Yes"
+          },
+          {
+            "kpi": "Board-ready evidence pack delivered",
+            "target": "Yes"
+          },
+          {
+            "kpi": "Executive readout to CIO + General Counsel",
+            "target": "Yes"
+          },
+          {
+            "kpi": "Sponsor NPS",
+            "target": "≥ +40"
+          }
         ],
         "clientOutcomeKPIs": [
-          { "kpi": "Sovereignty posture score", "base": "Unmeasured", "day90": "Baselined", "day180": "Improved" },
-          { "kpi": "Regulatory questionnaires answerable with evidence", "base": "Partial", "day90": "≥80%", "day180": "≥95%" },
-          { "kpi": "High-risk workloads with remediation plan", "base": "0", "day90": "100%", "day180": "≥50% remediated" }
+          {
+            "kpi": "Sovereignty posture score",
+            "base": "Unmeasured",
+            "day90": "Baselined",
+            "day180": "Improved"
+          },
+          {
+            "kpi": "Regulatory questionnaires answerable with evidence",
+            "base": "Partial",
+            "day90": "≥80%",
+            "day180": "≥95%"
+          },
+          {
+            "kpi": "High-risk workloads with remediation plan",
+            "base": "0",
+            "day90": "100%",
+            "day180": "≥50% remediated"
+          }
         ],
         "behaviouralCommitments": [
           "5-day SLA on interview scheduling",
@@ -422,11 +675,36 @@
           "Board-ready sovereignty narrative and evidence pack"
         ],
         "resourceRequirements": [
-          { "role": "Engagement Partner", "fte": "0.2", "weeks": "W1, W4, W7, W8", "level": "Partner" },
-          { "role": "Engagement Lead", "fte": "1.0", "weeks": "W1–W8", "level": "Senior Manager" },
-          { "role": "Sovereignty SME", "fte": "1.0", "weeks": "W1–W8", "level": "Manager" },
-          { "role": "Cloud Architect", "fte": "0.5", "weeks": "W3–W7", "level": "Senior Consultant" },
-          { "role": "Regulatory Analyst", "fte": "0.5", "weeks": "W1–W6", "level": "Consultant" }
+          {
+            "role": "Engagement Partner",
+            "fte": "0.2",
+            "weeks": "W1, W4, W7, W8",
+            "level": "Partner"
+          },
+          {
+            "role": "Engagement Lead",
+            "fte": "1.0",
+            "weeks": "W1–W8",
+            "level": "Senior Manager"
+          },
+          {
+            "role": "Sovereignty SME",
+            "fte": "1.0",
+            "weeks": "W1–W8",
+            "level": "Manager"
+          },
+          {
+            "role": "Cloud Architect",
+            "fte": "0.5",
+            "weeks": "W3–W7",
+            "level": "Senior Consultant"
+          },
+          {
+            "role": "Regulatory Analyst",
+            "fte": "0.5",
+            "weeks": "W1–W6",
+            "level": "Consultant"
+          }
         ],
         "customerCommitment": [
           "Executive sponsor — 2h/week + checkpoint attendance",
@@ -448,9 +726,18 @@
         "salesCycle": "8–12 weeks",
         "pitch": "Sovereignty has moved from a compliance footnote to a board agenda item — but most organisations still can't answer a regulator's question with evidence. In eight weeks we assess the full estate across seven sovereignty lenses, map regulatory obligations, and deliver a prioritised remediation roadmap with a board-ready evidence pack.",
         "proofPoints": [
-          { "stat": "7", "label": "sovereignty lenses assessed per workload" },
-          { "stat": "8 wks", "label": "to board-ready sovereignty position" },
-          { "stat": "12 mo", "label": "prioritised remediation roadmap" }
+          {
+            "stat": "7",
+            "label": "sovereignty lenses assessed per workload"
+          },
+          {
+            "stat": "8 wks",
+            "label": "to board-ready sovereignty position"
+          },
+          {
+            "stat": "12 mo",
+            "label": "prioritised remediation roadmap"
+          }
         ],
         "discoveryQuestions": [
           "If a regulator asked for your sovereignty posture today, could you answer with evidence?",
@@ -473,12 +760,24 @@
         ],
         "pricingGuardrail": "Floor USD 240K for the 8-week Jump Start. Fixed-fee only.",
         "faq": [
-          { "q": "Is this a legal assessment?", "a": "No — we provide advisory, not legal counsel. We work alongside your Legal team and external counsel to build the evidence base." },
-          { "q": "Why seven lenses, not just data residency?", "a": "Data residency is one lens. True sovereignty spans operational resilience, technical control, workforce access, supply-chain dependency, and exit capability." }
+          {
+            "q": "Is this a legal assessment?",
+            "a": "No — we provide advisory, not legal counsel. We work alongside your Legal team and external counsel to build the evidence base."
+          },
+          {
+            "q": "Why seven lenses, not just data residency?",
+            "a": "Data residency is one lens. True sovereignty spans operational resilience, technical control, workforce access, supply-chain dependency, and exit capability."
+          }
         ],
         "objectionHandling": [
-          { "objection": "Our DPO already handles this.", "response": "DPOs handle data protection. Sovereignty spans architecture, operations, supply chain, and exit — seven lenses that need CIO, CISO and Legal alongside the DPO." },
-          { "objection": "We're waiting for final EUCS text.", "response": "DORA and NIS2 are already live. The seven-lens assessment covers all current obligations and builds a framework that absorbs EUCS when finalised." }
+          {
+            "objection": "Our DPO already handles this.",
+            "response": "DPOs handle data protection. Sovereignty spans architecture, operations, supply chain, and exit — seven lenses that need CIO, CISO and Legal alongside the DPO."
+          },
+          {
+            "objection": "We're waiting for final EUCS text.",
+            "response": "DORA and NIS2 are already live. The seven-lens assessment covers all current obligations and builds a framework that absorbs EUCS when finalised."
+          }
         ],
         "whyWeWin": [
           "Seven-lens framework — not just data residency",
@@ -488,13 +787,32 @@
           "Industry-specific regulatory depth"
         ],
         "competitiveCounters": [
-          { "competitor": "Big 4", "strength": "Regulatory advisory heritage", "counter": "We combine regulatory depth with cloud architecture credibility — the Big 4 outsource the technical assessment", "trapQuestion": "Who on your team can assess sovereign cloud architecture and data gravity — not just regulatory text?" },
-          { "competitor": "Hyperscaler ProServe", "strength": "Deep native knowledge", "counter": "Multi-cloud neutral; can credibly recommend repatriation or sovereign alternatives", "trapQuestion": "Can you recommend moving workloads off your platform if that's the sovereign answer?" }
+          {
+            "competitor": "Big 4",
+            "strength": "Regulatory advisory heritage",
+            "counter": "We combine regulatory depth with cloud architecture credibility — the Big 4 outsource the technical assessment",
+            "trapQuestion": "Who on your team can assess sovereign cloud architecture and data gravity — not just regulatory text?"
+          },
+          {
+            "competitor": "Hyperscaler ProServe",
+            "strength": "Deep native knowledge",
+            "counter": "Multi-cloud neutral; can credibly recommend repatriation or sovereign alternatives",
+            "trapQuestion": "Can you recommend moving workloads off your platform if that's the sovereign answer?"
+          }
         ],
         "differentiators": [
-          { "title": "Seven-lens sovereignty framework", "description": "Purpose-built framework covering data, operational, technical, legal, workforce, supply-chain and exit sovereignty." },
-          { "title": "Cross-pillar coherence", "description": "Plugs into Application Portfolio Mapping, Regulatory Alignment & Exit Strategy, and Sovereign AI Readiness." },
-          { "title": "Regulator-grade evidence", "description": "Deliverables designed to stand up to regulator, auditor and board scrutiny." }
+          {
+            "title": "Seven-lens sovereignty framework",
+            "description": "Purpose-built framework covering data, operational, technical, legal, workforce, supply-chain and exit sovereignty."
+          },
+          {
+            "title": "Cross-pillar coherence",
+            "description": "Plugs into Application Portfolio Mapping, Regulatory Alignment & Exit Strategy, and Sovereign AI Readiness."
+          },
+          {
+            "title": "Regulator-grade evidence",
+            "description": "Deliverables designed to stand up to regulator, auditor and board scrutiny."
+          }
         ]
       }
     },
@@ -530,11 +848,281 @@
           "Effort, complexity and cost bands per application",
           "Business-case input with sovereignty justification"
         ],
-        "inScope": ["Enterprise application portfolio (agreed subset at kickoff)", "Sovereignty, business-criticality and modernisation assessment", "Wave-based sequencing", "Cost and effort banding"],
-        "outOfScope": ["Application migration execution", "Detailed application re-architecture", "Code-level analysis", "Infrastructure migration"]
+        "inScope": [
+          "Enterprise application portfolio (agreed subset at kickoff)",
+          "Sovereignty, business-criticality and modernisation assessment",
+          "Wave-based sequencing",
+          "Cost and effort banding"
+        ],
+        "outOfScope": [
+          "Application migration execution",
+          "Detailed application re-architecture",
+          "Code-level analysis",
+          "Infrastructure migration"
+        ]
       },
-      "l2": null,
-      "battleCard": null
+      "l2": {
+        "personas": [
+          "Economic buyer: CIO, CTO (dual sign-off preferred)",
+          "Champion: VP IT Strategy / Head of Architecture / Head of Applications",
+          "Influencers: Enterprise Architect, Head of Development, BU Technology Leads"
+        ],
+        "firmographicSweetSpot": [
+          "Enterprise, $500M+ revenue, any geography",
+          "Application estate of 200–2,000+ business applications",
+          "Mixed technology landscape — legacy, SaaS, cloud-native",
+          "3+ years of M&A activity creating estate complexity",
+          "Industries: BFSI, Manufacturing, Retail, Healthcare, TMT"
+        ],
+        "triggerEvents": [
+          "New CIO / CTO mandate for IT simplification",
+          "Major M&A integration creating estate overlap",
+          "Cloud migration programme needing scope clarity",
+          "Rising application maintenance costs (>60% of IT spend)",
+          "Regulatory pressure requiring system compliance mapping",
+          "Board-mandated digital transformation with unclear starting point"
+        ],
+        "disqualifiers": [
+          "Fewer than 100 applications — use lighter discovery",
+          "Client has completed a CMDB refresh in last 6 months with full business context",
+          "No CIO/CTO sponsorship for rationalisation decisions",
+          "Purely infrastructure-led migration with no application decision rights"
+        ],
+        "weekPlan": [
+          {
+            "week": "W1–W2",
+            "phase": "UNDERSTAND",
+            "focus": "Discovery & Inventory",
+            "activities": "Kickoff, scope confirmation, RACI sign-off · CMDB/inventory data ingestion and cleansing · Stakeholder interview scheduling (20–30 interviews) · Application taxonomy and classification framework agreed · First 10 interviews completed"
+          },
+          {
+            "week": "W3–W4",
+            "phase": "UNDERSTAND",
+            "focus": "Assessment & Scoring",
+            "activities": "Complete remaining stakeholder interviews · Business criticality, technical health, and cost scoring per application · Dependency mapping workshop with architecture team · Identify quick-win rationalisation candidates · W4 checkpoint: draft portfolio heat map"
+          },
+          {
+            "week": "W5–W6",
+            "phase": "IDEATE",
+            "focus": "Analysis & Prioritisation",
+            "activities": "6R disposition analysis (Retain, Retire, Replace, Rehost, Replatform, Refactor) · Total cost of ownership modelling for top-50 applications · Wave planning and sequencing workshop · Business case development for rationalisation candidates"
+          },
+          {
+            "week": "W7–W8",
+            "phase": "OUTCREATE",
+            "focus": "Roadmap & Handover",
+            "activities": "Executive portfolio map and rationalisation roadmap delivery · Migration wave plan with dependencies and risk overlay · Governance model for ongoing portfolio management · Knowledge transfer and playbook handover · Executive readout to CIO / CTO"
+          }
+        ],
+        "engagementKPIs": [
+          {
+            "kpi": "Applications assessed and scored",
+            "target": "100% of in-scope estate"
+          },
+          {
+            "kpi": "6R disposition assigned to each application",
+            "target": "100%"
+          },
+          {
+            "kpi": "Business case for rationalisation candidates",
+            "target": "Delivered"
+          },
+          {
+            "kpi": "Migration wave plan with sequencing",
+            "target": "Delivered"
+          },
+          {
+            "kpi": "Sponsor NPS",
+            "target": "≥ +40"
+          }
+        ],
+        "clientOutcomeKPIs": [
+          {
+            "kpi": "Application inventory accuracy",
+            "base": "Measured",
+            "day90": "≥90%",
+            "day180": "≥95%"
+          },
+          {
+            "kpi": "Applications retired/consolidated",
+            "base": "0",
+            "day90": "≥5%",
+            "day180": "≥15%"
+          },
+          {
+            "kpi": "Application maintenance cost reduction",
+            "base": "Measured",
+            "day90": "≥5%",
+            "day180": "≥12%"
+          },
+          {
+            "kpi": "Cloud migration waves initiated",
+            "base": "0",
+            "day90": "Wave 1 started",
+            "day180": "Wave 2 started"
+          }
+        ],
+        "behaviouralCommitments": [
+          "5-day SLA on data access and CMDB extracts",
+          "Interview cohort availability within W1–W4",
+          "Sponsor commits to disposition decisions at W6 checkpoint",
+          "Architecture team available for dependency mapping workshop"
+        ],
+        "documentsRequired": [
+          "CMDB extract or application inventory (any format)",
+          "IT cost allocation by application or service",
+          "Existing architecture diagrams and dependency maps",
+          "Cloud strategy / digital transformation roadmap",
+          "Current vendor contracts for key applications",
+          "Org chart for IT and business technology teams"
+        ],
+        "deliverables": [
+          "Complete application portfolio map with business criticality scoring",
+          "6R disposition analysis for every in-scope application",
+          "Total cost of ownership model for priority applications",
+          "Migration wave plan with dependencies and risk overlay",
+          "Rationalisation business case with savings projection",
+          "Portfolio governance framework and operating rhythm",
+          "Executive readout deck"
+        ],
+        "resourceRequirements": [
+          {
+            "role": "Engagement Partner",
+            "fte": "0.2",
+            "weeks": "W1, W4, W7–W8",
+            "level": "Partner"
+          },
+          {
+            "role": "Engagement Lead",
+            "fte": "1.0",
+            "weeks": "W1–W8",
+            "level": "Senior Manager"
+          },
+          {
+            "role": "Application Architect × 2",
+            "fte": "1.0 each",
+            "weeks": "W1–W7",
+            "level": "Manager / Sr Consultant"
+          },
+          {
+            "role": "Business Analyst",
+            "fte": "1.0",
+            "weeks": "W1–W6",
+            "level": "Consultant"
+          },
+          {
+            "role": "Data Analyst",
+            "fte": "0.5",
+            "weeks": "W1–W4",
+            "level": "Consultant"
+          }
+        ],
+        "customerCommitment": [
+          "Executive sponsor (CIO/CTO) — 2h/week + W4, W8 attendance",
+          "Application owners cohort (20–30) — 45 min interview each",
+          "Enterprise architecture team — 1 day/week for dependency mapping",
+          "Finance / IT controlling — cost data provision"
+        ],
+        "frameworksApplied": [
+          "Gartner TIME Model",
+          "6R Migration Framework",
+          "TOGAF Application Portfolio Management",
+          "LTM Jump Start Methodology"
+        ]
+      },
+      "battleCard": {
+        "targetBuyer": "CIO · CTO · VP IT Strategy",
+        "dealSize": "USD 180K–350K | EUR 160K–310K",
+        "salesCycle": "6–10 weeks",
+        "pitch": "Most enterprises can't answer a simple question: how many applications do we run, what do they cost, and which ones should we keep? In eight weeks we deliver a scored portfolio map, a disposition roadmap, and the first migration wave plan — turning IT complexity into actionable decisions.",
+        "proofPoints": [
+          {
+            "stat": "200+",
+            "label": "applications typically assessed per engagement"
+          },
+          {
+            "stat": "8 wks",
+            "label": "to complete portfolio map and roadmap"
+          },
+          {
+            "stat": "15%",
+            "label": "typical first-year maintenance cost reduction"
+          }
+        ],
+        "discoveryQuestions": [
+          "Can you tell me today how many business applications you run and what each one costs?",
+          "When was the last time an application was retired, and what made it happen?",
+          "How do you decide which applications to migrate to cloud versus modernise versus retire?",
+          "What percentage of your IT budget goes to maintaining applications nobody uses?",
+          "Have previous rationalisation attempts stalled — and what caused it?"
+        ],
+        "qualifyIn": [
+          "200+ applications in scope",
+          "Named CIO/CTO sponsor for rationalisation decisions",
+          "Cloud migration or digital transformation programme underway",
+          "Application maintenance exceeding 50% of IT spend"
+        ],
+        "qualifyOut": [
+          "Fewer than 100 applications — scope too thin",
+          "No executive sponsor for retirement/consolidation decisions",
+          "Client wants only a CMDB refresh with no strategic output"
+        ],
+        "pricingGuardrail": "Floor USD 150K for full 8-week engagement. Assessment-only (4 weeks) available at USD 90K. Discounts beyond 12% require Partner approval.",
+        "faq": [
+          {
+            "q": "We already have a CMDB — why do we need this?",
+            "a": "A CMDB tells you what exists. We tell you what it costs, what it's worth, and what to do with it. Most CMDBs we see are 30–40% inaccurate on business context."
+          },
+          {
+            "q": "How is this different from a cloud readiness assessment?",
+            "a": "Cloud readiness assesses migration feasibility. Portfolio mapping answers the prior question: which applications deserve the investment at all?"
+          }
+        ],
+        "objectionHandling": [
+          {
+            "objection": "We can do this internally.",
+            "response": "You can — and most teams start. The challenge is that internal teams lack the political independence to recommend retiring applications someone owns. We bring the framework and the air cover."
+          },
+          {
+            "objection": "Eight weeks is too long.",
+            "response": "For estates under 500 applications, we can run a 4-week fast-track that delivers the portfolio map and disposition. The full 8 weeks adds the wave plan and governance model."
+          }
+        ],
+        "whyWeWin": [
+          "Proven framework combining business criticality, technical health, and cost data",
+          "Independent of any cloud platform — objective migration recommendations",
+          "Pairs naturally with our Cloud Migration and IT for the Future offerings",
+          "Jump Start methodology — fixed scope, fixed price, fixed deliverables"
+        ],
+        "competitiveCounters": [
+          {
+            "competitor": "Big4 (Deloitte / McKinsey)",
+            "strength": "Board-level credibility, benchmarking data",
+            "counter": "We deliver the analysis and the migration wave plan, not just the recommendation. Half the price.",
+            "trapQuestion": "Who builds the wave plan after your team leaves?"
+          },
+          {
+            "competitor": "Hyperscaler ProServe",
+            "strength": "Free/discounted assessment, platform expertise",
+            "counter": "Their assessment is cloud-readiness only. We answer the strategic question first: which applications to keep.",
+            "trapQuestion": "Will you recommend retiring an application rather than migrating it to your platform?"
+          }
+        ],
+        "differentiators": [
+          {
+            "title": "Business-first, not technology-first",
+            "description": "Scoring combines business criticality with technical health and cost — not just migration feasibility."
+          },
+          {
+            "title": "Independent portfolio advice",
+            "description": "No platform bias. We recommend retire, retain, or migrate based on business value, not cloud credits."
+          },
+          {
+            "title": "Cross-offering coherence",
+            "description": "Portfolio map feeds directly into IT for the Future, Cloud Migration, and Target Operating Model engagements."
+          }
+        ]
+      }
     },
     {
       "id": "technical-debt-portfolio",
@@ -568,11 +1156,273 @@
           "Technical debt governance framework",
           "Board-ready narrative linking debt to business risk"
         ],
-        "inScope": ["Enterprise application and infrastructure estate", "Five-dimension assessment framework", "Business-impact scoring", "Remediation prioritisation"],
-        "outOfScope": ["Code-level refactoring execution", "Infrastructure migration", "Detailed security audit", "Application re-architecture"]
+        "inScope": [
+          "Enterprise application and infrastructure estate",
+          "Five-dimension assessment framework",
+          "Business-impact scoring",
+          "Remediation prioritisation"
+        ],
+        "outOfScope": [
+          "Code-level refactoring execution",
+          "Infrastructure migration",
+          "Detailed security audit",
+          "Application re-architecture"
+        ]
       },
-      "l2": null,
-      "battleCard": null
+      "l2": {
+        "personas": [
+          "Economic buyer: CTO, VP Engineering",
+          "Champion: Head of Architecture / Chief Architect / Head of Development",
+          "Influencers: Engineering Managers, Platform Team Lead, CISO"
+        ],
+        "firmographicSweetSpot": [
+          "Enterprise, $500M+ revenue",
+          "Engineering team of 100+ developers",
+          "Legacy codebase aged 5+ years with accumulated technical debt",
+          "Industries: BFSI, Insurance, Retail, TMT, Manufacturing"
+        ],
+        "triggerEvents": [
+          "New CTO mandate to 'fix the foundations'",
+          "Release velocity declining quarter-over-quarter",
+          "Security audit flagging end-of-life dependencies",
+          "Cloud migration stalled by unmovable legacy components",
+          "Developer attrition citing codebase quality",
+          "Regulatory pressure on system resilience and recoverability"
+        ],
+        "disqualifiers": [
+          "Greenfield or early-stage codebase (<3 years old)",
+          "Client wants only a static code scan with no strategic output",
+          "No engineering leadership sponsorship for remediation budget",
+          "Pure infrastructure debt with no application-layer scope"
+        ],
+        "weekPlan": [
+          {
+            "week": "W1–W2",
+            "phase": "UNDERSTAND",
+            "focus": "Scan & Catalogue",
+            "activities": "Kickoff and scope confirmation · Automated code scanning and dependency analysis · Architecture review interviews (10–15 stakeholders) · Technical debt taxonomy and classification · Initial debt inventory with severity scoring"
+          },
+          {
+            "week": "W3–W4",
+            "phase": "UNDERSTAND",
+            "focus": "Impact Analysis",
+            "activities": "Business impact assessment per debt item · Velocity and incident correlation analysis · Security and compliance risk mapping · Cost of delay quantification · W4 checkpoint: debt heat map to sponsor"
+          },
+          {
+            "week": "W5–W6",
+            "phase": "IDEATE",
+            "focus": "Prioritisation & Planning",
+            "activities": "Prioritisation matrix (business impact × effort × risk) · Remediation strategy per top-20 debt items · Budget and resource requirements modelling · Quick-win vs. strategic remediation categorisation"
+          },
+          {
+            "week": "W7–W8",
+            "phase": "OUTCREATE",
+            "focus": "Roadmap & Governance",
+            "activities": "12-month remediation roadmap with quarterly milestones · Technical debt governance framework (prevention + paydown) · Engineering KPI framework for debt management · Executive readout to CTO / CIO · Knowledge transfer and playbook handover"
+          }
+        ],
+        "engagementKPIs": [
+          {
+            "kpi": "Debt items catalogued and scored",
+            "target": "100% of in-scope estate"
+          },
+          {
+            "kpi": "Top-20 remediation plans delivered",
+            "target": "100%"
+          },
+          {
+            "kpi": "Business case with ROI for remediation",
+            "target": "Delivered"
+          },
+          {
+            "kpi": "Governance framework signed off",
+            "target": "Yes"
+          },
+          {
+            "kpi": "Sponsor NPS",
+            "target": "≥ +40"
+          }
+        ],
+        "clientOutcomeKPIs": [
+          {
+            "kpi": "Critical debt items remediated",
+            "base": "0",
+            "day90": "Top 5",
+            "day180": "Top 15"
+          },
+          {
+            "kpi": "Release velocity improvement",
+            "base": "Measured",
+            "day90": "≥10%",
+            "day180": "≥25%"
+          },
+          {
+            "kpi": "Security vulnerabilities from tech debt",
+            "base": "Measured",
+            "day90": "-30%",
+            "day180": "-60%"
+          },
+          {
+            "kpi": "Unplanned downtime from legacy components",
+            "base": "Measured",
+            "day90": "-20%",
+            "day180": "-50%"
+          }
+        ],
+        "behaviouralCommitments": [
+          "Read access to source repositories within W1",
+          "Architecture team available for interviews W1–W2",
+          "Sponsor commits to remediation budget decisions at W6",
+          "Engineering teams available for impact validation W3–W4"
+        ],
+        "documentsRequired": [
+          "Source code repository access (read-only)",
+          "CI/CD pipeline configuration and metrics",
+          "Incident and outage logs (last 12 months)",
+          "Architecture documentation and system diagrams",
+          "Dependency inventory / SBOM if available",
+          "Engineering team structure and org chart"
+        ],
+        "deliverables": [
+          "Technical debt portfolio with severity and business impact scoring",
+          "Prioritised remediation roadmap (12-month, quarterly milestones)",
+          "Quick-win remediation pack (implementable in 30 days)",
+          "Technical debt governance framework",
+          "Engineering KPI framework for ongoing debt management",
+          "Executive readout deck with business case"
+        ],
+        "resourceRequirements": [
+          {
+            "role": "Engagement Partner",
+            "fte": "0.2",
+            "weeks": "W1, W4, W7–W8",
+            "level": "Partner"
+          },
+          {
+            "role": "Engagement Lead / Chief Architect",
+            "fte": "1.0",
+            "weeks": "W1–W8",
+            "level": "Principal"
+          },
+          {
+            "role": "Senior Engineer × 2",
+            "fte": "1.0 each",
+            "weeks": "W1–W6",
+            "level": "Manager / Sr Consultant"
+          },
+          {
+            "role": "Security SME",
+            "fte": "0.3",
+            "weeks": "W3–W5",
+            "level": "Senior Consultant"
+          }
+        ],
+        "customerCommitment": [
+          "CTO / VP Engineering — 2h/week + W4, W8 attendance",
+          "Chief Architect — 1 day/week through engagement",
+          "Engineering managers (5–8) — interviews + validation sessions",
+          "DevOps / Platform team — CI/CD and deployment data"
+        ],
+        "frameworksApplied": [
+          "SQALE Method for Technical Debt",
+          "DORA Metrics Framework",
+          "OWASP Dependency Check",
+          "LTM Jump Start Methodology"
+        ]
+      },
+      "battleCard": {
+        "targetBuyer": "CTO · VP Engineering · Chief Architect",
+        "dealSize": "USD 160K–300K | EUR 140K–270K",
+        "salesCycle": "6–8 weeks",
+        "pitch": "Technical debt isn't a backlog item — it's a portfolio to govern. We quantify it, score its business impact, and hand over a prioritised remediation roadmap so engineering leadership can defend the investment to the board with numbers, not opinions.",
+        "proofPoints": [
+          {
+            "stat": "25%",
+            "label": "typical release velocity improvement within 6 months"
+          },
+          {
+            "stat": "8 wks",
+            "label": "to complete assessment and remediation roadmap"
+          },
+          {
+            "stat": "60%",
+            "label": "reduction in debt-related incidents at 180 days"
+          }
+        ],
+        "discoveryQuestions": [
+          "What percentage of your engineering capacity goes to unplanned maintenance versus new features?",
+          "When was the last time a release was delayed by a legacy dependency?",
+          "Can you quantify the cost of your technical debt to the business today?",
+          "How do you decide which debt to pay down versus live with?",
+          "Has technical debt ever been a factor in developer attrition?"
+        ],
+        "qualifyIn": [
+          "Engineering org of 100+ developers",
+          "CTO or VP Engineering sponsor with remediation budget authority",
+          "Legacy codebase aged 5+ years",
+          "Release velocity or incident rates deteriorating"
+        ],
+        "qualifyOut": [
+          "Greenfield codebase under 3 years old",
+          "No sponsor for remediation investment",
+          "Client wants only automated scanning with no strategic overlay"
+        ],
+        "pricingGuardrail": "Floor USD 140K for full 8-week engagement. Quick-scan (4 weeks) at USD 80K for estates under 500K LOC.",
+        "faq": [
+          {
+            "q": "We already run SonarQube — why do we need this?",
+            "a": "SonarQube finds code-level issues. We quantify business impact, prioritise against engineering capacity, and deliver the governance model that prevents re-accumulation."
+          },
+          {
+            "q": "Can you fix the debt too?",
+            "a": "The assessment delivers the prioritised roadmap. Remediation execution is a follow-on engagement, typically 2–4 quarters."
+          }
+        ],
+        "objectionHandling": [
+          {
+            "objection": "We know where our debt is.",
+            "response": "Knowing where it is and being able to defend remediation investment to the CFO are different things. We bring the quantification framework that turns engineering instinct into a business case."
+          },
+          {
+            "objection": "Our developers should be building features, not paying down debt.",
+            "response": "That's exactly the trap. The longer debt compounds, the more engineering capacity it consumes. We help you find the tipping point and the sequence that maximises feature velocity."
+          }
+        ],
+        "whyWeWin": [
+          "Portfolio approach — treats debt as an asset class to govern, not a backlog to ignore",
+          "Business impact quantification that CFOs and boards understand",
+          "Pairs with IT for the Future and Application Portfolio offerings",
+          "Governance model prevents re-accumulation after remediation"
+        ],
+        "competitiveCounters": [
+          {
+            "competitor": "Code scanning vendors (SonarQube, Snyk)",
+            "strength": "Automated, continuous, developer-integrated",
+            "counter": "They find issues; we prioritise them by business impact and build the governance to prevent re-accumulation.",
+            "trapQuestion": "How do you decide which of the 10,000 findings to fix first — and how do you get the budget to do it?"
+          },
+          {
+            "competitor": "Big4 advisory",
+            "strength": "Board credibility, benchmarking data",
+            "counter": "We combine architecture depth with engineering credibility. Our team has built and shipped software.",
+            "trapQuestion": "Has anyone on the advisory team actually refactored a legacy codebase?"
+          }
+        ],
+        "differentiators": [
+          {
+            "title": "Engineering credibility meets advisory rigour",
+            "description": "Team combines hands-on engineering experience with structured advisory methodology."
+          },
+          {
+            "title": "Prevention built in",
+            "description": "Governance framework addresses ongoing debt prevention, not just current remediation."
+          },
+          {
+            "title": "Business language output",
+            "description": "Deliverables designed for CFO/board consumption, not just engineering teams."
+          }
+        ]
+      }
     },
     {
       "id": "it-for-the-future",
@@ -606,11 +1456,287 @@
           "Skills and capability gap analysis with build/buy/partner recommendations",
           "3-year investment roadmap with phased business case"
         ],
-        "inScope": ["Enterprise IT organisation and architecture", "Operating model design", "Skills and capability assessment", "Investment roadmap"],
-        "outOfScope": ["HR policy changes", "Detailed technology implementation", "Vendor selection and procurement", "Change management execution"]
+        "inScope": [
+          "Enterprise IT organisation and architecture",
+          "Operating model design",
+          "Skills and capability assessment",
+          "Investment roadmap"
+        ],
+        "outOfScope": [
+          "HR policy changes",
+          "Detailed technology implementation",
+          "Vendor selection and procurement",
+          "Change management execution"
+        ]
       },
-      "l2": null,
-      "battleCard": null
+      "l2": {
+        "personas": [
+          "Economic buyer: CIO, CEO (for mid-market)",
+          "Champion: Head of IT Strategy / VP Technology / Chief Architect",
+          "Influencers: CFO, CHRO, Head of Digital, BU Leaders"
+        ],
+        "firmographicSweetSpot": [
+          "Enterprise or upper mid-market, $300M–$10B revenue",
+          "IT organisation of 200–2,000 people",
+          "IT perceived as cost centre, not value driver",
+          "Industries: BFSI, Manufacturing, Retail, Healthcare, Energy, TMT"
+        ],
+        "triggerEvents": [
+          "New CIO with a mandate to transform IT",
+          "Board questioning IT value — 'what do we get for this spend?'",
+          "Digital native competitor disrupting the market",
+          "Major technology refresh or end-of-life event",
+          "Post-M&A IT integration requirement",
+          "Cloud migration programme needing a strategic wrapper"
+        ],
+        "disqualifiers": [
+          "IT team under 50 people — scope too thin for a 12-week engagement",
+          "Client wants only a technology roadmap with no organisational design",
+          "No board-level sponsorship for IT transformation",
+          "Active restructuring making org design premature"
+        ],
+        "weekPlan": [
+          {
+            "week": "W1–W3",
+            "phase": "UNDERSTAND",
+            "focus": "Current State & Ambition",
+            "activities": "Kickoff, scope confirmation, RACI · 25–35 stakeholder interviews (CxO, BU leaders, IT leadership, key users) · IT capability maturity assessment across 8 domains · Current spend analysis and benchmarking · Technology landscape mapping · W3 checkpoint: current-state synthesis"
+          },
+          {
+            "week": "W4–W6",
+            "phase": "IDEATE",
+            "focus": "Future State Design",
+            "activities": "Future-state IT operating model workshops (3 × half-day) · Capability gap analysis and prioritisation · Technology architecture target state · Talent and skills gap assessment · Investment model and business case development · W6 checkpoint: draft future-state model"
+          },
+          {
+            "week": "W7–W9",
+            "phase": "IDEATE",
+            "focus": "Roadmap Development",
+            "activities": "Initiative definition and sequencing · Quick-win identification (90-day impact) · Risk and dependency mapping · Change management approach design · Governance model for transformation programme"
+          },
+          {
+            "week": "W10–W12",
+            "phase": "OUTCREATE",
+            "focus": "Delivery & Handover",
+            "activities": "Executive transformation roadmap (3-year horizon) · 100-day mobilisation plan · Investment case for board approval · Transformation governance framework · Executive readout to CIO + CEO / Board · Knowledge transfer"
+          }
+        ],
+        "engagementKPIs": [
+          {
+            "kpi": "Stakeholders interviewed",
+            "target": "25–35"
+          },
+          {
+            "kpi": "IT capability domains assessed",
+            "target": "8"
+          },
+          {
+            "kpi": "Future-state operating model delivered",
+            "target": "Yes"
+          },
+          {
+            "kpi": "3-year transformation roadmap delivered",
+            "target": "Yes"
+          },
+          {
+            "kpi": "Board-ready investment case",
+            "target": "Delivered"
+          },
+          {
+            "kpi": "Sponsor NPS",
+            "target": "≥ +40"
+          }
+        ],
+        "clientOutcomeKPIs": [
+          {
+            "kpi": "Quick-win initiatives delivered",
+            "base": "0",
+            "day90": "≥3",
+            "day180": "≥8"
+          },
+          {
+            "kpi": "IT satisfaction score (internal NPS)",
+            "base": "Measured",
+            "day90": "+10 pts",
+            "day180": "+20 pts"
+          },
+          {
+            "kpi": "IT cost as % of revenue",
+            "base": "Measured",
+            "day90": "Tracked",
+            "day180": "On trajectory"
+          },
+          {
+            "kpi": "Time to deliver new capability",
+            "base": "Measured",
+            "day90": "-15%",
+            "day180": "-30%"
+          }
+        ],
+        "behaviouralCommitments": [
+          "CxO interview availability within W1–W3",
+          "Sponsor commits to workshop participation W4–W6",
+          "Board slot secured for W11–W12 readout",
+          "Finance team provides IT cost data within W1"
+        ],
+        "documentsRequired": [
+          "IT budget and spend breakdown (last 3 years)",
+          "IT strategy documents (current, if any)",
+          "Organisation chart — IT and digital teams",
+          "Technology landscape / application inventory",
+          "Previous transformation or strategy reports",
+          "Board papers referencing IT (last 12 months)",
+          "Vendor and outsourcing contracts summary"
+        ],
+        "deliverables": [
+          "IT capability maturity assessment (8 domains)",
+          "Future-state IT operating model",
+          "Technology architecture target state",
+          "3-year transformation roadmap with initiatives",
+          "Investment case for board approval",
+          "100-day mobilisation plan",
+          "Change management approach",
+          "Transformation governance framework"
+        ],
+        "resourceRequirements": [
+          {
+            "role": "Engagement Partner",
+            "fte": "0.3",
+            "weeks": "W1, W3, W6, W10–W12",
+            "level": "Partner"
+          },
+          {
+            "role": "Engagement Lead",
+            "fte": "1.0",
+            "weeks": "W1–W12",
+            "level": "Director / Senior Manager"
+          },
+          {
+            "role": "IT Strategy Consultant × 2",
+            "fte": "1.0 each",
+            "weeks": "W1–W10",
+            "level": "Manager / Sr Consultant"
+          },
+          {
+            "role": "Organisational Design SME",
+            "fte": "0.5",
+            "weeks": "W4–W9",
+            "level": "Senior Consultant"
+          },
+          {
+            "role": "Technology Architect",
+            "fte": "0.5",
+            "weeks": "W4–W8",
+            "level": "Principal Architect"
+          }
+        ],
+        "customerCommitment": [
+          "CIO — 4h/week + all checkpoints",
+          "CxO interview cohort (6–8) — 60 min each",
+          "IT leadership team — workshop participation W4–W6",
+          "BU leaders (4–6) — 45 min interviews",
+          "Finance — IT cost data and benchmarks"
+        ],
+        "frameworksApplied": [
+          "Gartner IT Score",
+          "McKinsey IT Operating Model Framework",
+          "TOGAF Enterprise Architecture",
+          "LTM Jump Start Methodology"
+        ]
+      },
+      "battleCard": {
+        "targetBuyer": "CIO · CEO (mid-market) · Board",
+        "dealSize": "USD 280K–500K | EUR 250K–450K",
+        "salesCycle": "8–14 weeks",
+        "pitch": "Your IT organisation was designed for a world that no longer exists. In twelve weeks we assess where IT stands today, design the future-state operating model, and deliver a board-ready transformation roadmap — so IT becomes the engine of business value, not just the department that keeps the lights on.",
+        "proofPoints": [
+          {
+            "stat": "12 wks",
+            "label": "to board-ready transformation roadmap"
+          },
+          {
+            "stat": "8",
+            "label": "IT capability domains assessed"
+          },
+          {
+            "stat": "30%",
+            "label": "typical reduction in time-to-deliver at 180 days"
+          }
+        ],
+        "discoveryQuestions": [
+          "If you had to describe IT's role to the board in one sentence, what would you say — and would the board agree?",
+          "How long does it take IT to deliver a new capability from request to production?",
+          "What percentage of your IT budget is discretionary versus keeping the lights on?",
+          "When was your IT operating model last redesigned — and has the business changed since?",
+          "What's the biggest capability gap between IT today and where the business needs it to be?"
+        ],
+        "qualifyIn": [
+          "CIO or CEO sponsor for IT transformation",
+          "IT team of 200+ people",
+          "Board or executive recognition that IT needs to change",
+          "Willingness to invest in a 12-week strategic engagement"
+        ],
+        "qualifyOut": [
+          "IT team under 50 people — lighter engagement needed",
+          "Client wants only a technology roadmap, not organisational transformation",
+          "Active restructuring making org design premature"
+        ],
+        "pricingGuardrail": "Floor USD 250K for the full 12-week engagement. No shortened version — the methodology requires three full phases.",
+        "faq": [
+          {
+            "q": "We already have an IT strategy.",
+            "a": "Most IT strategies we see are technology roadmaps. This engagement designs the operating model, capability build, and organisational change that makes the strategy executable."
+          },
+          {
+            "q": "Why 12 weeks?",
+            "a": "The three-phase methodology needs 4 weeks per phase: understand the current state, design the future state, and build the roadmap. Compressing below 10 weeks compromises interview coverage."
+          }
+        ],
+        "objectionHandling": [
+          {
+            "objection": "We can't pause operations for 12 weeks of advisory.",
+            "response": "This runs alongside operations, not instead of them. The weekly commitment is 4h for the CIO and structured interviews for the team — not a reorganisation."
+          },
+          {
+            "objection": "The Big4 are better placed for this.",
+            "response": "The Big4 excel at the strategy deck. We deliver the strategy and the operating model, sized for what your organisation will actually fund and staff — not a 200-page report."
+          }
+        ],
+        "whyWeWin": [
+          "Combines technology architecture with organisational design",
+          "Sized for what organisations actually fund — not aspirational blueprints",
+          "Pairs with Target Operating Model and Application Portfolio offerings",
+          "Advisory team with delivery credibility — we've built what we recommend"
+        ],
+        "competitiveCounters": [
+          {
+            "competitor": "McKinsey / BCG",
+            "strength": "Board credibility, CEO relationships, benchmarking",
+            "counter": "We match strategic rigour with technology depth. Our recommendations come with architecture, not just PowerPoint.",
+            "trapQuestion": "Who on your team has actually built and run an IT operating model?"
+          },
+          {
+            "competitor": "Big4 (Deloitte / EY)",
+            "strength": "Broad capability, audit relationships, talent depth",
+            "counter": "We're not conflicted by audit relationships. Our team stays through implementation.",
+            "trapQuestion": "Will the senior partner at the pitch be the one doing the interviews — or someone three levels junior?"
+          }
+        ],
+        "differentiators": [
+          {
+            "title": "Strategy that's actually executable",
+            "description": "Every recommendation comes with a resourcing model, timeline, and investment case — not an aspirational target state."
+          },
+          {
+            "title": "Technology + organisation together",
+            "description": "We design the operating model, the architecture, and the talent plan as one integrated deliverable."
+          },
+          {
+            "title": "Cross-offering coherence",
+            "description": "Feeds directly into TOM, Application Portfolio, and Cloud Strategy engagements."
+          }
+        ]
+      }
     },
     {
       "id": "target-operating-model",
@@ -645,11 +1771,274 @@
           "KPI framework and performance management design",
           "100-day mobilisation plan"
         ],
-        "inScope": ["IT operating model across all functions", "Decision rights and governance", "Forum and cadence design", "Sourcing model"],
-        "outOfScope": ["HR restructuring execution", "Vendor contract renegotiation", "Technology platform changes", "Change management delivery"]
+        "inScope": [
+          "IT operating model across all functions",
+          "Decision rights and governance",
+          "Forum and cadence design",
+          "Sourcing model"
+        ],
+        "outOfScope": [
+          "HR restructuring execution",
+          "Vendor contract renegotiation",
+          "Technology platform changes",
+          "Change management delivery"
+        ]
       },
-      "l2": null,
-      "battleCard": null
+      "l2": {
+        "personas": [
+          "Economic buyer: CIO, Head of Platform Engineering, COO",
+          "Champion: Head of IT Operations / VP Infrastructure / Head of Platform",
+          "Influencers: Head of Engineering, Finance Controller, Procurement Lead"
+        ],
+        "firmographicSweetSpot": [
+          "Mid-market to enterprise, $200M–$5B revenue",
+          "Post-migration or mid-migration to cloud",
+          "IT operations team transitioning from on-premise mindset",
+          "Industries: Manufacturing, Retail, BFSI, Healthcare, TMT"
+        ],
+        "triggerEvents": [
+          "Cloud migration completed but costs haven't decreased",
+          "Application teams waiting >2 weeks for new environments",
+          "Platform team unfunded or operating on borrowed people",
+          "MSP contract renewal approaching — rethinking operating model",
+          "DevOps transformation stalled at team level",
+          "Post-M&A — operating models need harmonising"
+        ],
+        "disqualifiers": [
+          "Pre-migration with no cloud footprint — needs migration first",
+          "Committed to full MSP outsourcing with no interest in self-sufficiency",
+          "Budget under EUR 100K — scope too thin for meaningful TOM design"
+        ],
+        "weekPlan": [
+          {
+            "week": "W1–W2",
+            "phase": "UNDERSTAND",
+            "focus": "Current Operating Model",
+            "activities": "Kickoff, scope confirmation, RACI · 15–20 stakeholder interviews (IT ops, engineering, finance, procurement) · Current-state operating model documentation · Service catalogue and demand analysis · Guardrails and automation maturity assessment · W2 checkpoint: current-state findings"
+          },
+          {
+            "week": "W3–W5",
+            "phase": "IDEATE",
+            "focus": "Target Model Design",
+            "activities": "TOM design workshops (3 × half-day) · Platform team structure and sizing · Funding model design (project vs product) · RACI across Platform / Engineering / Operations / Procurement · Guardrails automation roadmap · Service request workflow design · W5 checkpoint: draft TOM"
+          },
+          {
+            "week": "W6–W8",
+            "phase": "IDEATE",
+            "focus": "Detailed Design",
+            "activities": "Detailed RACI and process flows · Tooling recommendations and integration design · SLA and KPI framework · Cost model for target operating model · Change management and transition planning"
+          },
+          {
+            "week": "W9–W10",
+            "phase": "OUTCREATE",
+            "focus": "Mobilisation & Handover",
+            "activities": "Transition roadmap with 90-day milestones · Platform team job descriptions and hiring plan · Operating rhythm and governance framework · Executive readout to CIO · First operating-rhythm meeting facilitated · Knowledge transfer and playbook handover"
+          }
+        ],
+        "engagementKPIs": [
+          {
+            "kpi": "Target operating model delivered",
+            "target": "Yes"
+          },
+          {
+            "kpi": "RACI signed off by all stakeholders",
+            "target": "Yes"
+          },
+          {
+            "kpi": "Platform team sized and hiring plan delivered",
+            "target": "Yes"
+          },
+          {
+            "kpi": "First operating-rhythm meeting run",
+            "target": "Yes"
+          },
+          {
+            "kpi": "Sponsor NPS",
+            "target": "≥ +40"
+          }
+        ],
+        "clientOutcomeKPIs": [
+          {
+            "kpi": "Time to provision new environment",
+            "base": "Measured",
+            "day90": "-50%",
+            "day180": "-75%"
+          },
+          {
+            "kpi": "Cloud run cost",
+            "base": "Measured",
+            "day90": "-10%",
+            "day180": "-25%"
+          },
+          {
+            "kpi": "Platform team operational",
+            "base": "No",
+            "day90": "Core team hired",
+            "day180": "Fully operational"
+          },
+          {
+            "kpi": "Guardrails automated",
+            "base": "Measured",
+            "day90": "≥50%",
+            "day180": "≥80%"
+          }
+        ],
+        "behaviouralCommitments": [
+          "Sponsor available for W2, W5, W10 checkpoints",
+          "Workshop participants available for 3 half-day sessions",
+          "Finance provides current IT ops cost data within W1",
+          "HR supports platform team job description review"
+        ],
+        "documentsRequired": [
+          "Current IT org chart and role descriptions",
+          "Cloud architecture and infrastructure diagrams",
+          "Service catalogue and request volumes",
+          "Current MSP / outsourcing contracts",
+          "IT operations cost breakdown",
+          "Existing guardrails, policies, and compliance requirements",
+          "DevOps toolchain inventory"
+        ],
+        "deliverables": [
+          "Target operating model document",
+          "Platform team structure, sizing, and job descriptions",
+          "Funding model (project vs product)",
+          "Detailed RACI across all IT functions",
+          "Guardrails automation roadmap",
+          "SLA and KPI framework",
+          "Transition roadmap (90-day milestones)",
+          "Operating rhythm design"
+        ],
+        "resourceRequirements": [
+          {
+            "role": "Engagement Partner",
+            "fte": "0.2",
+            "weeks": "W1, W5, W9–W10",
+            "level": "Partner"
+          },
+          {
+            "role": "Engagement Lead",
+            "fte": "1.0",
+            "weeks": "W1–W10",
+            "level": "Senior Manager"
+          },
+          {
+            "role": "Cloud Operating Model Consultant × 2",
+            "fte": "1.0 each",
+            "weeks": "W1–W9",
+            "level": "Manager / Sr Consultant"
+          },
+          {
+            "role": "Organisational Design SME",
+            "fte": "0.3",
+            "weeks": "W3–W6",
+            "level": "Senior Consultant"
+          }
+        ],
+        "customerCommitment": [
+          "CIO / Head of Platform — 3h/week + checkpoint attendance",
+          "IT leadership team (8–10) — interviews + workshops",
+          "Finance controller — cost data and funding model input",
+          "HR — platform team role design collaboration"
+        ],
+        "frameworksApplied": [
+          "Team Topologies",
+          "ITIL 4 Operating Model",
+          "DevOps Capability Model",
+          "LTM Jump Start Methodology"
+        ]
+      },
+      "battleCard": {
+        "targetBuyer": "CIO · Head of Platform Engineering · Head of IT Operations",
+        "dealSize": "EUR 150K–350K | USD 170K–390K",
+        "salesCycle": "8–12 weeks",
+        "pitch": "Migration finishes and nothing improves, because the operating model never changed. We design the platform team, the funding model, and the guardrails so cloud actually reduces cost and cycle time instead of just relocating the problem.",
+        "proofPoints": [
+          {
+            "stat": "31%",
+            "label": "run-cost reduction on the reference engagement"
+          },
+          {
+            "stat": "12 wks",
+            "label": "to a functioning platform team"
+          },
+          {
+            "stat": "18 mo",
+            "label": "reference journey, with year-two savings sustained"
+          }
+        ],
+        "discoveryQuestions": [
+          "Who owns the platform today — a funded team or borrowed people?",
+          "How long does an application team wait for a new environment?",
+          "Is cloud funded as a project cost or a product run cost?",
+          "How many of your guardrails are automated versus enforced by review boards?",
+          "What did the last migration actually improve, measurably?"
+        ],
+        "qualifyIn": [
+          "Post-migration estate that hasn't delivered promised savings",
+          "Application teams waiting on infrastructure",
+          "Mid-market organisations wanting self-sufficiency",
+          "Leadership willing to fund a small permanent platform team"
+        ],
+        "qualifyOut": [
+          "Pre-migration clients with no cloud footprint yet",
+          "Organisations committed to full MSP outsourcing indefinitely"
+        ],
+        "pricingGuardrail": "From EUR 150K. Reference case study is anonymised and legal-cleared — safe to share.",
+        "faq": [
+          {
+            "q": "We just finished migrating — why do we need this now?",
+            "a": "That's exactly when the gap shows. The estate moved but the operating model didn't, which is why costs stay flat and delivery doesn't speed up."
+          },
+          {
+            "q": "We can't fund a dedicated platform team.",
+            "a": "Most mid-market clients can't fund a large one — we size it for what's realistic, typically 4–6 people, and automate the rest."
+          }
+        ],
+        "objectionHandling": [
+          {
+            "objection": "Our MSP already handles operations.",
+            "response": "Operations and platform engineering are different disciplines. An MSP keeps the lights on; a platform team makes your application teams faster. We're happy to design a model where the MSP stays."
+          },
+          {
+            "objection": "We already have a cloud team.",
+            "response": "The question isn't whether the team exists — it's whether they're funded, mandated, and measured correctly. Most teams we see are doing ops, not platform engineering."
+          }
+        ],
+        "whyWeWin": [
+          "Sized for what organisations actually fund — not aspirational blueprints",
+          "Combines organisational design with technology guardrails",
+          "Reference engagement with published outcomes",
+          "Pairs naturally with FinOps, Cloud Strategy, and IT for the Future"
+        ],
+        "competitiveCounters": [
+          {
+            "competitor": "Big4 / MBB",
+            "strength": "Board-level operating model credibility",
+            "counter": "They design a model sized for an enterprise the client isn't. Ours is sized for what mid-market will actually fund and staff.",
+            "trapQuestion": "How many people does your target platform team require?"
+          },
+          {
+            "competitor": "Incumbent MSP",
+            "strength": "Already embedded, knows the estate",
+            "counter": "Their commercial model depends on the client not becoming self-sufficient. Ours transfers the capability.",
+            "trapQuestion": "What does your revenue look like once the client runs the platform themselves?"
+          }
+        ],
+        "differentiators": [
+          {
+            "title": "Right-sized for mid-market",
+            "description": "Platform team starts at 4–6 people with automation, not a 40-person organisation nobody will fund."
+          },
+          {
+            "title": "Funding model included",
+            "description": "We design the financial model (project vs product funding) alongside the organisational model."
+          },
+          {
+            "title": "Reference engagement available",
+            "description": "Anonymised case study with 31% run-cost reduction and year-two sustained savings."
+          }
+        ]
+      }
     },
     {
       "id": "cross-border-data-strategy",
@@ -683,11 +2072,269 @@
           "Data localisation options paper",
           "30/60/90-day remediation action list"
         ],
-        "inScope": ["Cross-border data flows across EU, UK, US and designated jurisdictions", "Regulatory framework mapping", "Transfer mechanism review", "Localisation options"],
-        "outOfScope": ["Legal counsel on specific transfers", "Data migration execution", "Technology implementation", "DPIA completion"]
+        "inScope": [
+          "Cross-border data flows across EU, UK, US and designated jurisdictions",
+          "Regulatory framework mapping",
+          "Transfer mechanism review",
+          "Localisation options"
+        ],
+        "outOfScope": [
+          "Legal counsel on specific transfers",
+          "Data migration execution",
+          "Technology implementation",
+          "DPIA completion"
+        ]
       },
-      "l2": null,
-      "battleCard": null
+      "l2": {
+        "personas": [
+          "Economic buyer: CDO, CIO, DPO / Chief Privacy Officer",
+          "Champion: Head of Data Governance / Head of Data Architecture / VP Data",
+          "Influencers: General Counsel, CISO, Head of Compliance, Regulatory Affairs"
+        ],
+        "firmographicSweetSpot": [
+          "Multinational enterprise operating across 3+ jurisdictions",
+          "Significant EU, UK, India, or Middle East data presence",
+          "Revenue $1B+ with regulated data flows",
+          "Industries: BFSI, Pharma, Healthcare, Manufacturing (supply chain), TMT"
+        ],
+        "triggerEvents": [
+          "New data protection regulation (GDPR amendment, India DPDP, UAE PDPL)",
+          "Cross-border M&A requiring data governance harmonisation",
+          "Schrems II / data transfer mechanism expiry",
+          "Cloud migration creating new cross-border data flows",
+          "Regulatory audit or enforcement action",
+          "Board asking 'where is our data and is it compliant?'"
+        ],
+        "disqualifiers": [
+          "Single-jurisdiction operation with no cross-border data flows",
+          "Client wants only a privacy policy document — needs a law firm",
+          "No data governance or privacy function to build upon",
+          "Budget under USD 120K"
+        ],
+        "weekPlan": [
+          {
+            "week": "W1–W2",
+            "phase": "UNDERSTAND",
+            "focus": "Data Flow Discovery",
+            "activities": "Kickoff and scope confirmation · Data flow mapping across jurisdictions · Regulatory landscape assessment per jurisdiction · Current data governance maturity assessment · Interviews with DPO, legal, compliance, IT (15–20 stakeholders) · W2 checkpoint: data flow map and regulatory gap summary"
+          },
+          {
+            "week": "W3–W4",
+            "phase": "IDEATE",
+            "focus": "Gap Analysis & Strategy",
+            "activities": "Cross-border transfer mechanism analysis · Data classification and sovereignty tiering · Gap analysis against regulatory requirements per jurisdiction · Data architecture recommendations for sovereignty compliance · Strategy options workshop with trade-off analysis"
+          },
+          {
+            "week": "W5–W6",
+            "phase": "OUTCREATE",
+            "focus": "Roadmap & Implementation Plan",
+            "activities": "Cross-border data governance framework design · Transfer mechanism implementation plan · Technology architecture changes required · Risk register and mitigation strategies · Executive readout to CDO / CIO / Board · Knowledge transfer and playbook handover"
+          }
+        ],
+        "engagementKPIs": [
+          {
+            "kpi": "Data flows mapped across jurisdictions",
+            "target": "100% of in-scope"
+          },
+          {
+            "kpi": "Regulatory gaps identified and remediation planned",
+            "target": "100%"
+          },
+          {
+            "kpi": "Transfer mechanism recommendations delivered",
+            "target": "Yes"
+          },
+          {
+            "kpi": "Cross-border governance framework delivered",
+            "target": "Yes"
+          },
+          {
+            "kpi": "Sponsor NPS",
+            "target": "≥ +40"
+          }
+        ],
+        "clientOutcomeKPIs": [
+          {
+            "kpi": "Regulatory gaps remediated",
+            "base": "Measured",
+            "day90": "Critical gaps closed",
+            "day180": "≥80% gaps closed"
+          },
+          {
+            "kpi": "Data classification coverage",
+            "base": "Measured",
+            "day90": "≥70%",
+            "day180": "≥90%"
+          },
+          {
+            "kpi": "Transfer mechanisms updated",
+            "base": "Measured",
+            "day90": "Priority flows",
+            "day180": "All flows"
+          },
+          {
+            "kpi": "Audit readiness score",
+            "base": "Measured",
+            "day90": "+20 pts",
+            "day180": "+40 pts"
+          }
+        ],
+        "behaviouralCommitments": [
+          "DPO / Privacy team available for interviews W1–W2",
+          "Legal team available for transfer mechanism review W3",
+          "Sponsor commits to strategy decisions at W4 checkpoint",
+          "IT team provides data architecture documentation W1"
+        ],
+        "documentsRequired": [
+          "Data flow inventory / data mapping register",
+          "Current privacy impact assessments",
+          "Transfer mechanism documentation (SCCs, BCRs, adequacy decisions)",
+          "Data classification policy and schema",
+          "Regulatory correspondence / audit findings (last 24 months)",
+          "Cloud architecture showing data storage locations",
+          "Vendor and processor agreements (relevant clauses)"
+        ],
+        "deliverables": [
+          "Cross-border data flow map with regulatory overlay",
+          "Regulatory gap analysis per jurisdiction",
+          "Transfer mechanism recommendations and implementation plan",
+          "Data sovereignty tiering model",
+          "Cross-border data governance framework",
+          "Risk register with mitigation strategies",
+          "Executive readout deck"
+        ],
+        "resourceRequirements": [
+          {
+            "role": "Engagement Partner",
+            "fte": "0.2",
+            "weeks": "W1, W4, W5–W6",
+            "level": "Partner"
+          },
+          {
+            "role": "Engagement Lead / Data Governance Expert",
+            "fte": "1.0",
+            "weeks": "W1–W6",
+            "level": "Senior Manager"
+          },
+          {
+            "role": "Regulatory / Privacy SME",
+            "fte": "0.5",
+            "weeks": "W1–W4",
+            "level": "Manager"
+          },
+          {
+            "role": "Data Architect",
+            "fte": "0.5",
+            "weeks": "W3–W6",
+            "level": "Senior Consultant"
+          }
+        ],
+        "customerCommitment": [
+          "CDO / DPO — 3h/week + checkpoint attendance",
+          "Legal / Privacy team — interview + transfer mechanism review",
+          "IT / Data architecture team — data flow documentation",
+          "Compliance / Regulatory affairs — regulatory landscape input"
+        ],
+        "frameworksApplied": [
+          "NIST Privacy Framework",
+          "GDPR / Schrems II Transfer Impact Assessment",
+          "ISO 27701 Privacy Information Management",
+          "LTM Jump Start Methodology"
+        ]
+      },
+      "battleCard": {
+        "targetBuyer": "CDO · CIO · DPO · General Counsel",
+        "dealSize": "USD 140K–280K | EUR 120K–250K",
+        "salesCycle": "6–8 weeks",
+        "pitch": "Every multinational moves data across borders. Few can prove to a regulator that every flow is compliant. In six weeks we map your cross-border data flows, assess each against the regulatory requirements of every jurisdiction involved, and deliver the governance framework that keeps you ahead of enforcement.",
+        "proofPoints": [
+          {
+            "stat": "6 wks",
+            "label": "to complete cross-border data governance framework"
+          },
+          {
+            "stat": "3+",
+            "label": "jurisdictions assessed per typical engagement"
+          },
+          {
+            "stat": "80%",
+            "label": "regulatory gaps closed within 180 days"
+          }
+        ],
+        "discoveryQuestions": [
+          "Can you tell me today which data flows cross a border and under which legal mechanism?",
+          "When was the last time a regulator asked about your cross-border data transfers?",
+          "How confident are you that your standard contractual clauses are still adequate post-Schrems II?",
+          "What happens to your data flows if a new regulation comes into force in one of your markets?",
+          "Who owns cross-border data compliance — legal, IT, or the DPO?"
+        ],
+        "qualifyIn": [
+          "Operating across 3+ jurisdictions with regulated data flows",
+          "CDO or DPO sponsor with governance authority",
+          "Upcoming regulatory audit or compliance deadline",
+          "Cloud migration creating new cross-border data patterns"
+        ],
+        "qualifyOut": [
+          "Single-jurisdiction operation",
+          "Needs only a privacy policy — better served by a law firm",
+          "No data governance function to build upon"
+        ],
+        "pricingGuardrail": "Floor USD 120K for 6-week engagement. Additional jurisdictions beyond 5 at USD 15K each.",
+        "faq": [
+          {
+            "q": "Isn't this legal work?",
+            "a": "We work alongside your legal team, not instead of them. We bring the data architecture and technology perspective; legal brings the regulatory interpretation."
+          },
+          {
+            "q": "We're GDPR compliant — is this still relevant?",
+            "a": "GDPR compliance is one regulation in one region. If you operate in India, UAE, UK, or APAC, the transfer mechanisms and data sovereignty requirements are different."
+          }
+        ],
+        "objectionHandling": [
+          {
+            "objection": "Our legal team handles this.",
+            "response": "Legal teams handle the regulatory interpretation. The gap is usually in the data architecture — knowing which systems hold what data and which transfers actually cross a border. That's what we map."
+          },
+          {
+            "objection": "We'll wait until the regulation is final.",
+            "response": "Mapping your data flows and governance gaps now means you can move quickly when regulation lands. Reactive compliance costs 3–5x more than proactive preparation."
+          }
+        ],
+        "whyWeWin": [
+          "Combines regulatory knowledge with data architecture expertise",
+          "Pairs with Sovereignty Readiness Assessment and Sovereign AI offerings",
+          "Practical governance frameworks, not theoretical compliance papers",
+          "Multi-jurisdictional experience across EU, UK, India, Middle East"
+        ],
+        "competitiveCounters": [
+          {
+            "competitor": "Law firms (DLA Piper, Linklaters)",
+            "strength": "Deep regulatory expertise, legal privilege",
+            "counter": "They draft the legal framework. We map the data flows, assess the architecture, and implement the governance. We work alongside legal, not instead of them.",
+            "trapQuestion": "Can your legal team map the actual data flows at the systems level — or do they rely on a questionnaire?"
+          },
+          {
+            "competitor": "Big4 Risk / Advisory",
+            "strength": "Regulatory credibility, audit relationships",
+            "counter": "We combine regulatory assessment with data architecture changes. Our deliverables are implementable, not just advisory.",
+            "trapQuestion": "Does your team include data architects, or is this a policy-and-framework engagement?"
+          }
+        ],
+        "differentiators": [
+          {
+            "title": "Architecture meets regulation",
+            "description": "We don't just assess compliance — we design the data architecture changes needed to achieve it."
+          },
+          {
+            "title": "Multi-jurisdictional depth",
+            "description": "Experience across EU (GDPR), UK (UK GDPR), India (DPDP), UAE (PDPL), and emerging frameworks."
+          },
+          {
+            "title": "Sovereignty portfolio coherence",
+            "description": "Part of the Digital Sovereignty vertical — pairs with infrastructure and AI sovereignty offerings."
+          }
+        ]
+      }
     },
     {
       "id": "sovereign-ai-readiness",
@@ -721,11 +2368,269 @@
           "Data sovereignty assessment for training and inference data",
           "Readiness scorecard and prioritised remediation plan"
         ],
-        "inScope": ["Planned and active AI use cases", "EU AI Act classification", "Model hosting and inference assessment", "Training data sovereignty"],
-        "outOfScope": ["AI model development or fine-tuning", "MLOps platform implementation", "Responsible AI governance (see sibling offering)", "Data engineering execution"]
+        "inScope": [
+          "Planned and active AI use cases",
+          "EU AI Act classification",
+          "Model hosting and inference assessment",
+          "Training data sovereignty"
+        ],
+        "outOfScope": [
+          "AI model development or fine-tuning",
+          "MLOps platform implementation",
+          "Responsible AI governance (see sibling offering)",
+          "Data engineering execution"
+        ]
       },
-      "l2": null,
-      "battleCard": null
+      "l2": {
+        "personas": [
+          "Economic buyer: CIO, CDO, Chief AI Officer",
+          "Champion: Head of AI / ML / Head of Data Science / VP Data & Analytics",
+          "Influencers: DPO, CISO, General Counsel, Head of Compliance, Head of Ethics"
+        ],
+        "firmographicSweetSpot": [
+          "Enterprise, $1B+ revenue, EU / UK / regulated markets",
+          "Active AI/ML adoption or GenAI pilot programmes",
+          "Regulated industry with AI governance requirements",
+          "Industries: BFSI, Healthcare, Pharma, Public Sector, Defence, Insurance"
+        ],
+        "triggerEvents": [
+          "EU AI Act compliance deadline approaching",
+          "Board asking about AI governance and risk management",
+          "GenAI pilot scaling to production — governance gap emerging",
+          "Regulatory inquiry about AI decision-making",
+          "Data sovereignty requirements colliding with AI model training",
+          "Competitor announcing responsible AI credentials"
+        ],
+        "disqualifiers": [
+          "No active AI / ML programme — pre-adoption stage",
+          "Client wants only an AI strategy, not governance",
+          "No regulatory or board-level driver for AI governance",
+          "Budget under USD 100K"
+        ],
+        "weekPlan": [
+          {
+            "week": "W1–W2",
+            "phase": "UNDERSTAND",
+            "focus": "AI Landscape & Governance Baseline",
+            "activities": "Kickoff and scope confirmation · AI/ML inventory — models, use cases, data sources, hosting · Regulatory landscape assessment (EU AI Act, sector-specific) · Current AI governance maturity assessment · Interviews with AI leads, data scientists, compliance, legal (15–20 stakeholders) · W2 checkpoint: AI landscape map and governance gap summary"
+          },
+          {
+            "week": "W3–W4",
+            "phase": "IDEATE",
+            "focus": "Risk Assessment & Framework Design",
+            "activities": "AI risk classification per EU AI Act tiers · Data sovereignty assessment for AI training data · Model provenance and explainability gap analysis · AI governance framework design workshops · Responsible AI policy drafting · Third-party AI vendor risk assessment"
+          },
+          {
+            "week": "W5–W6",
+            "phase": "OUTCREATE",
+            "focus": "Roadmap & Implementation",
+            "activities": "AI governance framework finalisation · Compliance roadmap with regulatory milestones · Technical controls recommendation (model monitoring, audit trails) · AI sovereignty architecture recommendations · Executive readout to CIO / CDO / Board · Knowledge transfer and governance playbook handover"
+          }
+        ],
+        "engagementKPIs": [
+          {
+            "kpi": "AI use cases assessed and risk-classified",
+            "target": "100% of in-scope"
+          },
+          {
+            "kpi": "Governance framework delivered",
+            "target": "Yes"
+          },
+          {
+            "kpi": "EU AI Act compliance roadmap delivered",
+            "target": "Yes"
+          },
+          {
+            "kpi": "Third-party AI vendor risk assessed",
+            "target": "Top 5 vendors"
+          },
+          {
+            "kpi": "Sponsor NPS",
+            "target": "≥ +40"
+          }
+        ],
+        "clientOutcomeKPIs": [
+          {
+            "kpi": "AI use cases with governance controls",
+            "base": "Measured",
+            "day90": "≥60%",
+            "day180": "≥90%"
+          },
+          {
+            "kpi": "High-risk AI systems with documentation",
+            "base": "Measured",
+            "day90": "100%",
+            "day180": "100%"
+          },
+          {
+            "kpi": "Model monitoring coverage",
+            "base": "Measured",
+            "day90": "≥50%",
+            "day180": "≥80%"
+          },
+          {
+            "kpi": "AI incident response capability",
+            "base": "None",
+            "day90": "Framework in place",
+            "day180": "Tested"
+          }
+        ],
+        "behaviouralCommitments": [
+          "AI/ML team available for interviews and workshops W1–W4",
+          "Legal and compliance team participate in risk classification",
+          "Sponsor commits to governance decisions at W4 checkpoint",
+          "Data science team provides model inventory and documentation"
+        ],
+        "documentsRequired": [
+          "AI/ML model inventory and use case register",
+          "Current AI governance policies (if any)",
+          "Data processing agreements for AI-related data",
+          "Third-party AI vendor contracts",
+          "AI ethics guidelines or responsible AI policy (if any)",
+          "Regulatory correspondence about AI (if any)",
+          "Cloud / infrastructure architecture for AI workloads"
+        ],
+        "deliverables": [
+          "AI landscape map with risk classification",
+          "AI governance framework aligned to EU AI Act",
+          "Responsible AI policy and guidelines",
+          "Third-party AI vendor risk assessment",
+          "AI sovereignty architecture recommendations",
+          "Compliance roadmap with regulatory milestones",
+          "Executive readout deck"
+        ],
+        "resourceRequirements": [
+          {
+            "role": "Engagement Partner",
+            "fte": "0.2",
+            "weeks": "W1, W4, W5–W6",
+            "level": "Partner"
+          },
+          {
+            "role": "Engagement Lead / AI Governance Expert",
+            "fte": "1.0",
+            "weeks": "W1–W6",
+            "level": "Senior Manager"
+          },
+          {
+            "role": "AI/ML Architect",
+            "fte": "0.5",
+            "weeks": "W1–W4",
+            "level": "Manager"
+          },
+          {
+            "role": "Regulatory / Compliance SME",
+            "fte": "0.5",
+            "weeks": "W2–W5",
+            "level": "Senior Consultant"
+          }
+        ],
+        "customerCommitment": [
+          "CIO / CDO — 3h/week + checkpoint attendance",
+          "Head of AI / ML — 1 day/week",
+          "Data science team — model inventory and workshops",
+          "Legal and compliance — regulatory interpretation and risk classification"
+        ],
+        "frameworksApplied": [
+          "EU AI Act Risk Classification",
+          "NIST AI Risk Management Framework",
+          "ISO 42001 AI Management System",
+          "LTM Jump Start Methodology"
+        ]
+      },
+      "battleCard": {
+        "targetBuyer": "CIO · CDO · Chief AI Officer · DPO",
+        "dealSize": "USD 120K–240K | EUR 100K–210K",
+        "salesCycle": "6–8 weeks",
+        "pitch": "The EU AI Act is coming. Most organisations have AI in production but no governance around it. In six weeks we classify your AI portfolio by risk, design the governance framework, and deliver a compliance roadmap — so you can scale AI with confidence, not liability.",
+        "proofPoints": [
+          {
+            "stat": "6 wks",
+            "label": "to AI governance framework and compliance roadmap"
+          },
+          {
+            "stat": "EU AI Act",
+            "label": "risk classification aligned to regulatory tiers"
+          },
+          {
+            "stat": "90%",
+            "label": "AI use cases governed within 180 days"
+          }
+        ],
+        "discoveryQuestions": [
+          "How many AI models do you have in production today — and can you list them all?",
+          "Who is accountable for the decisions your AI models make?",
+          "Have you classified your AI use cases against the EU AI Act risk tiers?",
+          "What happens if a model produces a biased or incorrect outcome in production?",
+          "Where is your AI training data stored, and does it cross sovereign boundaries?"
+        ],
+        "qualifyIn": [
+          "Active AI/ML programme with models in production",
+          "Regulated industry or EU AI Act in scope",
+          "CIO or CDO sponsor for AI governance",
+          "Board-level concern about AI risk"
+        ],
+        "qualifyOut": [
+          "No active AI programme — pre-adoption stage",
+          "Only wants an AI strategy, not governance",
+          "No regulatory or board driver"
+        ],
+        "pricingGuardrail": "Floor USD 100K for 6-week engagement. Larger AI portfolios (50+ models) may require 8 weeks at USD 160K.",
+        "faq": [
+          {
+            "q": "Isn't the EU AI Act still being finalised?",
+            "a": "The Act entered into force August 2024 with phased compliance deadlines. Prohibited practices apply now; high-risk requirements apply from August 2026. The time to prepare is now."
+          },
+          {
+            "q": "We use third-party AI — is this still relevant?",
+            "a": "Especially relevant. The EU AI Act makes deployers liable alongside providers. You need to assess your third-party AI vendors' compliance too."
+          }
+        ],
+        "objectionHandling": [
+          {
+            "objection": "We'll wait until the regulation is clearer.",
+            "response": "The regulation is law. The deadlines are set. Organisations that prepare now will be compliant; those that wait will be doing emergency remediation at 3x the cost."
+          },
+          {
+            "objection": "Our data science team handles governance.",
+            "response": "Data science teams excel at model performance. Governance requires regulatory interpretation, risk classification, and organisational accountability — different skills."
+          }
+        ],
+        "whyWeWin": [
+          "Combines AI/ML technical depth with regulatory knowledge",
+          "Part of Digital Sovereignty vertical — pairs with data and infrastructure sovereignty",
+          "Practical governance, not theoretical frameworks",
+          "EU AI Act risk classification methodology proven in regulated industries"
+        ],
+        "competitiveCounters": [
+          {
+            "competitor": "Law firms",
+            "strength": "Regulatory interpretation, legal privilege",
+            "counter": "We bring the technical assessment — model inventory, risk classification, architecture review — that legal teams can't do alone.",
+            "trapQuestion": "Can your team assess AI model performance and data sovereignty at the systems level?"
+          },
+          {
+            "competitor": "AI consultancies (Fractal, Mu Sigma)",
+            "strength": "Deep AI/ML expertise, model development",
+            "counter": "They build models; we govern them. Governance requires independence from the team that built it.",
+            "trapQuestion": "Is the team advising on governance the same team that built the models?"
+          }
+        ],
+        "differentiators": [
+          {
+            "title": "Governance with technical depth",
+            "description": "We assess models at the technical level — not just policy review."
+          },
+          {
+            "title": "Sovereignty-aware AI governance",
+            "description": "Unique perspective on where AI training data sits and how it crosses borders."
+          },
+          {
+            "title": "Cross-offering coherence",
+            "description": "Part of the Digital Sovereignty vertical — pairs with Cross-Border Data Strategy and Sovereignty Readiness."
+          }
+        ]
+      }
     },
     {
       "id": "tokenops-genai-governance",
@@ -760,11 +2665,274 @@
           "AI cost governance operating rhythm design",
           "100-day mobilisation plan for TokenOps practice"
         ],
-        "inScope": ["GenAI, agentic AI and ML inference costs", "Token, API call and compute consumption", "Model choice and prompt optimisation", "Integration with existing FinOps practice"],
-        "outOfScope": ["AI model development", "Cloud infrastructure FinOps (see FinOps Excellence)", "Responsible AI governance", "MLOps platform build"]
+        "inScope": [
+          "GenAI, agentic AI and ML inference costs",
+          "Token, API call and compute consumption",
+          "Model choice and prompt optimisation",
+          "Integration with existing FinOps practice"
+        ],
+        "outOfScope": [
+          "AI model development",
+          "Cloud infrastructure FinOps (see FinOps Excellence)",
+          "Responsible AI governance",
+          "MLOps platform build"
+        ]
       },
-      "l2": null,
-      "battleCard": null
+      "l2": {
+        "personas": [
+          "Economic buyer: CIO, CFO, CTO",
+          "Champion: Head of AI / ML / Head of Cloud Platform / VP Engineering",
+          "Influencers: Head of FinOps, Finance Controller, Chief Architect, CISO"
+        ],
+        "firmographicSweetSpot": [
+          "Enterprise, $500M+ revenue",
+          "Active GenAI adoption — GPT, Claude, Gemini, or self-hosted LLMs",
+          "Monthly GenAI spend >$50K or growing >100% QoQ",
+          "Industries: BFSI, TMT, Retail, Healthcare, Professional Services"
+        ],
+        "triggerEvents": [
+          "GenAI spend appearing on cloud bill with no accountability",
+          "Multiple teams adopting GenAI independently with no governance",
+          "CFO asking 'what are we spending on AI and what are we getting?'",
+          "FinOps team struggling to extend existing models to token-based costs",
+          "Shadow AI usage discovered across business units",
+          "GenAI pilot moving to production — economics suddenly matter"
+        ],
+        "disqualifiers": [
+          "No GenAI usage or spend — pre-adoption",
+          "Monthly GenAI spend under $10K — use lighter FinOps extension",
+          "Client wants only prompt engineering, not cost governance",
+          "No FinOps or cost management function to extend"
+        ],
+        "weekPlan": [
+          {
+            "week": "W1–W2",
+            "phase": "UNDERSTAND",
+            "focus": "GenAI Landscape & Spend Baseline",
+            "activities": "Kickoff and scope confirmation · GenAI usage inventory — models, providers, use cases, users · Token consumption analysis and cost allocation · Current governance and procurement assessment · Interviews with AI leads, engineering, finance, procurement (12–15 stakeholders) · W2 checkpoint: GenAI landscape map and spend baseline"
+          },
+          {
+            "week": "W3–W4",
+            "phase": "IDEATE",
+            "focus": "Unit Economics & Governance Design",
+            "activities": "Token unit economics per use case (cost per query / per transaction / per user) · Consumption forecasting and budgeting model · GenAI governance framework design (access, guardrails, monitoring) · Cost optimisation opportunities (model selection, caching, prompt optimisation) · Vendor management and procurement strategy"
+          },
+          {
+            "week": "W5–W6",
+            "phase": "OUTCREATE",
+            "focus": "Operating Model & Handover",
+            "activities": "TokenOps operating model and operating rhythm · Cost visibility dashboards and chargeback model · Consumption guardrails and alerting framework · GenAI procurement guidelines · Executive readout to CIO / CFO · Knowledge transfer and playbook handover"
+          }
+        ],
+        "engagementKPIs": [
+          {
+            "kpi": "GenAI use cases catalogued",
+            "target": "100% of in-scope"
+          },
+          {
+            "kpi": "Token unit economics defined",
+            "target": "Per use case"
+          },
+          {
+            "kpi": "Cost visibility dashboard delivered",
+            "target": "Yes"
+          },
+          {
+            "kpi": "TokenOps operating model delivered",
+            "target": "Yes"
+          },
+          {
+            "kpi": "Sponsor NPS",
+            "target": "≥ +40"
+          }
+        ],
+        "clientOutcomeKPIs": [
+          {
+            "kpi": "GenAI spend visibility",
+            "base": "Partial",
+            "day90": "100% allocated",
+            "day180": "100% allocated + forecasted"
+          },
+          {
+            "kpi": "Cost per GenAI transaction",
+            "base": "Unknown",
+            "day90": "Measured per use case",
+            "day180": "Optimised -15%"
+          },
+          {
+            "kpi": "Shadow AI usage",
+            "base": "Unknown",
+            "day90": "Mapped",
+            "day180": "Governed"
+          },
+          {
+            "kpi": "GenAI budget accuracy",
+            "base": "±50%+",
+            "day90": "±20%",
+            "day180": "±10%"
+          }
+        ],
+        "behaviouralCommitments": [
+          "API key and usage data access within W1",
+          "AI/ML and engineering teams available for interviews",
+          "Finance provides GenAI-related invoices and cost data",
+          "Sponsor commits to governance decisions at W4 checkpoint"
+        ],
+        "documentsRequired": [
+          "GenAI provider invoices and usage reports",
+          "API key inventory and access management records",
+          "Current GenAI use case register (if any)",
+          "Cloud billing data showing AI/ML line items",
+          "Existing FinOps framework documentation",
+          "AI/GenAI policies and guidelines",
+          "Procurement contracts with AI providers"
+        ],
+        "deliverables": [
+          "GenAI landscape map with usage and cost data",
+          "Token unit economics model per use case",
+          "TokenOps operating model and operating rhythm",
+          "Cost visibility dashboard with chargeback allocation",
+          "Consumption guardrails and alerting framework",
+          "GenAI cost optimisation backlog",
+          "Procurement guidelines for AI providers",
+          "Executive readout deck"
+        ],
+        "resourceRequirements": [
+          {
+            "role": "Engagement Partner",
+            "fte": "0.2",
+            "weeks": "W1, W4, W5–W6",
+            "level": "Partner"
+          },
+          {
+            "role": "Engagement Lead / TokenOps Expert",
+            "fte": "1.0",
+            "weeks": "W1–W6",
+            "level": "Senior Manager"
+          },
+          {
+            "role": "GenAI Cost Analyst",
+            "fte": "1.0",
+            "weeks": "W1–W5",
+            "level": "Consultant / Sr Consultant"
+          },
+          {
+            "role": "FinOps / Cloud Economics SME",
+            "fte": "0.3",
+            "weeks": "W1–W4",
+            "level": "Manager"
+          }
+        ],
+        "customerCommitment": [
+          "CIO / CTO — 2h/week + checkpoint attendance",
+          "AI/ML team leads — interviews + use case inventory",
+          "Finance / FinOps team — cost data and allocation framework",
+          "Procurement — vendor contract access"
+        ],
+        "frameworksApplied": [
+          "FinOps Foundation Framework (extended for tokens)",
+          "LTM TokenOps Reference Model",
+          "Unit Economics Framework",
+          "LTM Jump Start Methodology"
+        ]
+      },
+      "battleCard": {
+        "targetBuyer": "CIO · CFO · CTO · Head of AI",
+        "dealSize": "USD 100K–200K | EUR 90K–180K",
+        "salesCycle": "4–8 weeks",
+        "pitch": "GenAI spend is the new cloud bill — growing fast, allocated to nobody, and understood by no one. In six weeks we map your token consumption, define unit economics per use case, and stand up the operating rhythm that keeps GenAI spend visible, governed, and optimised. TokenOps: FinOps for the AI era.",
+        "proofPoints": [
+          {
+            "stat": "6 wks",
+            "label": "to TokenOps operating model and dashboards"
+          },
+          {
+            "stat": "15%",
+            "label": "typical token cost reduction through optimisation"
+          },
+          {
+            "stat": "100%",
+            "label": "GenAI spend visibility and allocation at 90 days"
+          }
+        ],
+        "discoveryQuestions": [
+          "Do you know how much you're spending on GenAI today — and which team is spending it?",
+          "Can you calculate the cost of a single AI-powered transaction in your application?",
+          "How many API keys do you have across the organisation, and who manages them?",
+          "What happens when a new team wants to start using GenAI — is there a process?",
+          "Is your FinOps team equipped to handle token-based pricing models?"
+        ],
+        "qualifyIn": [
+          "Monthly GenAI spend >$50K or growing >100% QoQ",
+          "Multiple teams using GenAI independently",
+          "CFO or CIO asking about AI spending",
+          "Existing FinOps function to extend"
+        ],
+        "qualifyOut": [
+          "No GenAI usage — pre-adoption stage",
+          "Monthly spend under $10K — too small for dedicated governance",
+          "Only wants prompt engineering, not cost governance"
+        ],
+        "pricingGuardrail": "Floor USD 90K for 6-week engagement. Bundled with FinOps Excellence at 20% discount on combined scope.",
+        "faq": [
+          {
+            "q": "How is this different from FinOps?",
+            "a": "FinOps governs cloud infrastructure spend (compute, storage, network). TokenOps governs GenAI consumption (tokens, API calls, model inference). Different unit metrics, different optimisation levers, different stakeholders."
+          },
+          {
+            "q": "We only use one AI provider.",
+            "a": "Even single-provider estates benefit from unit economics, consumption governance, and model selection optimisation. Most clients we see have more GenAI usage than they realise."
+          }
+        ],
+        "objectionHandling": [
+          {
+            "objection": "Our FinOps team can handle this.",
+            "response": "FinOps teams are excellent at cloud cost management. Token economics are fundamentally different — per-call pricing, model version dependencies, prompt length impact. We extend their capability, not replace it."
+          },
+          {
+            "objection": "GenAI spend isn't material yet.",
+            "response": "That's the best time to set up governance — before it grows. Organisations that wait until GenAI is 10% of their cloud bill find governance 5x harder to retrofit."
+          },
+          {
+            "objection": "Can't we just use the provider's cost dashboard?",
+            "response": "Provider dashboards show consumption. They don't show unit economics per use case, allocation to business functions, or the governance framework for who can spend what."
+          }
+        ],
+        "whyWeWin": [
+          "First-mover advantage — TokenOps is a distinct offering, not a FinOps afterthought",
+          "Sibling to FinOps Excellence — same methodology, different unit metrics",
+          "Combines AI/ML understanding with cost governance discipline",
+          "Jump Start methodology — 6-week fixed scope, fixed price"
+        ],
+        "competitiveCounters": [
+          {
+            "competitor": "FinOps tool vendors",
+            "strength": "Automated visibility, dashboard integration",
+            "counter": "Tools show you the number. We build the operating model, unit economics, and governance around it.",
+            "trapQuestion": "Can your tool calculate the cost per business transaction flowing through GenAI — or just the total API spend?"
+          },
+          {
+            "competitor": "AI platform providers (OpenAI, Google)",
+            "strength": "Free usage dashboards, deep API insights",
+            "counter": "Their view is single-provider. Real governance needs a multi-provider, multi-model view with business context.",
+            "trapQuestion": "Will your dashboard show us token consumption across all our AI providers — including open-source models?"
+          }
+        ],
+        "differentiators": [
+          {
+            "title": "TokenOps — not just FinOps with AI",
+            "description": "Purpose-built for token economics: per-call pricing, model selection, prompt optimisation, caching strategies."
+          },
+          {
+            "title": "FinOps + TokenOps coherence",
+            "description": "Same Jump Start methodology as FinOps Excellence, extended for token-based cost models."
+          },
+          {
+            "title": "First-mover positioning",
+            "description": "One of the first advisory offerings in the market specifically addressing GenAI consumption governance."
+          }
+        ]
+      }
     }
   ],
   "methodology": {
@@ -775,25 +2943,49 @@
       {
         "number": "W0",
         "name": "Pre-Engagement",
-        "activities": ["Engagement Charter", "Stakeholder Map", "Activity Plan", "Information Request", "Governance Plan"],
+        "activities": [
+          "Engagement Charter",
+          "Stakeholder Map",
+          "Activity Plan",
+          "Information Request",
+          "Governance Plan"
+        ],
         "duration": "~1 week"
       },
       {
         "number": "01",
         "name": "Understand",
-        "activities": ["Stakeholder interviews", "Discovery workshops", "Current-state assessment", "Evidence gathering", "Understand Playback"],
+        "activities": [
+          "Stakeholder interviews",
+          "Discovery workshops",
+          "Current-state assessment",
+          "Evidence gathering",
+          "Understand Playback"
+        ],
         "duration": "1–2 weeks"
       },
       {
         "number": "02",
         "name": "Ideate",
-        "activities": ["Co-creation of target-state options", "MECE options & trade-offs", "Frameworks & accelerators", "Recommendations", "Ideate Playback"],
+        "activities": [
+          "Co-creation of target-state options",
+          "MECE options & trade-offs",
+          "Frameworks & accelerators",
+          "Recommendations",
+          "Ideate Playback"
+        ],
         "duration": "4–8 weeks"
       },
       {
         "number": "03",
         "name": "Outcreate",
-        "activities": ["Final advisory report", "Executive presentation", "PoV & roadmap", "Knowledge transfer", "Closure"],
+        "activities": [
+          "Final advisory report",
+          "Executive presentation",
+          "PoV & roadmap",
+          "Knowledge transfer",
+          "Closure"
+        ],
         "duration": "~2 weeks"
       }
     ],
