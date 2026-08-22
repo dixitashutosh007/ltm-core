@@ -5,42 +5,79 @@ import { useRole } from '../context/RoleContext';
 import SearchBar from '../components/common/SearchBar';
 import AddOfferingModal from '../components/Editor/AddOfferingModal';
 
-function OfferingCard({ offering }) {
-  const stageClass = offering.stage.toLowerCase() === 'diagnose' ? 'stage-diagnose'
-    : offering.stage.toLowerCase() === 'design' ? 'stage-design'
-    : 'stage-mobilise';
-
+function OfferingCard({ offering, pillarColor }) {
   return (
     <Link to={`/offering/${offering.id}`} className="offering-card">
       <div className="offering-card-header">
         <h3>{offering.name}</h3>
-        <span className="offering-card-num">{offering.number.padStart(2, '0')}</span>
+        <span className="offering-card-num" style={{ color: pillarColor, background: pillarColor + '14' }}>
+          {offering.number.padStart(2, '0')}
+        </span>
       </div>
       <p className="tagline">{offering.tagline}</p>
-      <div className="offering-card-meta">
-        <span className={`meta-badge ${stageClass}`}>{offering.stage}</span>
-        <span className="meta-badge">{offering.duration}</span>
-        <span className="meta-badge">{offering.phase}</span>
-        {offering.l2 && <span className="meta-badge badge-l2">L2 Ready</span>}
-        {offering.battleCard && <span className="meta-badge badge-bc">Battle Card</span>}
-      </div>
+      {offering.poweredBy && offering.poweredBy.length > 0 ? (
+        <div className="card-accels">
+          <span className="card-accels-lbl">Powered by</span>
+          {offering.poweredBy.map(a => <span className="accel-chip" key={a}>{a}</span>)}
+        </div>
+      ) : (
+        <div className="card-accels">
+          <span className="card-accels-lbl">Powered by</span>
+          <span className="accel-chip methodology">methodology-led</span>
+        </div>
+      )}
     </Link>
   );
 }
 
+function AcceleratorCard({ accel }) {
+  return (
+    <div className="accel-card-item">
+      <span className={`accel-label ${accel.type}`}>
+        {accel.type === 'free' ? 'Free' : 'Available with engagement'}
+      </span>
+      <div className="accel-num">{accel.number.padStart(2, '0')} / {accel.name}</div>
+      <h4>{accel.title}</h4>
+      <p className="accel-desc">{accel.description}</p>
+      {accel.url ? (
+        <a href={accel.url} className="accel-cta" target="_blank" rel="noopener noreferrer">
+          Try {accel.name} <span>→</span>
+        </a>
+      ) : (
+        <span className="accel-cta placeholder">
+          {accel.type === 'free' ? 'Coming soon' : 'Available with engagement'}
+        </span>
+      )}
+    </div>
+  );
+}
+
+function InsightCard({ insight }) {
+  return (
+    <a className="insight-card" href={insight.url} target="_blank" rel="noopener noreferrer">
+      <div className="insight-meta">
+        <span className="insight-type">{insight.type}</span>
+        <span>{insight.source}</span>
+      </div>
+      <h4>{insight.title}</h4>
+      <p className="insight-excerpt">{insight.excerpt}</p>
+      <span className="insight-read">Read on {insight.source.split(' ·')[0].toLowerCase()}.com →</span>
+    </a>
+  );
+}
+
 export default function LandingPage() {
-  const { verticals, offerings, getOfferingsByVertical } = useData();
+  const { verticals, offerings, accelerators, insights, partners, getOfferingsByVertical } = useData();
   const { isEditor } = useRole();
   const [search, setSearch] = useState('');
   const [stageFilter, setStageFilter] = useState('');
   const [showAddModal, setShowAddModal] = useState(false);
 
   const stats = useMemo(() => ({
+    pillars: verticals.length,
     total: offerings.length,
-    l2Ready: offerings.filter(o => o.l2).length,
-    battleCards: offerings.filter(o => o.battleCard).length,
-    verticals: verticals.length,
-  }), [offerings, verticals]);
+    accelCount: accelerators ? accelerators.length : 0,
+  }), [offerings, verticals, accelerators]);
 
   const filteredOfferings = useMemo(() => {
     const q = search.toLowerCase();
@@ -59,30 +96,20 @@ export default function LandingPage() {
 
   return (
     <div>
-      <div className="landing-hero">
-        <div className="eyebrow">CIS Tech Advisory</div>
-        <h1>Advisory-led services for cloud, sovereignty &amp; AI.</h1>
-        <p>
-          Nine advisory offerings engineered for the CIO and CFO room. Fixed cadence,
-          fixed deliverables, advisory that leads to action — at roughly one-third of
-          Tier-1 consulting fees.
-        </p>
-        <div className="hero-stats">
-          <div className="hero-stat">
-            <span className="stat-value">{stats.total}</span>
-            <span className="stat-label">Offerings</span>
+      <div className="landing-hero dark-hero">
+        <div className="hero-in">
+          <div className="eyebrow"><span className="hero-dot" /> Infra Tech Advisory · Part of Cognitive Infrastructure Services</div>
+          <h1>Shape the intelligent core.<br />Turn IT cost, resilience and AI into <em>advantage.</em></h1>
+          <p className="hero-sub">
+            Advisory that leads to action — helping CIOs, CTOs and CDOs decide what to do about their estate,
+            sovereignty, cloud and AI, then delivering the plan that gets there.
+          </p>
+          <div className="hero-ctas">
+            <a href="#accelerators" className="btn-hero-ghost">Explore Accelerators <span>→</span></a>
           </div>
-          <div className="hero-stat">
-            <span className="stat-value">{stats.verticals}</span>
-            <span className="stat-label">Verticals</span>
-          </div>
-          <div className="hero-stat">
-            <span className="stat-value">{stats.l2Ready}</span>
-            <span className="stat-label">L2 Ready</span>
-          </div>
-          <div className="hero-stat">
-            <span className="stat-value">{stats.battleCards}</span>
-            <span className="stat-label">Battle Cards</span>
+          <div className="hero-parent">
+            <span>Part of <b>Cognitive Infrastructure Services</b> · LTIMindtree</span>
+            <span>Four pillars · {stats.total} offerings · {stats.accelCount} branded accelerators</span>
           </div>
         </div>
       </div>
@@ -113,19 +140,14 @@ export default function LandingPage() {
           return (
             <section className="vertical-section" key={vertical.id} id={vertical.id}>
               <div className="vertical-header">
-                <span className="vertical-number">{vertical.number}</span>
+                <span className="vertical-number" style={{ color: vertical.color }}>{vertical.number}</span>
                 <div className="vertical-info">
                   <h2>{vertical.name}</h2>
                   <p>{vertical.description}</p>
                 </div>
               </div>
               <div className="offerings-grid">
-                {vOfferings.map(o => <OfferingCard key={o.id} offering={o} />)}
-                {vOfferings.length === 0 && (
-                  <div className="empty-state">
-                    <p>No offerings yet in this vertical.</p>
-                  </div>
-                )}
+                {vOfferings.map(o => <OfferingCard key={o.id} offering={o} pillarColor={vertical.color} />)}
               </div>
             </section>
           );
@@ -138,6 +160,50 @@ export default function LandingPage() {
           </div>
         )}
       </div>
+
+      {accelerators && accelerators.length > 0 && (
+        <section className="section-full" id="accelerators">
+          <div className="section-inner">
+            <div className="section-eyebrow-alt">Proprietary IP</div>
+            <h2 className="section-title-alt">Twelve branded accelerators, four free to try</h2>
+            <p className="section-lede-alt">Every accelerator is proprietary LTIMindtree IP — either free lead-in diagnostics that produce evidence in hours, or engagement-gated tools that come with an advisory partnership.</p>
+            <div className="accel-grid">
+              {accelerators.map(a => <AcceleratorCard key={a.id} accel={a} />)}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {insights && insights.length > 0 && (
+        <section className="section-full section-white" id="insights">
+          <div className="section-inner">
+            <div className="section-eyebrow-alt">Points of View</div>
+            <h2 className="section-title-alt">Latest thinking from LTIMindtree Infra Tech Advisory</h2>
+            <p className="section-lede-alt">Published perspectives from our advisors, featured across LTIMindtree, CIO.com and industry stages.</p>
+            <div className="insights-grid">
+              {insights.map(i => <InsightCard key={i.id} insight={i} />)}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {partners && partners.length > 0 && (
+        <section className="section-full" id="partners">
+          <div className="section-inner">
+            <div className="section-eyebrow-alt">Our Partner Ecosystem</div>
+            <h2 className="section-title-alt">Advisory grounded in the platforms our clients rely on</h2>
+            <div className="partners-grid">
+              {partners.map(p => (
+                <div className="partner-card" key={p.id}>
+                  <div className="partner-name">{p.name}</div>
+                  <div className="partner-cat">{p.category}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {showAddModal && <AddOfferingModal onClose={() => setShowAddModal(false)} />}
     </div>
   );
