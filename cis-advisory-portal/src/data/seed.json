@@ -5,35 +5,39 @@
       "number": "01",
       "name": "Enterprise IT Strategy",
       "description": "Strategic advisory for CIOs and CTOs navigating enterprise IT transformation — from technical debt and target operating models to future-state architecture.",
-      "color": "#1E2761"
+      "color": "#1E2761",
+      "tagline": "Out Line the horizon"
     },
     {
       "id": "public-cloud",
       "number": "02",
       "name": "Public Cloud",
       "description": "Turn cloud from a technology footprint into a governed source of business value — from anchor-cloud decisions to FinOps, AI-ready foundations, and architectural health.",
-      "color": "#FF5E4F"
+      "color": "#FF5E4F",
+      "tagline": "Out Class the estate"
     },
     {
       "id": "digital-sovereignty",
       "number": "03",
       "name": "Digital Sovereignty",
       "description": "Sovereignty is now a board-level operating question. Advisory that answers where the organisation stands, what to do about it, and how to keep data, systems and operations under control.",
-      "color": "#028090"
+      "color": "#028090",
+      "tagline": "Out Standing under scrutiny"
     },
     {
       "id": "ai-infusion",
       "number": "04",
       "name": "AI Infusion",
       "description": "Turn scattered AI experiments into a prioritised, funded and governed adoption path — from opportunity identification to responsible AI governance for a 2026 regulatory environment.",
-      "color": "#6D2E46"
+      "color": "#6D2E46",
+      "tagline": "Out Create with AI"
     }
   ],
   "offerings": [
     {
       "id": "finops-excellence",
       "verticalId": "public-cloud",
-      "number": "01",
+      "number": "02",
       "name": "FinOps Excellence",
       "tagline": "From bill-shock to durable financial discipline in six weeks.",
       "pillar": "02 · Public Cloud",
@@ -41,6 +45,13 @@
       "duration": "6 weeks",
       "phase": "Phase 1",
       "buyers": "CIO · CFO · Head of Cloud · Head of FinOps",
+      "bullets": [
+        "Establishes a maturity baseline across five stages — from Chaos to Automated — with capability-level scoring",
+        "Analyses cloud bill and usage data to surface prioritised savings opportunities with dollar-impact bands",
+        "Designs the cultural side of FinOps — roles, cadence, showback and chargeback — alongside the technical optimisation",
+        "Extends governance beyond cloud to AI, GenAI, SaaS and licensing spend, aligned to FOCUS data standards",
+        "Delivers a Crawl-Walk-Run elevation roadmap and KPI scorecard the finance and engineering teams jointly own"
+      ],
       "l1": {
         "objective": "Establish or elevate the FinOps operating discipline so cloud spend is visible, allocated, forecasted and optimised at the pace the business changes — moving from reactive bill-shock to a measurable Crawl → Walk → Run maturity.",
         "valueToCustomer": [
@@ -501,7 +512,7 @@
     {
       "id": "sovereignty-readiness-assessment",
       "verticalId": "digital-sovereignty",
-      "number": "02",
+      "number": "03",
       "name": "Sovereignty Readiness Assessment",
       "tagline": "The full seven-lens readiness view for a board question that used to be a legal footnote.",
       "pillar": "03 · Digital Sovereignty",
@@ -509,6 +520,13 @@
       "duration": "8 weeks",
       "phase": "Phase 1",
       "buyers": "CIO · General Counsel · Group DPO · CISO",
+      "bullets": [
+        "Moves the organisation from awareness to a defensible, evidence-based readiness baseline",
+        "Produces a detailed sovereignty risk register scored against regulatory and operational impact",
+        "Co-creates target-state principles and guardrails with IT, security, legal and business stakeholders",
+        "Delivers a costed, sequenced 12–18 month remediation roadmap tied to 2026 regulatory deadlines",
+        "Provides a first-pass exit or multi-vendor strategy to reduce hyperscaler concentration risk"
+      ],
       "l1": {
         "objective": "Establish a board-defensible position on the enterprise's sovereignty posture across the full seven-lens framework — with a prioritised remediation roadmap and target-state architecture that balances sovereignty obligations with innovation velocity.",
         "valueToCustomer": [
@@ -819,7 +837,7 @@
     {
       "id": "app-portfolio-mapping",
       "verticalId": "digital-sovereignty",
-      "number": "03",
+      "number": "04",
       "name": "Application Portfolio Mapping & Roadmap",
       "tagline": "Map, score and sequence the application estate for sovereignty-aware modernisation.",
       "pillar": "03 · Digital Sovereignty",
@@ -827,6 +845,13 @@
       "duration": "10 weeks",
       "phase": "Phase 2",
       "buyers": "CIO · CTO · Head of Applications · Chief Architect",
+      "bullets": [
+        "Maps the application portfolio against sovereignty, business-criticality and modernization lenses",
+        "Assigns a clear per-application disposition — the \"6 Rs\" mapped explicitly to sovereignty need",
+        "Sequences a wave-based modernization and migration roadmap that de-risks execution",
+        "Identifies sovereignty-sensitive and high-criticality applications needing action first",
+        "Attaches indicative effort, complexity and cost bands — a ready input to the business case"
+      ],
       "l1": {
         "objective": "Map the application portfolio against sovereignty, business-criticality and modernisation lenses, assigning a clear per-application disposition and sequencing a wave-based modernisation roadmap.",
         "valueToCustomer": [
@@ -1127,7 +1152,7 @@
     {
       "id": "technical-debt-portfolio",
       "verticalId": "enterprise-it-strategy",
-      "number": "04",
+      "number": "03",
       "name": "Technical Debt Portfolio Assessment",
       "tagline": "Quantify, prioritise and govern technical debt as a portfolio — not a backlog.",
       "pillar": "01 · Enterprise IT Strategy",
@@ -1135,6 +1160,13 @@
       "duration": "8 weeks",
       "phase": "Phase 2",
       "buyers": "CIO · CTO · VP Engineering · Chief Architect",
+      "bullets": [
+        "Quantifies technical debt across infrastructure, applications and data — translating silent risk into hard cash, change velocity and resilience impact",
+        "Categorises debt by driver — deferred upgrades, unsupported stacks, architectural drift, data quality and integration sprawl — so paydown targets the root cause, not the symptom",
+        "Prioritises paydown by business criticality, risk exposure and modernisation ROI — not by loudest voice, oldest ticket or nearest audit",
+        "Reframes debt paydown as a portfolio investment case, not a hidden cost line the CFO writes off each year",
+        "Delivers a costed, sequenced paydown plan and board narrative that unlocks funding for work the business has been quietly deferring"
+      ],
       "l1": {
         "objective": "Quantify the enterprise's technical debt across architecture, code, infrastructure, data and process dimensions — producing a prioritised remediation portfolio the board can fund.",
         "valueToCustomer": [
@@ -1427,7 +1459,7 @@
     {
       "id": "it-for-the-future",
       "verticalId": "enterprise-it-strategy",
-      "number": "05",
+      "number": "01",
       "name": "IT for the Future",
       "tagline": "Design the IT organisation, architecture and operating model for the next five years.",
       "pillar": "01 · Enterprise IT Strategy",
@@ -1435,6 +1467,13 @@
       "duration": "12 weeks",
       "phase": "Phase 2",
       "buyers": "CIO · CTO · CDO · CHRO (IT)",
+      "bullets": [
+        "Sets a 3–5 year IT vision anchored to enterprise strategy, competitive position and the business ambition the board has actually signed off",
+        "Maps current-state capability, cost, architecture and talent posture against the technology moves the business will demand — not the moves IT would prefer",
+        "Defines an integrated capability roadmap across cloud, data, AI, security, workplace and platform — replacing siloed technology plans that never reconcile",
+        "Sequences investment across horizons — protect, transform and disrupt — with funding envelopes, dependency logic and clear exit criteria per horizon",
+        "Delivers a board-endorsable IT strategy and portfolio the CIO can defend, fund and adjust as the regulatory, economic and AI environment shifts"
+      ],
       "l1": {
         "objective": "Design the future-state IT organisation, architecture, and operating model that aligns technology capability with business strategy over a 3–5 year horizon.",
         "valueToCustomer": [
@@ -1741,7 +1780,7 @@
     {
       "id": "target-operating-model",
       "verticalId": "enterprise-it-strategy",
-      "number": "06",
+      "number": "02",
       "name": "Target Operating Model",
       "tagline": "Design and mobilise the operating model that makes strategy executable.",
       "pillar": "01 · Enterprise IT Strategy",
@@ -1749,6 +1788,13 @@
       "duration": "10 weeks",
       "phase": "Phase 1",
       "buyers": "CIO · COO · VP Engineering · Head of Cloud",
+      "bullets": [
+        "Designs the target operating model end-to-end — capability model, organisation structure, roles, RACI and governance forums",
+        "Establishes decision rights and escalation paths across product, platform, security, FinOps, data and sourcing functions",
+        "Defines the sourcing model — insourced, managed service, partner and hyperscaler — with clear ownership boundaries and no accidental grey zones",
+        "Aligns run-and-change cadence, KPIs and value tracking so the operating model is measurable, not just organisational theatre",
+        "Delivers a mobilisable TOM blueprint, transition plan and first-100-day operating cadence the CxO team can execute against in a 6–12 week engagement"
+      ],
       "l1": {
         "objective": "Design and mobilise a target operating model that translates IT strategy into executable structure — roles, forums, decision rights, sourcing, and KPIs.",
         "valueToCustomer": [
@@ -2043,7 +2089,7 @@
     {
       "id": "cross-border-data-strategy",
       "verticalId": "digital-sovereignty",
-      "number": "07",
+      "number": "02",
       "name": "Cross-Border Data Strategy",
       "tagline": "Map, govern and optimise data flows across jurisdictions — in four weeks.",
       "pillar": "03 · Digital Sovereignty",
@@ -2051,6 +2097,13 @@
       "duration": "4 weeks",
       "phase": "Phase 1",
       "buyers": "Group DPO · CISO · Head of Data · General Counsel",
+      "bullets": [
+        "Maps where data actually resides, moves and is processed across the estate — down to the workload, dataset and third-party flow",
+        "Assesses transfer mechanisms in place — SCCs, adequacy decisions, BCRs and derogations — against current data flows and target jurisdictions",
+        "Surfaces flows exposed to Schrems II, EU–US Data Privacy Framework instability and unrecorded cross-border processing that the DPO cannot currently defend",
+        "Sets out architectural options for multi-region operations — from regional isolation and selective repatriation to sovereign-zone and split-processing patterns",
+        "Delivers a defensible cross-border position and 90-day action list — often the fastest, most fundable entry point into a broader sovereignty programme"
+      ],
       "l1": {
         "objective": "Map cross-border data flows against regulatory obligations and sovereignty requirements, producing a governed data-flow strategy that balances compliance with operational efficiency.",
         "valueToCustomer": [
@@ -2339,7 +2392,7 @@
     {
       "id": "sovereign-ai-readiness",
       "verticalId": "digital-sovereignty",
-      "number": "08",
+      "number": "06",
       "name": "Sovereign AI Readiness",
       "tagline": "Assess whether your AI ambitions can meet sovereignty obligations — before you scale.",
       "pillar": "03 · Digital Sovereignty (linked to AI Infusion)",
@@ -2347,6 +2400,13 @@
       "duration": "8 weeks",
       "phase": "Phase 2",
       "buyers": "CIO · CDO · CISO · Head of AI / ML",
+      "bullets": [
+        "Assesses model hosting geography, inference footprint and data movement against sovereignty exposure and EU AI Act obligations",
+        "Traces training data provenance, licensing and IP exposure across foundation, fine-tuned and retrieval-augmented models in use",
+        "Reviews sovereign inference options — from in-region hyperscaler zones to sovereign cloud, EU-based specialists and on-premise stacks — against use-case criticality",
+        "Establishes the audit-trail, technical documentation and human-oversight practices needed for high-risk AI systems from August 2026 onward",
+        "Produces a sovereign-AI readiness scorecard and target-state pattern the CIO, CISO, DPO and legal function can jointly back"
+      ],
       "l1": {
         "objective": "Assess whether the organisation's AI adoption plans — model hosting, training data, inference pipelines — can meet sovereignty and regulatory obligations under the EU AI Act and adjacent frameworks.",
         "valueToCustomer": [
@@ -2635,7 +2695,7 @@
     {
       "id": "tokenops-genai-governance",
       "verticalId": "ai-infusion",
-      "number": "09",
+      "number": "05",
       "name": "TokenOps · GenAI Consumption Governance",
       "tagline": "Govern GenAI and agentic AI consumption before spend becomes unmanageable.",
       "pillar": "04 · AI Infusion (linked to Public Cloud)",
@@ -2643,6 +2703,13 @@
       "duration": "6 weeks",
       "phase": "Phase 1",
       "buyers": "CIO · CFO · Head of AI · Head of FinOps",
+      "bullets": [
+        "Establishes cost visibility across tokens, inference calls, embeddings, agent runs and vector operations — the unit metrics FinOps was not built for",
+        "Implements quota, rate-limit and tenancy controls that prevent runaway spend before it reaches the CFO's radar",
+        "Defines model-selection governance — when to route to a frontier model, a smaller open-weight model, an internal fine-tune or a cached response",
+        "Builds per-use-case unit economics — cost per resolved ticket, per generated artefact, per agent action — the business will actually recognise",
+        "Delivers a TokenOps blueprint and operating cadence that puts GenAI consumption under the same discipline as cloud spend — before the bill forces the conversation"
+      ],
       "l1": {
         "objective": "Extend FinOps discipline to GenAI and agentic AI workloads — establishing tagging, allocation, forecasting and governance practices for token, inference and training cost before spend becomes unmanageable.",
         "valueToCustomer": [
@@ -2933,6 +3000,618 @@
           }
         ]
       }
+    },
+    {
+      "id": "right-cloud-strategy-workload-placement",
+      "verticalId": "public-cloud",
+      "number": "01",
+      "name": "Right Cloud Strategy & Workload Placement",
+      "tagline": "Decide the anchor cloud and place every workload where it actually belongs.",
+      "pillar": "02 · Public Cloud",
+      "stage": "Diagnose",
+      "duration": "6 weeks",
+      "phase": "Phase 1",
+      "buyers": "CIO · CTO · Chief Architect · Head of Cloud",
+      "bullets": [
+        "Determines the right primary (anchor) cloud and the deliberate balance across multiple clouds",
+        "Places each workload where it belongs — public, private, hybrid or repatriated — weighed across value, resilience, sovereignty, latency and data gravity",
+        "Surfaces lock-in and exit risk early, with first-pass mitigation for the largest hyperscaler dependencies",
+        "Defines a target cloud operating model and guardrails to prevent accidental multicloud sprawl",
+        "Produces a defensible placement heatmap and anchor-cloud stance the board, procurement and regulators can back"
+      ],
+      "l1": {
+        "objective": "Determine the right anchor cloud and a defensible, workload-by-workload placement across public, private, hybrid and repatriated patterns.",
+        "valueToCustomer": [
+          "A defensible anchor-cloud decision the board and procurement can back",
+          "A workload placement heatmap weighed across value, resilience, sovereignty and cost",
+          "Early visibility of lock-in and exit risk before it compounds",
+          "Guardrails that prevent accidental multicloud sprawl"
+        ],
+        "problemsSolved": [
+          "No clear rationale for which cloud runs which workload",
+          "Multicloud sprawl accumulating without a placement policy",
+          "Lock-in risk with the primary hyperscaler undocumented",
+          "Placement decisions made by individual teams, not a coherent strategy"
+        ],
+        "keyDeliverables": [
+          "Anchor-cloud recommendation and rationale",
+          "Workload placement heatmap across all in-scope applications",
+          "Lock-in and exit risk register with first-pass mitigations",
+          "Target cloud operating model and placement guardrails"
+        ],
+        "inScope": [
+          "Enterprise workload portfolio (agreed subset at kickoff)",
+          "Public, private, hybrid and repatriation placement options",
+          "Anchor-cloud and multicloud balance decision"
+        ],
+        "outOfScope": [
+          "Workload migration execution",
+          "Detailed contract renegotiation",
+          "Application re-architecture"
+        ]
+      }
+    },
+    {
+      "id": "ai-ready-cloud-foundations",
+      "verticalId": "public-cloud",
+      "number": "03",
+      "name": "AI-Ready Cloud Foundations",
+      "tagline": "Know whether the cloud and data foundation can actually carry AI at scale.",
+      "pillar": "02 · Public Cloud",
+      "stage": "Diagnose",
+      "duration": "6 weeks",
+      "phase": "Phase 1",
+      "buyers": "CIO · CDO · Chief Architect · Head of AI/ML",
+      "bullets": [
+        "Reviews the cloud and data landscape to determine whether AI at scale is genuinely supportable today",
+        "Surfaces gaps in landing zone, data platform, MLOps posture and inference footprint that block AI adoption",
+        "Identifies foundational investments needed before AI use cases can safely reach production",
+        "Aligns cost, responsible-AI and EU AI Act guardrails into the cloud foundation from day one",
+        "Produces a readiness scorecard and prioritised remediation plan against the intended AI use-case portfolio"
+      ],
+      "l1": {
+        "objective": "Assess whether the existing cloud and data foundation can support AI at meaningful scale, and define the investments needed to close the gap.",
+        "valueToCustomer": [
+          "An honest read on AI infrastructure readiness before use cases are committed",
+          "A prioritised remediation plan tied to the intended use-case portfolio",
+          "Cost and responsible-AI guardrails built into the foundation from day one"
+        ],
+        "problemsSolved": [
+          "AI pilots stalling because the underlying cloud foundation can't scale them",
+          "No visibility into landing zone, data platform or MLOps gaps",
+          "AI investment committed before infrastructure readiness is understood"
+        ],
+        "keyDeliverables": [
+          "AI-readiness scorecard across landing zone, data platform, MLOps and inference footprint",
+          "Prioritised remediation plan against the use-case portfolio",
+          "Cost and responsible-AI guardrail recommendations"
+        ],
+        "inScope": [
+          "Cloud landing zone and data platform review",
+          "MLOps and inference footprint assessment",
+          "Responsible-AI and EU AI Act guardrail alignment"
+        ],
+        "outOfScope": [
+          "Model development or training execution",
+          "Detailed data platform build",
+          "Use-case selection (see AI Opportunity & Value Advisory)"
+        ]
+      }
+    },
+    {
+      "id": "cloud-strategy-adoption-roadmap",
+      "verticalId": "public-cloud",
+      "number": "04",
+      "name": "Cloud Strategy & Adoption Roadmap",
+      "tagline": "A board-ready cloud strategy and a first phase ready to fund.",
+      "pillar": "02 · Public Cloud",
+      "stage": "Design",
+      "duration": "8 weeks",
+      "phase": "Phase 2",
+      "buyers": "CIO · CTO · Head of Cloud · Chief Architect",
+      "bullets": [
+        "Establishes a coherent cloud strategy aligned to business goals — not a set of disconnected point moves",
+        "Assesses readiness across strategy, applications, infrastructure, security, operating model, FinOps and skills",
+        "Produces a directional 6R / 7R disposition per application at a portfolio level",
+        "Sequences Immediate, Short-term and Long-term actions with owners, dependencies and cost bands",
+        "Delivers a board-ready adoption narrative and a mobilisable first phase ready to fund"
+      ],
+      "l1": {
+        "objective": "Establish a coherent cloud strategy aligned to business goals, with a directional application disposition and a fundable adoption roadmap.",
+        "valueToCustomer": [
+          "A single, board-ready cloud strategy aligned to business goals",
+          "A directional 6R/7R disposition across the application portfolio",
+          "A sequenced roadmap with owners, dependencies and cost bands"
+        ],
+        "problemsSolved": [
+          "Cloud adoption proceeding as a series of disconnected point moves",
+          "No agreed disposition for the application portfolio",
+          "Roadmap exists but isn't sequenced, owned or costed"
+        ],
+        "keyDeliverables": [
+          "Cloud readiness assessment across seven dimensions",
+          "Directional 6R/7R application disposition",
+          "Sequenced adoption roadmap with cost bands",
+          "Board-ready adoption narrative"
+        ],
+        "inScope": [
+          "Enterprise cloud strategy and readiness assessment",
+          "Portfolio-level application disposition",
+          "Roadmap sequencing and first-phase mobilisation"
+        ],
+        "outOfScope": [
+          "Migration execution",
+          "Detailed application-level architecture design",
+          "Vendor contract negotiation"
+        ]
+      }
+    },
+    {
+      "id": "ai-powered-well-architected-review",
+      "verticalId": "public-cloud",
+      "number": "05",
+      "name": "AI-Powered Well-Architected Review",
+      "tagline": "AI-assisted architecture review across all six well-architected pillars.",
+      "pillar": "02 · Public Cloud",
+      "stage": "Diagnose",
+      "duration": "4 weeks",
+      "phase": "Phase 1",
+      "buyers": "CTO · Chief Architect · Head of Cloud Platform",
+      "bullets": [
+        "Assesses infrastructure and priority workloads against hyperscaler well-architected principles across six pillars",
+        "Uses AI-assisted analysis to review far more configuration and telemetry than a manual review of the same duration",
+        "Prioritises findings across reliability, security, cost, operations, performance and sustainability",
+        "Surfaces cost and security quick wins early — a natural tie-in to FinOps and resilience workstreams",
+        "Establishes a repeatable baseline to track architecture health over time as the estate evolves"
+      ],
+      "l1": {
+        "objective": "Assess priority workloads against well-architected principles across six pillars, using AI-assisted analysis to review far more of the estate than a manual review would allow.",
+        "valueToCustomer": [
+          "A six-pillar architecture health baseline in three weeks",
+          "Prioritised findings across reliability, security, cost, operations, performance and sustainability",
+          "A repeatable baseline to track architecture health over time"
+        ],
+        "problemsSolved": [
+          "No current view of architecture health against well-architected standards",
+          "Manual reviews too slow and too narrow to cover the estate",
+          "Cost and security quick wins going unnoticed"
+        ],
+        "keyDeliverables": [
+          "Six-pillar architecture health scorecard",
+          "Prioritised findings register with quick wins flagged",
+          "Repeatable baseline methodology for ongoing tracking"
+        ],
+        "inScope": [
+          "Priority workloads agreed at kickoff",
+          "Six well-architected pillars",
+          "AI-assisted configuration and telemetry review"
+        ],
+        "outOfScope": [
+          "Remediation execution",
+          "Full estate coverage beyond priority workloads",
+          "Penetration testing"
+        ]
+      }
+    },
+    {
+      "id": "quick-sovereignty-posture-assessment",
+      "verticalId": "digital-sovereignty",
+      "number": "01",
+      "name": "Quick Sovereignty Posture Assessment",
+      "tagline": "A fast, board-ready read on sovereignty exposure before any budget is committed.",
+      "pillar": "03 · Digital Sovereignty",
+      "stage": "Diagnose",
+      "duration": "2 weeks",
+      "phase": "Phase 1",
+      "buyers": "CIO · CISO · General Counsel · Group DPO",
+      "bullets": [
+        "Delivers a fast, board-ready read on sovereignty exposure — before any budget is committed",
+        "Cuts through the confusion between \"data residency\" and true digital sovereignty",
+        "Assesses posture across seven lenses: strategic, jurisdictional, data, cloud, data centre, AI, and operational resilience",
+        "Creates a single common view across teams hearing DORA, EU AI Act, NIS2 and EUCS separately",
+        "Produces a 30 / 60 / 90-day no-regret action list and a first-pass hyperscaler concentration scorecard"
+      ],
+      "l1": {
+        "objective": "Deliver a fast, evidence-based read on sovereignty exposure across seven lenses, before any programme budget is committed.",
+        "valueToCustomer": [
+          "A board-ready sovereignty posture read in two weeks",
+          "A single common view across teams currently hearing DORA, EU AI Act, NIS2 and EUCS separately",
+          "A 30/60/90-day no-regret action list"
+        ],
+        "problemsSolved": [
+          "\"Data residency\" and true sovereignty confused inside the organisation",
+          "No single view of sovereignty exposure across CIO, CISO, DPO and Legal",
+          "Regulatory conversations happening in silos"
+        ],
+        "keyDeliverables": [
+          "Seven-lens sovereignty posture scorecard",
+          "30/60/90-day no-regret action list",
+          "First-pass hyperscaler concentration scorecard"
+        ],
+        "inScope": [
+          "Seven-lens sovereignty framework at posture level",
+          "Rapid stakeholder interviews across CIO, CISO, DPO, Legal",
+          "No-regret action identification"
+        ],
+        "outOfScope": [
+          "Detailed remediation roadmap (see Sovereignty Readiness Assessment)",
+          "Legal advice",
+          "Contract renegotiation"
+        ]
+      }
+    },
+    {
+      "id": "regulatory-alignment-exit-strategy",
+      "verticalId": "digital-sovereignty",
+      "number": "05",
+      "name": "Regulatory Alignment & Exit Strategy",
+      "tagline": "Map the estate against DORA, NIS2, the EU AI Act and EUCS — and design the exit options.",
+      "pillar": "03 · Digital Sovereignty",
+      "stage": "Design",
+      "duration": "8 weeks",
+      "phase": "Phase 2",
+      "buyers": "CIO · CISO · General Counsel · Group DPO",
+      "bullets": [
+        "Maps the current estate against DORA, NIS2, the EU AI Act and EUCS in a single alignment view",
+        "Assesses hyperscaler and third-party ICT concentration risk at the workload and contract level",
+        "Develops first-pass exit and multi-vendor options aligned to sovereign cloud and open-source alternatives",
+        "Supports the case for sovereign cloud partnerships without vendor lock-in",
+        "Produces evidence and narrative that stands up to regulator, auditor and board scrutiny"
+      ],
+      "l1": {
+        "objective": "Map the estate against DORA, NIS2, the EU AI Act and EUCS in a single alignment view, and develop first-pass exit and multi-vendor options.",
+        "valueToCustomer": [
+          "A single regulatory alignment view across four converging frameworks",
+          "Concentration risk quantified at the workload and contract level",
+          "Regulator-, auditor- and board-ready evidence and narrative"
+        ],
+        "problemsSolved": [
+          "DORA, NIS2, EU AI Act and EUCS tracked separately with no unified view",
+          "Hyperscaler concentration risk undocumented at contract level",
+          "No exit or multi-vendor option on the table if regulatory pressure increases"
+        ],
+        "keyDeliverables": [
+          "Single regulatory alignment view across DORA, NIS2, EU AI Act and EUCS",
+          "Hyperscaler and third-party ICT concentration risk register",
+          "First-pass exit and multi-vendor options paper",
+          "Regulator-ready evidence pack"
+        ],
+        "inScope": [
+          "Named regulatory frameworks (DORA, NIS2, EU AI Act, EUCS)",
+          "Hyperscaler and third-party concentration risk",
+          "First-pass exit and multi-vendor options"
+        ],
+        "outOfScope": [
+          "Contract renegotiation execution",
+          "Full migration or exit implementation",
+          "Legal advice"
+        ]
+      }
+    },
+    {
+      "id": "ai-opportunity-value-advisory",
+      "verticalId": "ai-infusion",
+      "number": "01",
+      "name": "AI Opportunity & Value Advisory",
+      "tagline": "Prioritise the AI use cases that will actually move the numbers.",
+      "pillar": "04 · AI Infusion",
+      "stage": "Diagnose",
+      "duration": "6 weeks",
+      "phase": "Phase 1",
+      "buyers": "CIO · CDO · Chief AI Officer · Business Unit Leaders",
+      "bullets": [
+        "Reviews process and value-chain landscape to surface high-value AI infusion opportunities",
+        "Scores use cases across value, effort, risk and data-readiness — not tech for its own sake",
+        "Distinguishes GenAI, agentic AI and classical ML use cases and their respective adoption paths",
+        "Prioritises a first wave of use cases with expected outcomes and KPIs the business will recognise",
+        "Provides directional build-buy-partner options and platform choices across hyperscaler and specialist AI"
+      ],
+      "l1": {
+        "objective": "Surface, score and prioritise the AI use cases most likely to move the numbers, with a fundable first wave and directional platform options.",
+        "valueToCustomer": [
+          "A scored, prioritised AI use-case portfolio the business will recognise",
+          "A first wave of use cases with expected outcomes and KPIs",
+          "Directional build-buy-partner and platform recommendations"
+        ],
+        "problemsSolved": [
+          "AI experiments scattered with no prioritisation framework",
+          "Use cases chosen for novelty rather than value",
+          "No shared language for GenAI, agentic AI and classical ML"
+        ],
+        "keyDeliverables": [
+          "AI opportunity landscape across the value chain",
+          "Use-case scoring across value, effort, risk and data-readiness",
+          "Prioritised first-wave use-case portfolio with KPIs",
+          "Directional build-buy-partner options"
+        ],
+        "inScope": [
+          "Enterprise process and value-chain review",
+          "Use-case identification and scoring",
+          "First-wave prioritisation"
+        ],
+        "outOfScope": [
+          "Use-case build or implementation",
+          "Detailed data-readiness remediation (see AI Readiness & Data Foundation Assessment)",
+          "Vendor selection and procurement"
+        ]
+      }
+    },
+    {
+      "id": "ai-readiness-data-foundation-assessment",
+      "verticalId": "ai-infusion",
+      "number": "02",
+      "name": "AI Readiness & Data Foundation Assessment",
+      "tagline": "Assess whether the data and cloud foundation can support AI at scale.",
+      "pillar": "04 · AI Infusion",
+      "stage": "Diagnose",
+      "duration": "6 weeks",
+      "phase": "Phase 1",
+      "buyers": "CIO · CDO · Head of Data · Head of AI/ML",
+      "bullets": [
+        "Assesses whether the existing data and cloud foundation can support AI at meaningful scale",
+        "Surfaces gaps in data quality, classification, lineage and platform capability that block adoption",
+        "Reviews AI-relevant cloud posture — model hosting, inference footprint, data movement and cost",
+        "Identifies foundational investments needed before AI use cases can safely reach production",
+        "Produces a readiness scorecard and prioritised remediation list against the intended use-case portfolio"
+      ],
+      "l1": {
+        "objective": "Assess whether the data and cloud foundation can support the intended AI use-case portfolio, and define the remediation needed before production.",
+        "valueToCustomer": [
+          "An evidence-based read on data and cloud AI-readiness",
+          "Gaps in data quality, classification and lineage surfaced early",
+          "A prioritised remediation list tied to the use-case portfolio"
+        ],
+        "problemsSolved": [
+          "AI use cases blocked by data quality or platform gaps discovered too late",
+          "No visibility into AI-relevant cloud posture",
+          "Foundational investment decisions made without an evidence base"
+        ],
+        "keyDeliverables": [
+          "Data and cloud AI-readiness scorecard",
+          "Data quality, classification and lineage gap register",
+          "Prioritised remediation list against the use-case portfolio"
+        ],
+        "inScope": [
+          "Data platform and quality assessment",
+          "AI-relevant cloud posture review",
+          "Remediation prioritisation"
+        ],
+        "outOfScope": [
+          "Data platform build or remediation execution",
+          "Use-case selection (see AI Opportunity & Value Advisory)",
+          "Model development"
+        ]
+      }
+    },
+    {
+      "id": "responsible-ai-governance-advisory",
+      "verticalId": "ai-infusion",
+      "number": "03",
+      "name": "Responsible AI & Governance Advisory",
+      "tagline": "The governance blueprint that lets AI scale without inheriting the risk.",
+      "pillar": "04 · AI Infusion",
+      "stage": "Design",
+      "duration": "6 weeks",
+      "phase": "Phase 2",
+      "buyers": "CIO · CDO · CISO · General Counsel",
+      "bullets": [
+        "Maps AI use cases against EU AI Act risk categories and high-risk system obligations from August 2026",
+        "Establishes a responsible-AI governance model — roles, review cadence, escalation and audit trail",
+        "Defines guardrails across bias, transparency, human oversight and data handling per use-case class",
+        "Aligns responsible-AI governance with existing risk, security and compliance functions",
+        "Delivers an AI governance blueprint the CIO, CISO, legal and business can jointly operate"
+      ],
+      "l1": {
+        "objective": "Establish a responsible-AI governance model — roles, review cadence, escalation and guardrails — aligned to EU AI Act risk categories and existing risk functions.",
+        "valueToCustomer": [
+          "AI use cases mapped against EU AI Act risk categories",
+          "A governance model with clear roles, cadence and escalation",
+          "Guardrails the business can operate day to day, not just a policy document"
+        ],
+        "problemsSolved": [
+          "No structured view of AI risk classification across the use-case portfolio",
+          "Responsible-AI guardrails undefined or inconsistent across teams",
+          "Governance disconnected from existing risk, security and compliance functions"
+        ],
+        "keyDeliverables": [
+          "EU AI Act risk classification for the AI use-case portfolio",
+          "Responsible-AI governance model — roles, cadence, escalation, audit trail",
+          "Guardrail framework across bias, transparency, oversight and data handling",
+          "AI governance blueprint"
+        ],
+        "inScope": [
+          "EU AI Act risk classification",
+          "Governance model and guardrail design",
+          "Alignment with existing risk and compliance functions"
+        ],
+        "outOfScope": [
+          "Legal advice",
+          "Guardrail tooling implementation",
+          "Model-level bias testing"
+        ]
+      }
+    },
+    {
+      "id": "ai-cost-finops-for-ai",
+      "verticalId": "ai-infusion",
+      "number": "04",
+      "name": "AI Cost & FinOps for AI",
+      "tagline": "Extend FinOps discipline to AI before the spend becomes unmanageable.",
+      "pillar": "04 · AI Infusion",
+      "stage": "Mobilise",
+      "duration": "6 weeks",
+      "phase": "Phase 1",
+      "buyers": "CIO · CFO · Head of AI · Head of FinOps",
+      "bullets": [
+        "Extends FinOps discipline to AI, GenAI and agentic workloads before spend becomes unmanageable",
+        "Establishes tagging, allocation and forecasting practices for token, inference and training cost",
+        "Surfaces early optimisation opportunities across model choice, caching, prompt design and platform",
+        "Aligns AI spend to business value with per-use-case unit economics and ROI tracking",
+        "Prepares the organisation for AI cost governance to become a board-level metric"
+      ],
+      "l1": {
+        "objective": "Extend FinOps discipline to AI, GenAI and agentic workloads, establishing tagging, allocation, forecasting and unit-economics practices before spend becomes unmanageable.",
+        "valueToCustomer": [
+          "AI spend visibility with tagging, allocation and forecasting in place",
+          "Early optimisation opportunities across model choice and platform",
+          "Per-use-case unit economics the business will recognise"
+        ],
+        "problemsSolved": [
+          "AI spend appearing on the bill with no allocation or accountability",
+          "No forecasting discipline for token, inference and training cost",
+          "AI cost governance absent from the board conversation"
+        ],
+        "keyDeliverables": [
+          "AI cost tagging and allocation model",
+          "Forecasting practice for token, inference and training cost",
+          "Optimisation backlog across model choice, caching and platform",
+          "Per-use-case unit-economics framework"
+        ],
+        "inScope": [
+          "AI, GenAI and agentic workload spend",
+          "Tagging, allocation and forecasting design",
+          "Unit-economics framework"
+        ],
+        "outOfScope": [
+          "Tool implementation",
+          "Model-level engineering optimisation",
+          "Hyperscaler contract renegotiation"
+        ]
+      }
+    }
+  ],
+  "accelerators": [
+    {
+      "number": "01",
+      "name": "Sovereign Compass",
+      "badge": "Free",
+      "description": "The fundamental first-look accelerator for digital sovereignty. Helps organisations assess whether — and where — they need sovereignty controls before committing any budget, with an evidence-based posture read and no-regret actions in hours.",
+      "type": "tool",
+      "url": "https://ltm-core.s3.us-east-1.amazonaws.com/sovereign-screen.html"
+    },
+    {
+      "number": "02",
+      "name": "Regulatory Alignment & Exit Strategy",
+      "badge": null,
+      "description": "The L2 sovereignty accelerator — a Data Residency & Jurisdiction Audit. Gauges compliance against targeted jurisdictions and sovereignty frameworks (DORA, NIS2, EU AI Act, EUCS) with a focus on where data actually lives, moves and is processed.",
+      "type": "tool",
+      "url": "https://ltm-core.s3.us-east-1.amazonaws.com/Data-Residency-Jurisdiction-Audit.html"
+    },
+    {
+      "number": "03",
+      "name": "FinOps Value Case",
+      "badge": null,
+      "description": "Answers the question every finance leader is asking: \"Do we actually need FinOps?\" A guided value-case accelerator that sizes the opportunity from a handful of estate inputs and returns a directional ROI band you can take into a funding conversation.",
+      "type": "tool",
+      "url": "http://ltm-core.s3-website-us-east-1.amazonaws.com/finops-value-case.html"
+    },
+    {
+      "number": "04",
+      "name": "FinOps Maturity Assessment",
+      "badge": "Free",
+      "description": "Inspired by the FinOps Foundation's five-stage maturity model, delivers a rapid capability-level read of where the client's practice stands today — and lays out a realistic Crawl-Walk-Run path to Out Class the peer set.",
+      "type": "tool",
+      "url": "http://ltm-core.s3-website-us-east-1.amazonaws.com/finops-screen.html"
+    },
+    {
+      "number": "05",
+      "name": "CIS Operating Model Designer",
+      "badge": null,
+      "description": "Lets clients rapidly rebuild and stress-test their cloud operating model. Propose changes to structure, roles and cadence and immediately see the pros and cons the advisor would flag — a working sandbox for operating-model decisions.",
+      "type": "engagement",
+      "url": null
+    },
+    {
+      "number": "06",
+      "name": "CIS Business Case Analyser",
+      "badge": null,
+      "description": "Takes a handful of inputs about the organisation — estate size, cloud footprint, industry, drivers — and returns a CIO / CTO-level cloud transformation business case with a directional ROI band. A fast, credible start to board-ready funding conversations.",
+      "type": "engagement",
+      "url": null
+    }
+  ],
+  "insights": [
+    {
+      "type": "Point of View",
+      "source": "LTM",
+      "coverTag": "POV · LTM",
+      "coverTitle": "Agentic AI",
+      "coverClass": "alt-3",
+      "title": "Agentic AI & Financial Minefields",
+      "excerpt": "Where autonomous agents create real value for financial services — and the operational, model-risk and regulatory minefields to steer around before scaling.",
+      "url": "https://www.ltm.com/insights/povs/agentic-ai-financial-minefields-pov"
+    },
+    {
+      "type": "Whitepaper",
+      "source": "LTM",
+      "coverTag": "Whitepaper · LTM",
+      "coverTitle": "Responsible AI",
+      "coverClass": "alt-1",
+      "title": "Guarding AI Innovation in the Cloud",
+      "excerpt": "A robust framework for responsible AI adoption — governance, guardrails and cloud-foundation choices that let enterprises innovate without inheriting AI risk.",
+      "url": "https://www.ltm.com/insights/whitepapers/guarding-ai-innovation-in-the-cloud-robust-framework-for-responsible-ai-adoption"
+    },
+    {
+      "type": "Point of View",
+      "source": "LTM",
+      "coverTag": "POV · LTM",
+      "coverTitle": "Cloud Migration",
+      "coverClass": "",
+      "title": "The Migration Imperative Has Never Been More Urgent",
+      "excerpt": "Why the window to modernise the estate is closing — and how CIOs can build the case for a decisive migration wave now, not after another budget cycle.",
+      "url": "https://www.ltm.com/insights/povs/the-migration-imperative-has-never-been-more-urgent"
+    },
+    {
+      "type": "Point of View",
+      "source": "LTM · SAP Sapphire '26",
+      "coverTag": "POV · LTM",
+      "coverTitle": "Architecture of Choice",
+      "coverClass": "alt-2",
+      "title": "The Architecture of Choice",
+      "excerpt": "Designing an enterprise architecture that preserves optionality — across clouds, vendors and platforms — instead of trading it away for short-term integration wins.",
+      "url": "https://www.ltm.com/insights/povs/the-architecture-of-choice"
+    },
+    {
+      "type": "Featured Article",
+      "source": "CIO.com",
+      "coverTag": "Article · CIO.com",
+      "coverTitle": "AI Strategy",
+      "coverClass": "alt-3",
+      "title": "If Your AI Strategy Still Looks Like 2024, You're Already Too Late",
+      "excerpt": "The playbook has moved on from pilots and PoCs. What a 2026-fit AI strategy looks like, and what to stop doing today.",
+      "url": "https://www.cio.com/article/4125852/if-your-ai-strategy-still-looks-like-2024-youre-already-too-late.html"
+    },
+    {
+      "type": "Featured Article",
+      "source": "CIO.com",
+      "coverTag": "Article · CIO.com",
+      "coverTitle": "AI & the Cycle",
+      "coverClass": "alt-4",
+      "title": "AI's Bubble Trouble: Hype, Myth and Dotcom Déjà Vu",
+      "excerpt": "Reading the current AI wave against the dotcom pattern — what to fund through the noise, and which claims deserve a second look before they hit the roadmap.",
+      "url": "https://www.cio.com/article/4059596/ais-bubble-trouble-hype-myth-and-dotcom-deja-vu.html"
+    }
+  ],
+  "partners": [
+    {
+      "name": "AWS",
+      "category": "Hyperscaler"
+    },
+    {
+      "name": "Microsoft Azure",
+      "category": "Hyperscaler"
+    },
+    {
+      "name": "ServiceNow",
+      "category": "Platform"
+    },
+    {
+      "name": "HP",
+      "category": "Infrastructure"
+    },
+    {
+      "name": "MontiCloud",
+      "category": "Sovereign Cloud"
     }
   ],
   "methodology": {
