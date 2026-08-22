@@ -14,7 +14,7 @@ export default function Header() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'infra-tech-advisory-data.json';
+    a.download = 'cis-advisory-portal-data.json';
     a.click();
     URL.revokeObjectURL(url);
   };
@@ -25,7 +25,7 @@ export default function Header() {
         <div className="header-brand">
           <span className="logo-text">LTM</span>
           <span className="divider" />
-          <span className="sub-text">Infra Tech Advisory</span>
+          <span className="sub-text">CIS Tech Advisory Portal</span>
         </div>
         <div className="header-actions">
           {role === 'editor' && (

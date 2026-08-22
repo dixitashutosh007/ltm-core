@@ -7,9 +7,6 @@ export function DataProvider({ children }) {
   const [verticals, setVerticals] = useState(seedData.verticals);
   const [offerings, setOfferings] = useState(seedData.offerings);
   const [methodology] = useState(seedData.methodology);
-  const [accelerators] = useState(seedData.accelerators || []);
-  const [insights] = useState(seedData.insights || []);
-  const [partners] = useState(seedData.partners || []);
   const [toasts, setToasts] = useState([]);
 
   const addToast = useCallback((message, type = 'info') => {
@@ -95,12 +92,12 @@ export function DataProvider({ children }) {
   }, [addToast]);
 
   const exportData = useCallback(() => {
-    return JSON.stringify({ verticals, offerings, accelerators, insights, partners, methodology }, null, 2);
-  }, [verticals, offerings, accelerators, insights, partners, methodology]);
+    return JSON.stringify({ verticals, offerings, methodology }, null, 2);
+  }, [verticals, offerings, methodology]);
 
   return (
     <DataContext.Provider value={{
-      verticals, offerings, methodology, accelerators, insights, partners, toasts,
+      verticals, offerings, methodology, toasts,
       getOfferingsByVertical, getOffering, getVertical,
       updateOffering, updateOfferingField, addOffering, deleteOffering,
       addVertical, importData, exportData, addToast

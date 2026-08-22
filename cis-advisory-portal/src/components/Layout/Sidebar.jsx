@@ -6,18 +6,11 @@ export default function Sidebar() {
   const location = useLocation();
   const isHome = location.pathname === '/';
 
-  const scrollTo = (id) => {
-    if (location.pathname === '/') {
-      const el = document.getElementById(id);
-      if (el) el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <aside className="app-sidebar">
       <div className="sidebar-brand">
-        <h2>Infra Tech Advisory</h2>
-        <p>Cognitive Infrastructure Services</p>
+        <h2>CIS Tech Advisory</h2>
+        <p>Internal Advisory Portal</p>
       </div>
 
       <div className="sidebar-section">
@@ -33,11 +26,16 @@ export default function Sidebar() {
       </div>
 
       <div className="sidebar-section">
-        <div className="sidebar-section-title">Pillars</div>
+        <div className="sidebar-section-title">Verticals</div>
         <ul className="sidebar-nav">
           {verticals.map(v => (
             <li key={v.id}>
-              <NavLink to={`/#${v.id}`} onClick={() => scrollTo(v.id)}>
+              <NavLink to={`/#${v.id}`} onClick={() => {
+                if (location.pathname === '/') {
+                  const el = document.getElementById(v.id);
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}>
                 <span className="nav-icon" style={{ color: v.color, fontWeight: 800, fontSize: 11 }}>
                   {v.number}
                 </span>
@@ -45,30 +43,6 @@ export default function Sidebar() {
               </NavLink>
             </li>
           ))}
-        </ul>
-      </div>
-
-      <div className="sidebar-section">
-        <div className="sidebar-section-title">More</div>
-        <ul className="sidebar-nav">
-          <li>
-            <a href="/#accelerators" onClick={() => scrollTo('accelerators')}>
-              <span className="nav-icon">&#9670;</span>
-              Accelerators
-            </a>
-          </li>
-          <li>
-            <a href="/#insights" onClick={() => scrollTo('insights')}>
-              <span className="nav-icon">&#9679;</span>
-              Insights
-            </a>
-          </li>
-          <li>
-            <a href="/#partners" onClick={() => scrollTo('partners')}>
-              <span className="nav-icon">&#9733;</span>
-              Partners
-            </a>
-          </li>
         </ul>
       </div>
 
