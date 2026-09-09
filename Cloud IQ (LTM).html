@@ -8,123 +8,137 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
 <style>
+/* LTM design system — palette, typography and spacing lifted from the sibling
+   accelerators (Sovereign IQ, Posture IQ, FinOps IQ, FinOps Value Case). */
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap");
 :root{
-  --rust:#A84410; --dark:#6E2C0A; --cream:#F7E6D8; --cream2:#FBF1E9;
-  --green:#2E6E4E; --ink:#2B2B2B; --line:#E4D2C4; --muted:#8a7360;
+  --ground:#F9F9F9; --panel:#FFFFFF; --panel2:#F5F5F5;
+  --line:#DADADA; --line2:#ECECEC;
+  --ink:#282828; --mut:#5B5B5B; --mutd:#8E8E8E;
+  --coral:#FF5E4F; --coral-dk:#E54536; --coral-dkr:#CC2B1C; --coral-tint:#FCF0EE;
+  --blue:#226882; --violet:#482475; --amber:#B8860B; --green:#35754D;
+  --radius-sm:4px; --radius-md:8px; --radius-lg:16px;
+  --shadow-card:0 1px 2px rgba(40,40,40,.06), 0 4px 12px rgba(40,40,40,.08);
+  --font-display:"Manrope","Segoe UI",Arial,sans-serif;
+  --font-body:Arial,"Helvetica Neue",Helvetica,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',Arial,sans-serif;background:#faf6f2;color:var(--ink);line-height:1.5}
-.wrap{max-width:920px;margin:0 auto;padding:0 20px}
-header.top{background:var(--dark);color:#fff;padding:14px 0}
-header.top .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
-.brand{display:flex;align-items:baseline;gap:10px}
-.brand b{font-size:22px;letter-spacing:.5px}
-.brand span{font-size:12px;color:#e9c9b4;font-style:italic}
-.kicker{font-size:11px;letter-spacing:2px;color:#e9c9b4;text-transform:uppercase}
+body{font-family:var(--font-body);background:var(--ground);color:var(--ink);line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--font-display);letter-spacing:-.01em;color:var(--ink)}
+.wrap{max-width:960px;margin:0 auto;padding:0 24px}
+
+/* header */
+header.top{background:var(--panel);border-bottom:1px solid var(--line);padding:14px 0}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.ltmlogo{display:flex;align-items:center;gap:12px}
+.ltmlogo>img{height:26px;width:auto;object-fit:contain;flex:none}
+.ltmword{line-height:1.15;border-left:1px solid var(--line);padding-left:12px}
+.ltmword b{font-family:var(--font-display);font-size:14px;font-weight:600;display:block;color:var(--ink)}
+.ltmword span{display:block;font-family:var(--font-display);font-size:10px;letter-spacing:.12em;color:var(--mutd);text-transform:uppercase;margin-top:2px}
+.kicker{font-family:var(--font-display);font-size:11px;letter-spacing:.16em;color:var(--mut);text-transform:uppercase}
 
 /* progress */
-.progress-bar{height:6px;background:var(--cream);}
-.progress-fill{height:6px;background:var(--rust);width:0;transition:width .3s}
+.progress-bar{height:3px;background:var(--line2)}
+.progress-fill{height:3px;background:var(--coral);width:0;transition:width .3s}
 
 /* cards */
-.screen{padding:34px 0 60px}
-.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:26px;margin-bottom:18px;box-shadow:0 1px 3px rgba(110,44,10,.06)}
-h1{font-size:30px;color:var(--dark);margin-bottom:8px;line-height:1.15}
-h2{font-size:19px;color:var(--dark);margin-bottom:14px}
-h3{font-size:15px;color:var(--rust);margin:0 0 8px;text-transform:uppercase;letter-spacing:1px}
-.lead{font-size:16px;color:#4a3d33;margin-bottom:18px}
-.pill{display:inline-block;background:var(--cream);color:var(--dark);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;margin:0 6px 6px 0}
-.sec-label{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-weight:700}
-.qtext{font-size:19px;color:var(--dark);font-weight:600;margin-bottom:4px}
-.qhint{font-size:13px;color:var(--muted);margin-bottom:18px}
+.screen{padding:36px 0 64px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-lg);padding:28px;margin-bottom:20px;box-shadow:var(--shadow-card)}
+h1{font-size:36px;font-weight:700;line-height:1.15;margin-bottom:10px}
+h2{font-size:22px;font-weight:600;margin-bottom:14px}
+h3{font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--coral);margin:0 0 10px}
+.lead{font-size:16px;color:var(--mut);margin-bottom:18px}
+.pill{display:inline-block;background:var(--coral-tint);color:var(--coral-dkr);border-radius:var(--radius-pill,999px);padding:5px 12px;font-size:12px;font-weight:600;margin:0 6px 6px 0;font-family:var(--font-display)}
+.eyebrow,.sec-label{font-family:var(--font-display);font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--coral);margin-bottom:8px}
+.qtext{font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.qhint{font-size:13px;color:var(--mutd);margin-bottom:18px}
 
 /* option buttons */
 .opts{display:flex;flex-direction:column;gap:10px}
-.opt{border:1.5px solid var(--line);border-radius:10px;padding:14px 16px;cursor:pointer;background:#fff;font-size:15px;transition:.15s;display:flex;align-items:center;gap:12px}
-.opt:hover{border-color:var(--rust);background:var(--cream2)}
-.opt.sel{border-color:var(--rust);background:var(--cream);font-weight:600}
+.opt{border:1.5px solid var(--line);border-radius:var(--radius-md);padding:14px 16px;cursor:pointer;background:var(--panel);font-size:15px;transition:.15s;display:flex;align-items:center;gap:12px}
+.opt:hover{border-color:var(--coral);background:var(--coral-tint)}
+.opt.sel{border-color:var(--coral);background:var(--coral-tint);font-weight:600}
 .opt .mark{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex:0 0 auto;display:flex;align-items:center;justify-content:center}
 .opt.multi .mark{border-radius:5px}
-.opt.sel .mark{border-color:var(--rust);background:var(--rust)}
+.opt.sel .mark{border-color:var(--coral);background:var(--coral)}
 .opt.sel .mark::after{content:'✓';color:#fff;font-size:12px;font-weight:bold}
-.opt .sub{display:block;font-size:12px;color:var(--muted);font-weight:400}
+.opt .sub{display:block;font-size:12px;color:var(--mutd);font-weight:400}
 
-/* cards scenario */
 .scen{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .scen .opt{flex-direction:column;align-items:flex-start;text-align:left}
-.scen .opt .tag{font-size:11px;font-weight:700;color:var(--rust);letter-spacing:1px}
+.scen .opt .tag{font-family:var(--font-display);font-size:11px;font-weight:700;color:var(--coral);letter-spacing:.12em}
 
-/* slider */
 .slider-wrap{padding:10px 4px}
-.slider-wrap input[type=range]{width:100%;accent-color:var(--rust)}
-.slider-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:8px}
-.slider-val{text-align:center;font-size:20px;font-weight:700;color:var(--rust);margin:10px 0}
+.slider-wrap input[type=range]{width:100%;accent-color:var(--coral)}
+.slider-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--mutd);margin-top:8px;font-family:var(--font-display)}
+.slider-val{text-align:center;font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--coral);margin:10px 0}
 
-/* drag rank */
 .rank-list{display:flex;flex-direction:column;gap:8px}
-.rank-item{border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;background:#fff;cursor:grab;display:flex;align-items:center;gap:12px;font-size:15px}
+.rank-item{border:1.5px solid var(--line);border-radius:var(--radius-md);padding:12px 14px;background:var(--panel);cursor:grab;display:flex;align-items:center;gap:12px;font-size:15px}
 .rank-item.dragging{opacity:.4}
-.rank-item .num{width:26px;height:26px;border-radius:50%;background:var(--rust);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex:0 0 auto}
-.rank-item .grip{color:var(--muted);margin-left:auto;font-size:18px}
+.rank-item .num{width:26px;height:26px;border-radius:50%;background:var(--coral);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:700;font-size:13px;flex:0 0 auto}
+.rank-item .grip{color:var(--mutd);margin-left:auto;font-size:18px}
 
-/* tf */
 .tf{display:flex;gap:12px}
 .tf .opt{flex:1;justify-content:center;font-weight:600}
 
-/* nav */
 .nav{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
-.btn{background:var(--rust);color:#fff;border:none;border-radius:8px;padding:13px 28px;font-size:15px;font-weight:600;cursor:pointer;transition:.15s}
-.btn:hover{background:var(--dark)}
-.btn:disabled{background:#d8c4b6;cursor:not-allowed}
-.btn.ghost{background:transparent;color:var(--rust);border:1.5px solid var(--line)}
-.btn.ghost:hover{background:var(--cream2);color:var(--dark)}
+.btn{background:var(--coral);color:#fff;border:none;border-radius:var(--radius-md);padding:13px 28px;font-family:var(--font-display);font-size:15px;font-weight:600;cursor:pointer;transition:.15s;letter-spacing:.01em}
+.btn:hover{background:var(--coral-dk)}
+.btn:disabled{background:var(--line);color:var(--mutd);cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--coral);border:1.5px solid var(--line)}
+.btn.ghost:hover{background:var(--coral-tint);color:var(--coral-dkr);border-color:var(--coral)}
 .btn.big{padding:16px 40px;font-size:17px}
-.qcount{font-size:13px;color:var(--muted)}
+.qcount{font-family:var(--font-display);font-size:13px;color:var(--mutd)}
 
 /* results */
-.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.badge{display:inline-block;padding:6px 14px;border-radius:20px;font-weight:700;font-size:14px;color:#fff;background:var(--rust)}
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.badge{display:inline-block;padding:6px 14px;border-radius:var(--radius-pill,999px);font-family:var(--font-display);font-weight:700;font-size:14px;color:#fff;background:var(--coral)}
 .band-scale{display:flex;gap:4px;margin-top:12px}
-.band-seg{flex:1;text-align:center;font-size:10px;padding:6px 2px;border-radius:5px;background:var(--cream);color:var(--muted)}
-.band-seg.on{background:var(--rust);color:#fff;font-weight:700}
+.band-seg{flex:1;text-align:center;font-family:var(--font-display);font-size:10px;font-weight:600;padding:6px 2px;border-radius:var(--radius-sm);background:var(--panel2);color:var(--mut);letter-spacing:.06em;text-transform:uppercase}
+.band-seg.on{background:var(--coral);color:#fff}
 .dimrow{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-.dimrow .dname{width:180px;font-size:12px;color:#4a3d33}
-.dimbar{flex:1;background:var(--cream);border-radius:6px;height:14px;overflow:hidden}
-.dimbar .fill{height:14px;background:var(--rust);border-radius:6px}
-.dimrow .dval{width:34px;text-align:right;font-weight:700;font-size:12px;color:var(--dark)}
-.move{border-left:4px solid var(--rust);background:var(--cream2);padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:10px}
-.move .mtitle{font-weight:700;color:var(--dark);margin-bottom:2px}
-.move .mmeta{font-size:12px;color:var(--muted)}
-.offer{border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px}
-.offer .ocode{font-weight:700;color:var(--rust)}
-.offer .odoor{font-size:12px;color:var(--green);font-weight:600;margin-top:4px}
-.handoff{background:linear-gradient(90deg,var(--cream),#fff);border:1px dashed var(--rust);border-radius:10px;padding:14px;margin-bottom:10px}
-.valuehook{background:var(--dark);color:#fff;border-radius:12px;padding:22px;text-align:center}
-.valuehook .big{font-size:34px;font-weight:800;color:#ffd9c2}
-.valuehook .lbl{font-size:13px;color:#e9c9b4;letter-spacing:1px;text-transform:uppercase}
-footer.foot{text-align:center;color:var(--muted);font-size:12px;padding:24px 0 40px}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-@media(max-width:720px){.res-grid,.scen,.two-col{grid-template-columns:1fr}.dimrow .dname{width:130px}}
-.chip-journey{padding:10px 14px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:8px}
-.chip-primary{background:var(--rust);color:#fff}
-.chip-secondary{background:var(--cream);color:var(--dark);border:1px solid var(--rust)}
+.dimrow .dname{width:200px;font-size:12px;color:var(--mut);font-family:var(--font-display);font-weight:500}
+.dimbar{flex:1;background:var(--panel2);border-radius:var(--radius-sm);height:12px;overflow:hidden}
+.dimbar .fill{height:12px;background:var(--coral);border-radius:var(--radius-sm)}
+.dimrow .dval{width:34px;text-align:right;font-family:var(--font-display);font-weight:700;font-size:12px;color:var(--ink)}
+.move{border-left:4px solid var(--coral);background:var(--panel2);padding:14px 18px;border-radius:0 var(--radius-md) var(--radius-md) 0;margin-bottom:10px}
+.move .mtitle{font-family:var(--font-display);font-weight:700;color:var(--ink);margin-bottom:2px}
+.move .mmeta{font-size:12px;color:var(--mut)}
+.offer{border:1px solid var(--line);border-radius:var(--radius-md);padding:16px;margin-bottom:10px;background:var(--panel)}
+.offer .ocode{font-family:var(--font-display);font-weight:700;color:var(--coral)}
+.offer .odoor{font-size:12px;color:var(--green);font-weight:600;margin-top:4px;font-family:var(--font-display)}
+.handoff{background:var(--coral-tint);border:1px dashed var(--coral);border-radius:var(--radius-md);padding:14px 16px;margin-bottom:10px;color:var(--ink)}
+.valuehook{background:var(--ink);color:#fff;border-radius:var(--radius-lg);padding:26px;text-align:center}
+.valuehook .big{font-family:var(--font-display);font-size:38px;font-weight:800;color:var(--coral);letter-spacing:-.01em}
+.valuehook .lbl{font-family:var(--font-display);font-size:12px;color:var(--mutd);letter-spacing:.16em;text-transform:uppercase}
+footer.foot{text-align:center;color:var(--mutd);font-size:12px;padding:28px 0 44px;font-family:var(--font-display);letter-spacing:.02em}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.chip-journey{padding:10px 14px;border-radius:var(--radius-md);font-family:var(--font-display);font-size:13px;font-weight:600;margin-bottom:8px}
+.chip-primary{background:var(--coral);color:#fff}
+.chip-secondary{background:var(--coral-tint);color:var(--coral-dkr);border:1px solid var(--coral)}
 .stage-flow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
-.stage{background:#fff;border:1px solid var(--line);border-radius:6px;padding:5px 10px;font-size:12px;color:#4a3d33}
+.stage{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-sm);padding:5px 10px;font-family:var(--font-display);font-size:12px;color:var(--mut)}
 .stage.cur{background:var(--green);color:#fff;border-color:var(--green);font-weight:700}
+@media(max-width:720px){.res-grid,.scen,.two-col{grid-template-columns:1fr}.dimrow .dname{width:130px}}
 </style>
 </head>
 <body>
 <header class="top">
   <div class="wrap">
-    <div class="brand"><b>Cloud IQ</b><span>free self-assessment</span></div>
-    <div class="kicker">LTM · Infrastructure Tech Advisory</div>
+    <div class="ltmlogo">
+      <img src="data:image/png;base64,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" alt="LTM"/>
+      <span class="ltmword"><b>Cloud IQ</b><span>free self-assessment</span></span>
+    </div>
+    <div class="kicker">Infrastructure Tech Advisory</div>
   </div>
 </header>
 <div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
 
 <div class="wrap screen" id="app"></div>
 
-<footer class="foot">LTM · Infrastructure Tech Advisory · Public Cloud &amp; Modernization &nbsp;·&nbsp; Cloud IQ diagnostic layer</footer>
+<footer class="foot">LTM &middot; Infrastructure Tech Advisory &middot; Public Cloud &amp; Modernization &nbsp;&middot;&nbsp; Cloud IQ diagnostic layer</footer>
+
 
 <script>
 /* ============================================================
@@ -228,7 +242,7 @@ const pfill=document.getElementById('pfill');
 function start(){
  app.innerHTML=`
   <div class="card">
-    <div class="kicker" style="color:var(--rust)">How every engagement finds its path</div>
+    <div class="kicker" style="color:var(--coral)">How every engagement finds its path</div>
     <h1>One front door,<br>two journeys.</h1>
     <p class="lead">Cloud IQ is a short, free diagnostic that finds out <b>where you are on your cloud journey</b> and <b>what hurts most</b> — then hands you a maturity scorecard and a prioritized set of moves.</p>
     <div style="margin:14px 0">
@@ -238,17 +252,17 @@ function start(){
       <span class="pill">📄 LTM PDF report</span>
     </div>
     <div class="two-col" style="margin:18px 0">
-      <div style="background:var(--cream2);border-radius:10px;padding:16px">
+      <div style="background:var(--panel2);border-radius:10px;padding:16px">
         <h3>Journey A · Optimize</h3>
         <div style="font-size:13px;color:#4a3d33">Already on cloud / mid-migration.<br><b>Diagnose → Optimize → Govern → Run</b></div>
       </div>
-      <div style="background:var(--cream2);border-radius:10px;padding:16px">
+      <div style="background:var(--panel2);border-radius:10px;padding:16px">
         <h3>Journey B · Decide & Modernize</h3>
         <div style="font-size:13px;color:#4a3d33">Not started / tentative / hybrid.<br><b>Diagnose → Decide → Modern → Build</b></div>
       </div>
     </div>
     <div class="nav"><span></span><button class="btn big" onclick="begin()">Start assessment →</button></div>
-    <p style="font-size:11px;color:var(--muted);margin-top:18px;line-height:1.5">
+    <p style="font-size:11px;color:var(--mut);margin-top:18px;line-height:1.5">
       This is a preliminary, indicative self-assessment intended for planning conversations only —
       not legal, tax, financial, or regulatory advice.
       All answers stay in your browser; nothing is transmitted to LTM unless you use Contact Us.
@@ -535,27 +549,27 @@ function showResults(R){
  const moves=R.moves.map(m=>{
    const dest = m.sep
      ? `Points to <b>${m.offer}</b>${m.note?` — ${m.note}`:` (separate offering)`}`
-     : `Offering <b>${m.offer} ${OFFERINGS[m.offer].name}</b>${m.note?` <span style="color:var(--muted)">— ${m.note}</span>`:""}`;
+     : `Offering <b>${m.offer} ${OFFERINGS[m.offer].name}</b>${m.note?` <span style="color:var(--mut)">— ${m.note}</span>`:""}`;
    return `<div class="move"><div class="mtitle">Move ${m.n}: Lift ${m.name} (now ${m.score}/5)</div>
    <div class="mmeta">→ ${dest}</div></div>`;
  }).join("");
 
  const offers=R.offers.map(o=>{const O=OFFERINGS[o.code];
    const spans=O.journey==="A/B shared"?`<span style="display:inline-block;background:var(--green);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.5px;margin-left:8px;vertical-align:middle">SPANS BOTH JOURNEYS</span>`:"";
-   const xref=O.xref?`<div style="font-size:11px;color:var(--rust);font-weight:600;margin-top:2px">${O.xref}</div>`:"";
+   const xref=O.xref?`<div style="font-size:11px;color:var(--coral);font-weight:600;margin-top:2px">${O.xref}</div>`:"";
    return `<div class="offer"><div><span class="ocode">${o.code}</span> — ${O.name}${spans}</div>
    ${xref}
-   <div style="font-size:12px;color:var(--muted);margin-top:4px">Journey ${O.journey} · ${o.why}</div>
-   <div class="odoor">Two doors: ${O.door}  ·  or advisory / consulting</div></div>`;}).join("") || `<div style="color:var(--muted)">No gaps triggered — you're in strong shape. A governance & optimization review still adds value.</div>`;
+   <div style="font-size:12px;color:var(--mut);margin-top:4px">Journey ${O.journey} · ${o.why}</div>
+   <div class="odoor">Two doors: ${O.door}  ·  or advisory / consulting</div></div>`;}).join("") || `<div style="color:var(--mut)">No gaps triggered — you're in strong shape. A governance & optimization review still adds value.</div>`;
 
  let handoffs="";
  if(R.sovFlag) handoffs+=`<div class="handoff">🔐 <b>Digital Sovereignty (Pillar 02)</b> — residency / regulatory exposure detected. Start with <b>Sovereign IQ</b>; deep-dive on posture with <b>Posture IQ</b>.</div>`;
  if(R.aiFlag) handoffs+=`<div class="handoff">🤖 <b>AI Infusion (Pillar 04)</b> — data & AI ambition detected. Cross-pillar referral; no Pillar-03 offering delivers the AI program. In-pillar foundation work stays with <b>03.6 Platform Engineering & Developer Experience</b>.</div>`;
  if(R.secReferral) handoffs+=`<div class="handoff">🛡 <b>LTM Security practice</b> — dedicated security services (SOC, threat, IAM program) belong to the LTM Security practice, not Pillar 03. Pillar 03 owns cloud <i>guardrails</i> only.</div>`;
- if(!handoffs) handoffs=`<div style="color:var(--muted)">No sovereignty, AI, or security-services referrals raised.</div>`;
+ if(!handoffs) handoffs=`<div style="color:var(--mut)">No sovereignty, AI, or security-services referrals raised.</div>`;
 
  const nextAccBlock = R.nextAcc.length
-   ? `<div class="card"><h3>Next in the accelerator funnel</h3>${R.nextAcc.map(n=>`<div class="handoff" style="border-style:solid">🧭 <b>${n.label}</b> <span style="color:var(--muted);font-size:12px">— ${n.why}</span></div>`).join("")}</div>`
+   ? `<div class="card"><h3>Next in the accelerator funnel</h3>${R.nextAcc.map(n=>`<div class="handoff" style="border-style:solid">🧭 <b>${n.label}</b> <span style="color:var(--mut);font-size:12px">— ${n.why}</span></div>`).join("")}</div>`
    : "";
 
  app.innerHTML=`
@@ -572,13 +586,13 @@ function showResults(R){
       <div class="stage-flow">${pM.stages.map((s,i)=>`<span class="stage ${i===0?'cur':''}">${s}</span>`).join("")}</div>
       ${R.hybrid?`<div style="margin-top:14px"><div class="chip-journey chip-secondary">ALSO RELEVANT — Journey ${R.secondary} · ${sM.name}</div>
         <div class="stage-flow">${sM.stages.map(s=>`<span class="stage">${s}</span>`).join("")}</div>
-        <div style="font-size:12px;color:var(--muted);margin-top:8px">You scored close on both — Cloud IQ classifies you <b>HYBRID</b> and surfaces offerings from both columns.</div></div>`:``}
+        <div style="font-size:12px;color:var(--mut);margin-top:8px">You scored close on both — Cloud IQ classifies you <b>HYBRID</b> and surfaces offerings from both columns.</div></div>`:``}
     </div>
     <div class="card">
       <h3>Maturity scorecard</h3>
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
         <span class="badge">Overall ${R.overall.toFixed(1)} / 5</span>
-        <span style="font-weight:700;color:var(--dark)">${R.band}</span>
+        <span style="font-weight:700;color:var(--ink)">${R.band}</span>
       </div>
       <div class="band-scale">${bandScale}</div>
       <canvas id="radar" height="220" style="margin-top:14px"></canvas>
@@ -602,7 +616,7 @@ function showResults(R){
         <div class="big">${fmt(R.leakLow)}–${fmt(R.leakHigh)}</div>
         <div style="font-size:12px;color:#e9c9b4;margin-top:6px">~${Math.round(R.wasteRate*100)}% waste across ~${R.apps} apps · triggers FinOps IQ / value case</div>
       </div>
-      <div style="font-size:11px;color:var(--muted);margin-top:10px">Directional estimate for prioritization only — a FinOps IQ deep-dive confirms the true number.</div>
+      <div style="font-size:11px;color:var(--mut);margin-top:10px">Directional estimate for prioritization only — a FinOps IQ deep-dive confirms the true number.</div>
     </div>
   </div>
 
@@ -618,12 +632,12 @@ function showResults(R){
 
   ${nextAccBlock}
 
-  <div class="card" style="text-align:center;background:var(--cream2)">
+  <div class="card" style="text-align:center;background:var(--panel2)">
     <h2 style="margin-bottom:6px">Take your report with you</h2>
     <p style="color:#4a3d33;margin-bottom:16px">Download the full LTM-branded Accelerate output pack as a PDF to share with your team.</p>
     <button class="btn big" onclick="downloadPDF()">📄 Download LTM PDF report</button>
     <div style="margin-top:12px"><button class="btn ghost" onclick="start()">Restart assessment</button></div>
-    <p style="font-size:11px;color:var(--muted);margin-top:18px;line-height:1.5">
+    <p style="font-size:11px;color:var(--mut);margin-top:18px;line-height:1.5">
       This is a preliminary, indicative self-assessment intended for planning conversations only —
       not legal, tax, financial, or regulatory advice.
       All answers stay in your browser; nothing is transmitted to LTM unless you use Contact Us.
@@ -642,12 +656,12 @@ function drawRadar(R){
  radarChart=new Chart(ctx,{
   type:'radar',
   data:{labels,datasets:[{label:'Your maturity',data,
-    backgroundColor:'rgba(168,68,16,0.20)',borderColor:'#A84410',
-    pointBackgroundColor:'#6E2C0A',borderWidth:2}]},
+    backgroundColor:'rgba(255,94,79,0.20)',borderColor:'#FF5E4F',
+    pointBackgroundColor:'#282828',borderWidth:2}]},
   options:{responsive:true,animation:{duration:600},
-    scales:{r:{min:0,max:5,ticks:{stepSize:1,color:'#8a7360'},
-      grid:{color:'#E4D2C4'},angleLines:{color:'#E4D2C4'},
-      pointLabels:{color:'#6E2C0A',font:{size:11,weight:'600'}}}},
+    scales:{r:{min:0,max:5,ticks:{stepSize:1,color:'#8E8E8E'},
+      grid:{color:'#DADADA'},angleLines:{color:'#DADADA'},
+      pointLabels:{color:'#282828',font:{size:11,weight:'600'}}}},
     plugins:{legend:{display:false}}}
  });
 }
@@ -662,7 +676,7 @@ function downloadPDF(){
  const H=doc.internal.pageSize.getHeight();
  const R=RESULT;
  const M=48;
- const rust=[168,68,16], dark=[110,44,10], green=[46,110,78], cream=[247,230,216], ink=[43,43,43], muted=[138,115,96];
+ const rust=[255,94,79], dark=[40,40,40], green=[53,117,77], cream=[245,245,245], ink=[40,40,40], muted=[142,142,142], panelLine=[218,218,218];
 
  const persona=QUESTIONS.find(x=>x.id==="Q0.1").opts[A["Q0.1"]][0];
  const industry=QUESTIONS.find(x=>x.id==="Q0.2").opts[A["Q0.2"]][0];
@@ -678,9 +692,9 @@ function downloadPDF(){
   doc.setFillColor(...dark);doc.rect(0,0,W,64,"F");
   doc.setFont("helvetica","bold");doc.setFontSize(18);doc.setTextColor(255,255,255);
   doc.text("Cloud IQ",M,34);
-  doc.setFont("helvetica","italic");doc.setFontSize(9);doc.setTextColor(233,201,180);
+  doc.setFont("helvetica","italic");doc.setFontSize(9);doc.setTextColor(200,200,200);
   doc.text("free self-assessment",M+90,34);
-  doc.setFont("helvetica","normal");doc.setFontSize(8);doc.setTextColor(233,201,180);
+  doc.setFont("helvetica","normal");doc.setFontSize(8);doc.setTextColor(200,200,200);
   doc.text("INFRASTRUCTURE TECH ADVISORY",W-M,26,{align:"right"});
   doc.setFontSize(11);doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");
   doc.text(title,W-M,44,{align:"right"});
@@ -761,7 +775,7 @@ function downloadPDF(){
   theme:"grid",
   headStyles:{fillColor:rust,textColor:255,fontSize:9},
   bodyStyles:{fontSize:8.5,textColor:ink},
-  alternateRowStyles:{fillColor:[251,241,233]},
+  alternateRowStyles:{fillColor:[245,245,245]},
   margin:{left:M,right:M},
   columnStyles:{0:{cellWidth:38,fontStyle:"bold"},2:{cellWidth:48,halign:"center"},3:{cellWidth:80}}
  });
@@ -784,9 +798,9 @@ function downloadPDF(){
  // Value hook
  y=sectionTitle(y,"5 · Quantified value hook");
  doc.setFillColor(...dark);doc.roundedRect(M,y,W-2*M,54,6,6,"F");
- doc.setFont("helvetica","bold");doc.setFontSize(18);doc.setTextColor(255,217,194);
+ doc.setFont("helvetica","bold");doc.setFontSize(18);doc.setTextColor(255,94,79);
  doc.text(`${fmt(R.leakLow)} – ${fmt(R.leakHigh)}`,W/2,y+26,{align:"center"});
- doc.setFont("helvetica","normal");doc.setFontSize(8.5);doc.setTextColor(233,201,180);
+ doc.setFont("helvetica","normal");doc.setFontSize(8.5);doc.setTextColor(200,200,200);
  doc.text(`Estimated annual cost leakage · ~${Math.round(R.wasteRate*100)}% waste across ~${R.apps} apps · triggers FinOps IQ`,W/2,y+42,{align:"center"});
  y+=68;
 
@@ -807,7 +821,7 @@ function downloadPDF(){
   theme:"grid",
   headStyles:{fillColor:green,textColor:255,fontSize:9},
   bodyStyles:{fontSize:8.5,textColor:ink},
-  alternateRowStyles:{fillColor:[251,241,233]},
+  alternateRowStyles:{fillColor:[245,245,245]},
   margin:{left:M,right:M},
   columnStyles:{0:{cellWidth:42,fontStyle:"bold"},2:{cellWidth:70},3:{cellWidth:120}}
  });
