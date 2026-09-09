@@ -121,6 +121,13 @@ footer.foot{text-align:center;color:var(--mutd);font-size:12px;padding:28px 0 44
 .stage{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-sm);padding:5px 10px;font-family:var(--font-display);font-size:12px;color:var(--mut)}
 .stage.cur{background:var(--green);color:#fff;border-color:var(--green);font-weight:700}
 @media(max-width:720px){.res-grid,.scen,.two-col{grid-template-columns:1fr}.dimrow .dname{width:130px}}
+.qblock{padding:20px 0;border-bottom:1px solid var(--line2)}
+.qblock:first-child{padding-top:4px}
+.qblock:last-child{border-bottom:none;padding-bottom:0}
+.resume{background:var(--coral-tint);border:1px solid var(--coral);border-radius:var(--radius-md);padding:12px 16px;margin-bottom:18px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.resume span{font-family:var(--font-display);font-weight:600;color:var(--coral-dkr);font-size:13px;flex:1}
+.resume button{font-family:var(--font-display);font-size:12px;font-weight:600;padding:6px 12px;border-radius:var(--radius-sm);cursor:pointer;border:1px solid var(--coral);background:var(--panel);color:var(--coral-dkr)}
+.resume button.primary{background:var(--coral);color:#fff;border-color:var(--coral)}
 </style>
 </head>
 <body>
@@ -145,7 +152,7 @@ footer.foot{text-align:center;color:var(--mutd);font-size:12px;padding:28px 0 44
    CloudIQ — data model (mirrors the workbook spec)
    ============================================================ */
 const QUESTIONS = [
- // Section 0 — Persona & Context
+ // ---- Persona & Context ----
  {id:"Q0.1",sec:"Persona & Context",q:"Which best describes your role?",type:"single",
   opts:[["CIO / CTO"],["Head of Infra / Cloud"],["Enterprise Architect"],["FinOps / Finance Lead"],["App / Dev Lead"],["Security / Compliance (CISO)"]]},
  {id:"Q0.2",sec:"Persona & Context",q:"Your industry?",type:"single",
@@ -156,63 +163,92 @@ const QUESTIONS = [
  {id:"Q0.4",sec:"Persona & Context",q:"Where is your estate today?",type:"single",
   opts:[["No cloud yet"],["Early / pilot"],["~Half migrated"],["Mostly on cloud"],["Cloud-native"]],
   route:{0:{B:2},1:{B:2},2:{A:1,B:1},3:{A:2},4:{A:2}}},
- {id:"Q0.5",sec:"Persona & Context",q:"Approx. size of application estate?",type:"slider",
+ {id:"Q0.5",sec:"Persona & Context",q:"Approx. size of application estate?",hint:"Used as a fallback when annual cloud spend is unknown.",type:"slider",
   scale:["<50","50–200","200–500","500+"], apps:[35,120,350,700]},
  {id:"Q0.6",sec:"Persona & Context",q:"Rank your top objectives.",hint:"Drag to order — most important at the top.",type:"rank",
   opts:["Cost reduction","Speed / agility","Compliance / sovereignty","Modernization","Resilience","AI enablement"],
   objDim:{"Cost reduction":"D3","Speed / agility":"D5","Compliance / sovereignty":"D7","Modernization":"D2","Resilience":"D4","AI enablement":"D8"},
   objJourney:{"Cost reduction":"A","Resilience":"A","Modernization":"B","Compliance / sovereignty":"B"}},
- // Section 1 — Journey Router
- {id:"Q1.1",sec:"Journey Router",q:"Pick the card that sounds most like you.",type:"cards",
+
+ // ---- Cloud footprint & spend (spend-anchored value hook) ----
+ {id:"Q0.7",sec:"Cloud footprint & spend",q:"Which cloud providers are in your estate?",hint:"Select all that apply.",type:"multi",
+  opts:[["AWS"],["Azure"],["Google Cloud"],["Oracle Cloud"],["Alibaba / Huawei"],["Private cloud"],["Other / none"]]},
+ {id:"Q0.8",sec:"Cloud footprint & spend",q:"Approximate annual public-cloud spend?",hint:"Used to anchor the value hook. Ranges are fine.",type:"single",
+  opts:[["Not sure"],["< $1M"],["$1–5M"],["$5–25M"],["$25–100M"],["$100M+"]],
+  midM:[0, 0.5, 3, 15, 60, 200]},
+ {id:"Q0.9",sec:"Cloud footprint & spend",q:"Commitment / discount coverage (RI, Savings Plans, CUD, EA)?",hint:"Roughly what share of your spend sits under commitments today.",type:"single",
+  opts:[["Don't know"],["0–20%"],["20–40%"],["40–60%"],["60–80%"],["80%+"]],
+  midPct:[0.1, 0.1, 0.3, 0.5, 0.7, 0.9]},
+ {id:"Q0.10",sec:"Cloud footprint & spend",q:"Which services drive most of the bill?",hint:"Pick up to 3.",type:"multi",max:3,
+  opts:[["Compute (VMs)"],["Containers / Kubernetes"],["Serverless"],["Managed databases"],["Data & analytics"],["AI / ML"],["Storage"],["Networking / CDN"],["SaaS-of-cloud"]]},
+
+ // ---- Journey signals ----
+ {id:"Q1.1",sec:"Journey signals",q:"Pick the card(s) that sound most like you.",hint:"Choose up to 2 — both journeys is a real answer.",type:"cards",multi:true,max:2,
   opts:[
    {tag:"A1",t:"On cloud but spend & ops is messy",j:{A:2}},
    {tag:"A2",t:"Migrated some — need to optimize & govern",j:{A:2}},
    {tag:"B1",t:"Not started / undecided on target",j:{B:2}},
-   {tag:"B2",t:"Modernizing apps / exiting the data centre",j:{B:2}},
-   {tag:"H",t:"Honestly, a bit of both",j:{A:1,B:1}}
+   {tag:"B2",t:"Modernizing apps / exiting the data centre",j:{B:2}}
   ]},
- {id:"Q1.2",sec:"Journey Router",q:"What hurts most right now?",hint:"Pick up to 3.",type:"multi",max:3,
+ {id:"Q1.2",sec:"Journey signals",q:"What hurts most right now?",hint:"Pick up to 3.",type:"multi",max:3,
   opts:[["Runaway cost"],["No governance"],["Legacy / tech debt"],["DC exit deadline"],["Skills gap"],["Security / compliance risk"],["Slow delivery"],["Unclear strategy"]]},
- // D1
+
+ // ---- D1 ----
  {id:"Q2.1",sec:"Cloud Strategy",dim:"D1",q:"Is your target operating landscape (where each workload runs) defined?",type:"single",
   opts:[["No"],["Loosely"],["Documented"],["TCO-modelled"],["Automated & reviewed"]],maturity:true},
  {id:"Q2.2",sec:"Cloud Strategy",dim:"D1",q:"How are workload placement decisions made?",type:"single",
   opts:[["Gut feel"],["Ad-hoc"],["Framework-based"],["TCO-modelled"],["Policy-automated"]],maturity:true},
- // D2
+ // ---- D2 ----
  {id:"Q3.1",sec:"Migration & Modernization",dim:"D2",q:"Have you defined dispositions (the 6 R's) for your apps?",type:"single",
   opts:[["No view"],["For a few"],["For key apps"],["Most of estate"],["Full & tracked"]],maturity:true},
  {id:"Q3.2",sec:"Migration & Modernization",dim:"D2",q:"How heavy is your legacy / technical debt?",type:"slider",
   scale:["Very heavy","Heavy","Moderate","Light","None"],maturity:true},
- // D3
+ // ---- D3 ----
  {id:"Q4.1",sec:"Cost & FinOps",dim:"D3",q:"How good is your cloud cost visibility & allocation?",type:"single",
   opts:[["None"],["Reactive bill review"],["Tagged & budgeted"],["Showback / chargeback"],["Unit economics"]],maturity:true},
  {id:"Q4.2",sec:"Cost & FinOps",dim:"D3",q:"Which FinOps practices are live?",hint:"Select all that apply.",type:"multi",
   opts:[["Tagging"],["Budgets / alerts"],["Showback / chargeback"],["Rightsizing"],["Commitment mgmt"],["Unit economics"]],maturityCount:true},
  {id:"Q4.3",sec:"Cost & FinOps",dim:"D3",q:"Estimated cloud waste / overspend?",type:"single",
   opts:[["Don't know"],["<10%"],["10–20%"],["20–30%"],[">30%"]], waste:[0.15,0.08,0.15,0.25,0.35]},
- // D4
+ // ---- D4 ----
  {id:"Q5.1",sec:"Hybrid & Multi-Cloud",dim:"D4",q:"How consistent is operations across your hybrid / multi-cloud estate?",type:"single",
   opts:[["Siloed"],["Manual"],["Defined model"],["Standardized"],["Unified control plane"]],maturity:true},
  {id:"Q5.2",sec:"Hybrid & Multi-Cloud",dim:"D4",q:"Do you run one operating model across environments?",type:"tf",maturityTF:true},
- // D5
+ // ---- D5 ----
  {id:"Q6.1",sec:"Platform & Automation",dim:"D5",q:"How mature is your automation / IaC?",type:"single",
   opts:[["Manual"],["Some scripts"],["IaC standardized"],["CI/CD + policy"],["Platform as product"]],maturity:true},
- {id:"Q6.2",sec:"Platform & Automation",dim:"D5",q:"Do teams have self-service 'golden paths'?",type:"tf",maturityTF:true,goldenPaths:true},
- // D6
+ {id:"Q6.2",sec:"Platform & Automation",dim:"D5",q:"Do teams have self-service &lsquo;golden paths&rsquo;?",
+  hint:"A paved-road path — starter templates, CI/CD, IaC and guardrails baked in — that most teams use by default.",
+  type:"single",
+  opts:[["No — every team rolls their own"],["Some teams do, most don't"],["Yes — a paved-road platform is available and used"]],
+  goldenMap:[1,3,5]},
+ // ---- D6 ----
  {id:"Q7.1",sec:"Data Centre & Estate",dim:"D6",q:"What is your data-centre situation?",type:"single",
   opts:[["Committed long-term"],["No plan"],["Evaluating exit"],["Exit planned"],["Exit underway / done"]],
   dcMaturity:[3,1,3,4,5], dcExit:[false,true,true,true,true]},
  {id:"Q7.2",sec:"Data Centre & Estate",dim:"D6",q:"Quality of your estate discovery / inventory?",type:"single",
   opts:[["None"],["Partial"],["Full inventory"],["Dependency-mapped"],["Live CMDB"]],maturity:true},
- // D7
+ // ---- D7 ----
  {id:"Q8.1",sec:"Governance, Guardrails & Security",dim:"D7",q:"How mature are your cloud guardrails & governance?",type:"single",
   opts:[["None"],["Reactive"],["Baseline defined"],["Enforced"],["Continuous compliance"]],maturity:true},
  {id:"Q8.2",sec:"Governance, Guardrails & Security",dim:"D7",q:"Do you have sovereignty / data-residency obligations?",type:"tf",sovFlagTF:true,maturityTF:true},
- // D8
+ // ---- D8 ----
  {id:"Q9.1",sec:"Data & AI Readiness",dim:"D8",q:"How ready is your data foundation for AI?",type:"single",
   opts:[["Siloed"],["Experiments"],["Governed platform"],["Productionizing"],["AI at scale"]],maturity:true},
  {id:"Q9.2",sec:"Data & AI Readiness",dim:"D8",q:"AI ambitions in the next 12 months?",hint:"Select all that apply.",type:"multi",
   opts:[["None yet"],["GenAI pilots"],["Copilots for staff"],["AI in products"],["Platform / ML at scale"]], aiFlagExcept:"None yet"}
+];
+
+// One card per group — collapses 26 individual screens into 9.
+const GROUPS = [
+ {name:"Persona & context",         qs:["Q0.1","Q0.2","Q0.3","Q0.4","Q0.5"]},
+ {name:"Your top objectives",       qs:["Q0.6"]},
+ {name:"Cloud footprint & spend",   qs:["Q0.7","Q0.8","Q0.9","Q0.10"]},
+ {name:"Journey signals",           qs:["Q1.1","Q1.2"]},
+ {name:"Strategy & modernization",  qs:["Q2.1","Q2.2","Q3.1","Q3.2"]},
+ {name:"Cost, FinOps & ops",        qs:["Q4.1","Q4.2","Q4.3","Q5.1","Q5.2"]},
+ {name:"Platform & estate",         qs:["Q6.1","Q6.2","Q7.1","Q7.2"]},
+ {name:"Governance, data & AI",     qs:["Q8.1","Q8.2","Q9.1","Q9.2"]}
 ];
 
 const DIM_NAMES={D1:"Cloud Strategy & Placement",D2:"Migration & Modernization",D3:"Cost & FinOps",
@@ -231,34 +267,58 @@ const OFFERINGS={
 /* ============================================================
    State
    ============================================================ */
-let idx=0;
-const A={}; // answers keyed by qid
+let gIdx=0;                           // current group card index
+const A={};                           // answers keyed by qid
 const app=document.getElementById('app');
 const pfill=document.getElementById('pfill');
+const STORE_KEY="cloudiq.v1.state";
+
+function saveState(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify({gIdx:gIdx, A:A, ts:Date.now()})); }catch(e){} }
+function loadState(){
+ try{
+  const raw=localStorage.getItem(STORE_KEY); if(!raw) return null;
+  const st=JSON.parse(raw); if(!st||!st.A||typeof st.gIdx!=="number") return null;
+  return st;
+ }catch(e){ return null; }
+}
+function clearState(){ try{ localStorage.removeItem(STORE_KEY); }catch(e){} }
+function hydrate(st){ Object.keys(A).forEach(k=>delete A[k]); Object.assign(A, st.A||{}); gIdx=st.gIdx||0; }
 
 /* ============================================================
    Render engine
    ============================================================ */
 function start(){
+ const st=loadState();
+ let resumeHtml="";
+ if(st && (st.gIdx>0 || Object.keys(st.A||{}).length>0)){
+  const pct = Math.round((st.gIdx/GROUPS.length)*100);
+  resumeHtml = `<div class="resume">
+    <span>You were partway through — ${pct}% complete. Resume where you left off?</span>
+    <button class="primary" onclick="resumeSaved()">Resume</button>
+    <button onclick="startFresh()">Start over</button>
+  </div>`;
+ }
  app.innerHTML=`
+  ${resumeHtml}
   <div class="card">
     <div class="kicker" style="color:var(--coral)">How every engagement finds its path</div>
     <h1>One front door,<br>two journeys.</h1>
     <p class="lead">Cloud IQ is a short, free diagnostic that finds out <b>where you are on your cloud journey</b> and <b>what hurts most</b> — then hands you a maturity scorecard and a prioritized set of moves.</p>
     <div style="margin:14px 0">
-      <span class="pill">⏱ ~8–10 minutes</span>
+      <span class="pill">⏱ ~6–8 minutes</span>
       <span class="pill">📊 Maturity scorecard</span>
       <span class="pill">🧭 Personalized roadmap</span>
       <span class="pill">📄 LTM PDF report</span>
+      <span class="pill">💾 Auto-saved in this browser</span>
     </div>
     <div class="two-col" style="margin:18px 0">
       <div style="background:var(--panel2);border-radius:10px;padding:16px">
         <h3>Journey A · Optimize</h3>
-        <div style="font-size:13px;color:#4a3d33">Already on cloud / mid-migration.<br><b>Diagnose → Optimize → Govern → Run</b></div>
+        <div style="font-size:13px;color:var(--mut)">Already on cloud / mid-migration.<br><b>Diagnose → Optimize → Govern → Run</b></div>
       </div>
       <div style="background:var(--panel2);border-radius:10px;padding:16px">
         <h3>Journey B · Decide & Modernize</h3>
-        <div style="font-size:13px;color:#4a3d33">Not started / tentative / hybrid.<br><b>Diagnose → Decide → Modern → Build</b></div>
+        <div style="font-size:13px;color:var(--mut)">Not started / tentative / hybrid.<br><b>Diagnose → Decide → Modern → Build</b></div>
       </div>
     </div>
     <div class="nav"><span></span><button class="btn big" onclick="begin()">Start assessment →</button></div>
@@ -271,41 +331,50 @@ function start(){
  pfill.style.width="0%";
 }
 
-function begin(){ idx=0; renderQ(); }
+function begin(){ clearState(); Object.keys(A).forEach(k=>delete A[k]); gIdx=0; renderGroup(); }
+function resumeSaved(){ const st=loadState(); if(!st){ begin(); return; } hydrate(st); renderGroup(); }
+function startFresh(){ clearState(); begin(); }
 
-function renderQ(){
- const Q=QUESTIONS[idx];
- pfill.style.width=((idx)/QUESTIONS.length*100)+"%";
- let body="";
- if(Q.type==="single") body=renderSingle(Q);
- else if(Q.type==="multi") body=renderMulti(Q);
- else if(Q.type==="cards") body=renderCards(Q);
- else if(Q.type==="slider") body=renderSlider(Q);
- else if(Q.type==="rank") body=renderRank(Q);
- else if(Q.type==="tf") body=renderTF(Q);
-
+function renderGroup(){
+ const G=GROUPS[gIdx];
+ pfill.style.width=((gIdx)/GROUPS.length*100)+"%";
+ const parts=G.qs.map(qid=>{
+  const Q=QUESTIONS.find(x=>x.id===qid);
+  if(shouldSkip(Q)) return "";
+  let body="";
+  if(Q.type==="single") body=renderSingle(Q);
+  else if(Q.type==="multi") body=renderMulti(Q);
+  else if(Q.type==="cards") body=renderCards(Q);
+  else if(Q.type==="slider") body=renderSlider(Q);
+  else if(Q.type==="rank") body=renderRank(Q);
+  else if(Q.type==="tf") body=renderTF(Q);
+  const meta=Q.dim?` <span style="color:var(--mutd);font-size:11px;font-weight:500;letter-spacing:.08em">· ${Q.dim}</span>`:"";
+  return `<div class="qblock"><div class="qtext">${Q.q}${meta}</div><div class="qhint">${Q.hint||"&nbsp;"}</div>${body}</div>`;
+ }).join("");
+ const answered=G.qs.every(qid=>{const Q=QUESTIONS.find(x=>x.id===qid);return shouldSkip(Q)||isAnswered(Q);});
  app.innerHTML=`
   <div class="card">
-    <div class="sec-label">Section — ${Q.sec}${Q.dim?` · ${Q.dim}`:""}</div>
-    <div class="qtext">${Q.q}</div>
-    <div class="qhint">${Q.hint||"&nbsp;"}</div>
-    ${body}
+    <div class="sec-label">${G.name}</div>
+    ${parts}
     <div class="nav" style="margin-top:22px">
-      <button class="btn ghost" onclick="prev()" ${idx===0?'style="visibility:hidden"':''}>← Back</button>
-      <span class="qcount">${idx+1} / ${QUESTIONS.length}</span>
-      <button class="btn" id="nextBtn" onclick="next()" ${isAnswered(Q)?'':'disabled'}>${idx===QUESTIONS.length-1?"See my results →":"Next →"}</button>
+      <button class="btn ghost" onclick="prevGroup()" ${gIdx===0?'style="visibility:hidden"':''}>← Back</button>
+      <span class="qcount">Card ${gIdx+1} of ${GROUPS.length}</span>
+      <button class="btn" id="nextBtn" onclick="nextGroup()" ${answered?"":"disabled"}>${gIdx===GROUPS.length-1?"See my results →":"Next →"}</button>
     </div>
   </div>`;
- if(Q.type==="rank") wireRank(Q);
+ G.qs.forEach(qid=>{const Q=QUESTIONS.find(x=>x.id===qid);if(Q.type==="rank" && !shouldSkip(Q)) wireRank(Q);});
+ saveState();
 }
+function shouldSkip(Q){ return false; }
 
 function isAnswered(Q){
  const v=A[Q.id];
  if(Q.type==="multi") return Array.isArray(v)&&v.length>0;
+ if(Q.type==="cards" && Q.multi) return Array.isArray(v)&&v.length>0;
  if(Q.type==="rank"||Q.type==="slider") return true; // defaults filled
  return v!==undefined&&v!==null;
 }
-function refreshNext(){const Q=QUESTIONS[idx];const b=document.getElementById('nextBtn');if(b)b.disabled=!isAnswered(Q);}
+function refreshNext(){const G=GROUPS[gIdx];const ok=G.qs.every(qid=>{const Q=QUESTIONS.find(x=>x.id===qid);return shouldSkip(Q)||isAnswered(Q);});const b=document.getElementById('nextBtn');if(b)b.disabled=!ok;saveState();}
 
 /* --- single --- */
 function renderSingle(Q){
@@ -314,7 +383,7 @@ function renderSingle(Q){
    return `<div class="opt ${sel}" onclick="pickSingle('${Q.id}',${i})"><span class="mark"></span><span>${o[0]}${o[1]?`<span class="sub">${o[1]}</span>`:""}</span></div>`;
  }).join("")+`</div>`;
 }
-function pickSingle(id,i){A[id]=i;renderQ();}
+function pickSingle(id,i){A[id]=i;renderGroup();}
 
 /* --- multi --- */
 function renderMulti(Q){
@@ -329,14 +398,17 @@ function pickMulti(id,i){
  let sel=A[id]||[];
  if(sel.includes(i)) sel=sel.filter(x=>x!==i);
  else{ if(Q.max&&sel.length>=Q.max){return;} sel=[...sel,i]; }
- A[id]=sel; renderQ();
+ A[id]=sel; renderGroup();
 }
 
 /* --- cards --- */
 function renderCards(Q){
+ const multi=!!Q.multi;
+ const sel = multi ? (A[Q.id]||[]) : [];
  return `<div class="scen">`+Q.opts.map((o,i)=>{
-  const sel=A[Q.id]===i?'sel':'';
-  return `<div class="opt ${sel}" onclick="pickSingle('${Q.id}',${i})"><span class="tag">${o.tag}</span><span>${o.t}</span></div>`;
+  const on = multi ? sel.includes(i) : A[Q.id]===i;
+  const handler = multi ? `pickMulti('${Q.id}',${i})` : `pickSingle('${Q.id}',${i})`;
+  return `<div class="opt ${on?'sel':''}" onclick="${handler}"><span class="tag">${o.tag}</span><span>${o.t}</span></div>`;
  }).join("")+`</div>`;
 }
 
@@ -395,8 +467,8 @@ function renderTF(Q){
  </div>`;
 }
 
-function next(){ if(idx<QUESTIONS.length-1){idx++;renderQ();} else {computeAndShow();} }
-function prev(){ if(idx>0){idx--;renderQ();} }
+function nextGroup(){ saveState(); if(gIdx<GROUPS.length-1){gIdx++;renderGroup();} else { clearState(); computeAndShow(); } }
+function prevGroup(){ if(gIdx>0){gIdx--;renderGroup();} }
 
 /* ============================================================
    Scoring & routing engine
@@ -406,11 +478,9 @@ function optLabel(qid){const Q=QUESTIONS.find(x=>x.id===qid);const v=A[qid];if(Q
 function compute(){
  // ---- Journey routing ----
  let JA=0,JB=0;
- // Q0.4
  const r04=QUESTIONS.find(x=>x.id==="Q0.4").route[A["Q0.4"]]||{};JA+=r04.A||0;JB+=r04.B||0;
- // Q1.1
- const c=QUESTIONS.find(x=>x.id==="Q1.1").opts[A["Q1.1"]].j;JA+=c.A||0;JB+=c.B||0;
- // Q0.6 top objective
+ const Q11=QUESTIONS.find(x=>x.id==="Q1.1");
+ (A["Q1.1"]||[]).forEach(i=>{ const j=Q11.opts[i].j; JA+=j.A||0; JB+=j.B||0; });
  const Q06=QUESTIONS.find(x=>x.id==="Q0.6");
  const top=A["Q0.6"][0];
  const oj=Q06.objJourney[top];if(oj==="A")JA++;if(oj==="B")JB++;
@@ -432,6 +502,7 @@ function compute(){
   else if(Q.maturityCount){ const n=(v||[]).length; add(Q.dim, Math.max(1,Math.round(n/Q.opts.length*5))); }
   else if(Q.maturityTF){ add(Q.dim, v===true?4:2); }
   else if(Q.dcMaturity){ add(Q.dim, Q.dcMaturity[v]); }
+  else if(Q.goldenMap){ add(Q.dim, Q.goldenMap[v]); }
  });
  Object.keys(DIM_NAMES).forEach(d=>{
   dimScores[d]= dimAcc[d]&&dimAcc[d].length ? dimAcc[d].reduce((a,b)=>a+b,0)/dimAcc[d].length : 3;
@@ -452,12 +523,22 @@ function compute(){
  const Q92=QUESTIONS.find(x=>x.id==="Q9.2");
  const aiFlag=(A["Q9.2"]||[]).some(i=>Q92.opts[i][0]!==Q92.aiFlagExcept);
 
- // ---- Value hook ----
+ // ---- Value hook — anchor on actual spend when we have it ----
  const wasteRate=QUESTIONS.find(x=>x.id==="Q4.3").waste[A["Q4.3"]];
  const apps=QUESTIONS.find(x=>x.id==="Q0.5").apps[A["Q0.5"]];
- const annualPerApp=42000; // directional est. annual cloud run-rate per app
- const leak=Math.round(apps*annualPerApp*wasteRate);
- const leakLow=Math.round(leak*0.8), leakHigh=Math.round(leak*1.2);
+ const Q08=QUESTIONS.find(x=>x.id==="Q0.8"); const Q09=QUESTIONS.find(x=>x.id==="Q0.9");
+ const spendMidM = (Q08.midM[A["Q0.8"]]||0);
+ const commitMid = (Q09.midPct[A["Q0.9"]]||0.1);
+ const spendBased = spendMidM > 0;
+ // commitments mitigate waste (they lock in price, not utilization) — halve the waste share sitting under a commitment
+ const effWaste = wasteRate * (1 - commitMid*0.5);
+ const leak = spendBased
+   ? Math.round(spendMidM*1000000*effWaste)
+   : Math.round(apps*42000*wasteRate);      // fallback: apps × directional per-app run-rate
+ const leakLow=Math.round(leak*0.75), leakHigh=Math.round(leak*1.25);
+ const hookBasis = spendBased
+   ? { kind:"spend", spendM:spendMidM, commitPct:Math.round(commitMid*100), spendLabel:Q08.opts[A["Q0.8"]][0] }
+   : { kind:"apps", apps:apps };
 
  // ---- Offering triggers ----
  const offers=[];
@@ -510,8 +591,11 @@ function compute(){
         d==="D8"?"data / platform foundation only — the AI program itself is Pillar 04 (AI Infusion)":null)
  }));
 
+ // provider mix (labels)
+ const Q07=QUESTIONS.find(x=>x.id==="Q0.7");
+ const providers=(A["Q0.7"]||[]).map(i=>Q07.opts[i][0]);
  return {JA,JB,hybrid,primary,secondary,dimScores,overall,band,sovFlag,aiFlag,
-   leakLow,leakHigh,wasteRate,apps,offers:offersDedup,moves,topDim,secReferral,nextAcc};
+   leakLow,leakHigh,wasteRate,apps,offers:offersDedup,moves,topDim,secReferral,nextAcc,hookBasis,providers};
 }
 
 function scoreBand(s){
@@ -614,9 +698,9 @@ function showResults(R){
       <div class="valuehook">
         <div class="lbl">Estimated annual cost leakage</div>
         <div class="big">${fmt(R.leakLow)}–${fmt(R.leakHigh)}</div>
-        <div style="font-size:12px;color:#e9c9b4;margin-top:6px">~${Math.round(R.wasteRate*100)}% waste across ~${R.apps} apps · triggers FinOps IQ / value case</div>
+        <div style="font-size:12px;color:var(--mutd);margin-top:6px">${R.hookBasis.kind==="spend" ? `Anchored on your <b>${R.hookBasis.spendLabel}</b> annual spend &middot; ~${Math.round(R.wasteRate*100)}% waste &middot; ~${R.hookBasis.commitPct}% commitment coverage` : `Fallback estimate: ~${Math.round(R.wasteRate*100)}% waste across ~${R.hookBasis.apps} apps &middot; provide actual spend for a tighter number`}</div>
       </div>
-      <div style="font-size:11px;color:var(--mut);margin-top:10px">Directional estimate for prioritization only — a FinOps IQ deep-dive confirms the true number.</div>
+      <div style="font-size:11px;color:var(--mut);margin-top:10px">Directional estimate for prioritization only — a FinOps Value Case + FinOps IQ deep-dive confirm the true number.</div>
     </div>
   </div>
 
@@ -715,12 +799,15 @@ function downloadPDF(){
  y+=22;
 
  // Lead profile box
- doc.setFillColor(...cream);doc.roundedRect(M,y,W-2*M,52,6,6,"F");
+ doc.setFillColor(...cream);doc.roundedRect(M,y,W-2*M,64,6,6,"F");
  doc.setFont("helvetica","bold");doc.setFontSize(10);doc.setTextColor(...dark);
  doc.text("LEAD PROFILE",M+14,y+18);
  doc.setFont("helvetica","normal");doc.setFontSize(10);doc.setTextColor(...ink);
- doc.text(`Persona: ${persona}     Industry: ${industry}     Estate: ~${R.apps} apps`,M+14,y+36);
- y+=72;
+ const provLine = R.providers.length ? R.providers.join(", ") : "Not specified";
+ const spendLine = R.hookBasis.kind==="spend" ? R.hookBasis.spendLabel : "not provided";
+ doc.text(`Persona: ${persona}     Industry: ${industry}     Estate: ~${R.apps} apps`,M+14,y+34);
+ doc.text(`Providers: ${provLine}     Annual cloud spend: ${spendLine}`,M+14,y+48);
+ y+=84;
 
  // Journey placement
  y=sectionTitle(y,"1 · Journey placement");
@@ -801,7 +888,10 @@ function downloadPDF(){
  doc.setFont("helvetica","bold");doc.setFontSize(18);doc.setTextColor(255,94,79);
  doc.text(`${fmt(R.leakLow)} – ${fmt(R.leakHigh)}`,W/2,y+26,{align:"center"});
  doc.setFont("helvetica","normal");doc.setFontSize(8.5);doc.setTextColor(200,200,200);
- doc.text(`Estimated annual cost leakage · ~${Math.round(R.wasteRate*100)}% waste across ~${R.apps} apps · triggers FinOps IQ`,W/2,y+42,{align:"center"});
+ const hookCaption = R.hookBasis.kind==="spend"
+   ? `Anchored on your ${R.hookBasis.spendLabel} annual spend · ~${Math.round(R.wasteRate*100)}% waste · ~${R.hookBasis.commitPct}% commitment coverage`
+   : `Fallback estimate: ~${Math.round(R.wasteRate*100)}% waste across ~${R.hookBasis.apps} apps · provide spend for a tighter number`;
+ doc.text(hookCaption,W/2,y+42,{align:"center"});
  y+=68;
 
  // Offerings + referrals table
