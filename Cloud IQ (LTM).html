@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Cloud IQ — Infrastructure Tech Advisory</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.8.2/jspdf.plugin.autotable.min.js"></script>
+<style>
+:root{
+  --rust:#A84410; --dark:#6E2C0A; --cream:#F7E6D8; --cream2:#FBF1E9;
+  --green:#2E6E4E; --ink:#2B2B2B; --line:#E4D2C4; --muted:#8a7360;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#faf6f2;color:var(--ink);line-height:1.5}
+.wrap{max-width:920px;margin:0 auto;padding:0 20px}
+header.top{background:var(--dark);color:#fff;padding:14px 0}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+.brand{display:flex;align-items:baseline;gap:10px}
+.brand b{font-size:22px;letter-spacing:.5px}
+.brand span{font-size:12px;color:#e9c9b4;font-style:italic}
+.kicker{font-size:11px;letter-spacing:2px;color:#e9c9b4;text-transform:uppercase}
+
+/* progress */
+.progress-bar{height:6px;background:var(--cream);}
+.progress-fill{height:6px;background:var(--rust);width:0;transition:width .3s}
+
+/* cards */
+.screen{padding:34px 0 60px}
+.card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:26px;margin-bottom:18px;box-shadow:0 1px 3px rgba(110,44,10,.06)}
+h1{font-size:30px;color:var(--dark);margin-bottom:8px;line-height:1.15}
+h2{font-size:19px;color:var(--dark);margin-bottom:14px}
+h3{font-size:15px;color:var(--rust);margin:0 0 8px;text-transform:uppercase;letter-spacing:1px}
+.lead{font-size:16px;color:#4a3d33;margin-bottom:18px}
+.pill{display:inline-block;background:var(--cream);color:var(--dark);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;margin:0 6px 6px 0}
+.sec-label{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:6px;font-weight:700}
+.qtext{font-size:19px;color:var(--dark);font-weight:600;margin-bottom:4px}
+.qhint{font-size:13px;color:var(--muted);margin-bottom:18px}
+
+/* option buttons */
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{border:1.5px solid var(--line);border-radius:10px;padding:14px 16px;cursor:pointer;background:#fff;font-size:15px;transition:.15s;display:flex;align-items:center;gap:12px}
+.opt:hover{border-color:var(--rust);background:var(--cream2)}
+.opt.sel{border-color:var(--rust);background:var(--cream);font-weight:600}
+.opt .mark{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex:0 0 auto;display:flex;align-items:center;justify-content:center}
+.opt.multi .mark{border-radius:5px}
+.opt.sel .mark{border-color:var(--rust);background:var(--rust)}
+.opt.sel .mark::after{content:'✓';color:#fff;font-size:12px;font-weight:bold}
+.opt .sub{display:block;font-size:12px;color:var(--muted);font-weight:400}
+
+/* cards scenario */
+.scen{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.scen .opt{flex-direction:column;align-items:flex-start;text-align:left}
+.scen .opt .tag{font-size:11px;font-weight:700;color:var(--rust);letter-spacing:1px}
+
+/* slider */
+.slider-wrap{padding:10px 4px}
+.slider-wrap input[type=range]{width:100%;accent-color:var(--rust)}
+.slider-labels{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);margin-top:8px}
+.slider-val{text-align:center;font-size:20px;font-weight:700;color:var(--rust);margin:10px 0}
+
+/* drag rank */
+.rank-list{display:flex;flex-direction:column;gap:8px}
+.rank-item{border:1.5px solid var(--line);border-radius:10px;padding:12px 14px;background:#fff;cursor:grab;display:flex;align-items:center;gap:12px;font-size:15px}
+.rank-item.dragging{opacity:.4}
+.rank-item .num{width:26px;height:26px;border-radius:50%;background:var(--rust);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;flex:0 0 auto}
+.rank-item .grip{color:var(--muted);margin-left:auto;font-size:18px}
+
+/* tf */
+.tf{display:flex;gap:12px}
+.tf .opt{flex:1;justify-content:center;font-weight:600}
+
+/* nav */
+.nav{display:flex;justify-content:space-between;align-items:center;margin-top:8px}
+.btn{background:var(--rust);color:#fff;border:none;border-radius:8px;padding:13px 28px;font-size:15px;font-weight:600;cursor:pointer;transition:.15s}
+.btn:hover{background:var(--dark)}
+.btn:disabled{background:#d8c4b6;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--rust);border:1.5px solid var(--line)}
+.btn.ghost:hover{background:var(--cream2);color:var(--dark)}
+.btn.big{padding:16px 40px;font-size:17px}
+.qcount{font-size:13px;color:var(--muted)}
+
+/* results */
+.res-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.badge{display:inline-block;padding:6px 14px;border-radius:20px;font-weight:700;font-size:14px;color:#fff;background:var(--rust)}
+.band-scale{display:flex;gap:4px;margin-top:12px}
+.band-seg{flex:1;text-align:center;font-size:10px;padding:6px 2px;border-radius:5px;background:var(--cream);color:var(--muted)}
+.band-seg.on{background:var(--rust);color:#fff;font-weight:700}
+.dimrow{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.dimrow .dname{width:180px;font-size:12px;color:#4a3d33}
+.dimbar{flex:1;background:var(--cream);border-radius:6px;height:14px;overflow:hidden}
+.dimbar .fill{height:14px;background:var(--rust);border-radius:6px}
+.dimrow .dval{width:34px;text-align:right;font-weight:700;font-size:12px;color:var(--dark)}
+.move{border-left:4px solid var(--rust);background:var(--cream2);padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:10px}
+.move .mtitle{font-weight:700;color:var(--dark);margin-bottom:2px}
+.move .mmeta{font-size:12px;color:var(--muted)}
+.offer{border:1px solid var(--line);border-radius:10px;padding:14px;margin-bottom:10px}
+.offer .ocode{font-weight:700;color:var(--rust)}
+.offer .odoor{font-size:12px;color:var(--green);font-weight:600;margin-top:4px}
+.handoff{background:linear-gradient(90deg,var(--cream),#fff);border:1px dashed var(--rust);border-radius:10px;padding:14px;margin-bottom:10px}
+.valuehook{background:var(--dark);color:#fff;border-radius:12px;padding:22px;text-align:center}
+.valuehook .big{font-size:34px;font-weight:800;color:#ffd9c2}
+.valuehook .lbl{font-size:13px;color:#e9c9b4;letter-spacing:1px;text-transform:uppercase}
+footer.foot{text-align:center;color:var(--muted);font-size:12px;padding:24px 0 40px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:720px){.res-grid,.scen,.two-col{grid-template-columns:1fr}.dimrow .dname{width:130px}}
+.chip-journey{padding:10px 14px;border-radius:10px;font-size:13px;font-weight:600;margin-bottom:8px}
+.chip-primary{background:var(--rust);color:#fff}
+.chip-secondary{background:var(--cream);color:var(--dark);border:1px solid var(--rust)}
+.stage-flow{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.stage{background:#fff;border:1px solid var(--line);border-radius:6px;padding:5px 10px;font-size:12px;color:#4a3d33}
+.stage.cur{background:var(--green);color:#fff;border-color:var(--green);font-weight:700}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand"><b>Cloud IQ</b><span>free self-assessment</span></div>
+    <div class="kicker">LTM · Infrastructure Tech Advisory</div>
+  </div>
+</header>
+<div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+
+<div class="wrap screen" id="app"></div>
+
+<footer class="foot">LTM · Infrastructure Tech Advisory · Public Cloud &amp; Modernization &nbsp;·&nbsp; Cloud IQ diagnostic layer</footer>
+
+<script>
+/* ============================================================
+   CloudIQ — data model (mirrors the workbook spec)
+   ============================================================ */
+const QUESTIONS = [
+ // Section 0 — Persona & Context
+ {id:"Q0.1",sec:"Persona & Context",q:"Which best describes your role?",type:"single",
+  opts:[["CIO / CTO"],["Head of Infra / Cloud"],["Enterprise Architect"],["FinOps / Finance Lead"],["App / Dev Lead"],["Security / Compliance (CISO)"]]},
+ {id:"Q0.2",sec:"Persona & Context",q:"Your industry?",type:"single",
+  opts:[["BFSI"],["Public Sector"],["Healthcare"],["Retail / CPG"],["Manufacturing"],["Telco / Media"],["Other"]]},
+ {id:"Q0.3",sec:"Persona & Context",q:"Which apply to your data & compliance context?",hint:"Select all that apply.",type:"multi",
+  opts:[["Data residency required"],["Sector regulation (DORA/HIPAA/etc.)"],["Government / public sector"],["Cross-border restrictions"],["None significant"]],
+  sovFlagExcept:"None significant"},
+ {id:"Q0.4",sec:"Persona & Context",q:"Where is your estate today?",type:"single",
+  opts:[["No cloud yet"],["Early / pilot"],["~Half migrated"],["Mostly on cloud"],["Cloud-native"]],
+  route:{0:{B:2},1:{B:2},2:{A:1,B:1},3:{A:2},4:{A:2}}},
+ {id:"Q0.5",sec:"Persona & Context",q:"Approx. size of application estate?",type:"slider",
+  scale:["<50","50–200","200–500","500+"], apps:[35,120,350,700]},
+ {id:"Q0.6",sec:"Persona & Context",q:"Rank your top objectives.",hint:"Drag to order — most important at the top.",type:"rank",
+  opts:["Cost reduction","Speed / agility","Compliance / sovereignty","Modernization","Resilience","AI enablement"],
+  objDim:{"Cost reduction":"D3","Speed / agility":"D5","Compliance / sovereignty":"D7","Modernization":"D2","Resilience":"D4","AI enablement":"D8"},
+  objJourney:{"Cost reduction":"A","Resilience":"A","Modernization":"B","Compliance / sovereignty":"B"}},
+ // Section 1 — Journey Router
+ {id:"Q1.1",sec:"Journey Router",q:"Pick the card that sounds most like you.",type:"cards",
+  opts:[
+   {tag:"A1",t:"On cloud but spend & ops is messy",j:{A:2}},
+   {tag:"A2",t:"Migrated some — need to optimize & govern",j:{A:2}},
+   {tag:"B1",t:"Not started / undecided on target",j:{B:2}},
+   {tag:"B2",t:"Modernizing apps / exiting the data centre",j:{B:2}},
+   {tag:"H",t:"Honestly, a bit of both",j:{A:1,B:1}}
+  ]},
+ {id:"Q1.2",sec:"Journey Router",q:"What hurts most right now?",hint:"Pick up to 3.",type:"multi",max:3,
+  opts:[["Runaway cost"],["No governance"],["Legacy / tech debt"],["DC exit deadline"],["Skills gap"],["Security / compliance risk"],["Slow delivery"],["Unclear strategy"]]},
+ // D1
+ {id:"Q2.1",sec:"Cloud Strategy",dim:"D1",q:"Is your target operating landscape (where each workload runs) defined?",type:"single",
+  opts:[["No"],["Loosely"],["Documented"],["TCO-modelled"],["Automated & reviewed"]],maturity:true},
+ {id:"Q2.2",sec:"Cloud Strategy",dim:"D1",q:"How are workload placement decisions made?",type:"single",
+  opts:[["Gut feel"],["Ad-hoc"],["Framework-based"],["TCO-modelled"],["Policy-automated"]],maturity:true},
+ // D2
+ {id:"Q3.1",sec:"Migration & Modernization",dim:"D2",q:"Have you defined dispositions (the 6 R's) for your apps?",type:"single",
+  opts:[["No view"],["For a few"],["For key apps"],["Most of estate"],["Full & tracked"]],maturity:true},
+ {id:"Q3.2",sec:"Migration & Modernization",dim:"D2",q:"How heavy is your legacy / technical debt?",type:"slider",
+  scale:["Very heavy","Heavy","Moderate","Light","None"],maturity:true},
+ // D3
+ {id:"Q4.1",sec:"Cost & FinOps",dim:"D3",q:"How good is your cloud cost visibility & allocation?",type:"single",
+  opts:[["None"],["Reactive bill review"],["Tagged & budgeted"],["Showback / chargeback"],["Unit economics"]],maturity:true},
+ {id:"Q4.2",sec:"Cost & FinOps",dim:"D3",q:"Which FinOps practices are live?",hint:"Select all that apply.",type:"multi",
+  opts:[["Tagging"],["Budgets / alerts"],["Showback / chargeback"],["Rightsizing"],["Commitment mgmt"],["Unit economics"]],maturityCount:true},
+ {id:"Q4.3",sec:"Cost & FinOps",dim:"D3",q:"Estimated cloud waste / overspend?",type:"single",
+  opts:[["Don't know"],["<10%"],["10–20%"],["20–30%"],[">30%"]], waste:[0.15,0.08,0.15,0.25,0.35]},
+ // D4
+ {id:"Q5.1",sec:"Hybrid & Multi-Cloud",dim:"D4",q:"How consistent is operations across your hybrid / multi-cloud estate?",type:"single",
+  opts:[["Siloed"],["Manual"],["Defined model"],["Standardized"],["Unified control plane"]],maturity:true},
+ {id:"Q5.2",sec:"Hybrid & Multi-Cloud",dim:"D4",q:"Do you run one operating model across environments?",type:"tf",maturityTF:true},
+ // D5
+ {id:"Q6.1",sec:"Platform & Automation",dim:"D5",q:"How mature is your automation / IaC?",type:"single",
+  opts:[["Manual"],["Some scripts"],["IaC standardized"],["CI/CD + policy"],["Platform as product"]],maturity:true},
+ {id:"Q6.2",sec:"Platform & Automation",dim:"D5",q:"Do teams have self-service 'golden paths'?",type:"tf",maturityTF:true,goldenPaths:true},
+ // D6
+ {id:"Q7.1",sec:"Data Centre & Estate",dim:"D6",q:"What is your data-centre situation?",type:"single",
+  opts:[["Committed long-term"],["No plan"],["Evaluating exit"],["Exit planned"],["Exit underway / done"]],
+  dcMaturity:[3,1,3,4,5], dcExit:[false,true,true,true,true]},
+ {id:"Q7.2",sec:"Data Centre & Estate",dim:"D6",q:"Quality of your estate discovery / inventory?",type:"single",
+  opts:[["None"],["Partial"],["Full inventory"],["Dependency-mapped"],["Live CMDB"]],maturity:true},
+ // D7
+ {id:"Q8.1",sec:"Governance, Guardrails & Security",dim:"D7",q:"How mature are your cloud guardrails & governance?",type:"single",
+  opts:[["None"],["Reactive"],["Baseline defined"],["Enforced"],["Continuous compliance"]],maturity:true},
+ {id:"Q8.2",sec:"Governance, Guardrails & Security",dim:"D7",q:"Do you have sovereignty / data-residency obligations?",type:"tf",sovFlagTF:true,maturityTF:true},
+ // D8
+ {id:"Q9.1",sec:"Data & AI Readiness",dim:"D8",q:"How ready is your data foundation for AI?",type:"single",
+  opts:[["Siloed"],["Experiments"],["Governed platform"],["Productionizing"],["AI at scale"]],maturity:true},
+ {id:"Q9.2",sec:"Data & AI Readiness",dim:"D8",q:"AI ambitions in the next 12 months?",hint:"Select all that apply.",type:"multi",
+  opts:[["None yet"],["GenAI pilots"],["Copilots for staff"],["AI in products"],["Platform / ML at scale"]], aiFlagExcept:"None yet"}
+];
+
+const DIM_NAMES={D1:"Cloud Strategy & Placement",D2:"Migration & Modernization",D3:"Cost & FinOps",
+ D4:"Hybrid & Multi-Cloud Ops",D5:"Platform & Automation",D6:"Data Centre & Estate",
+ D7:"Governance, Guardrails & Security",D8:"Data & AI Readiness"};
+
+const OFFERINGS={
+ "03.1":{name:"Right Cloud Strategy & Workload Placement",journey:"B",door:"Advisory → Decide"},
+ "03.2":{name:"Hybrid & Multi-Cloud Management",journey:"A",door:"Advise → Run (managed)"},
+ "03.3":{name:"FinOps Excellence & Cloud Unit Economics",journey:"A",door:"Advise → Execute",xref:"+ FinOps IQ"},
+ "03.4":{name:"Application Modernization",journey:"A/B shared",door:"Advise → Build"},
+ "03.5":{name:"Data Centre & Compute Capacity Strategy",journey:"B",door:"Advise → Migration execution",xref:"+ Modernization IQ"},
+ "03.6":{name:"Platform Engineering & Developer Experience",journey:"A/B shared",door:"Advise → Build"}
+};
+
+/* ============================================================
+   State
+   ============================================================ */
+let idx=0;
+const A={}; // answers keyed by qid
+const app=document.getElementById('app');
+const pfill=document.getElementById('pfill');
+
+/* ============================================================
+   Render engine
+   ============================================================ */
+function start(){
+ app.innerHTML=`
+  <div class="card">
+    <div class="kicker" style="color:var(--rust)">How every engagement finds its path</div>
+    <h1>One front door,<br>two journeys.</h1>
+    <p class="lead">Cloud IQ is a short, free diagnostic that finds out <b>where you are on your cloud journey</b> and <b>what hurts most</b> — then hands you a maturity scorecard and a prioritized set of moves.</p>
+    <div style="margin:14px 0">
+      <span class="pill">⏱ ~8–10 minutes</span>
+      <span class="pill">📊 Maturity scorecard</span>
+      <span class="pill">🧭 Personalized roadmap</span>
+      <span class="pill">📄 LTM PDF report</span>
+    </div>
+    <div class="two-col" style="margin:18px 0">
+      <div style="background:var(--cream2);border-radius:10px;padding:16px">
+        <h3>Journey A · Optimize</h3>
+        <div style="font-size:13px;color:#4a3d33">Already on cloud / mid-migration.<br><b>Diagnose → Optimize → Govern → Run</b></div>
+      </div>
+      <div style="background:var(--cream2);border-radius:10px;padding:16px">
+        <h3>Journey B · Decide & Modernize</h3>
+        <div style="font-size:13px;color:#4a3d33">Not started / tentative / hybrid.<br><b>Diagnose → Decide → Modern → Build</b></div>
+      </div>
+    </div>
+    <div class="nav"><span></span><button class="btn big" onclick="begin()">Start assessment →</button></div>
+    <p style="font-size:11px;color:var(--muted);margin-top:18px;line-height:1.5">
+      This is a preliminary, indicative self-assessment intended for planning conversations only —
+      not legal, tax, financial, or regulatory advice.
+      All answers stay in your browser; nothing is transmitted to LTM unless you use Contact Us.
+    </p>
+  </div>`;
+ pfill.style.width="0%";
+}
+
+function begin(){ idx=0; renderQ(); }
+
+function renderQ(){
+ const Q=QUESTIONS[idx];
+ pfill.style.width=((idx)/QUESTIONS.length*100)+"%";
+ let body="";
+ if(Q.type==="single") body=renderSingle(Q);
+ else if(Q.type==="multi") body=renderMulti(Q);
+ else if(Q.type==="cards") body=renderCards(Q);
+ else if(Q.type==="slider") body=renderSlider(Q);
+ else if(Q.type==="rank") body=renderRank(Q);
+ else if(Q.type==="tf") body=renderTF(Q);
+
+ app.innerHTML=`
+  <div class="card">
+    <div class="sec-label">Section — ${Q.sec}${Q.dim?` · ${Q.dim}`:""}</div>
+    <div class="qtext">${Q.q}</div>
+    <div class="qhint">${Q.hint||"&nbsp;"}</div>
+    ${body}
+    <div class="nav" style="margin-top:22px">
+      <button class="btn ghost" onclick="prev()" ${idx===0?'style="visibility:hidden"':''}>← Back</button>
+      <span class="qcount">${idx+1} / ${QUESTIONS.length}</span>
+      <button class="btn" id="nextBtn" onclick="next()" ${isAnswered(Q)?'':'disabled'}>${idx===QUESTIONS.length-1?"See my results →":"Next →"}</button>
+    </div>
+  </div>`;
+ if(Q.type==="rank") wireRank(Q);
+}
+
+function isAnswered(Q){
+ const v=A[Q.id];
+ if(Q.type==="multi") return Array.isArray(v)&&v.length>0;
+ if(Q.type==="rank"||Q.type==="slider") return true; // defaults filled
+ return v!==undefined&&v!==null;
+}
+function refreshNext(){const Q=QUESTIONS[idx];const b=document.getElementById('nextBtn');if(b)b.disabled=!isAnswered(Q);}
+
+/* --- single --- */
+function renderSingle(Q){
+ return `<div class="opts">`+Q.opts.map((o,i)=>{
+   const sel=A[Q.id]===i?'sel':'';
+   return `<div class="opt ${sel}" onclick="pickSingle('${Q.id}',${i})"><span class="mark"></span><span>${o[0]}${o[1]?`<span class="sub">${o[1]}</span>`:""}</span></div>`;
+ }).join("")+`</div>`;
+}
+function pickSingle(id,i){A[id]=i;renderQ();}
+
+/* --- multi --- */
+function renderMulti(Q){
+ const sel=A[Q.id]||[];
+ return `<div class="opts">`+Q.opts.map((o,i)=>{
+   const on=sel.includes(i)?'sel':'';
+   return `<div class="opt multi ${on}" onclick="pickMulti('${Q.id}',${i})"><span class="mark"></span><span>${o[0]}</span></div>`;
+ }).join("")+`</div>`;
+}
+function pickMulti(id,i){
+ const Q=QUESTIONS.find(x=>x.id===id);
+ let sel=A[id]||[];
+ if(sel.includes(i)) sel=sel.filter(x=>x!==i);
+ else{ if(Q.max&&sel.length>=Q.max){return;} sel=[...sel,i]; }
+ A[id]=sel; renderQ();
+}
+
+/* --- cards --- */
+function renderCards(Q){
+ return `<div class="scen">`+Q.opts.map((o,i)=>{
+  const sel=A[Q.id]===i?'sel':'';
+  return `<div class="opt ${sel}" onclick="pickSingle('${Q.id}',${i})"><span class="tag">${o.tag}</span><span>${o.t}</span></div>`;
+ }).join("")+`</div>`;
+}
+
+/* --- slider --- */
+function renderSlider(Q){
+ if(A[Q.id]===undefined) A[Q.id]=Math.floor(Q.scale.length/2);
+ const v=A[Q.id];
+ return `<div class="slider-wrap">
+   <div class="slider-val" id="sv_${Q.id}">${Q.scale[v]}</div>
+   <input type="range" min="0" max="${Q.scale.length-1}" value="${v}" oninput="setSlider('${Q.id}',this.value)">
+   <div class="slider-labels"><span>${Q.scale[0]}</span><span>${Q.scale[Q.scale.length-1]}</span></div>
+ </div>`;
+}
+function setSlider(id,val){A[id]=+val;const Q=QUESTIONS.find(x=>x.id===id);document.getElementById('sv_'+id).textContent=Q.scale[val];refreshNext();}
+
+/* --- rank (drag & drop) --- */
+function renderRank(Q){
+ if(!A[Q.id]) A[Q.id]=[...Q.opts];
+ return `<div class="rank-list" id="rank_${Q.id}">`+A[Q.id].map((o,i)=>
+   `<div class="rank-item" draggable="true" data-val="${o}"><span class="num">${i+1}</span><span>${o}</span><span class="grip">⣿</span></div>`
+ ).join("")+`</div>`;
+}
+function wireRank(Q){
+ const list=document.getElementById('rank_'+Q.id);
+ let dragEl=null;
+ list.querySelectorAll('.rank-item').forEach(it=>{
+  it.addEventListener('dragstart',()=>{dragEl=it;it.classList.add('dragging');});
+  it.addEventListener('dragend',()=>{it.classList.remove('dragging');saveRank(Q);});
+ });
+ list.addEventListener('dragover',e=>{
+  e.preventDefault();
+  const after=getAfter(list,e.clientY);
+  if(after==null) list.appendChild(dragEl); else list.insertBefore(dragEl,after);
+ });
+}
+function getAfter(list,y){
+ const els=[...list.querySelectorAll('.rank-item:not(.dragging)')];
+ return els.reduce((closest,child)=>{
+  const box=child.getBoundingClientRect();
+  const offset=y-box.top-box.height/2;
+  if(offset<0&&offset>closest.offset) return {offset,element:child};
+  return closest;
+ },{offset:-Infinity}).element||null;
+}
+function saveRank(Q){
+ const list=document.getElementById('rank_'+Q.id);
+ A[Q.id]=[...list.querySelectorAll('.rank-item')].map(x=>x.dataset.val);
+ list.querySelectorAll('.rank-item .num').forEach((n,i)=>n.textContent=i+1);
+}
+
+/* --- true/false --- */
+function renderTF(Q){
+ return `<div class="tf">
+   <div class="opt ${A[Q.id]===true?'sel':''}" onclick="pickSingle('${Q.id}',true)"><span class="mark"></span><span>Yes / True</span></div>
+   <div class="opt ${A[Q.id]===false?'sel':''}" onclick="pickSingle('${Q.id}',false)"><span class="mark"></span><span>No / False</span></div>
+ </div>`;
+}
+
+function next(){ if(idx<QUESTIONS.length-1){idx++;renderQ();} else {computeAndShow();} }
+function prev(){ if(idx>0){idx--;renderQ();} }
+
+/* ============================================================
+   Scoring & routing engine
+   ============================================================ */
+function optLabel(qid){const Q=QUESTIONS.find(x=>x.id===qid);const v=A[qid];if(Q.type==="single"||Q.type==="cards"){return Q.type==="cards"?Q.opts[v].tag:Q.opts[v][0];}return v;}
+
+function compute(){
+ // ---- Journey routing ----
+ let JA=0,JB=0;
+ // Q0.4
+ const r04=QUESTIONS.find(x=>x.id==="Q0.4").route[A["Q0.4"]]||{};JA+=r04.A||0;JB+=r04.B||0;
+ // Q1.1
+ const c=QUESTIONS.find(x=>x.id==="Q1.1").opts[A["Q1.1"]].j;JA+=c.A||0;JB+=c.B||0;
+ // Q0.6 top objective
+ const Q06=QUESTIONS.find(x=>x.id==="Q0.6");
+ const top=A["Q0.6"][0];
+ const oj=Q06.objJourney[top];if(oj==="A")JA++;if(oj==="B")JB++;
+
+ const hybrid=Math.abs(JA-JB)<=1;
+ const primary=JA>=JB?"A":"B";
+ const secondary=primary==="A"?"B":"A";
+
+ // ---- Maturity per dimension ----
+ const dimScores={};
+ const dimAcc={};
+ function add(dim,val){ if(!dimAcc[dim])dimAcc[dim]=[]; dimAcc[dim].push(val); }
+
+ QUESTIONS.forEach(Q=>{
+  if(!Q.dim) return;
+  const v=A[Q.id];
+  if(Q.maturity && Q.type==="single") add(Q.dim,v+1);
+  else if(Q.maturity && Q.type==="slider") add(Q.dim,v+1);
+  else if(Q.maturityCount){ const n=(v||[]).length; add(Q.dim, Math.max(1,Math.round(n/Q.opts.length*5))); }
+  else if(Q.maturityTF){ add(Q.dim, v===true?4:2); }
+  else if(Q.dcMaturity){ add(Q.dim, Q.dcMaturity[v]); }
+ });
+ Object.keys(DIM_NAMES).forEach(d=>{
+  dimScores[d]= dimAcc[d]&&dimAcc[d].length ? dimAcc[d].reduce((a,b)=>a+b,0)/dimAcc[d].length : 3;
+ });
+
+ // weighting: top objective's dimension x1.5
+ const topDim=Q06.objDim[top];
+ let wsum=0,wtot=0;
+ Object.keys(dimScores).forEach(d=>{const w=(d===topDim)?1.5:1;wsum+=dimScores[d]*w;wtot+=w;});
+ const overall=wsum/wtot;
+ const band=scoreBand(overall);
+
+ // ---- Flags ----
+ const Q03=QUESTIONS.find(x=>x.id==="Q0.3");
+ const sov03=(A["Q0.3"]||[]).some(i=>Q03.opts[i][0]!==Q03.sovFlagExcept);
+ const sov82=A["Q8.2"]===true;
+ const sovFlag=sov03||sov82;
+ const Q92=QUESTIONS.find(x=>x.id==="Q9.2");
+ const aiFlag=(A["Q9.2"]||[]).some(i=>Q92.opts[i][0]!==Q92.aiFlagExcept);
+
+ // ---- Value hook ----
+ const wasteRate=QUESTIONS.find(x=>x.id==="Q4.3").waste[A["Q4.3"]];
+ const apps=QUESTIONS.find(x=>x.id==="Q0.5").apps[A["Q0.5"]];
+ const annualPerApp=42000; // directional est. annual cloud run-rate per app
+ const leak=Math.round(apps*annualPerApp*wasteRate);
+ const leakLow=Math.round(leak*0.8), leakHigh=Math.round(leak*1.2);
+
+ // ---- Offering triggers ----
+ const offers=[];
+ const notStarted=A["Q0.4"]<=1;
+ const heavyLegacy=A["Q3.2"]<=1;
+ const goldenFalse=A["Q6.2"]===false;
+ const dc=QUESTIONS.find(x=>x.id==="Q7.1");
+ const dcExit=dc.dcExit[A["Q7.1"]];
+ const poorInv=A["Q7.2"]<=1;
+ const noOps=A["Q5.1"]<=1;
+
+ if(dimScores.D3<=3 || wasteRate>=0.10) offers.push({code:"03.3",why:"Cost visibility / waste exposure"});
+ if(dimScores.D4<=3 || noOps) offers.push({code:"03.2",why:"Inconsistent hybrid / multi-cloud ops"});
+ if(dimScores.D5<=3 || goldenFalse) offers.push({code:"03.6",why:"Automation / platform gap"});
+ if(dimScores.D1<=3 || notStarted) offers.push({code:"03.1",why:"Undefined target / placement"});
+ if(dimScores.D2<=3 || heavyLegacy) offers.push({code:"03.4",why:"Legacy & modernization backlog"});
+ if(dcExit || poorInv) offers.push({code:"03.5",why:"DC exit / weak estate discovery"});
+ // D7 guardrails → 03.6 (in-pillar); dedicated security services referred to LTM Security (see referrals)
+ if(dimScores.D7<=3) offers.push({code:"03.6",why:"Guardrails / landing-zone / policy-as-code gap"});
+ // D8 AI ambition + weak data foundation → 03.6 (in-pillar readiness); AI program itself referred to Pillar 04
+ if(aiFlag && dimScores.D8<=3) offers.push({code:"03.6",why:"Data / platform foundation for AI"});
+
+ // dedupe by code, join reasons
+ const merged={};
+ offers.forEach(o=>{
+   if(!merged[o.code]) merged[o.code]={code:o.code,whys:[o.why]};
+   else if(!merged[o.code].whys.includes(o.why)) merged[o.code].whys.push(o.why);
+ });
+ const offersDedup=Object.values(merged).map(x=>({code:x.code,why:x.whys.join(" · ")}));
+
+ // ---- Cross-practice / cross-pillar referrals ----
+ const secReferral = dimScores.D7<=3; // dedicated security SERVICES → LTM Security practice
+
+ // ---- Next-accelerator suggestions (funnel) ----
+ const nextAcc=[];
+ if(dimScores.D3<=3 || wasteRate>=0.20) nextAcc.push({label:"FinOps Value Case, then FinOps IQ",why:"cost visibility & waste"});
+ if(primary==="B" && (dimScores.D6<=3 || dcExit || poorInv)) nextAcc.push({label:"Modernization IQ",why:"data-centre estate & modernization"});
+ if(sovFlag) nextAcc.push({label:"Sovereign IQ (Pillar 02)",why:"residency / regulatory exposure"});
+
+ // ---- 3-move roadmap: two lowest dims + top objective dim ----
+ const sorted=Object.keys(dimScores).sort((a,b)=>dimScores[a]-dimScores[b]);
+ const moveDims=[...new Set([sorted[0],sorted[1],topDim])].slice(0,3);
+ // D7/D8 moves point to the in-pillar item (03.6). Cross-pillar/cross-practice referrals
+ // (Sovereign IQ, AI Infusion, LTM Security) fire through the flag-driven handoff cards.
+ const dimOffer={D1:"03.1",D2:"03.4",D3:"03.3",D4:"03.2",D5:"03.6",D6:"03.5",D7:"03.6",D8:"03.6"};
+ const moves=moveDims.map((d,i)=>({
+   n:i+1, dim:d, name:DIM_NAMES[d], score:dimScores[d].toFixed(1),
+   offer:dimOffer[d], sep:false,
+   note:(d==="D7"?"guardrails only — dedicated security services referred to LTM Security practice":
+        d==="D8"?"data / platform foundation only — the AI program itself is Pillar 04 (AI Infusion)":null)
+ }));
+
+ return {JA,JB,hybrid,primary,secondary,dimScores,overall,band,sovFlag,aiFlag,
+   leakLow,leakHigh,wasteRate,apps,offers:offersDedup,moves,topDim,secReferral,nextAcc};
+}
+
+function scoreBand(s){
+ if(s<2)return "Nascent";if(s<3)return "Emerging";if(s<4)return "Established";if(s<4.5)return "Advanced";return "Leading";
+}
+const BANDS=["Nascent","Emerging","Established","Advanced","Leading"];
+const JOURNEY_META={
+ A:{name:"Optimize",stages:["Diagnose","Optimize","Govern","Run"],pop:"already on cloud / mid-migration"},
+ B:{name:"Decide & Modernize",stages:["Diagnose","Decide","Modern","Build"],pop:"not started / tentative / hybrid"}
+};
+function fmt(n){return "$"+n.toLocaleString();}
+
+/* ============================================================
+   Results screen
+   ============================================================ */
+let RESULT=null;
+function computeAndShow(){ RESULT=compute(); showResults(RESULT); }
+
+function showResults(R){
+ pfill.style.width="100%";
+ const persona=QUESTIONS.find(x=>x.id==="Q0.1").opts[A["Q0.1"]][0];
+ const industry=QUESTIONS.find(x=>x.id==="Q0.2").opts[A["Q0.2"]][0];
+ const pM=JOURNEY_META[R.primary], sM=JOURNEY_META[R.secondary];
+
+ // dimension bars
+ const dimBars=Object.keys(DIM_NAMES).map(d=>{
+  const v=R.dimScores[d];
+  return `<div class="dimrow"><div class="dname">${d} · ${DIM_NAMES[d]}</div>
+    <div class="dimbar"><div class="fill" style="width:${v/5*100}%"></div></div>
+    <div class="dval">${v.toFixed(1)}</div></div>`;
+ }).join("");
+
+ const bandScale=BANDS.map(b=>`<div class="band-seg ${b===R.band?'on':''}">${b}</div>`).join("");
+
+ const moves=R.moves.map(m=>{
+   const dest = m.sep
+     ? `Points to <b>${m.offer}</b>${m.note?` — ${m.note}`:` (separate offering)`}`
+     : `Offering <b>${m.offer} ${OFFERINGS[m.offer].name}</b>${m.note?` <span style="color:var(--muted)">— ${m.note}</span>`:""}`;
+   return `<div class="move"><div class="mtitle">Move ${m.n}: Lift ${m.name} (now ${m.score}/5)</div>
+   <div class="mmeta">→ ${dest}</div></div>`;
+ }).join("");
+
+ const offers=R.offers.map(o=>{const O=OFFERINGS[o.code];
+   const spans=O.journey==="A/B shared"?`<span style="display:inline-block;background:var(--green);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;letter-spacing:.5px;margin-left:8px;vertical-align:middle">SPANS BOTH JOURNEYS</span>`:"";
+   const xref=O.xref?`<div style="font-size:11px;color:var(--rust);font-weight:600;margin-top:2px">${O.xref}</div>`:"";
+   return `<div class="offer"><div><span class="ocode">${o.code}</span> — ${O.name}${spans}</div>
+   ${xref}
+   <div style="font-size:12px;color:var(--muted);margin-top:4px">Journey ${O.journey} · ${o.why}</div>
+   <div class="odoor">Two doors: ${O.door}  ·  or advisory / consulting</div></div>`;}).join("") || `<div style="color:var(--muted)">No gaps triggered — you're in strong shape. A governance & optimization review still adds value.</div>`;
+
+ let handoffs="";
+ if(R.sovFlag) handoffs+=`<div class="handoff">🔐 <b>Digital Sovereignty (Pillar 02)</b> — residency / regulatory exposure detected. Start with <b>Sovereign IQ</b>; deep-dive on posture with <b>Posture IQ</b>.</div>`;
+ if(R.aiFlag) handoffs+=`<div class="handoff">🤖 <b>AI Infusion (Pillar 04)</b> — data & AI ambition detected. Cross-pillar referral; no Pillar-03 offering delivers the AI program. In-pillar foundation work stays with <b>03.6 Platform Engineering & Developer Experience</b>.</div>`;
+ if(R.secReferral) handoffs+=`<div class="handoff">🛡 <b>LTM Security practice</b> — dedicated security services (SOC, threat, IAM program) belong to the LTM Security practice, not Pillar 03. Pillar 03 owns cloud <i>guardrails</i> only.</div>`;
+ if(!handoffs) handoffs=`<div style="color:var(--muted)">No sovereignty, AI, or security-services referrals raised.</div>`;
+
+ const nextAccBlock = R.nextAcc.length
+   ? `<div class="card"><h3>Next in the accelerator funnel</h3>${R.nextAcc.map(n=>`<div class="handoff" style="border-style:solid">🧭 <b>${n.label}</b> <span style="color:var(--muted);font-size:12px">— ${n.why}</span></div>`).join("")}</div>`
+   : "";
+
+ app.innerHTML=`
+  <div class="card">
+    <div class="sec-label">Your Cloud IQ result</div>
+    <h1 style="font-size:26px">${persona} · ${industry}</h1>
+    <p class="lead" style="margin-bottom:6px">Here's where you are on the journey — and what to do next.</p>
+  </div>
+
+  <div class="res-grid">
+    <div class="card">
+      <h3>Journey placement</h3>
+      <div class="chip-journey chip-primary">PRIMARY — Journey ${R.primary} · ${pM.name}</div>
+      <div class="stage-flow">${pM.stages.map((s,i)=>`<span class="stage ${i===0?'cur':''}">${s}</span>`).join("")}</div>
+      ${R.hybrid?`<div style="margin-top:14px"><div class="chip-journey chip-secondary">ALSO RELEVANT — Journey ${R.secondary} · ${sM.name}</div>
+        <div class="stage-flow">${sM.stages.map(s=>`<span class="stage">${s}</span>`).join("")}</div>
+        <div style="font-size:12px;color:var(--muted);margin-top:8px">You scored close on both — Cloud IQ classifies you <b>HYBRID</b> and surfaces offerings from both columns.</div></div>`:``}
+    </div>
+    <div class="card">
+      <h3>Maturity scorecard</h3>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+        <span class="badge">Overall ${R.overall.toFixed(1)} / 5</span>
+        <span style="font-weight:700;color:var(--dark)">${R.band}</span>
+      </div>
+      <div class="band-scale">${bandScale}</div>
+      <canvas id="radar" height="220" style="margin-top:14px"></canvas>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Dimension detail (D1–D8)</h3>
+    ${dimBars}
+  </div>
+
+  <div class="res-grid">
+    <div class="card">
+      <h3>Prioritized 3-move roadmap</h3>
+      ${moves}
+    </div>
+    <div class="card">
+      <h3>Quantified value hook</h3>
+      <div class="valuehook">
+        <div class="lbl">Estimated annual cost leakage</div>
+        <div class="big">${fmt(R.leakLow)}–${fmt(R.leakHigh)}</div>
+        <div style="font-size:12px;color:#e9c9b4;margin-top:6px">~${Math.round(R.wasteRate*100)}% waste across ~${R.apps} apps · triggers FinOps IQ / value case</div>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-top:10px">Directional estimate for prioritization only — a FinOps IQ deep-dive confirms the true number.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Recommended offerings (Pillar 03)</h3>
+    ${offers}
+  </div>
+
+  <div class="card">
+    <h3>Cross-pillar &amp; cross-practice referrals</h3>
+    ${handoffs}
+  </div>
+
+  ${nextAccBlock}
+
+  <div class="card" style="text-align:center;background:var(--cream2)">
+    <h2 style="margin-bottom:6px">Take your report with you</h2>
+    <p style="color:#4a3d33;margin-bottom:16px">Download the full LTM-branded Accelerate output pack as a PDF to share with your team.</p>
+    <button class="btn big" onclick="downloadPDF()">📄 Download LTM PDF report</button>
+    <div style="margin-top:12px"><button class="btn ghost" onclick="start()">Restart assessment</button></div>
+    <p style="font-size:11px;color:var(--muted);margin-top:18px;line-height:1.5">
+      This is a preliminary, indicative self-assessment intended for planning conversations only —
+      not legal, tax, financial, or regulatory advice.
+      All answers stay in your browser; nothing is transmitted to LTM unless you use Contact Us.
+    </p>
+  </div>`;
+
+ drawRadar(R);
+}
+
+let radarChart=null;
+function drawRadar(R){
+ const ctx=document.getElementById('radar');
+ const labels=Object.keys(DIM_NAMES);
+ const data=labels.map(d=>R.dimScores[d]);
+ if(radarChart) radarChart.destroy();
+ radarChart=new Chart(ctx,{
+  type:'radar',
+  data:{labels,datasets:[{label:'Your maturity',data,
+    backgroundColor:'rgba(168,68,16,0.20)',borderColor:'#A84410',
+    pointBackgroundColor:'#6E2C0A',borderWidth:2}]},
+  options:{responsive:true,animation:{duration:600},
+    scales:{r:{min:0,max:5,ticks:{stepSize:1,color:'#8a7360'},
+      grid:{color:'#E4D2C4'},angleLines:{color:'#E4D2C4'},
+      pointLabels:{color:'#6E2C0A',font:{size:11,weight:'600'}}}},
+    plugins:{legend:{display:false}}}
+ });
+}
+
+/* ============================================================
+   LTM-standard PDF export
+   ============================================================ */
+function downloadPDF(){
+ const {jsPDF}=window.jspdf;
+ const doc=new jsPDF({unit:"pt",format:"a4"});
+ const W=doc.internal.pageSize.getWidth();
+ const H=doc.internal.pageSize.getHeight();
+ const R=RESULT;
+ const M=48;
+ const rust=[168,68,16], dark=[110,44,10], green=[46,110,78], cream=[247,230,216], ink=[43,43,43], muted=[138,115,96];
+
+ const persona=QUESTIONS.find(x=>x.id==="Q0.1").opts[A["Q0.1"]][0];
+ const industry=QUESTIONS.find(x=>x.id==="Q0.2").opts[A["Q0.2"]][0];
+ const pM=JOURNEY_META[R.primary], sM=JOURNEY_META[R.secondary];
+
+ function footer(pageLabel){
+  doc.setDrawColor(...cream);doc.setLineWidth(1);doc.line(M,H-40,W-M,H-40);
+  doc.setFont("helvetica","normal");doc.setFontSize(8);doc.setTextColor(...muted);
+  doc.text("LTM · Infrastructure Tech Advisory · Public Cloud & Modernization",M,H-26);
+  doc.text(pageLabel,W-M,H-26,{align:"right"});
+ }
+ function headerBand(title){
+  doc.setFillColor(...dark);doc.rect(0,0,W,64,"F");
+  doc.setFont("helvetica","bold");doc.setFontSize(18);doc.setTextColor(255,255,255);
+  doc.text("Cloud IQ",M,34);
+  doc.setFont("helvetica","italic");doc.setFontSize(9);doc.setTextColor(233,201,180);
+  doc.text("free self-assessment",M+90,34);
+  doc.setFont("helvetica","normal");doc.setFontSize(8);doc.setTextColor(233,201,180);
+  doc.text("INFRASTRUCTURE TECH ADVISORY",W-M,26,{align:"right"});
+  doc.setFontSize(11);doc.setTextColor(255,255,255);doc.setFont("helvetica","bold");
+  doc.text(title,W-M,44,{align:"right"});
+ }
+ function sectionTitle(y,txt){
+  doc.setFont("helvetica","bold");doc.setFontSize(12);doc.setTextColor(...rust);
+  doc.text(txt.toUpperCase(),M,y);
+  doc.setDrawColor(...rust);doc.setLineWidth(1.5);doc.line(M,y+5,M+28,y+5);
+  return y+22;
+ }
+
+ /* ---------- PAGE 1 ---------- */
+ headerBand("Accelerate — Output Pack");
+ let y=96;
+ doc.setFont("helvetica","normal");doc.setFontSize(9);doc.setTextColor(...muted);
+ doc.text('"where are you on the journey, and what hurts?"',M,y);
+ doc.text("Prepared: "+new Date().toLocaleDateString(),W-M,y,{align:"right"});
+ y+=22;
+
+ // Lead profile box
+ doc.setFillColor(...cream);doc.roundedRect(M,y,W-2*M,52,6,6,"F");
+ doc.setFont("helvetica","bold");doc.setFontSize(10);doc.setTextColor(...dark);
+ doc.text("LEAD PROFILE",M+14,y+18);
+ doc.setFont("helvetica","normal");doc.setFontSize(10);doc.setTextColor(...ink);
+ doc.text(`Persona: ${persona}     Industry: ${industry}     Estate: ~${R.apps} apps`,M+14,y+36);
+ y+=72;
+
+ // Journey placement
+ y=sectionTitle(y,"1 · Journey placement");
+ doc.setFillColor(...rust);doc.roundedRect(M,y,W-2*M,30,5,5,"F");
+ doc.setFont("helvetica","bold");doc.setFontSize(10);doc.setTextColor(255,255,255);
+ doc.text(`PRIMARY — Journey ${R.primary} · ${pM.name}   (${pM.stages.join("  →  ")})`,M+12,y+19);
+ y+=38;
+ if(R.hybrid){
+  doc.setFillColor(...cream);doc.setDrawColor(...rust);doc.setLineWidth(1);
+  doc.roundedRect(M,y,W-2*M,28,5,5,"FD");
+  doc.setFont("helvetica","bold");doc.setFontSize(9);doc.setTextColor(...dark);
+  doc.text(`ALSO RELEVANT — Journey ${R.secondary} · ${sM.name}   (${sM.stages.join("  →  ")})`,M+12,y+18);
+  y+=36;
+  doc.setFont("helvetica","italic");doc.setFontSize(8.5);doc.setTextColor(...muted);
+  doc.text("Classified HYBRID — offerings surface from both columns.",M+12,y);
+  y+=16;
+ } else { y+=4; }
+
+ // Maturity scorecard with radar image
+ y=sectionTitle(y+6,"2 · Maturity scorecard");
+ doc.setFont("helvetica","bold");doc.setFontSize(11);doc.setTextColor(...dark);
+ doc.text(`Overall  ${R.overall.toFixed(1)} / 5   —   ${R.band}`,M,y+4);
+ // band scale
+ let bx=M, by=y+14, bw=(W-2*M)/5;
+ BANDS.forEach(b=>{
+  const on=b===R.band;
+  doc.setFillColor(...(on?rust:cream));doc.rect(bx,by,bw-3,16,"F");
+  doc.setFontSize(7.5);doc.setTextColor(...(on?[255,255,255]:muted));doc.setFont("helvetica",on?"bold":"normal");
+  doc.text(b,bx+(bw-3)/2,by+11,{align:"center"});
+  bx+=bw;
+ });
+ y=by+28;
+ // radar image
+ try{
+   const img=radarChart.toBase64Image("image/png",1);
+   doc.addImage(img,"PNG",W/2-110,y,220,180);
+ }catch(e){}
+ y+=190;
+ footer("Page 1 of 2");
+
+ /* ---------- PAGE 2 ---------- */
+ doc.addPage();
+ headerBand("Accelerate — Output Pack");
+ y=96;
+
+ // Dimension table
+ y=sectionTitle(y,"Dimension detail (D1–D8)");
+ doc.autoTable({
+  startY:y,
+  head:[["Dim","Dimension","Score","Band"]],
+  body:Object.keys(DIM_NAMES).map(d=>[d,DIM_NAMES[d],R.dimScores[d].toFixed(1),scoreBand(R.dimScores[d])]),
+  theme:"grid",
+  headStyles:{fillColor:rust,textColor:255,fontSize:9},
+  bodyStyles:{fontSize:8.5,textColor:ink},
+  alternateRowStyles:{fillColor:[251,241,233]},
+  margin:{left:M,right:M},
+  columnStyles:{0:{cellWidth:38,fontStyle:"bold"},2:{cellWidth:48,halign:"center"},3:{cellWidth:80}}
+ });
+ y=doc.lastAutoTable.finalY+22;
+
+ // 3-move roadmap
+ y=sectionTitle(y,"4 · Prioritized 3-move roadmap");
+ R.moves.forEach(m=>{
+  doc.setFillColor(251,241,233);doc.rect(M,y,W-2*M,30,"F");
+  doc.setFillColor(...rust);doc.rect(M,y,4,30,"F");
+  doc.setFont("helvetica","bold");doc.setFontSize(9.5);doc.setTextColor(...dark);
+  doc.text(`Move ${m.n}: Lift ${m.name} (now ${m.score}/5)`,M+12,y+13);
+  doc.setFont("helvetica","normal");doc.setFontSize(8.5);doc.setTextColor(...muted);
+  const dest=m.sep?`Points to ${m.offer} (separate offering)`:`Offering ${m.offer} ${OFFERINGS[m.offer].name}`;
+  doc.text("→ "+dest,M+12,y+24);
+  y+=36;
+ });
+ y+=4;
+
+ // Value hook
+ y=sectionTitle(y,"5 · Quantified value hook");
+ doc.setFillColor(...dark);doc.roundedRect(M,y,W-2*M,54,6,6,"F");
+ doc.setFont("helvetica","bold");doc.setFontSize(18);doc.setTextColor(255,217,194);
+ doc.text(`${fmt(R.leakLow)} – ${fmt(R.leakHigh)}`,W/2,y+26,{align:"center"});
+ doc.setFont("helvetica","normal");doc.setFontSize(8.5);doc.setTextColor(233,201,180);
+ doc.text(`Estimated annual cost leakage · ~${Math.round(R.wasteRate*100)}% waste across ~${R.apps} apps · triggers FinOps IQ`,W/2,y+42,{align:"center"});
+ y+=68;
+
+ // Offerings + referrals table
+ y=sectionTitle(y,"6 · Recommended offerings (Pillar 03) & 7 · Referrals");
+ const offerRows=R.offers.map(o=>{
+   const O=OFFERINGS[o.code];
+   const nm=O.name+(O.journey==="A/B shared"?"  [spans both journeys]":"")+(O.xref?"  ("+O.xref+")":"");
+   return [o.code,nm,O.journey,O.door];
+ });
+ if(R.sovFlag)     offerRows.push(["→","Sovereign IQ / Posture IQ (Pillar 02 · Digital Sovereignty)","Cross-pillar","Referral"]);
+ if(R.aiFlag)      offerRows.push(["→","AI Infusion (Pillar 04)","Cross-pillar","Referral"]);
+ if(R.secReferral) offerRows.push(["→","LTM Security practice (SOC / threat / IAM)","Cross-practice","Referral"]);
+ doc.autoTable({
+  startY:y,
+  head:[["Code","Offering","Journey","Onward course"]],
+  body:offerRows.length?offerRows:[["—","No gaps triggered — optimization review recommended","—","—"]],
+  theme:"grid",
+  headStyles:{fillColor:green,textColor:255,fontSize:9},
+  bodyStyles:{fontSize:8.5,textColor:ink},
+  alternateRowStyles:{fillColor:[251,241,233]},
+  margin:{left:M,right:M},
+  columnStyles:{0:{cellWidth:42,fontStyle:"bold"},2:{cellWidth:70},3:{cellWidth:120}}
+ });
+ y=doc.lastAutoTable.finalY+12;
+ if(R.nextAcc.length){
+   doc.setFont("helvetica","bold");doc.setFontSize(8.5);doc.setTextColor(...dark);
+   doc.text("Next in the accelerator funnel: "+R.nextAcc.map(n=>n.label).join("  ·  "),M,y,{maxWidth:W-2*M});
+   y+=14;
+ }
+ doc.setFont("helvetica","italic");doc.setFontSize(8);doc.setTextColor(...muted);
+ doc.text("Cloud IQ is the diagnostic layer — scores & flags feed FinOps IQ, Modernization IQ, Sovereign IQ / Posture IQ (Pillar 02) and AI Infusion (Pillar 04) downstream.",M,y,{maxWidth:W-2*M});
+ y+=22;
+ doc.setFont("helvetica","italic");doc.setFontSize(7.5);doc.setTextColor(...muted);
+ doc.text("This is a preliminary, indicative self-assessment intended for planning conversations only — not legal, tax, financial, or regulatory advice. Answers stay in the user's browser; nothing is transmitted to LTM unless Contact Us is used.",M,y,{maxWidth:W-2*M});
+
+ footer("Page 2 of 2");
+
+ doc.save(`CloudIQ_Report_${industry.replace(/[^a-z]/gi,'')}_${new Date().toISOString().slice(0,10)}.pdf`);
+}
+
+/* boot */
+start();
+</script>
+</body>
+</html>

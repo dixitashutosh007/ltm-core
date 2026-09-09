@@ -23,6 +23,19 @@
     },
 
     {
+      "src": "Cloud IQ (LTM).html",
+      "key": "cloud-iq.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
+    },
+    {
+      "src": "Cloud IQ (LTM).html",
+      "key": "cloud-iq-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
+    },
+
+    {
       "src": "Sovereign IQ (LTM).html",
       "key": "sovereign-screen.html",
       "contentType": "text/html; charset=utf-8",
