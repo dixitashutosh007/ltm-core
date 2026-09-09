@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="generator" content="Cloud IQ v1.2 · LTM Infrastructure Tech Advisory" />
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'none'; frame-ancestors 'self';">
 <title>Cloud IQ — Infrastructure Tech Advisory</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -121,6 +123,18 @@ footer.foot{text-align:center;color:var(--mutd);font-size:12px;padding:28px 0 44
 .stage{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius-sm);padding:5px 10px;font-family:var(--font-display);font-size:12px;color:var(--mut)}
 .stage.cur{background:var(--green);color:#fff;border-color:var(--green);font-weight:700}
 @media(max-width:720px){.res-grid,.scen,.two-col{grid-template-columns:1fr}.dimrow .dname{width:130px}}
+/* a11y */
+.opt:focus-visible, .btn:focus-visible, .rank-item:focus-visible, .navbtn:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+.opt{-webkit-tap-highlight-color:rgba(255,94,79,.2)}
+@media(max-width:520px){
+  .wrap{padding:0 16px}
+  .card{padding:20px}
+  h1{font-size:26px}
+  .btn.big{padding:14px 20px;font-size:15px}
+  .nav{flex-wrap:wrap;gap:8px}
+  .qcount{width:100%;text-align:center;order:3}
+}
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .qblock{padding:20px 0;border-bottom:1px solid var(--line2)}
 .qblock:first-child{padding-top:4px}
 .qblock:last-child{border-bottom:none;padding-bottom:0}
@@ -140,7 +154,7 @@ footer.foot{text-align:center;color:var(--mutd);font-size:12px;padding:28px 0 44
     <div class="kicker">Infrastructure Tech Advisory</div>
   </div>
 </header>
-<div class="progress-bar"><div class="progress-fill" id="pfill"></div></div>
+<div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-label="Assessment progress"><div class="progress-fill" id="pfill"></div></div>
 
 <div class="wrap screen" id="app"></div>
 
@@ -301,7 +315,17 @@ let gIdx=0;                           // current group card index
 const A={};                           // answers keyed by qid
 const app=document.getElementById('app');
 const pfill=document.getElementById('pfill');
+const CLOUD_IQ_VERSION="1.2";
 const STORE_KEY="cloudiq.v1.state";
+const SHARE_PREFIX="#s=";
+
+// Custom-event telemetry. Hosts can attach a listener; no external endpoint.
+window.CLOUD_IQ_TELEMETRY = window.CLOUD_IQ_TELEMETRY || {events:[]};
+function telemetry(type, detail){
+ const evt = Object.assign({type, ts:Date.now(), v:CLOUD_IQ_VERSION}, detail||{});
+ window.CLOUD_IQ_TELEMETRY.events.push(evt);
+ try{ window.dispatchEvent(new CustomEvent("cloudiq:event",{detail:evt})); }catch(e){}
+}
 
 function saveState(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify({gIdx:gIdx, A:A, ts:Date.now()})); }catch(e){} }
 function loadState(){
@@ -314,10 +338,47 @@ function loadState(){
 function clearState(){ try{ localStorage.removeItem(STORE_KEY); }catch(e){} }
 function hydrate(st){ Object.keys(A).forEach(k=>delete A[k]); Object.assign(A, st.A||{}); gIdx=st.gIdx||0; }
 
+function encodeShare(){
+ try{
+  const payload = JSON.stringify({v:CLOUD_IQ_VERSION, A:A});
+  const b64 = btoa(unescape(encodeURIComponent(payload))).replace(/=+$/,"");
+  return location.origin + location.pathname + SHARE_PREFIX + b64;
+ }catch(e){ return null; }
+}
+function decodeShareHash(){
+ try{
+  const h = location.hash||"";
+  if(!h.startsWith(SHARE_PREFIX)) return null;
+  const b64 = h.slice(SHARE_PREFIX.length);
+  const pad = "=".repeat((4 - b64.length%4)%4);
+  const json = decodeURIComponent(escape(atob(b64+pad)));
+  const s = JSON.parse(json);
+  return (s && s.A) ? s : null;
+ }catch(e){ return null; }
+}
+function shareResult(){
+ const url = encodeShare();
+ if(!url) return;
+ const toast = document.getElementById("shareToast");
+ const done = ok => { if(toast){ toast.textContent = ok?"Share link copied to clipboard.":"Couldn\u2019t copy \u2014 URL in console."; toast.style.opacity=1; setTimeout(()=>toast.style.opacity=0, 2600);} };
+ try{
+  if(navigator.clipboard && navigator.clipboard.writeText){
+   navigator.clipboard.writeText(url).then(()=>done(true), ()=>done(false));
+  } else {
+   const ta=document.createElement("textarea"); ta.value=url; document.body.appendChild(ta); ta.select();
+   document.execCommand("copy"); document.body.removeChild(ta); done(true);
+  }
+ }catch(e){ console.log(url); done(false); }
+ telemetry("share_generated");
+}
+
 /* ============================================================
    Render engine
    ============================================================ */
 function start(){
+ // Deep link: if a share hash exists, hydrate and jump to results
+ const shared = decodeShareHash();
+ if(shared){ hydrate(shared); telemetry("share_opened"); RESULT=compute(); showResults(RESULT); return; }
  const st=loadState();
  let resumeHtml="";
  if(st && (st.gIdx>0 || Object.keys(st.A||{}).length>0)){
@@ -355,13 +416,23 @@ function start(){
     <p style="font-size:11px;color:var(--mut);margin-top:18px;line-height:1.5">
       This is a preliminary, indicative self-assessment intended for planning conversations only —
       not legal, tax, financial, or regulatory advice.
-      All answers stay in your browser; nothing is transmitted to LTM unless you use Contact Us.
     </p>
+    <details style="margin-top:10px;font-size:11px;color:var(--mut);line-height:1.55">
+      <summary style="cursor:pointer;font-family:var(--font-display);font-weight:600;color:var(--mut)">Privacy &amp; data — what this page does</summary>
+      <div style="margin-top:8px">
+        <b>Nothing you type is transmitted to LTM</b> unless you explicitly use the Book a Readout button.
+        External resources loaded at runtime: Manrope from Google Fonts, Chart.js from jsDelivr, jsPDF from cdnjs — all CDN reads, no data sent.
+        Your progress is auto-saved to this browser only (<code>localStorage</code>) and cleared when you finish or restart.
+        If you use Share, an encoded copy of your answers sits in the URL fragment — treat that URL as sensitive.
+        A CSP header on this page blocks any other outbound requests (<code>connect-src 'none'</code>).
+      </div>
+    </details>
+    <div style="text-align:right;margin-top:10px;font-family:var(--font-display);font-size:10px;color:var(--mutd);letter-spacing:.08em">Cloud IQ v${CLOUD_IQ_VERSION}</div>
   </div>`;
  pfill.style.width="0%";
 }
 
-function begin(){ clearState(); Object.keys(A).forEach(k=>delete A[k]); gIdx=0; renderGroup(); }
+function begin(){ clearState(); Object.keys(A).forEach(k=>delete A[k]); gIdx=0; telemetry("assessment_started"); renderGroup(); }
 function resumeSaved(){ const st=loadState(); if(!st){ begin(); return; } hydrate(st); renderGroup(); }
 function startFresh(){ clearState(); begin(); }
 
@@ -408,9 +479,9 @@ function refreshNext(){const G=GROUPS[gIdx];const ok=G.qs.every(qid=>{const Q=QU
 
 /* --- single --- */
 function renderSingle(Q){
- return `<div class="opts">`+Q.opts.map((o,i)=>{
+ return `<div class="opts" role="radiogroup" aria-label="${Q.q}">`+Q.opts.map((o,i)=>{
    const sel=A[Q.id]===i?'sel':'';
-   return `<div class="opt ${sel}" onclick="pickSingle('${Q.id}',${i})"><span class="mark"></span><span>${o[0]}${o[1]?`<span class="sub">${o[1]}</span>`:""}</span></div>`;
+   return `<div class="opt ${sel}" role="radio" tabindex="0" aria-checked="${sel?'true':'false'}" onclick="pickSingle('${Q.id}',${i})" onkeydown="kb(event,()=>pickSingle('${Q.id}',${i}))"><span class="mark"></span><span>${o[0]}${o[1]?`<span class="sub">${o[1]}</span>`:""}</span></div>`;
  }).join("")+`</div>`;
 }
 function pickSingle(id,i){A[id]=i;renderGroup();}
@@ -418,9 +489,9 @@ function pickSingle(id,i){A[id]=i;renderGroup();}
 /* --- multi --- */
 function renderMulti(Q){
  const sel=A[Q.id]||[];
- return `<div class="opts">`+Q.opts.map((o,i)=>{
+ return `<div class="opts" role="group" aria-label="${Q.q}">`+Q.opts.map((o,i)=>{
    const on=sel.includes(i)?'sel':'';
-   return `<div class="opt multi ${on}" onclick="pickMulti('${Q.id}',${i})"><span class="mark"></span><span>${o[0]}</span></div>`;
+   return `<div class="opt multi ${on}" role="checkbox" tabindex="0" aria-checked="${on?'true':'false'}" onclick="pickMulti('${Q.id}',${i})" onkeydown="kb(event,()=>pickMulti('${Q.id}',${i}))"><span class="mark"></span><span>${o[0]}</span></div>`;
  }).join("")+`</div>`;
 }
 function pickMulti(id,i){
@@ -435,10 +506,12 @@ function pickMulti(id,i){
 function renderCards(Q){
  const multi=!!Q.multi;
  const sel = multi ? (A[Q.id]||[]) : [];
- return `<div class="scen">`+Q.opts.map((o,i)=>{
+ const role = multi ? "group" : "radiogroup";
+ return `<div class="scen" role="${role}" aria-label="${Q.q}">`+Q.opts.map((o,i)=>{
   const on = multi ? sel.includes(i) : A[Q.id]===i;
   const handler = multi ? `pickMulti('${Q.id}',${i})` : `pickSingle('${Q.id}',${i})`;
-  return `<div class="opt ${on?'sel':''}" onclick="${handler}"><span class="tag">${o.tag}</span><span>${o.t}</span></div>`;
+  const itemRole = multi ? "checkbox" : "radio";
+  return `<div class="opt ${on?'sel':''}" role="${itemRole}" tabindex="0" aria-checked="${on?'true':'false'}" onclick="${handler}" onkeydown="kb(event,()=>${handler})"><span class="tag">${o.tag}</span><span>${o.t}</span></div>`;
  }).join("")+`</div>`;
 }
 
@@ -451,6 +524,10 @@ function renderSlider(Q){
    <input type="range" min="0" max="${Q.scale.length-1}" value="${v}" oninput="setSlider('${Q.id}',this.value)">
    <div class="slider-labels"><span>${Q.scale[0]}</span><span>${Q.scale[Q.scale.length-1]}</span></div>
  </div>`;
+}
+function kb(ev, fn){
+ // Enter or Space activates a focused option/card
+ if(ev.key==="Enter"||ev.key===" "||ev.key==="Spacebar"){ ev.preventDefault(); fn(); }
 }
 function setSlider(id,val){A[id]=+val;const Q=QUESTIONS.find(x=>x.id===id);document.getElementById('sv_'+id).textContent=Q.scale[val];refreshNext();}
 
@@ -491,13 +568,13 @@ function saveRank(Q){
 
 /* --- true/false --- */
 function renderTF(Q){
- return `<div class="tf">
-   <div class="opt ${A[Q.id]===true?'sel':''}" onclick="pickSingle('${Q.id}',true)"><span class="mark"></span><span>Yes / True</span></div>
-   <div class="opt ${A[Q.id]===false?'sel':''}" onclick="pickSingle('${Q.id}',false)"><span class="mark"></span><span>No / False</span></div>
+ return `<div class="tf" role="radiogroup" aria-label="${Q.q}">
+   <div class="opt ${A[Q.id]===true?'sel':''}" role="radio" tabindex="0" aria-checked="${A[Q.id]===true?'true':'false'}" onclick="pickSingle('${Q.id}',true)" onkeydown="kb(event,()=>pickSingle('${Q.id}',true))"><span class="mark"></span><span>Yes / True</span></div>
+   <div class="opt ${A[Q.id]===false?'sel':''}" role="radio" tabindex="0" aria-checked="${A[Q.id]===false?'true':'false'}" onclick="pickSingle('${Q.id}',false)" onkeydown="kb(event,()=>pickSingle('${Q.id}',false))"><span class="mark"></span><span>No / False</span></div>
  </div>`;
 }
 
-function nextGroup(){ saveState(); if(gIdx<GROUPS.length-1){gIdx++;renderGroup();} else { clearState(); computeAndShow(); } }
+function nextGroup(){ saveState(); telemetry("card_completed",{gIdx:gIdx,card:GROUPS[gIdx].name}); if(gIdx<GROUPS.length-1){gIdx++;renderGroup();} else { clearState(); computeAndShow(); } }
 function prevGroup(){ if(gIdx>0){gIdx--;renderGroup();} }
 
 /* ============================================================
@@ -603,10 +680,22 @@ function compute(){
  const secReferral = dimScores.D7<=3; // dedicated security SERVICES → LTM Security practice
 
  // ---- Next-accelerator suggestions (funnel) ----
+ // context params for sibling accelerator handoffs
+ const industryForLink = QUESTIONS.find(x=>x.id==="Q0.2").opts[A["Q0.2"]][0];
+ const spendForLink = (A["Q0.8"] !== undefined) ? QUESTIONS.find(x=>x.id==="Q0.8").opts[A["Q0.8"]][0] : "";
+ const qp = (extra) => {
+   const base = {from:"cloud-iq", v:CLOUD_IQ_VERSION, industry:industryForLink};
+   if(spendForLink) base.spend = spendForLink;
+   Object.assign(base, extra||{});
+   return "?" + Object.entries(base).filter(([,v])=>v!=null&&v!=="").map(([k,v])=>encodeURIComponent(k)+"="+encodeURIComponent(v)).join("&");
+ };
  const nextAcc=[];
- if(dimScores.D3<=3 || wasteRate>=0.20) nextAcc.push({label:"FinOps Value Case, then FinOps IQ",why:"cost visibility & waste"});
- if(primary==="B" && (dimScores.D6<=3 || dcExit || poorInv)) nextAcc.push({label:"Modernization IQ",why:"data-centre estate & modernization"});
- if(sovFlag) nextAcc.push({label:"Sovereign IQ (Pillar 02)",why:"residency / regulatory exposure"});
+ if(dimScores.D3<=3 || wasteRate>=0.20) nextAcc.push({label:"FinOps Value Case, then FinOps IQ",why:"cost visibility & waste", href:"finops-value-case.html"+qp({waste:Math.round(wasteRate*100)})});
+ if(primary==="B" && (dimScores.D6<=3 || dcExit || poorInv)) nextAcc.push({label:"Modernization IQ",why:"data-centre estate & modernization", href:null});
+ if(sovFlag){
+   const fw = (function(){ const fwArr = QUESTIONS.find(x=>x.id==="Q0.3").frameworks||[]; return (A["Q0.3"]||[]).map(i=>fwArr[i]); })().filter(k=>k&&k!=="none").join(",");
+   nextAcc.push({label:"Sovereign IQ (Pillar 02)",why:"residency / regulatory exposure", href:"sovereign-screen.html"+qp({sov:1, frameworks:fw})});
+ }
 
  // ---- 3-move roadmap: two lowest dims + top objective dim ----
  const sorted=Object.keys(dimScores).sort((a,b)=>dimScores[a]-dimScores[b]);
@@ -674,7 +763,7 @@ function fmt(n){return "$"+n.toLocaleString();}
    Results screen
    ============================================================ */
 let RESULT=null;
-function computeAndShow(){ RESULT=compute(); showResults(RESULT); }
+function computeAndShow(){ RESULT=compute(); telemetry("assessment_completed",{overall:RESULT.overall.toFixed(2), band:RESULT.band, primary:RESULT.primary, offerings:RESULT.offers.map(o=>o.code)}); showResults(RESULT); }
 
 function showResults(R){
  pfill.style.width="100%";
@@ -715,7 +804,12 @@ function showResults(R){
  if(!handoffs) handoffs=`<div style="color:var(--mut)">No sovereignty, AI, or security-services referrals raised.</div>`;
 
  const nextAccBlock = R.nextAcc.length
-   ? `<div class="card"><h3>Next in the accelerator funnel</h3>${R.nextAcc.map(n=>`<div class="handoff" style="border-style:solid">🧭 <b>${n.label}</b> <span style="color:var(--mut);font-size:12px">— ${n.why}</span></div>`).join("")}</div>`
+   ? `<div class="card"><h3>Next in the accelerator funnel</h3>${R.nextAcc.map(n=>{
+       const inner = `🧭 <b>${n.label}</b> <span style="color:var(--mut);font-size:12px">— ${n.why}</span>`;
+       return n.href
+         ? `<a href="${n.href}" class="handoff" style="border-style:solid;display:block;color:inherit;text-decoration:none" onclick="telemetry('handoff_click',{to:'${n.label}'})">${inner} <span style="float:right;color:var(--coral);font-family:var(--font-display);font-size:12px;font-weight:600">Open →</span></a>`
+         : `<div class="handoff" style="border-style:solid">${inner} <span style="float:right;color:var(--mutd);font-size:11px;font-style:italic">coming soon</span></div>`;
+     }).join("")}</div>`
    : "";
 
  const execRisks = R.exec.risks.map(r=>
@@ -813,8 +907,11 @@ function showResults(R){
       <button class="btn big" onclick="downloadPDF()">📄 Download PDF report</button>
       <button class="btn ghost" onclick="emailReadout()">📧 Book a 30-min readout with LTM</button>
       <button class="btn ghost" onclick="copySummary()">📋 Copy summary</button>
+      <button class="btn ghost" onclick="shareResult()">🔗 Share this result</button>
     </div>
     <div id="copyToast" style="font-family:var(--font-display);font-size:12px;color:var(--green);margin-top:10px;opacity:0;transition:opacity .2s"></div>
+    <div id="shareToast" style="font-family:var(--font-display);font-size:12px;color:var(--green);margin-top:6px;opacity:0;transition:opacity .2s"></div>
+    <div style="font-family:var(--font-display);font-size:10px;color:var(--mutd);letter-spacing:.08em;margin-top:14px">Cloud IQ v${CLOUD_IQ_VERSION}</div>
     <div style="margin-top:14px"><button class="btn ghost" onclick="start()">Restart assessment</button></div>
     <p style="font-size:11px;color:var(--mut);margin-top:18px;line-height:1.5">
       This is a preliminary, indicative self-assessment intended for planning conversations only —
@@ -865,7 +962,7 @@ function downloadPDF(){
   doc.setDrawColor(...cream);doc.setLineWidth(1);doc.line(M,H-40,W-M,H-40);
   doc.setFont("helvetica","normal");doc.setFontSize(8);doc.setTextColor(...muted);
   doc.text("LTM · Infrastructure Tech Advisory · Public Cloud & Modernization",M,H-26);
-  doc.text(pageLabel,W-M,H-26,{align:"right"});
+  doc.text("Cloud IQ v"+CLOUD_IQ_VERSION+" · "+pageLabel, W-M, H-26, {align:"right"});
  }
  function headerBand(title){
   doc.setFillColor(...dark);doc.rect(0,0,W,64,"F");
