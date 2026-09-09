@@ -157,8 +157,9 @@ const QUESTIONS = [
   opts:[["CIO / CTO"],["Head of Infra / Cloud"],["Enterprise Architect"],["FinOps / Finance Lead"],["App / Dev Lead"],["Security / Compliance (CISO)"]]},
  {id:"Q0.2",sec:"Persona & Context",q:"Your industry?",type:"single",
   opts:[["BFSI"],["Public Sector"],["Healthcare"],["Retail / CPG"],["Manufacturing"],["Telco / Media"],["Other"]]},
- {id:"Q0.3",sec:"Persona & Context",q:"Which apply to your data & compliance context?",hint:"Select all that apply.",type:"multi",
-  opts:[["Data residency required"],["Sector regulation (DORA/HIPAA/etc.)"],["Government / public sector"],["Cross-border restrictions"],["None significant"]],
+ {id:"Q0.3",sec:"Persona & Context",q:"Which apply to your data & compliance context?",hint:"Select all that apply. Named frameworks route directly to the right referral.",type:"multi",
+  opts:[["Data residency required"],["DORA (EU financial)"],["HIPAA / HITECH (US health)"],["GDPR / UK GDPR"],["RBI / SEBI (India financial)"],["PCI-DSS (payments)"],["SOX / financial reporting"],["FedRAMP / US public sector"],["Other sector regulation"],["Cross-border data restrictions"],["None significant"]],
+  frameworks:["residency","dora","hipaa","gdpr","rbi","pci","sox","fedramp","other","xborder","none"],
   sovFlagExcept:"None significant"},
  {id:"Q0.4",sec:"Persona & Context",q:"Where is your estate today?",type:"single",
   opts:[["No cloud yet"],["Early / pilot"],["~Half migrated"],["Mostly on cloud"],["Cloud-native"]],
@@ -181,6 +182,8 @@ const QUESTIONS = [
   midPct:[0.1, 0.1, 0.3, 0.5, 0.7, 0.9]},
  {id:"Q0.10",sec:"Cloud footprint & spend",q:"Which services drive most of the bill?",hint:"Pick up to 3.",type:"multi",max:3,
   opts:[["Compute (VMs)"],["Containers / Kubernetes"],["Serverless"],["Managed databases"],["Data & analytics"],["AI / ML"],["Storage"],["Networking / CDN"],["SaaS-of-cloud"]]},
+ {id:"Q0.11",sec:"Cloud footprint & spend",q:"Which workload archetypes are represented in your estate?",hint:"Select all that apply.",type:"multi",
+  opts:[["Legacy monoliths / 3-tier"],["VM-based services"],["Containerized microservices"],["Kubernetes-native"],["Serverless / functions"],["Managed data platforms"],["SaaS-substituted"],["AI/ML workloads"]]},
 
  // ---- Journey signals ----
  {id:"Q1.1",sec:"Journey signals",q:"Pick the card(s) that sound most like you.",hint:"Choose up to 2 — both journeys is a real answer.",type:"cards",multi:true,max:2,
@@ -243,7 +246,7 @@ const QUESTIONS = [
 const GROUPS = [
  {name:"Persona & context",         qs:["Q0.1","Q0.2","Q0.3","Q0.4","Q0.5"]},
  {name:"Your top objectives",       qs:["Q0.6"]},
- {name:"Cloud footprint & spend",   qs:["Q0.7","Q0.8","Q0.9","Q0.10"]},
+ {name:"Cloud footprint & spend",   qs:["Q0.7","Q0.8","Q0.9","Q0.10","Q0.11"]},
  {name:"Journey signals",           qs:["Q1.1","Q1.2"]},
  {name:"Strategy & modernization",  qs:["Q2.1","Q2.2","Q3.1","Q3.2"]},
  {name:"Cost, FinOps & ops",        qs:["Q4.1","Q4.2","Q4.3","Q5.1","Q5.2"]},
@@ -254,6 +257,33 @@ const GROUPS = [
 const DIM_NAMES={D1:"Cloud Strategy & Placement",D2:"Migration & Modernization",D3:"Cost & FinOps",
  D4:"Hybrid & Multi-Cloud Ops",D5:"Platform & Automation",D6:"Data Centre & Estate",
  D7:"Governance, Guardrails & Security",D8:"Data & AI Readiness"};
+
+// Directional peer benchmarks — overall maturity by sector.
+// Not statistical; anchored on LTM engagement patterns and used for calibration only.
+const INDUSTRY_BENCHMARKS = {
+  "BFSI":           {overall:3.2, note:"regulated → strong D7, cost pressure on D3"},
+  "Public Sector":  {overall:2.6, note:"sovereignty-first, slower on D5/D6"},
+  "Healthcare":     {overall:2.7, note:"compliance-heavy, uneven D3/D5"},
+  "Retail / CPG":   {overall:3.1, note:"cost-led → strong D3, uneven D6"},
+  "Manufacturing":  {overall:2.8, note:"OT-adjacency slows D4/D6"},
+  "Telco / Media":  {overall:3.3, note:"ops-mature → strong D4/D5"},
+  "Other":          {overall:2.9, note:"cross-sector directional average"}
+};
+
+// Framework → downstream implication
+const REG_FRAMEWORK_META = {
+  residency: {label:"Data residency",           implies:"sov"},
+  dora:      {label:"DORA",                     implies:"sov+security"},
+  hipaa:     {label:"HIPAA / HITECH",           implies:"security+sov"},
+  gdpr:      {label:"GDPR",                     implies:"sov"},
+  rbi:       {label:"RBI / SEBI",               implies:"sov+security"},
+  pci:       {label:"PCI-DSS",                  implies:"security"},
+  sox:       {label:"SOX",                      implies:"governance"},
+  fedramp:   {label:"FedRAMP",                  implies:"sov+security"},
+  other:     {label:"Sector regulation",        implies:"governance"},
+  xborder:   {label:"Cross-border restrictions",implies:"sov"},
+  none:      {label:"None significant",         implies:""}
+};
 
 const OFFERINGS={
  "03.1":{name:"Right Cloud Strategy & Workload Placement",journey:"B",door:"Advisory → Decide"},
@@ -594,8 +624,40 @@ function compute(){
  // provider mix (labels)
  const Q07=QUESTIONS.find(x=>x.id==="Q0.7");
  const providers=(A["Q0.7"]||[]).map(i=>Q07.opts[i][0]);
+
+ // ---- Peer benchmark (directional, by industry) ----
+ const industry = QUESTIONS.find(x=>x.id==="Q0.2").opts[A["Q0.2"]][0];
+ const peer = INDUSTRY_BENCHMARKS[industry] || INDUSTRY_BENCHMARKS["Other"];
+ const peerDelta = overall - peer.overall;   // + = ahead of peers, − = behind
+
+ // ---- Detected regulatory frameworks (from Q0.3) ----
+ const Q03fw = QUESTIONS.find(x=>x.id==="Q0.3").frameworks || [];
+ const regFlags = (A["Q0.3"]||[])
+   .map(i => Q03fw[i])
+   .filter(k => k && k!=="none");
+ const regLabels = regFlags.map(k => (REG_FRAMEWORK_META[k]||{}).label).filter(Boolean);
+
+ // ---- Workload archetypes (from Q0.11) ----
+ const Q011 = QUESTIONS.find(x=>x.id==="Q0.11");
+ const archetypes = (A["Q0.11"]||[]).map(i=>Q011.opts[i][0]);
+ const hasLegacy   = archetypes.includes("Legacy monoliths / 3-tier");
+ const hasK8s      = archetypes.includes("Kubernetes-native") || archetypes.includes("Containerized microservices");
+ const hasAIload   = archetypes.includes("AI/ML workloads");
+
+ // ---- Executive summary: top 3 risks, top 3 moves, one-line headline ----
+ const risks = Object.keys(DIM_NAMES)
+   .map(d => ({dim:d, name:DIM_NAMES[d], score:dimScores[d]}))
+   .sort((a,b)=>a.score-b.score)
+   .slice(0,3);
+ const journeyName = primary==="A" ? "Optimize" : "Decide & Modernize";
+ const headline = `You're on Journey ${primary} · ${journeyName}. Overall ${overall.toFixed(1)}/5 — ${band}.` +
+                  (peerDelta >= 0.2 ? `  Ahead of ${industry} peers.` :
+                   peerDelta <=-0.2 ? `  Below ${industry} peers.` :
+                                      `  In line with ${industry} peers.`);
+ const exec = { headline, risks, peer, peerDelta, industry, regLabels, archetypes };
+
  return {JA,JB,hybrid,primary,secondary,dimScores,overall,band,sovFlag,aiFlag,
-   leakLow,leakHigh,wasteRate,apps,offers:offersDedup,moves,topDim,secReferral,nextAcc,hookBasis,providers};
+   leakLow,leakHigh,wasteRate,apps,offers:offersDedup,moves,topDim,secReferral,nextAcc,hookBasis,providers,exec,regFlags,regLabels,archetypes};
 }
 
 function scoreBand(s){
@@ -656,11 +718,39 @@ function showResults(R){
    ? `<div class="card"><h3>Next in the accelerator funnel</h3>${R.nextAcc.map(n=>`<div class="handoff" style="border-style:solid">🧭 <b>${n.label}</b> <span style="color:var(--mut);font-size:12px">— ${n.why}</span></div>`).join("")}</div>`
    : "";
 
+ const execRisks = R.exec.risks.map(r=>
+   `<li style="margin:4px 0;font-size:13px"><b>${r.dim}</b> ${r.name} — <span style="color:var(--mut)">${r.score.toFixed(1)}/5</span></li>`
+ ).join("");
+ const execRegLine = R.exec.regLabels.length
+   ? `<div style="font-size:12px;color:var(--mut);margin-top:8px"><b>Regulatory context:</b> ${R.exec.regLabels.join(", ")}</div>`
+   : "";
+ const execArchLine = R.exec.archetypes.length
+   ? `<div style="font-size:12px;color:var(--mut);margin-top:4px"><b>Workload mix:</b> ${R.exec.archetypes.join(" · ")}</div>`
+   : "";
+ const peerLine = `<div style="font-size:12px;color:var(--mut);margin-top:6px"><b>Peer benchmark (${R.exec.industry}):</b> ~${R.exec.peer.overall.toFixed(1)}/5 · ${R.exec.peer.note}</div>`;
+ const topOffer = R.offers[0]?`<b>${R.offers[0].code} ${OFFERINGS[R.offers[0].code].name}</b>`:`an optimization review`;
+ const nextAccInline = R.nextAcc.length?`Then <b>${R.nextAcc[0].label}</b>.`:``;
+
  app.innerHTML=`
-  <div class="card">
-    <div class="sec-label">Your Cloud IQ result</div>
-    <h1 style="font-size:26px">${persona} · ${industry}</h1>
-    <p class="lead" style="margin-bottom:6px">Here's where you are on the journey — and what to do next.</p>
+  <div class="card" style="background:linear-gradient(135deg,var(--panel) 0%,var(--coral-tint) 100%);border-color:var(--coral)">
+    <div class="sec-label">Executive summary</div>
+    <h1 style="font-size:24px;margin-bottom:8px">${R.exec.headline}</h1>
+    <div style="margin-top:14px;font-size:13px;color:var(--mut)"><b>Persona:</b> ${persona} &middot; <b>Industry:</b> ${industry}</div>
+    ${peerLine}
+    ${execRegLine}
+    ${execArchLine}
+    <div class="two-col" style="margin:18px 0 6px">
+      <div>
+        <h3>Top 3 risks</h3>
+        <ol style="margin:6px 0 0 22px;padding:0;color:var(--ink)">${execRisks}</ol>
+      </div>
+      <div>
+        <h3>What to do first</h3>
+        <div style="font-size:13px;color:var(--ink);margin-bottom:8px">Start with ${topOffer}. ${nextAccInline}</div>
+        <div style="font-family:var(--font-display);font-size:22px;font-weight:700;color:var(--coral)">${fmt(R.leakLow)}–${fmt(R.leakHigh)}</div>
+        <div style="font-size:11px;color:var(--mut)">Annual value at stake (${R.hookBasis.kind==="spend"?"spend-anchored":"fallback estimate"})</div>
+      </div>
+    </div>
   </div>
 
   <div class="res-grid">
@@ -718,9 +808,14 @@ function showResults(R){
 
   <div class="card" style="text-align:center;background:var(--panel2)">
     <h2 style="margin-bottom:6px">Take your report with you</h2>
-    <p style="color:#4a3d33;margin-bottom:16px">Download the full LTM-branded Accelerate output pack as a PDF to share with your team.</p>
-    <button class="btn big" onclick="downloadPDF()">📄 Download LTM PDF report</button>
-    <div style="margin-top:12px"><button class="btn ghost" onclick="start()">Restart assessment</button></div>
+    <p style="color:var(--mut);margin-bottom:16px">Download the LTM-branded output pack as a PDF, or share the summary with your team.</p>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn big" onclick="downloadPDF()">📄 Download PDF report</button>
+      <button class="btn ghost" onclick="emailReadout()">📧 Book a 30-min readout with LTM</button>
+      <button class="btn ghost" onclick="copySummary()">📋 Copy summary</button>
+    </div>
+    <div id="copyToast" style="font-family:var(--font-display);font-size:12px;color:var(--green);margin-top:10px;opacity:0;transition:opacity .2s"></div>
+    <div style="margin-top:14px"><button class="btn ghost" onclick="start()">Restart assessment</button></div>
     <p style="font-size:11px;color:var(--mut);margin-top:18px;line-height:1.5">
       This is a preliminary, indicative self-assessment intended for planning conversations only —
       not legal, tax, financial, or regulatory advice.
@@ -798,7 +893,26 @@ function downloadPDF(){
  doc.text("Prepared: "+new Date().toLocaleDateString(),W-M,y,{align:"right"});
  y+=22;
 
- // Lead profile box
+ // Executive summary strip
+ doc.setFillColor(...rust);doc.roundedRect(M,y,W-2*M,44,6,6,"F");
+ doc.setFont("helvetica","bold");doc.setFontSize(11);doc.setTextColor(255,255,255);
+ doc.text("EXECUTIVE SUMMARY",M+14,y+16);
+ doc.setFont("helvetica","normal");doc.setFontSize(9.5);doc.setTextColor(255,255,255);
+ doc.text(R.exec.headline, M+14, y+32, {maxWidth:W-2*M-28});
+ y+=56;
+
+ // Peer benchmark + value at stake row
+ doc.setFillColor(...cream);doc.roundedRect(M,y,W-2*M,36,6,6,"F");
+ doc.setFont("helvetica","bold");doc.setFontSize(9);doc.setTextColor(...dark);
+ doc.text(`PEER (${R.exec.industry}): ~${R.exec.peer.overall.toFixed(1)}/5`,M+14,y+16);
+ doc.text(`VALUE AT STAKE: ${fmt(R.leakLow)} – ${fmt(R.leakHigh)}`,M+14,y+30);
+ if(R.exec.regLabels.length){
+   doc.setFont("helvetica","italic");doc.setFontSize(8);doc.setTextColor(...muted);
+   doc.text(`Regulatory context: ${R.exec.regLabels.join(", ")}`, W-M-14, y+16, {align:"right", maxWidth:(W-2*M-28)/2});
+ }
+ y+=48;
+
+ // Lead profile
  doc.setFillColor(...cream);doc.roundedRect(M,y,W-2*M,64,6,6,"F");
  doc.setFont("helvetica","bold");doc.setFontSize(10);doc.setTextColor(...dark);
  doc.text("LEAD PROFILE",M+14,y+18);
@@ -930,6 +1044,47 @@ function downloadPDF(){
  footer("Page 2 of 2");
 
  doc.save(`CloudIQ_Report_${industry.replace(/[^a-z]/gi,'')}_${new Date().toISOString().slice(0,10)}.pdf`);
+}
+
+/* ---- Follow-up helpers ---- */
+function summaryText(){
+ if(!RESULT) return "";
+ const R=RESULT;
+ const persona=QUESTIONS.find(x=>x.id==="Q0.1").opts[A["Q0.1"]][0];
+ const industry=QUESTIONS.find(x=>x.id==="Q0.2").opts[A["Q0.2"]][0];
+ const topOff = R.offers[0]?(R.offers[0].code+" "+OFFERINGS[R.offers[0].code].name):"optimization review";
+ const risks = R.exec.risks.map(r=>r.dim+" "+r.name+" ("+r.score.toFixed(1)+"/5)").join(", ");
+ const val = fmt(R.leakLow)+"-"+fmt(R.leakHigh)+" annual value at stake";
+ const spendLine = R.hookBasis.kind==="spend" ? ("annual spend "+R.hookBasis.spendLabel+", "+R.hookBasis.commitPct+"% commitment coverage") : "spend not provided";
+ const next = R.nextAcc.length ? ("Next: "+R.nextAcc.map(n=>n.label).join(" | ")) : "";
+ return [
+  "Cloud IQ readout",
+  "Persona: "+persona+" | Industry: "+industry,
+  "Journey: "+R.primary+" ("+R.exec.headline.split(".")[0]+")",
+  "Maturity: "+R.overall.toFixed(1)+"/5 ("+R.band+"). "+R.exec.industry+" peer benchmark ~"+R.exec.peer.overall.toFixed(1)+"/5.",
+  "Top risks: "+risks,
+  "Value at stake: "+val+" ("+spendLine+")",
+  "First move: "+topOff,
+  next
+ ].filter(Boolean).join("\n");
+}
+function emailReadout(){
+ const body = encodeURIComponent(summaryText()+"\n\nI'd like a 30-minute readout with LTM Infrastructure Tech Advisory.");
+ const subject = encodeURIComponent("Cloud IQ readout — request 30-min conversation");
+ window.location.href = "mailto:?subject="+subject+"&body="+body;
+}
+function copySummary(){
+ const t = summaryText();
+ const toast = document.getElementById("copyToast");
+ const done = ok => { if(!toast) return; toast.textContent = ok?"Copied to clipboard.":"Couldn't copy — see console."; toast.style.opacity=1; setTimeout(()=>toast.style.opacity=0, 2400); };
+ try{
+  if(navigator.clipboard && navigator.clipboard.writeText){
+   navigator.clipboard.writeText(t).then(()=>done(true), ()=>done(false));
+  } else {
+   const ta=document.createElement("textarea"); ta.value=t; document.body.appendChild(ta); ta.select();
+   document.execCommand("copy"); document.body.removeChild(ta); done(true);
+  }
+ }catch(e){ console.log(t); done(false); }
 }
 
 /* boot */
