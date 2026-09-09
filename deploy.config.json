@@ -16,18 +16,6 @@
       "stage": "staging"
     },
     {
-      "src": "LTM CIS Tech Advisory v2.html",
-      "key": "LTM-CIS-Tech-Advisory-v2.html",
-      "contentType": "text/html; charset=utf-8",
-      "stage": "prod"
-    },
-    {
-      "src": "LTM CIS Tech Advisory.html",
-      "key": "LTM-CIS-Tech-Advisory.html",
-      "contentType": "text/html; charset=utf-8",
-      "stage": "prod"
-    },
-    {
       "src": "CIS Tech Consulting Brochure.pdf",
       "key": "CIS-Tech-Consulting-Brochure.pdf",
       "contentType": "application/pdf",
@@ -35,52 +23,52 @@
     },
 
     {
-      "src": "Data-Sovereignty-Value-Case-Tool/Sovereign Screen (standalone).html",
+      "src": "Sovereign IQ (LTM).html",
       "key": "sovereign-screen.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "prod"
     },
     {
-      "src": "Data-Sovereignty-Value-Case-Tool/Sovereign Screen (standalone).html",
+      "src": "Sovereign IQ (LTM).html",
       "key": "sovereign-screen-staging.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "staging"
     },
 
     {
-      "src": "finops-value-case/FinOps Value Case (LTM).html",
+      "src": "FinOps Value Case (LTM).html",
       "key": "finops-value-case.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "prod"
     },
     {
-      "src": "finops-value-case/FinOps Value Case (LTM).html",
+      "src": "FinOps Value Case (LTM).html",
       "key": "finops-value-case-staging.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "staging"
     },
 
     {
-      "src": "FinopsMaturityAssessment/FinOps Maturity Screen (LTM).html",
+      "src": "FinOps IQ (LTM).html",
       "key": "finops-screen.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "prod"
     },
     {
-      "src": "FinopsMaturityAssessment/FinOps Maturity Screen (LTM).html",
+      "src": "FinOps IQ (LTM).html",
       "key": "finops-screen-staging.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "staging"
     },
 
     {
-      "src": "Digital Sovereignty Data Residency Jurisdiction Audit/LTM-Data Residency & Jurisdiction Audit.html",
+      "src": "Posture IQ (LTM).html",
       "key": "Data-Residency-Jurisdiction-Audit.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "prod"
     },
     {
-      "src": "Digital Sovereignty Data Residency Jurisdiction Audit/LTM-Data Residency & Jurisdiction Audit.html",
+      "src": "Posture IQ (LTM).html",
       "key": "Data-Residency-Jurisdiction-Audit-staging.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "staging"
@@ -91,58 +79,6 @@
       "key": "qbank-studio.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "prod"
-    },
-
-    {
-      "src": "sovereign-screen-changelog.html",
-      "key": "sovereign-screen-changelog.html",
-      "contentType": "text/html; charset=utf-8",
-      "stage": "prod"
-    },
-    {
-      "src": "sovereign-screen-changelog.html",
-      "key": "sovereign-screen-changelog-staging.html",
-      "contentType": "text/html; charset=utf-8",
-      "stage": "staging"
-    },
-
-    {
-      "src": "dr-j-changelog.html",
-      "key": "dr-j-changelog.html",
-      "contentType": "text/html; charset=utf-8",
-      "stage": "prod"
-    },
-    {
-      "src": "dr-j-changelog.html",
-      "key": "dr-j-changelog-staging.html",
-      "contentType": "text/html; charset=utf-8",
-      "stage": "staging"
-    },
-
-    {
-      "src": "finops-value-case-changelog.html",
-      "key": "finops-value-case-changelog.html",
-      "contentType": "text/html; charset=utf-8",
-      "stage": "prod"
-    },
-    {
-      "src": "finops-value-case-changelog.html",
-      "key": "finops-value-case-changelog-staging.html",
-      "contentType": "text/html; charset=utf-8",
-      "stage": "staging"
-    },
-
-    {
-      "src": "finops-maturity-changelog.html",
-      "key": "finops-maturity-changelog.html",
-      "contentType": "text/html; charset=utf-8",
-      "stage": "prod"
-    },
-    {
-      "src": "finops-maturity-changelog.html",
-      "key": "finops-maturity-changelog-staging.html",
-      "contentType": "text/html; charset=utf-8",
-      "stage": "staging"
     },
 
     {
