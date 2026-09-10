@@ -826,6 +826,46 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Store on window for downstream pre-fill (Tier 3b) — no side effect yet
     window.LTM_HANDOFF = {from:from, industry:industry, spend:spend, waste:waste, sov:sov, frameworks:frameworks, v:v};
 
+
+    // ---- Posture-IQ-specific hydration ----
+    if (typeof window.toggleSector === 'function') {
+      var sectorMap = {
+        "BFSI":"finserv", "Public Sector":"public", "Healthcare":"health",
+        "Retail / CPG":"retail", "Manufacturing":"manuf", "Telco / Media":"telecom"
+      };
+      var fwMap = { dora:"dora", gdpr:"gdpr" };  // Cloud IQ → Posture reg ID (partial; EU-focused)
+
+      var targetSector = sectorMap[industry] || null;
+      var targetRegs = (frameworks || "").toLowerCase().split(",").map(function(s){return s.trim();}).filter(Boolean)
+        .map(function(k){ return fwMap[k]; }).filter(Boolean);
+
+      if (targetSector || targetRegs.length) {
+        var attempts = 0;
+        var hydrate = function(){
+          attempts++;
+          var hydrated = false;
+          try {
+            if (targetSector && window.STATE && Array.isArray(window.STATE.sectors)) {
+              if (!window.STATE.sectors.includes(targetSector)) {
+                var chip = document.querySelector('.sector[data-id="' + targetSector + '"]');
+                if (chip) { window.toggleSector(targetSector); hydrated = true; }
+              }
+            }
+            if (targetRegs.length && window.STATE && Array.isArray(window.STATE.regulations)) {
+              targetRegs.forEach(function(r){
+                if (!window.STATE.regulations.includes(r)) {
+                  var rchip = document.querySelector('.reg-chip[data-id="' + r + '"]');
+                  if (rchip) { window.toggleReg(r); hydrated = true; }
+                }
+              });
+            }
+          } catch(err){}
+          if (!hydrated && attempts < 60) setTimeout(hydrate, 250);   // retry ~15s
+        };
+        setTimeout(hydrate, 400);
+      }
+    }
+
     // Insert banner right after family nav (or after opening <body> if nav not yet present)
     function mount(){
       if (document.getElementById('ltm-handoff-banner')) return;
