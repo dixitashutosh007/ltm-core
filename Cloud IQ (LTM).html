@@ -143,8 +143,32 @@ footer.foot{text-align:center;color:var(--mutd);font-size:12px;padding:28px 0 44
 .resume button{font-family:var(--font-display);font-size:12px;font-weight:600;padding:6px 12px;border-radius:var(--radius-sm);cursor:pointer;border:1px solid var(--coral);background:var(--panel);color:var(--coral-dkr)}
 .resume button.primary{background:var(--coral);color:#fff;border-color:var(--coral)}
 </style>
+<style id="ltm-family-nav-style">
+#ltm-family-nav{background:#282828;color:#F9F9F9;font-family:'Manrope','Segoe UI',Arial,sans-serif;font-size:12px;padding:10px 0;border-bottom:2px solid #FF5E4F;position:relative;z-index:100}
+#ltm-family-nav *{box-sizing:border-box}
+.ltm-fam-inner{max-width:1200px;margin:0 auto;padding:0 20px;display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.ltm-fam-brand{display:flex;flex-direction:column;gap:2px;padding-right:16px;border-right:1px solid rgba(255,255,255,0.15)}
+.ltm-fam-b{font-weight:700;color:#FF5E4F;letter-spacing:.04em;font-size:13px}
+.ltm-fam-s{color:rgba(255,255,255,0.6);font-size:10px;text-transform:uppercase;letter-spacing:.12em}
+.ltm-fam-links{display:flex;gap:2px;flex-wrap:wrap;flex:1}
+.ltm-fam-link{color:rgba(255,255,255,0.75);text-decoration:none;padding:6px 12px;border-radius:4px;font-weight:600;letter-spacing:.01em;transition:background .15s,color .15s;display:inline-flex;align-items:center;gap:4px;white-space:nowrap}
+.ltm-fam-link:hover{color:#fff;background:rgba(255,255,255,0.08)}
+.ltm-fam-link.current{background:#FF5E4F;color:#fff}
+.ltm-fam-link.current:hover{background:#FF5E4F}
+.ltm-fam-tag{font-size:9px;text-transform:uppercase;letter-spacing:.12em;opacity:.7;background:rgba(255,255,255,0.12);padding:2px 6px;border-radius:3px}
+.ltm-fam-link.current .ltm-fam-tag{background:rgba(255,255,255,0.25);opacity:1}
+@media(max-width:720px){
+  .ltm-fam-inner{gap:8px}
+  .ltm-fam-brand{padding-right:8px;border-right:0}
+  .ltm-fam-s{display:none}
+  .ltm-fam-link{padding:4px 8px;font-size:11px}
+  .ltm-fam-tag{display:none}
+}
+</style>
 </head>
 <body>
+<nav id="ltm-family-nav" aria-label="LTM Infrastructure Tech Advisory accelerators"><div class="ltm-fam-inner"><div class="ltm-fam-brand"><span class="ltm-fam-b">LTM</span><span class="ltm-fam-s">Infrastructure Tech Advisory</span></div><div class="ltm-fam-links"><a href="cloud-iq.html" class="ltm-fam-link current" aria-current="page" data-fam="cloud">Cloud IQ <span class="ltm-fam-tag">front door</span></a><a href="sovereign-screen.html" class="ltm-fam-link" data-fam="sovereign">Sovereign IQ</a><a href="Data-Residency-Jurisdiction-Audit.html" class="ltm-fam-link" data-fam="posture">Posture IQ</a><a href="finops-screen.html" class="ltm-fam-link" data-fam="finops">FinOps IQ</a><a href="finops-value-case.html" class="ltm-fam-link" data-fam="fvc">FinOps Value Case</a></div></div></nav>
+
 <header class="top">
   <div class="wrap">
     <div class="ltmlogo">
@@ -159,6 +183,7 @@ footer.foot{text-align:center;color:var(--mutd);font-size:12px;padding:28px 0 44
 <div class="wrap screen" id="app"></div>
 
 <footer class="foot">LTM &middot; Infrastructure Tech Advisory &middot; Public Cloud &amp; Modernization &nbsp;&middot;&nbsp; Cloud IQ diagnostic layer</footer>
+<div style="max-width:900px;margin:0 auto 20px;text-align:center;font-family:'Manrope','Segoe UI',Arial,sans-serif;font-size:11px;color:#8E8E8E">You're on the <b style="color:#FF5E4F">front door</b> — <span>Cloud IQ</span> routes to Sovereign IQ, Posture IQ, FinOps IQ, and FinOps Value Case as needed.</div>
 
 
 <script>
