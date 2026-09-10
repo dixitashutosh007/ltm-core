@@ -21,7 +21,6 @@
       "contentType": "application/pdf",
       "stage": "prod"
     },
-
     {
       "src": "Cloud IQ (LTM).html",
       "key": "cloud-iq.html",
@@ -34,7 +33,6 @@
       "contentType": "text/html; charset=utf-8",
       "stage": "staging"
     },
-
     {
       "src": "Sovereign IQ (LTM).html",
       "key": "sovereign-screen.html",
@@ -47,7 +45,6 @@
       "contentType": "text/html; charset=utf-8",
       "stage": "staging"
     },
-
     {
       "src": "FinOps Value Case (LTM).html",
       "key": "finops-value-case.html",
@@ -60,7 +57,6 @@
       "contentType": "text/html; charset=utf-8",
       "stage": "staging"
     },
-
     {
       "src": "FinOps IQ (LTM).html",
       "key": "finops-screen.html",
@@ -73,7 +69,6 @@
       "contentType": "text/html; charset=utf-8",
       "stage": "staging"
     },
-
     {
       "src": "Posture IQ (LTM).html",
       "key": "Data-Residency-Jurisdiction-Audit.html",
@@ -86,14 +81,12 @@
       "contentType": "text/html; charset=utf-8",
       "stage": "staging"
     },
-
     {
       "src": "Question Bank Studio (LTM).html",
       "key": "qbank-studio.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "prod"
     },
-
     {
       "src": "terms-of-use.html",
       "key": "terms-of-use.html",
@@ -103,6 +96,42 @@
     {
       "src": "terms-of-use.html",
       "key": "terms-of-use-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
+    },
+    {
+      "src": "Modernization IQ (LTM).html",
+      "key": "modernization-iq.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
+    },
+    {
+      "src": "Modernization IQ (LTM).html",
+      "key": "modernization-iq-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
+    },
+    {
+      "src": "AI Readiness IQ (LTM).html",
+      "key": "ai-readiness-iq.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
+    },
+    {
+      "src": "AI Readiness IQ (LTM).html",
+      "key": "ai-readiness-iq-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
+    },
+    {
+      "src": "Strategy IQ (LTM).html",
+      "key": "strategy-iq.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
+    },
+    {
+      "src": "Strategy IQ (LTM).html",
+      "key": "strategy-iq-staging.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "staging"
     }
