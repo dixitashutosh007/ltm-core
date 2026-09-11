@@ -110,9 +110,9 @@ footer.foot{text-align:center;color:var(--mutd);font-size:12px;padding:22px 0 26
       <a href="cloud-iq.html" class="ltm-fam-link" data-fam="cloud">Cloud IQ <span class="ltm-fam-tag">front door</span></a>
       <a href="strategy-iq.html" class="ltm-fam-link" data-fam="strategy">Strategy IQ</a>
       <a href="modernization-iq.html" class="ltm-fam-link" data-fam="moderniz">Modernization IQ</a>
-      <a href="sovereign-screen.html" class="ltm-fam-link" data-fam="sovereign">Sovereign IQ</a>
-      <a href="Data-Residency-Jurisdiction-Audit.html" class="ltm-fam-link" data-fam="posture">Posture IQ</a>
-      <a href="finops-screen.html" class="ltm-fam-link" data-fam="finops">FinOps IQ</a>
+      <a href="sovereign-iq.html" class="ltm-fam-link" data-fam="sovereign">Sovereign IQ</a>
+      <a href="posture-iq.html" class="ltm-fam-link" data-fam="posture">Posture IQ</a>
+      <a href="finops-iq.html" class="ltm-fam-link" data-fam="finops">FinOps IQ</a>
       <a href="finops-value-case.html" class="ltm-fam-link" data-fam="fvc">FinOps Value Case</a>
       <a href="ai-readiness-iq.html" class="ltm-fam-link current" data-fam="ai" aria-current="page">AI Readiness IQ</a>
     </div>
@@ -187,7 +187,7 @@ const QUESTIONS = [{"id": "A1.1", "dim": "A1", "q": "How ready is your data foun
 const DIMS = [{"id": "A1", "label": "Data foundation"}, {"id": "A2", "label": "Model & platform choices"}, {"id": "A3", "label": "Governance & guardrails"}, {"id": "A4", "label": "Skills & operating model"}, {"id": "A5", "label": "Use case portfolio"}, {"id": "A6", "label": "Cost & TokenOps discipline"}];
 const DIM_LABELS = Object.fromEntries(DIMS.map(d => [d.id, d.label]));
 const MOVES_MAP = {"A1": "Data foundation programme (contracts, quality SLOs, lineage)", "A2": "Model & platform strategy — governed multi-model platform", "A3": "Responsible-AI / model-risk framework + guardrails", "A4": "AI operating model & skills programme", "A5": "Use case portfolio & value-realization discipline", "A6": "TokenOps: budgets, unit economics, provider routing"};
-const HANDOFFS = [["Cloud IQ", "cloud-iq.html", "broader-lens front-door diagnostic across the whole cloud estate"], ["Sovereign IQ", "sovereign-screen.html", "if the AI use cases touch regulated or residency-constrained data"], ["Posture IQ", "Data-Residency-Jurisdiction-Audit.html", "deep-dive on residency posture where AI processes regulated data"], ["FinOps IQ", "finops-screen.html", "wrap TokenOps into the broader cloud financial management discipline"]];
+const HANDOFFS = [["Cloud IQ", "cloud-iq.html", "broader-lens front-door diagnostic across the whole cloud estate"], ["Sovereign IQ", "sovereign-iq.html", "if the AI use cases touch regulated or residency-constrained data"], ["Posture IQ", "posture-iq.html", "deep-dive on residency posture where AI processes regulated data"], ["FinOps IQ", "finops-iq.html", "wrap TokenOps into the broader cloud financial management discipline"]];
 const GROUPS = [{"name": "A1 · A2", "qs": ["A1.1", "A1.2", "A2.1", "A2.2"]}, {"name": "A3 · A4", "qs": ["A3.1", "A3.2", "A4.1", "A4.2"]}, {"name": "A5 · A6", "qs": ["A5.1", "A5.2", "A6.1", "A6.2"]}];
 
 let gIdx = 0;

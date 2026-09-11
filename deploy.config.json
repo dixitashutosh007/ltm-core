@@ -16,76 +16,16 @@
       "stage": "staging"
     },
     {
-      "src": "CIS Tech Consulting Brochure.pdf",
-      "key": "CIS-Tech-Consulting-Brochure.pdf",
-      "contentType": "application/pdf",
-      "stage": "prod"
-    },
-    {
-      "src": "Cloud IQ (LTM).html",
-      "key": "cloud-iq.html",
-      "contentType": "text/html; charset=utf-8",
-      "stage": "prod"
-    },
-    {
-      "src": "Cloud IQ (LTM).html",
-      "key": "cloud-iq-staging.html",
-      "contentType": "text/html; charset=utf-8",
-      "stage": "staging"
-    },
-    {
-      "src": "Sovereign IQ (LTM).html",
-      "key": "sovereign-screen.html",
-      "contentType": "text/html; charset=utf-8",
-      "stage": "prod"
-    },
-    {
-      "src": "Sovereign IQ (LTM).html",
-      "key": "sovereign-screen-staging.html",
-      "contentType": "text/html; charset=utf-8",
-      "stage": "staging"
-    },
-    {
-      "src": "FinOps Value Case (LTM).html",
-      "key": "finops-value-case.html",
-      "contentType": "text/html; charset=utf-8",
-      "stage": "prod"
-    },
-    {
-      "src": "FinOps Value Case (LTM).html",
-      "key": "finops-value-case-staging.html",
-      "contentType": "text/html; charset=utf-8",
-      "stage": "staging"
-    },
-    {
-      "src": "FinOps IQ (LTM).html",
-      "key": "finops-screen.html",
-      "contentType": "text/html; charset=utf-8",
-      "stage": "prod"
-    },
-    {
-      "src": "FinOps IQ (LTM).html",
-      "key": "finops-screen-staging.html",
-      "contentType": "text/html; charset=utf-8",
-      "stage": "staging"
-    },
-    {
-      "src": "Posture IQ (LTM).html",
-      "key": "Data-Residency-Jurisdiction-Audit.html",
-      "contentType": "text/html; charset=utf-8",
-      "stage": "prod"
-    },
-    {
-      "src": "Posture IQ (LTM).html",
-      "key": "Data-Residency-Jurisdiction-Audit-staging.html",
-      "contentType": "text/html; charset=utf-8",
-      "stage": "staging"
-    },
-    {
       "src": "Question Bank Studio (LTM).html",
       "key": "qbank-studio.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "prod"
+    },
+    {
+      "src": "Question Bank Studio (LTM).html",
+      "key": "qbank-studio-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
     },
     {
       "src": "terms-of-use.html",
@@ -100,38 +40,110 @@
       "stage": "staging"
     },
     {
-      "src": "Modernization IQ (LTM).html",
-      "key": "modernization-iq.html",
+      "src": "showcase_accelerators.html",
+      "key": "showcase.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "prod"
     },
     {
-      "src": "Modernization IQ (LTM).html",
-      "key": "modernization-iq-staging.html",
+      "src": "showcase_accelerators.html",
+      "key": "showcase-staging.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "staging"
     },
     {
-      "src": "AI Readiness IQ (LTM).html",
-      "key": "ai-readiness-iq.html",
+      "src": "cloud-iq.html",
+      "key": "cloud-iq.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "prod"
     },
     {
-      "src": "AI Readiness IQ (LTM).html",
-      "key": "ai-readiness-iq-staging.html",
+      "src": "cloud-iq.html",
+      "key": "cloud-iq-staging.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "staging"
     },
     {
-      "src": "Strategy IQ (LTM).html",
+      "src": "strategy-iq.html",
       "key": "strategy-iq.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "prod"
     },
     {
-      "src": "Strategy IQ (LTM).html",
+      "src": "strategy-iq.html",
       "key": "strategy-iq-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
+    },
+    {
+      "src": "modernization-iq.html",
+      "key": "modernization-iq.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
+    },
+    {
+      "src": "modernization-iq.html",
+      "key": "modernization-iq-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
+    },
+    {
+      "src": "ai-readiness-iq.html",
+      "key": "ai-readiness-iq.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
+    },
+    {
+      "src": "ai-readiness-iq.html",
+      "key": "ai-readiness-iq-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
+    },
+    {
+      "src": "sovereign-iq.html",
+      "key": "sovereign-iq.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
+    },
+    {
+      "src": "sovereign-iq.html",
+      "key": "sovereign-iq-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
+    },
+    {
+      "src": "posture-iq.html",
+      "key": "posture-iq.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
+    },
+    {
+      "src": "posture-iq.html",
+      "key": "posture-iq-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
+    },
+    {
+      "src": "finops-iq.html",
+      "key": "finops-iq.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
+    },
+    {
+      "src": "finops-iq.html",
+      "key": "finops-iq-staging.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "staging"
+    },
+    {
+      "src": "finops-value-case.html",
+      "key": "finops-value-case.html",
+      "contentType": "text/html; charset=utf-8",
+      "stage": "prod"
+    },
+    {
+      "src": "finops-value-case.html",
+      "key": "finops-value-case-staging.html",
       "contentType": "text/html; charset=utf-8",
       "stage": "staging"
     }

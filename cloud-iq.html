@@ -167,7 +167,7 @@ footer.foot{text-align:center;color:var(--mutd);font-size:12px;padding:28px 0 44
 </style>
 </head>
 <body>
-<nav id="ltm-family-nav" aria-label="LTM Infrastructure Tech Advisory accelerators"><div class="ltm-fam-inner"><div class="ltm-fam-brand"><span class="ltm-fam-b">LTM</span><span class="ltm-fam-s">Infrastructure Tech Advisory</span></div><div class="ltm-fam-links"><a href="cloud-iq.html" class="ltm-fam-link current" aria-current="page" data-fam="cloud">Cloud IQ <span class="ltm-fam-tag">front door</span></a><a href="strategy-iq.html" class="ltm-fam-link" data-fam="strategy">Strategy IQ</a><a href="modernization-iq.html" class="ltm-fam-link" data-fam="moderniz">Modernization IQ</a><a href="ai-readiness-iq.html" class="ltm-fam-link" data-fam="ai">AI Readiness IQ</a><a href="sovereign-screen.html" class="ltm-fam-link" data-fam="sovereign">Sovereign IQ</a><a href="Data-Residency-Jurisdiction-Audit.html" class="ltm-fam-link" data-fam="posture">Posture IQ</a><a href="finops-screen.html" class="ltm-fam-link" data-fam="finops">FinOps IQ</a><a href="finops-value-case.html" class="ltm-fam-link" data-fam="fvc">FinOps Value Case</a></div></div></nav>
+<nav id="ltm-family-nav" aria-label="LTM Infrastructure Tech Advisory accelerators"><div class="ltm-fam-inner"><div class="ltm-fam-brand"><span class="ltm-fam-b">LTM</span><span class="ltm-fam-s">Infrastructure Tech Advisory</span></div><div class="ltm-fam-links"><a href="cloud-iq.html" class="ltm-fam-link current" aria-current="page" data-fam="cloud">Cloud IQ <span class="ltm-fam-tag">front door</span></a><a href="strategy-iq.html" class="ltm-fam-link" data-fam="strategy">Strategy IQ</a><a href="modernization-iq.html" class="ltm-fam-link" data-fam="moderniz">Modernization IQ</a><a href="ai-readiness-iq.html" class="ltm-fam-link" data-fam="ai">AI Readiness IQ</a><a href="sovereign-iq.html" class="ltm-fam-link" data-fam="sovereign">Sovereign IQ</a><a href="posture-iq.html" class="ltm-fam-link" data-fam="posture">Posture IQ</a><a href="finops-iq.html" class="ltm-fam-link" data-fam="finops">FinOps IQ</a><a href="finops-value-case.html" class="ltm-fam-link" data-fam="fvc">FinOps Value Case</a></div></div></nav>
 
 <header class="top">
   <div class="wrap">
@@ -719,7 +719,7 @@ function compute(){
  if(primary==="B" && (dimScores.D6<=3 || dcExit || poorInv)) nextAcc.push({label:"Modernization IQ",why:"data-centre estate & modernization", href:"modernization-iq.html"+qp({dcExit:dcExit?1:0})});
  if(sovFlag){
    const fw = (function(){ const fwArr = QUESTIONS.find(x=>x.id==="Q0.3").frameworks||[]; return (A["Q0.3"]||[]).map(i=>fwArr[i]); })().filter(k=>k&&k!=="none").join(",");
-   nextAcc.push({label:"Sovereign IQ (Pillar 02)",why:"residency / regulatory exposure", href:"sovereign-screen.html"+qp({sov:1, frameworks:fw})});
+   nextAcc.push({label:"Sovereign IQ (Pillar 02)",why:"residency / regulatory exposure", href:"sovereign-iq.html"+qp({sov:1, frameworks:fw})});
  }
  if(aiFlag) nextAcc.push({label:"AI Readiness IQ (Pillar 04)",why:"data + platform readiness for AI programmes", href:"ai-readiness-iq.html"+qp({ai:1})});
  if(dimScores.D1<=3 || notStarted) nextAcc.push({label:"Strategy IQ (Pillar 01)",why:"target operating model & business alignment", href:"strategy-iq.html"+qp()});
